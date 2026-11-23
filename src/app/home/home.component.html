@@ -41,12 +41,8 @@
       </mat-autocomplete>
     </mat-card-content>
 
-    <img
-      mat-card-image
-      [src]="'assets/images/' + tenant + '_home.png'"
-      (error)="onImageMissing($event)"
-      alt="Mifos X"
-    />
+    <img mat-card-image class="home-logo-light" src="assets/images/grofinix-light.png" alt="GroFiniX" />
+    <img mat-card-image class="home-logo-dark" src="assets/images/grofinix-dark.png" alt="GroFiniX" />
   </mat-card>
 </div>
 

@@ -116,8 +116,8 @@ $input-border: #e2e8f0;
     font-weight: 600;
     letter-spacing: 0.02em;
 
-    --md-filled-button-container-color: #{$brand-blue};
-    --md-filled-button-label-text-color: var(--dk-surface, #fff);
+    --md-filled-button-container-color: var(--dk-primary, #{$brand-blue});
+    --md-filled-button-label-text-color: var(--dk-on-accent, #fff);
 
     border-radius: 10px;
   }

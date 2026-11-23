@@ -79,8 +79,8 @@ export const environment = {
   displayTenantSelector: loadedEnv['displayTenantSelector'] || 'true',
   /** Production mode - when true, shows minimal hero with only branding at bottom */
   productionMode: loadedEnv['productionMode'] === 'true' || loadedEnv['productionMode'] === true || false,
-  tenantLogoUrl: loadedEnv['tenantLogoUrl'] || 'assets/images/debug-bg.png',
-  tenantLogoUrlDark: loadedEnv['tenantLogoUrlDark'] || 'assets/images/debug-bg.png',
+  tenantLogoUrl: loadedEnv['tenantLogoUrl'] || 'assets/images/grofinix-light.png',
+  tenantLogoUrlDark: loadedEnv['tenantLogoUrlDark'] || 'assets/images/grofinix-dark.png',
   documentationBaseUrl: loadedEnv['documentationBaseUrl'] || 'https://mifosforge.jira.com/wiki',
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: loadedEnv['waitTimeForNotifications'] || 60,

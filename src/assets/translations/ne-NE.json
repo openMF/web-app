@@ -1,6 +1,6 @@
 ﻿{
   "error.msg.upload.file.too.big": "चयन गरिएको फाइल {{args.0.value}} MB सीमाभन्दा ठूलो छ। कृपया सानो फाइल छान्नुहोस् र फेरि प्रयास गर्नुहोस्।",
-  "APP_NAME": "COFMIS",
+  "APP_NAME": "GroFiniX",
   "APP_FULL_NAME": "Cooperative Financial Management & Information System",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",

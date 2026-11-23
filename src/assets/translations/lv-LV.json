@@ -1,6 +1,6 @@
 ﻿{
   "error.msg.upload.file.too.big": "Atlasītais fails pārsniedz {{args.0.value}} MB ierobežojumu. Lūdzu, izvēlieties mazāku failu un mēģiniet vēlreiz.",
-  "APP_NAME": "COFMIS",
+  "APP_NAME": "GroFiniX",
   "APP_FULL_NAME": "Cooperative Financial Management & Information System",
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",

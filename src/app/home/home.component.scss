@@ -24,3 +24,23 @@ a {
   text-decoration: none;
   color: var(--dk-text, black);
 }
+
+.home-logo-light,
+.home-logo-dark {
+  box-sizing: border-box;
+  padding: 24px 32px;
+}
+
+.home-logo-dark {
+  display: none;
+}
+
+:host-context(.dark-theme) {
+  .home-logo-light {
+    display: none;
+  }
+
+  .home-logo-dark {
+    display: block;
+  }
+}
