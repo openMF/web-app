@@ -107,6 +107,17 @@ mat-checkbox {
   mat-checkbox {
     font-weight: 600;
   }
+
+  // Save pressed without the box ticked: outlined and explained.
+  &.confirm--invalid {
+    border: 2px solid var(--dk-danger, #d32f2f);
+  }
+
+  .confirm__error {
+    margin: 4px 0 8px;
+    color: var(--dk-danger, #d32f2f);
+    font-size: 0.875rem;
+  }
 }
 
 button mat-icon {

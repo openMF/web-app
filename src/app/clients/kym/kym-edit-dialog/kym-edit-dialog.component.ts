@@ -24,6 +24,7 @@ import {
   MARITAL_STATUSES
 } from '../kym.models';
 import { KymMemberPickerComponent } from '../member-picker/member-picker.component';
+import { revealFirstInvalid } from '../reveal-first-invalid';
 import { RelationshipSelectComponent } from 'app/shared/relationship-select/relationship-select.component';
 
 export interface KymEditDialogData {
@@ -323,10 +324,19 @@ export class KymEditDialogComponent implements AfterViewInit {
     return out;
   }
 
+  /**
+   * Saves what changed. Save is clickable once something has changed; if anything is still missing or invalid
+   * (the "here in person" box at the bottom most often), nothing is sent: every field shows its error and the
+   * first one is scrolled into view and focused.
+   */
   save(): void {
     const changes = this.changed();
-    if (this.form.invalid || !Object.keys(changes).length) {
+    if (!Object.keys(changes).length) {
+      return;
+    }
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      revealFirstInvalid(this.host.nativeElement);
       return;
     }
     const d: Date = this.form.value.changeHappenedOn;

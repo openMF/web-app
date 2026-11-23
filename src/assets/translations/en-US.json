@@ -7135,6 +7135,7 @@
     "typeToSearch": "Type at least two letters of the name",
     "declarationLabel": "The member declares that these details are true",
     "inPersonLabel": "The member is here in person",
+    "inPersonRequired": "Confirm the member is here in person to save these changes.",
     "changeHappenedOn": "The change happened on",
     "lateHint": "Changes told more than 35 days after they happened are marked late.",
     "Save": "Save",
@@ -7276,6 +7277,7 @@
         "OTHER": "Other"
       },
       "inPersonLabel": "Someone authorised to act for the organisation is here and gave these details",
+      "inPersonRequired": "Confirm someone authorised to act for the organisation is here to save these changes.",
       "People": "Board, chief executive and account operators",
       "peopleHint": "Each person needs their own complete KYM. They do not have to be members.",
       "Add a person": "Add a person",
