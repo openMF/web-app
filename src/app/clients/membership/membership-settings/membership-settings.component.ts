@@ -19,9 +19,11 @@ import { forkJoin } from 'rxjs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { MembershipService } from '../membership.service';
 import {
   MembersWithoutShares,
+  ShareCeiling,
   MembershipTemplate,
   OrganisationCategory,
   PaymentTaken,
@@ -41,7 +43,8 @@ import {
     ...STANDALONE_SHARED_IMPORTS,
     RouterLink,
     FaIconComponent,
-    MatSlideToggle
+    MatSlideToggle,
+    FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -83,9 +86,23 @@ export class MembershipSettingsComponent implements OnInit {
     nomineeRequired: [false],
     nomineeRelationshipFromList: [false],
     kymRequiredForApproval: [true],
+    ceilingOn: [true],
+    shareCeilingPercent: [
+      20 as number | null,
+      [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(100)
+      ]
+    ],
+    exitOnlyWhenSettled: [true],
     savingsProductId: [null as number | null],
     shareProductId: [null as number | null]
   });
+
+  /** The members above the ceiling, shown on request */
+  readonly ceiling = signal<ShareCeiling | null>(null);
+  readonly ceilingState = signal<'closed' | 'loading' | 'failed' | 'loaded'>('closed');
 
   private readonly chosenShareProductId = signal<number | null>(null);
 
@@ -99,11 +116,25 @@ export class MembershipSettingsComponent implements OnInit {
     this.form.controls.deadlineOn.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((on) => this.toggleDays(!!on));
+    this.form.controls.ceilingOn.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.toggleCeiling());
     this.form.controls.shareProductId.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((id) => this.chosenShareProductId.set(id ?? null));
     this.load();
     this.loadCategories();
+  }
+
+  showCeiling(): void {
+    this.ceilingState.set('loading');
+    this.membershipService.shareCeiling().subscribe({
+      next: (c) => {
+        this.ceiling.set(c);
+        this.ceilingState.set('loaded');
+      },
+      error: () => this.ceilingState.set('failed')
+    });
   }
 
   loadCategories(): void {
@@ -186,6 +217,8 @@ export class MembershipSettingsComponent implements OnInit {
         nomineeRequired: !!v.nomineeRequired,
         nomineeRelationshipFromList: !!v.nomineeRelationshipFromList,
         kymRequiredForApproval: v.kymRequiredForApproval !== false,
+        shareCeilingPercent: v.ceilingOn ? Number(v.shareCeilingPercent) : null,
+        exitOnlyWhenSettled: v.exitOnlyWhenSettled !== false,
         savingsProductId: v.savingsProductId ?? undefined,
         shareProductId: v.shareProductId ?? undefined
       })
@@ -198,6 +231,9 @@ export class MembershipSettingsComponent implements OnInit {
           );
           this.saving.set(false);
           this.load();
+          if (this.ceilingState() !== 'closed') {
+            this.showCeiling();
+          }
         },
         error: () => this.saving.set(false)
       });
@@ -224,17 +260,31 @@ export class MembershipSettingsComponent implements OnInit {
           nomineeRequired: !!s.nomineeRequired,
           nomineeRelationshipFromList: !!s.nomineeRelationshipFromList,
           kymRequiredForApproval: s.kymRequiredForApproval !== false,
+          ceilingOn: s.shareCeilingPercent != null,
+          shareCeilingPercent: s.shareCeilingPercent ?? 20,
+          exitOnlyWhenSettled: s.exitOnlyWhenSettled !== false,
           savingsProductId: s.savingsProductId ?? null,
           shareProductId: s.shareProductId ?? null
         });
         if (this.canUpdate) {
           this.form.enable();
           this.toggleDays(s.decisionDays != null);
+          this.toggleCeiling();
         } else {
           this.form.disable();
         }
       }
     );
+  }
+
+  /** The percentage only counts, and is only checked, while the check is on. */
+  private toggleCeiling(): void {
+    const percent = this.form.controls.shareCeilingPercent;
+    if (this.form.value.ceilingOn && this.canUpdate) {
+      percent.enable({ emitEvent: false });
+    } else {
+      percent.disable({ emitEvent: false });
+    }
   }
 
   /** The number of days only counts, and is only checked, while the deadline is on. */

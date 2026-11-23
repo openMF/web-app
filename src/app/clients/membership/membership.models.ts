@@ -127,6 +127,10 @@ export interface MembershipSettings {
   nomineeRelationshipFromList?: boolean;
   /** Approval waits for a complete KYM (on by default, fineract-dbug ADR 0042) */
   kymRequiredForApproval?: boolean;
+  /** The most of the share capital one member may hold, 1 to 100; null switches the check off (fineract-dbug #125) */
+  shareCeilingPercent?: number | null;
+  /** A member's last shares are paid back only when the member owes and guarantees nothing */
+  exitOnlyWhenSettled?: boolean;
 }
 
 export interface ShareProductOption {
@@ -238,3 +242,82 @@ export function deadlineTone(application: MembershipApplication): DeadlineTone |
   }
   return application.daysRemaining <= 7 ? 'soon' : 'ok';
 }
+
+export type LiabilityKind = 'LOAN' | 'GUARANTEE' | 'CHARGE' | 'OVERDRAWN_SAVINGS';
+export type CeilingNote = 'OFF' | 'EXEMPT' | 'TOO_FEW_MEMBERS';
+export type ExitStatus = 'REQUESTED' | 'SETTLED' | 'REFUNDED' | 'CANCELLED';
+
+export interface ExitLiability {
+  kind: LiabilityKind;
+  reference?: string;
+  otherParty?: string;
+  amount?: number;
+  description?: string;
+}
+
+/** A request to leave (fineract-dbug #125, docs/share-rules-and-leaving.md) */
+export interface MembershipExit {
+  id: number;
+  clientId: number;
+  accountNo: string;
+  name: string;
+  officeName?: string;
+  status: ExitStatus;
+  requestedOn: string;
+  reason?: string;
+  requestedBy?: string;
+  /** What is true now; only while the request is open */
+  kitta?: number;
+  shareAmount?: number;
+  liabilities?: ExitLiability[];
+  settledOn?: string;
+  settledBy?: string;
+  refundDueOn?: string;
+  daysLeft?: number;
+  overdue?: boolean;
+  refundedOn?: string;
+  refundAmount?: number;
+  refundReceiptNumber?: string;
+  refundedBy?: string;
+  cancelledOn?: string;
+  cancelledBy?: string;
+  cancelReason?: string;
+}
+
+/** A member's share position and what stands in the way of leaving */
+export interface MemberShares {
+  clientId: number;
+  kitta: number;
+  pendingKitta: number;
+  shareAmount: number;
+  shareCapital: number;
+  percentOfCapital: number;
+  ceilingPercent?: number | null;
+  ceilingApplies: boolean;
+  ceilingNote?: CeilingNote | null;
+  /** Rupees of shares still to buy; null when the ceiling does not apply */
+  roomAmount?: number | null;
+  liabilities: ExitLiability[];
+  canLeave: boolean;
+  exit: MembershipExit | null;
+}
+
+export interface ShareCeiling {
+  ceilingPercent?: number | null;
+  shareCapital: number;
+  ceilingAmount: number;
+  membersWithShares: number;
+  checked: boolean;
+  membersAbove: {
+    clientId: number;
+    name: string;
+    accountNo: string;
+    officeName?: string;
+    kitta: number;
+    amount: number;
+    percent: number;
+    exempt?: boolean;
+  }[];
+}
+
+export type ExitFilter = 'open' | 'requested' | 'settled' | 'refunded' | 'cancelled';

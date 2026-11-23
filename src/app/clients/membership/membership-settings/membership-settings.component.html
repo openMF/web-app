@@ -110,7 +110,101 @@
         </mat-select>
         <mat-hint>{{ 'membership.kymRequiredHint' | translate }}</mat-hint>
       </mat-form-field>
+
+      <div class="deadline">
+        <mat-form-field>
+          <mat-label>{{ 'shareRules.ceiling' | translate }}</mat-label>
+          <mat-select formControlName="ceilingOn">
+            <mat-option [value]="false">{{ 'membership.Off' | translate }}</mat-option>
+            <mat-option [value]="true">{{ 'membership.On' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        @if (form.value.ceilingOn) {
+          <mat-form-field class="days">
+            <mat-label>%</mat-label>
+            <input matInput type="number" min="1" max="100" formControlName="shareCeilingPercent" required />
+            @if (form.controls.shareCeilingPercent.invalid) {
+              <mat-error>{{ 'shareRules.errors.ceilingPercent' | translate }}</mat-error>
+            }
+          </mat-form-field>
+        }
+      </div>
+
+      <mat-form-field>
+        <mat-label>{{ 'shareRules.exitOnlyWhenSettled' | translate }}</mat-label>
+        <mat-select formControlName="exitOnlyWhenSettled">
+          <mat-option [value]="true">{{ 'membership.On' | translate }}</mat-option>
+          <mat-option [value]="false">{{ 'membership.Off' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+
+    <p class="ceiling-link">
+      <button mat-button color="primary" type="button" (click)="showCeiling()">
+        {{ 'shareRules.membersAbove' | translate }}
+      </button>
+    </p>
+    @switch (ceilingState()) {
+      @case ('loading') {
+        <p class="hint">{{ 'organisationCategories.loading' | translate }}</p>
+      }
+      @case ('failed') {
+        <p class="failed" role="alert">
+          {{ 'organisationCategories.failed' | translate }}
+          <button mat-button color="primary" type="button" (click)="showCeiling()">
+            {{ 'labels.buttons.Retry' | translate }}
+          </button>
+        </p>
+      }
+      @case ('loaded') {
+        @if (ceiling(); as c) {
+          <p class="hint">
+            @if (c.checked) {
+              {{
+                'shareRules.ceilingSummary'
+                  | translate: { capital: (c.shareCapital | formatNumber), ceiling: (c.ceilingAmount | formatNumber) }
+              }}
+            } @else {
+              {{ 'shareRules.ceilingNotChecked' | translate }}
+            }
+          </p>
+          <div class="table-wrap">
+            <table class="list">
+              <thead>
+                <tr>
+                  <th>{{ 'membership.Member' | translate }}</th>
+                  <th>{{ 'labels.inputs.Office' | translate }}</th>
+                  <th>{{ 'membership.Kitta' | translate }}</th>
+                  <th>{{ 'shareRules.amount' | translate }}</th>
+                  <th>{{ 'shareRules.percentOfCapital' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (m of c.membersAbove; track m.clientId) {
+                  <tr>
+                    <td>
+                      <a [routerLink]="['/members', m.clientId, 'membership']">{{ m.name }}</a>
+                      · {{ m.accountNo }}
+                      @if (m.exempt) {
+                        · {{ 'shareRules.governmentBody' | translate }}
+                      }
+                    </td>
+                    <td>{{ m.officeName }}</td>
+                    <td>{{ m.kitta }}</td>
+                    <td>{{ 'membership.Rs' | translate }} {{ m.amount | formatNumber }}</td>
+                    <td>{{ m.percent }}%</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5" class="empty">{{ 'membership.None' | translate }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    }
 
     @if (canUpdate) {
       <div class="actions">

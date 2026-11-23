@@ -1,0 +1,179 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="shares">
+  <h3>{{ 'shareRules.title' | translate }}</h3>
+  @switch (state()) {
+    @case ('loading') {
+      <p class="muted">{{ 'organisationCategories.loading' | translate }}</p>
+    }
+    @case ('notFound') {
+      <p class="muted">{{ 'shareRules.notFound' | translate }}</p>
+    }
+    @case ('failed') {
+      <p class="failed" role="alert">
+        {{ 'shareRules.failed' | translate }}
+        <button mat-button color="primary" type="button" (click)="load()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      </p>
+    }
+    @default {
+      @if (shares(); as s) {
+        <table class="details">
+          <tbody>
+            <tr>
+              <td>{{ 'membership.Kitta held' | translate }}</td>
+              <td>{{ s.kitta }}</td>
+            </tr>
+            @if (s.pendingKitta) {
+              <tr>
+                <td>{{ 'shareRules.pendingKitta' | translate }}</td>
+                <td>{{ s.pendingKitta }}</td>
+              </tr>
+            }
+            <tr>
+              <td>{{ 'shareRules.amount' | translate }}</td>
+              <td>{{ 'membership.Rs' | translate }} {{ s.shareAmount | formatNumber }}</td>
+            </tr>
+            <tr>
+              <td>{{ 'shareRules.percentOfCapital' | translate }}</td>
+              <td>{{ s.percentOfCapital }}%</td>
+            </tr>
+            <tr>
+              <td>{{ 'shareRules.canStillBuy' | translate }}</td>
+              <td>
+                @if (s.ceilingApplies) {
+                  {{ canStillBuy(s) }} {{ 'membership.kitta' | translate }}
+                } @else if (s.ceilingNote) {
+                  {{ 'shareRules.note.' + s.ceilingNote | translate }}
+                }
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        @if (!s.exit || s.exit.status === 'REQUESTED') {
+          <h4>{{ 'shareRules.beforeLeaving' | translate }}</h4>
+          @if (s.liabilities.length) {
+            <ul class="liabilities">
+              @for (l of s.liabilities; track $index) {
+                <li>
+                  {{
+                    'shareRules.liability.' + l.kind
+                      | translate
+                        : { reference: l.reference, otherParty: l.otherParty, amount: (l.amount | formatNumber) }
+                  }}
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="muted">{{ 'shareRules.nothingInTheWay' | translate }}</p>
+          }
+        }
+
+        @if (s.exit; as e) {
+          <div class="exit">
+            <p>
+              <span class="status" [class]="e.status">{{ 'exit.status.' + e.status | translate }}</span>
+              · {{ 'exit.requestedOn' | translate }} {{ e.requestedOn | dateFormat }}
+              @if (e.reason) {
+                · {{ e.reason }}
+              }
+            </p>
+            @if (e.status === 'SETTLED') {
+              <p>
+                {{ 'exit.dueBy' | translate }} {{ e.refundDueOn | dateFormat }} ·
+                <span [class.overdue]="e.overdue">{{
+                  (e.overdue ? 'exit.overdue' : 'exit.daysLeft')
+                    | translate: { days: e.overdue ? -e.daysLeft : e.daysLeft }
+                }}</span>
+              </p>
+            }
+            <div class="actions">
+              @if (e.status === 'REQUESTED') {
+                <button
+                  mat-raised-button
+                  color="primary"
+                  *mifosxHasPermission="'CREATE_MEMBERSHIPEXIT'"
+                  [disabled]="busy() || s.liabilities.length > 0"
+                  (click)="settle(e)"
+                >
+                  {{ 'exit.settle' | translate }}
+                </button>
+              }
+              @if (e.status === 'SETTLED') {
+                <button
+                  mat-raised-button
+                  color="primary"
+                  *mifosxHasPermission="'REFUND_MEMBERSHIPEXIT'"
+                  [disabled]="busy()"
+                  (click)="refund(e)"
+                >
+                  {{ 'exit.refund' | translate }}
+                </button>
+              }
+              <button
+                mat-stroked-button
+                *mifosxHasPermission="'CREATE_MEMBERSHIPEXIT'"
+                [disabled]="busy()"
+                (click)="cancel(e)"
+              >
+                {{ 'exit.cancel' | translate }}
+              </button>
+            </div>
+          </div>
+        } @else if (active) {
+          <div class="actions">
+            <button mat-raised-button color="primary" *mifosxHasPermission="'CREATE_MEMBERSHIPEXIT'" (click)="ask()">
+              {{ 'exit.ask' | translate }}
+            </button>
+          </div>
+        }
+
+        @if (history().length) {
+          <h4>{{ 'exit.history' | translate }}</h4>
+          <div class="table-wrap">
+            <table class="accounts">
+              <thead>
+                <tr>
+                  <th>{{ 'exit.requestedOn' | translate }}</th>
+                  <th>{{ 'membership.Status' | translate }}</th>
+                  <th>{{ 'exit.steps' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (h of history(); track h.id) {
+                  <tr>
+                    <td>{{ h.requestedOn | dateFormat }} · {{ h.requestedBy }}</td>
+                    <td>{{ 'exit.status.' + h.status | translate }}</td>
+                    <td>
+                      @if (h.settledOn) {
+                        {{ 'exit.settle' | translate }}: {{ h.settledOn | dateFormat }} ({{ h.settledBy }})<br />
+                      }
+                      @if (h.refundedOn) {
+                        {{ 'exit.refund' | translate }}: {{ h.refundedOn | dateFormat }} ({{ h.refundedBy }}) ·
+                        {{ 'membership.Rs' | translate }} {{ h.refundAmount | formatNumber }}
+                      }
+                      @if (h.cancelledOn) {
+                        {{ 'exit.cancel' | translate }}: {{ h.cancelledOn | dateFormat }} ({{ h.cancelledBy }})
+                        @if (h.cancelReason) {
+                          · {{ h.cancelReason }}
+                        }
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    }
+  }
+</section>

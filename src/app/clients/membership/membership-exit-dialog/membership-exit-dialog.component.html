@@ -1,0 +1,57 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>{{ (refund ? 'exit.refund' : 'exit.ask') | translate }}</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div mat-dialog-content>
+    <mifosx-nepali-date-input
+      [label]="'exit.date' | translate"
+      formControlName="date"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+    />
+
+    @if (refund) {
+      @if (typeAmount) {
+        <p>{{ 'exit.noSharesLeft' | translate }}</p>
+        <mat-form-field class="full">
+          <mat-label>{{ 'exit.amount' | translate }}</mat-label>
+          <input matInput type="number" min="0" step="0.01" formControlName="amount" required />
+          @if (form.controls.amount.invalid) {
+            <mat-error>{{ 'exit.errors.amount' | translate }}</mat-error>
+          }
+        </mat-form-field>
+      } @else {
+        <mat-form-field class="full">
+          <mat-label>{{ 'exit.amount' | translate }}</mat-label>
+          <input matInput [value]="data.exit.shareAmount | formatNumber" readonly />
+        </mat-form-field>
+      }
+      <mat-form-field class="full">
+        <mat-label>{{ 'membership.Receipt number' | translate }}</mat-label>
+        <input matInput formControlName="receiptNumber" maxlength="50" />
+      </mat-form-field>
+    } @else {
+      <mat-form-field class="full">
+        <mat-label>{{ 'membership.Reason' | translate }}</mat-label>
+        <textarea matInput formControlName="reason" rows="3" maxlength="1000"></textarea>
+        <mat-hint>{{ 'membership.optional' | translate }}</mat-hint>
+      </mat-form-field>
+    }
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button type="button" [disabled]="busy()" (click)="close()">
+      {{ 'labels.buttons.Cancel' | translate }}
+    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="busy()">
+      {{ 'labels.buttons.Submit' | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>
