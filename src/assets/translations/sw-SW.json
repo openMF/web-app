@@ -4871,6 +4871,8 @@
         "SAME": "Same as permanent address",
         "DIFFERENT": "A different address"
       },
+      "search": "Search",
+      "noResults": "No results found",
       "hints": {
         "optional": "Optional",
         "chooseProvinceFirst": "Choose a province first",
