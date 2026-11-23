@@ -534,8 +534,8 @@
       </section>
     }
 
-    <!-- Every change -->
-    <section class="frame">
+    <!-- The changes: the latest few, newest first, with Show all / Show less -->
+    <section class="frame" #changesSection>
       <h3 class="legend">{{ 'kym.Changes' | translate }}</h3>
       @if (history(); as h) {
         @if (h.length) {
@@ -551,7 +551,7 @@
                 </tr>
               </thead>
               <tbody>
-                @for (row of h; track $index) {
+                @for (row of shownChanges(h); track $index) {
                   <tr>
                     <td>
                       {{ row.recordedOn | dateFormat }}
@@ -573,11 +573,24 @@
               </tbody>
             </table>
           </div>
+          @if (h.length > recentChanges) {
+            <div class="history-toggle">
+              @if (historyExpanded()) {
+                <button mat-stroked-button type="button" (click)="showLessHistory(changesSection)">
+                  <mat-icon>expand_less</mat-icon>{{ 'kym.Show less' | translate }}
+                </button>
+              } @else {
+                <button mat-stroked-button type="button" (click)="historyExpanded.set(true)">
+                  <mat-icon>expand_more</mat-icon>{{ 'kym.Show all' | translate: { count: h.length } }}
+                </button>
+              }
+            </div>
+          }
         } @else {
           <p class="empty">{{ 'kym.noChanges' | translate }}</p>
         }
       } @else {
-        <button mat-button type="button" (click)="loadHistory()">{{ 'kym.Show every change' | translate }}</button>
+        <p class="empty">{{ 'kym.Loading' | translate }}</p>
       }
     </section>
   } @else {

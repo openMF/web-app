@@ -85,6 +85,10 @@ export class KymTabComponent {
   readonly failed = signal(false);
   readonly busy = signal(false);
   readonly history = signal<KymHistoryRow[] | null>(null);
+  /** How many of the latest changes show before Show all. */
+  readonly recentChanges = 5;
+  /** Whether every change shows (Show all) or only the latest few; kept when the history reloads after a save. */
+  readonly historyExpanded = signal(false);
   readonly professions = signal<CodeOption[]>([]);
 
   /** The items fixed on other tabs, and those fixed on this tab's form, kept apart so each gets one clear action. */
@@ -108,6 +112,7 @@ export class KymTabComponent {
         this.clientId = Number(params.get('clientId'));
         this.kym.set(null);
         this.history.set(null);
+        this.historyExpanded.set(false);
         this.load();
       });
       this.kymService
@@ -125,9 +130,8 @@ export class KymTabComponent {
         next: (k) => {
           this.kym.set(k);
           this.failed.set(false);
-          if (this.history()) {
-            this.loadHistory();
-          }
+          // The latest changes show without a click, and reload with the KYM.
+          this.loadHistory();
         },
         error: () => this.failed.set(true)
       });
@@ -138,6 +142,17 @@ export class KymTabComponent {
       .history(this.clientId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((h) => this.history.set(h));
+  }
+
+  /** The changes to show, newest first (the server's order): all of them, or only the latest few. */
+  shownChanges(history: KymHistoryRow[]): KymHistoryRow[] {
+    return this.historyExpanded() ? history : history.slice(0, this.recentChanges);
+  }
+
+  /** Back to the latest few, and back up to the Changes heading the long list had scrolled away from. */
+  showLessHistory(section: HTMLElement): void {
+    this.historyExpanded.set(false);
+    section.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
   }
 
   /** The translated words for a missing item, or the server's own words. */
@@ -186,7 +201,8 @@ export class KymTabComponent {
 
   /** A history row's field in words: the form's label when there is one, else the field's own name. */
   fieldName(field: string): string {
-    const key = 'kym.field.' + field;
+    // The occupation is recorded by its id; its label is the form's "Main occupation".
+    const key = 'kym.field.' + (field === 'occupationId' ? 'occupation' : field);
     const t = this.translate.instant(key);
     return t && t !== key ? t : field;
   }
@@ -195,6 +211,10 @@ export class KymTabComponent {
   valueText(field: string, value: string | null): string {
     if (value === null || value === undefined) {
       return '—';
+    }
+    if (field === 'occupationId') {
+      // The occupation's name from the list the tab loads; the id itself if it is no longer in the list.
+      return this.professions().find((p) => String(p.id) === value)?.name ?? value;
     }
     const group: Record<string, string> = {
       maritalStatus: 'marital',

@@ -7118,6 +7118,8 @@
     "Told late": "Told late",
     "noChanges": "No changes recorded yet.",
     "Show every change": "Show every change",
+    "Show all": "Show all ({{count}})",
+    "Show less": "Show less",
     "editLead": "Only what you change is saved. Details Fineract already keeps (identities, family members, address, documents) are changed on their own tabs.",
     "spouseHint": "Add them on the Family members tab",
     "noProfessions": "Add occupations to the PROFESSION code first",
