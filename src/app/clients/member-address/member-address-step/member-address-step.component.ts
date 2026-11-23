@@ -98,6 +98,10 @@ export class MemberAddressStepComponent {
 
   constructor() {
     this.loadLocations();
+    // Fields shown by "A different address" start pristine, whatever happened the last time they were shown.
+    this.temporaryChoice.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.temporaryForm.markAsUntouched());
   }
 
   loadLocations(): void {
@@ -129,6 +133,8 @@ export class MemberAddressStepComponent {
 
   markAllAsTouched(): void {
     this.permanentForm.markAllAsTouched();
-    this.temporaryForm.markAllAsTouched();
+    if (this.temporaryChoice.value === 'DIFFERENT') {
+      this.temporaryForm.markAllAsTouched();
+    }
   }
 }
