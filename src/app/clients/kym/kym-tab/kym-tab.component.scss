@@ -103,6 +103,13 @@
   margin-top: 16px;
 }
 
+// Show all / Show less under the changes table.
+.history-toggle {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
 // A small table in the app's blue-header look, for short lists inside a section.
 table.plain {
   width: 100%;
