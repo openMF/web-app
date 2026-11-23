@@ -9,6 +9,7 @@
 /** Angular Imports */
 import { AnpaAccountingComponent } from './loans-view/anpa-accounting/anpa-accounting.component';
 import { anpaAccountingGuard } from './loans-view/anpa-accounting/anpa-accounting.guard';
+import { loanApprovalActionGuard } from '../tasks/checker-inbox-and-tasks-tabs/loan-approval/loan-approval.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -493,6 +494,7 @@ const routes: Routes = [
       },
       {
         path: ':loanId/actions/:action',
+        canActivate: [loanApprovalActionGuard],
         component: LoanAccountActionsComponent,
         data: { title: 'Loan Account Actions', breadcrumb: 'action', routeParamBreadcrumb: 'action' },
         resolve: {
