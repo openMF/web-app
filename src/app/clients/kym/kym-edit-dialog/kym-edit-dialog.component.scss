@@ -19,7 +19,27 @@ h4 {
   border-bottom: 1px solid rgb(127 127 127 / 25%);
   font-size: 0.95rem;
   font-weight: 600;
-  scroll-margin-top: 8px;
+  // "Fill in" scrolls a heading to the top: keep some space above it.
+  scroll-margin-top: 16px;
+}
+
+// The field "Fill in" brought the user to: an outline in the theme's primary colour that fades out.
+.kym-target {
+  border-radius: 4px;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  animation: kym-target-flash 1.5s ease-out;
+}
+
+@keyframes kym-target-flash {
+  0%,
+  60% {
+    outline-color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+  }
+
+  100% {
+    outline-color: transparent;
+  }
 }
 
 .row {

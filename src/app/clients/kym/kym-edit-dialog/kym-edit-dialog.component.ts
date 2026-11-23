@@ -57,13 +57,82 @@ const SECTION: Record<string, string> = {
   familyHereList: 'here',
   incomeBand: 'income',
   incomeSources: 'income',
-  expectedTransactions: 'money',
-  expectedDeposit: 'money',
-  expectedBorrowing: 'money',
+  // The money questions sit under the "Income and transactions" heading, which stays in view above them.
+  expectedTransactions: 'income',
+  expectedDeposit: 'income',
+  expectedBorrowing: 'income',
   someoneElseDirects: 'owner',
   recommenders: 'recommend',
   declaration: 'declare'
 };
+
+/** A form control by its name. */
+const control = (name: string) => `[formcontrolname="${name}"]`;
+
+/**
+ * The field each missing item is filled in, to focus and highlight it once its section is in view. Where the field
+ * only shows after an earlier answer (details after "yes"), the first one on the form is used: the question to
+ * answer first.
+ */
+const TARGET: Record<string, string[]> = {
+  maritalStatus: [control('maritalStatus')],
+  familyType: [control('familyType')],
+  occupation: [control('occupationId')],
+  pan: [control('noPan')],
+  guardian: [control('guardianName')],
+  pep: [control('pepDeclared')],
+  pepDetails: [
+    control('pepName'),
+    control('pepPost'),
+    control('pepDeclared')
+  ],
+  workingAreaResidence: [control('workingAreaResidence')],
+  timeInWorkingArea: [control('timeInWorkingArea')],
+  purposeOfJoining: [control('purposeOfJoining')],
+  otherCoop: [control('otherCoopMember')],
+  otherCoopList: [
+    `[formarrayname="otherCoops"] ${control('coopNameAddress')}`,
+    control('otherCoopMember')
+  ],
+  otherCoopPurpose: [
+    control('otherCoopPurpose'),
+    control('otherCoopMember')
+  ],
+  familyOtherCoop: [control('familyOtherCoopMember')],
+  familyOtherCoopList: [
+    `[formarrayname="otherCoops"] ${control('coopNameAddress')}`,
+    control('familyOtherCoopMember')
+  ],
+  familyOtherCoopPurpose: [
+    control('familyOtherCoopPurpose'),
+    control('familyOtherCoopMember')
+  ],
+  familyHere: [control('familyInThisCoop')],
+  familyHereList: [
+    '[data-kym-field="familyHereList"]',
+    control('familyInThisCoop')
+  ],
+  incomeBand: [control('incomeBand')],
+  incomeSources: [
+    `[formarrayname="incomeSources"] ${control('heading')}`,
+    control('incomeBand')
+  ],
+  expectedTransactions: [control('expectedTransactionsYear')],
+  expectedDeposit: [control('expectedDepositYear')],
+  expectedBorrowing: [control('expectedBorrowing')],
+  someoneElseDirects: [control('someoneElseDirects')],
+  recommenders: [
+    '[data-kym-field="recommenders"]',
+    control('foundingMember')
+  ],
+  declaration: [control('declarationAccepted')]
+};
+
+/** What can take focus inside a field's element. */
+const FOCUSABLE = 'input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+/** How long the field just scrolled to stays highlighted. */
+const HIGHLIGHT_MS = 1500;
 
 /**
  * The KYM form's own questions (what Fineract does not keep), changed with the member present. Only what changed is
@@ -194,10 +263,42 @@ export class KymEditDialogComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const section = this.data.focus ? SECTION[this.data.focus] : null;
-    if (section) {
-      setTimeout(() => this.host.nativeElement.querySelector('#kym-' + section)?.scrollIntoView({ block: 'start' }));
+    const item = this.data.focus;
+    if (item && SECTION[item]) {
+      // Once the dialog has opened and placed its own focus, so the item's field keeps the focus given here.
+      this.ref.afterOpened().subscribe(() => this.goToItem(item));
     }
+  }
+
+  /**
+   * "Fill in" from the KYM tab: brings the item's section heading to the top (with space above it, see the
+   * scroll-margin on the headings), then makes sure the item's field is in view too, focuses it and highlights it
+   * for a moment.
+   */
+  private goToItem(item: string): void {
+    const root: HTMLElement = this.host.nativeElement;
+    root.querySelector<HTMLElement>('#kym-' + SECTION[item])?.scrollIntoView?.({ block: 'start' });
+
+    const field = (TARGET[item] ?? [])
+      .map((selector) => root.querySelector<HTMLElement>(selector))
+      .find((element) => !!element);
+    if (!field) {
+      return;
+    }
+    const box =
+      field.closest<HTMLElement>('mat-form-field, mat-radio-group, mat-checkbox, mifosx-kym-member-picker') ?? field;
+
+    // A field far below its heading (after a long list of income sources) is brought into view as well.
+    const content = root.querySelector('mat-dialog-content');
+    if (content && box.getBoundingClientRect().bottom > content.getBoundingClientRect().bottom) {
+      box.scrollIntoView?.({ block: 'center' });
+    }
+
+    const focusable = field.matches(FOCUSABLE) ? field : field.querySelector<HTMLElement>(FOCUSABLE);
+    focusable?.focus({ preventScroll: true });
+
+    box.classList.add('kym-target');
+    setTimeout(() => box.classList.remove('kym-target'), HIGHLIGHT_MS);
   }
 
   get otherCoops(): FormArray {

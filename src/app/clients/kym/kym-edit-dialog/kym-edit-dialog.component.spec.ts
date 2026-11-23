@@ -19,6 +19,43 @@ import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals
 import { KymEditDialogComponent } from './kym-edit-dialog.component';
 import { KymService } from '../kym.service';
 
+/** A member's KYM answers with nothing filled in. */
+const values: any = {
+  maritalStatus: null,
+  familyType: null,
+  occupationId: null,
+  occupationDetail: null,
+  noPan: false,
+  pepDeclared: null,
+  pepName: null,
+  pepSelf: false,
+  pepRelationshipCode: null,
+  pepRelationshipDetail: null,
+  pepPost: null,
+  guardianName: null,
+  workingAreaResidence: null,
+  timeInWorkingArea: null,
+  votingPollingPlace: null,
+  purposeOfJoining: null,
+  incomeBand: null,
+  expectedTransactionsYear: null,
+  expectedDepositYear: null,
+  expectedBorrowing: null,
+  otherCoopMember: null,
+  otherCoopPurpose: null,
+  familyOtherCoopMember: null,
+  familyOtherCoopPurpose: null,
+  familyInThisCoop: null,
+  foundingMember: null,
+  someoneElseDirects: null,
+  declarationAccepted: null,
+  remarks: null,
+  otherCoops: [],
+  familyHere: [],
+  incomeSources: [],
+  recommenders: []
+};
+
 describe('KymEditDialogComponent: Save', () => {
   let fixture: ComponentFixture<KymEditDialogComponent>;
   let component: KymEditDialogComponent;
@@ -26,43 +63,6 @@ describe('KymEditDialogComponent: Save', () => {
   /** The elements scrolled into view, in order. */
   let scrolled: Element[];
   const originalScrollIntoView = Element.prototype.scrollIntoView;
-
-  /** A member's KYM answers with nothing filled in. */
-  const values: any = {
-    maritalStatus: null,
-    familyType: null,
-    occupationId: null,
-    occupationDetail: null,
-    noPan: false,
-    pepDeclared: null,
-    pepName: null,
-    pepSelf: false,
-    pepRelationshipCode: null,
-    pepRelationshipDetail: null,
-    pepPost: null,
-    guardianName: null,
-    workingAreaResidence: null,
-    timeInWorkingArea: null,
-    votingPollingPlace: null,
-    purposeOfJoining: null,
-    incomeBand: null,
-    expectedTransactionsYear: null,
-    expectedDepositYear: null,
-    expectedBorrowing: null,
-    otherCoopMember: null,
-    otherCoopPurpose: null,
-    familyOtherCoopMember: null,
-    familyOtherCoopPurpose: null,
-    familyInThisCoop: null,
-    foundingMember: null,
-    someoneElseDirects: null,
-    declarationAccepted: null,
-    remarks: null,
-    otherCoops: [],
-    familyHere: [],
-    incomeSources: [],
-    recommenders: []
-  };
 
   const saveButton = (): HTMLButtonElement => fixture.nativeElement.querySelector('button[type="submit"]');
   const inPersonError = (): HTMLElement | null => fixture.nativeElement.querySelector('.confirm__error');
@@ -147,5 +147,114 @@ describe('KymEditDialogComponent: Save', () => {
       changeHappenedOn: '2026-11-22'
     });
     expect(inPersonError()).toBeNull();
+  });
+});
+
+describe('KymEditDialogComponent: Fill in', () => {
+  let fixture: ComponentFixture<KymEditDialogComponent>;
+  /** The elements scrolled into view, in order. */
+  let scrolled: Element[];
+  const originalScrollIntoView = Element.prototype.scrollIntoView;
+
+  /** Opens the dialog from "Fill in" next to a missing item. */
+  function openFor(focus: string, answers: Record<string, unknown> = {}) {
+    TestBed.configureTestingModule({
+      imports: [
+        KymEditDialogComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        DatePipe,
+        provideNoopAnimations(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: { clientId: 793, kym: { values: { ...values, ...answers } }, professions: [], focus }
+        },
+        // The dialog has opened (and placed its own focus) as soon as it is shown here.
+        { provide: MatDialogRef, useValue: { close: jest.fn(), afterOpened: () => of(undefined) } },
+        { provide: KymService, useValue: { update: jest.fn(), searchMembers: jest.fn(() => of([])) } }
+      ]
+    });
+    fixture = TestBed.createComponent(KymEditDialogComponent);
+    fixture.detectChanges();
+  }
+
+  const host = (): HTMLElement => fixture.nativeElement;
+  const active = (): Element | null => document.activeElement;
+
+  beforeEach(() => {
+    scrolled = [];
+    Element.prototype.scrollIntoView = jest.fn(function (this: Element) {
+      scrolled.push(this);
+    }) as any;
+  });
+
+  afterEach(() => {
+    Element.prototype.scrollIntoView = originalScrollIntoView;
+    jest.useRealTimers();
+  });
+
+  it.each([
+    [
+      'expectedTransactions',
+      'expectedTransactionsYear'
+    ],
+    [
+      'expectedDeposit',
+      'expectedDepositYear'
+    ],
+    [
+      'expectedBorrowing',
+      'expectedBorrowing'
+    ]
+  ])('%s: shows the "Income and transactions" heading and focuses %s', (item, controlName) => {
+    openFor(item);
+
+    expect(scrolled[0].id).toBe('kym-income');
+    expect(active()?.getAttribute('formcontrolname')).toBe(controlName);
+    expect(active()?.closest('mat-form-field')?.classList).toContain('kym-target');
+  });
+
+  it("focuses the item's own field for other items too", () => {
+    openFor('maritalStatus');
+
+    expect(scrolled[0].id).toBe('kym-family');
+    expect(active()?.getAttribute('formcontrolname')).toBe('maritalStatus');
+  });
+
+  it("focuses the first question when the item's field only shows after it is answered", () => {
+    // PEP details show only once "yes" is answered: the yes/no comes first.
+    openFor('pepDetails');
+
+    expect(scrolled[0].id).toBe('kym-pep');
+    expect(active()?.closest('mat-radio-group')?.getAttribute('formcontrolname')).toBe('pepDeclared');
+    expect(host().querySelector('mat-radio-group[formcontrolname="pepDeclared"]').classList).toContain('kym-target');
+  });
+
+  it('focuses the declaration checkbox for the declaration', () => {
+    openFor('declaration');
+
+    expect(scrolled[0].id).toBe('kym-declare');
+    expect(active()?.closest('mat-checkbox')?.getAttribute('formcontrolname')).toBe('declarationAccepted');
+  });
+
+  it('takes the highlight off again after a moment', () => {
+    jest.useFakeTimers();
+    openFor('expectedDeposit');
+    const box = host().querySelector('[formcontrolname="expectedDepositYear"]').closest('mat-form-field');
+    expect(box.classList).toContain('kym-target');
+
+    jest.advanceTimersByTime(1500);
+
+    expect(box.classList).not.toContain('kym-target');
+  });
+
+  it('does nothing when opened without an item', () => {
+    openFor(undefined);
+
+    expect(scrolled).toEqual([]);
+    expect(host().querySelector('.kym-target')).toBeNull();
   });
 });
