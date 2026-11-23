@@ -200,6 +200,9 @@
       } @else {
         <p class="edit-note">{{ 'labels.text.EditDocumentKeepFileHint' | translate }}</p>
       }
+    } @else if (identity?.documents?.length) {
+      <!-- Editing an identity that has a copy: a chosen file replaces it, none keeps it. -->
+      <p class="edit-note">{{ 'labels.text.EditDocumentKeepFileHint' | translate }}</p>
     }
 
     @if (serverError) {

@@ -274,4 +274,38 @@
     color: var(--dk-text-muted, rgb(127 127 127));
     font-size: 0.875rem;
   }
+
+  .upload-file {
+    margin-left: 16px;
+  }
+}
+
+// Download / Replace / Delete on an identity's file, like the Documents tab's card actions.
+.file-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+
+  .mat-mdc-icon-button {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .download,
+  .replace {
+    color: $belize-hole;
+    background: rgba($peter-river, 0.12);
+  }
+
+  .delete {
+    color: $alizarin;
+    background: rgba($alizarin, 0.1);
+  }
 }

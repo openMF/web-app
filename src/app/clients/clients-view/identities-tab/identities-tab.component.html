@@ -108,12 +108,64 @@
                         @if (document.fileName) {
                           <div class="meta">{{ document.fileName }}</div>
                         }
+                        <!-- The identity's file: download, replace with another, or delete -->
+                        <div class="file-actions">
+                          <button
+                            mat-icon-button
+                            type="button"
+                            class="download"
+                            (click)="downloadIdentityDocument(identity, document)"
+                            [title]="'labels.buttons.Download' | translate"
+                            [attr.aria-label]="('labels.buttons.Download' | translate) + ': ' + document.name"
+                          >
+                            <fa-icon icon="download"></fa-icon>
+                          </button>
+                          <input
+                            #replaceInput
+                            type="file"
+                            hidden
+                            (change)="onIdentityFileChosen(identity, $event, document)"
+                          />
+                          <button
+                            mat-icon-button
+                            type="button"
+                            class="replace"
+                            (click)="replaceInput.click()"
+                            [title]="'labels.buttons.Replace' | translate"
+                            [attr.aria-label]="('labels.buttons.Replace' | translate) + ': ' + document.name"
+                            *mifosxHasPermission="'CREATE_DOCUMENT'"
+                          >
+                            <fa-icon icon="sync"></fa-icon>
+                          </button>
+                          <button
+                            mat-icon-button
+                            type="button"
+                            class="delete"
+                            (click)="deleteIdentityDocument(identity, document)"
+                            [title]="'labels.buttons.Delete' | translate"
+                            [attr.aria-label]="('labels.buttons.Delete' | translate) + ': ' + document.name"
+                            *mifosxHasPermission="'DELETE_DOCUMENT'"
+                          >
+                            <fa-icon icon="trash"></fa-icon>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   }
                 </div>
               } @else {
                 <span class="muted">{{ 'labels.text.NoDocuments' | translate }}</span>
+                <!-- No file yet (e.g. created by a membership application): attach the copy here -->
+                <input #uploadInput type="file" hidden (change)="onIdentityFileChosen(identity, $event)" />
+                <button
+                  mat-stroked-button
+                  type="button"
+                  class="upload-file"
+                  (click)="uploadInput.click()"
+                  *mifosxHasPermission="'CREATE_DOCUMENT'"
+                >
+                  <fa-icon icon="upload" class="m-r-10"></fa-icon>{{ 'labels.buttons.Upload' | translate }}
+                </button>
               }
             </div>
           }

@@ -18,6 +18,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable, map } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
   MatTable,
@@ -465,32 +466,50 @@ export class IdentitiesTabComponent implements OnDestroy {
   }
 
   /**
-   * Attaches the file chosen in Edit to the identity. It is uploaded first and only then is the file it
-   * replaces (the one shown in the form) removed, so a failed upload never loses the stored file; an identity
-   * with no file just gets this one. Uploading anew (not updating the stored document) keeps the new file's
-   * own name and type. The dialog closes once the file is stored, or shows the error and stays open.
+   * Attaches the file chosen in Edit to the identity, replacing the file shown in the form. The dialog closes
+   * once the file is stored, or shows the error and stays open.
    */
   private replaceIdentityDocument(identity: any, response: any, dialogRef: any): void {
+    this.attachIdentityFile(
+      identity,
+      response.file,
+      response.fileName || response.file.name,
+      identity.documents?.[0]
+    ).subscribe({
+      next: () => dialogRef.close(),
+      // The identity's details are already saved; only the file failed, so the dialog stays open with the error.
+      error: (err: any) => dialogRef.componentInstance.applyServerError(err)
+    });
+  }
+
+  /**
+   * Uploads a file to the identity (POST client_identifiers/{id}/documents, which is what the KYM counts as the
+   * copy). When it replaces one of the identity's files, the new file takes its place and the old one is removed
+   * only after the upload has succeeded, so a failed upload never loses the stored file. Uploading anew (rather
+   * than updating the stored document) keeps the new file's own name and type.
+   */
+  private attachIdentityFile(identity: any, file: File, name: string, replaced?: any): Observable<void> {
     const formData: FormData = new FormData();
-    formData.append('name', response.fileName || response.file.name);
-    formData.append('file', response.file);
-    this.clientService.uploadClientIdentifierDocument(identity.id, formData).subscribe({
-      next: (docRes: any) => {
+    formData.append('name', name);
+    formData.append('file', file);
+    return this.clientService.uploadClientIdentifierDocument(identity.id, formData).pipe(
+      map((docRes: any) => {
         const newDoc = {
           id: docRes.resourceId,
           parentEntityType: 'client_identifiers',
           parentEntityId: identity.id,
-          name: response.fileName || response.file.name,
-          fileName: response.file.name
+          name,
+          fileName: file.name
         };
-        const replaced = identity.documents?.[0];
-        identity.documents = [
-          newDoc,
-          ...(identity.documents ?? []).slice(1)
-        ];
+        const documents: any[] = identity.documents ?? [];
+        const at = replaced ? documents.indexOf(replaced) : -1;
+        identity.documents = at >= 0 ? documents.map((doc: any, index: number) => (index === at ? newDoc : doc)) : [
+                ...documents,
+                newDoc
+              ];
         this.setThumbnail(newDoc);
 
-        if (replaced) {
+        if (at >= 0) {
           this.documentPreviewService.release(replaced.id);
           delete this.previewThumbnails[replaced.id];
           this.clientService.deleteClientIdentifierDocument(identity.id, replaced.id).subscribe({
@@ -510,10 +529,54 @@ export class IdentitiesTabComponent implements OnDestroy {
 
         this.identifiersTable.renderRows();
         this.changeDetectorRef.markForCheck();
-        dialogRef.close();
-      },
-      // The identity's details are already saved; only the file failed, so the dialog stays open with the error.
-      error: (err: any) => dialogRef.componentInstance.applyServerError(err)
+      })
+    );
+  }
+
+  /**
+   * Upload (replaced empty) or Replace from the open identity row: attaches the chosen file. A failure is shown by
+   * the app's global error alert, and the identity's files are left as they were.
+   */
+  onIdentityFileChosen(identity: any, event: Event, replaced?: any): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    // Cleared, so choosing the same file again still fires a change.
+    input.value = '';
+    if (!file) {
+      return;
+    }
+    this.attachIdentityFile(identity, file, file.name, replaced).subscribe({ error: (): void => undefined });
+  }
+
+  /** Download from the open identity row, under the file's own name. */
+  downloadIdentityDocument(identity: any, document: any): void {
+    this.clientService.downloadClientIdentificationDocument(identity.id, document.id).subscribe((blob: Blob) => {
+      const objectUrl = URL.createObjectURL(blob);
+      const anchor = window.document.createElement('a');
+      anchor.href = objectUrl;
+      anchor.download = document.fileName || document.name || 'document';
+      anchor.click();
+      // Revoking straight after click() can cancel the download in some browsers.
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    });
+  }
+
+  /** Delete from the open identity row, after confirming. The KYM then counts the copy as missing again. */
+  deleteIdentityDocument(identity: any, document: any): void {
+    const confirmRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `${this.translateService.instant('labels.inputs.Document')}: ${document.name}` }
+    });
+    confirmRef.afterClosed().subscribe((response: any) => {
+      if (!response?.delete) {
+        return;
+      }
+      this.clientService.deleteClientIdentifierDocument(identity.id, document.id).subscribe(() => {
+        identity.documents = (identity.documents ?? []).filter((doc: any) => doc.id !== document.id);
+        this.documentPreviewService.release(document.id);
+        delete this.previewThumbnails[document.id];
+        this.identifiersTable.renderRows();
+        this.changeDetectorRef.markForCheck();
+      });
     });
   }
   /**
