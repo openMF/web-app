@@ -261,7 +261,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     // Set default max date picker as Today
     this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
     // Set the server list from the env var FINERACT_API_URLS, but avoid overwriting "Add new server" user choice
-    if (!this.settingsService.servers) {
+    if (!this.settingsService.servers?.length) {
       this.settingsService.setServers(environment.baseApiUrls.split(','));
     }
     // Set the Tenant Identifier(s) list from the env var
