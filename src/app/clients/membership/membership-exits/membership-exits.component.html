@@ -1,0 +1,71 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container applications">
+  <nav mat-tab-nav-bar [tabPanel]="panel" class="tabs">
+    @for (s of filters; track s) {
+      <a mat-tab-link [active]="status() === s" (click)="show(s)" (keydown.enter)="show(s)" tabindex="0">
+        {{ 'exit.tab.' + s | translate }}
+      </a>
+    }
+  </nav>
+  <mat-tab-nav-panel #panel>
+    @if (state() === 'failed') {
+      <p class="late" role="alert">
+        {{ 'shareRules.failed' | translate }}
+        <button mat-button color="primary" type="button" (click)="load()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      </p>
+    }
+    <div class="table-wrap">
+      <table class="list">
+        <thead>
+          <tr>
+            <th>{{ 'membership.Member' | translate }}</th>
+            <th>{{ 'labels.inputs.Office' | translate }}</th>
+            <th>{{ 'exit.requestedOn' | translate }}</th>
+            <th>{{ 'membership.Status' | translate }}</th>
+            <th class="num">{{ 'exit.standingInTheWay' | translate }}</th>
+            <th>{{ 'exit.dueBy' | translate }}</th>
+            <th>{{ 'exit.daysLeftColumn' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (e of exits(); track e.id) {
+            <tr (click)="open(e)" (keydown.enter)="open(e)" tabindex="0" class="row" [class.overdue]="e.overdue">
+              <td>
+                <span class="name">{{ e.name }}</span>
+                <span class="sub">{{ e.accountNo }}</span>
+              </td>
+              <td>{{ e.officeName }}</td>
+              <td>{{ e.requestedOn | dateFormat }}</td>
+              <td>{{ 'exit.status.' + e.status | translate }}</td>
+              <td class="num">{{ e.liabilities?.length ?? 0 }}</td>
+              <td>{{ e.refundDueOn | dateFormat }}</td>
+              <td class="late">
+                @if (e.daysLeft !== undefined && e.daysLeft !== null) {
+                  {{
+                    (e.overdue ? 'exit.overdue' : 'exit.daysLeft')
+                      | translate: { days: e.overdue ? -e.daysLeft : e.daysLeft }
+                  }}
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="empty">
+                {{ (state() === 'loading' ? 'organisationCategories.loading' : 'membership.None') | translate }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </mat-tab-nav-panel>
+</div>

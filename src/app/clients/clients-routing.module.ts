@@ -30,6 +30,7 @@ import { ClientMembershipResolver, MembershipTemplateResolver } from './membersh
 import { MembershipTabComponent } from './membership/membership-tab/membership-tab.component';
 import { KymTabComponent } from './kym/kym-tab/kym-tab.component';
 import { KymListComponent } from './kym/kym-list/kym-list.component';
+import { MembershipExitsComponent } from './membership/membership-exits/membership-exits.component';
 import { MembershipApplicationsComponent } from './membership/membership-applications/membership-applications.component';
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
@@ -97,6 +98,11 @@ const routes: Routes = [
           resolve: {
             membershipTemplate: MembershipTemplateResolver
           }
+        },
+        {
+          path: 'exits',
+          data: { title: 'Requests to leave', breadcrumb: 'Requests to leave', routeParamBreadcrumb: false },
+          component: MembershipExitsComponent
         },
         {
           path: 'kym',

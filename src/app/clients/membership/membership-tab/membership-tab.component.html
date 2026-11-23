@@ -215,6 +215,13 @@
       </table>
     }
 
+    @if (showShares()) {
+      <mifosx-membership-shares
+        [clientId]="a.clientId"
+        [active]="client()?.status?.value === 'Active'"
+      ></mifosx-membership-shares>
+    }
+
     @if (earlier().length) {
       <h3>{{ 'membership.Earlier applications' | translate }}</h3>
       <div class="table-wrap">
@@ -292,6 +299,13 @@
           <fa-icon icon="redo" class="m-r-10"></fa-icon>{{ 'membership.Apply again' | translate }}
         </button>
       </div>
+    }
+
+    @if (showShares()) {
+      <mifosx-membership-shares
+        [clientId]="c.id"
+        [active]="client()?.status?.value === 'Active'"
+      ></mifosx-membership-shares>
     }
 
     <ng-container *ngTemplateOutlet="nomineeBlock"></ng-container>

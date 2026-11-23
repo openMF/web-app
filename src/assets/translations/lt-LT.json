@@ -7285,5 +7285,74 @@
     "noDocuments": "No documents attached.",
     "addDocuments": "Add documents",
     "linkSavingsRequired": "Choose the savings account to collect instalments from"
-  }
+  },
+  "shareRules": {
+    "title": "Share position",
+    "ceiling": "The most of the share capital one member may hold",
+    "exitOnlyWhenSettled": "Shares are paid back only when the member owes nothing",
+    "membersAbove": "Members above the ceiling",
+    "canStillBuy": "Can still buy",
+    "percentOfCapital": "Part of the share capital",
+    "amount": "Share amount",
+    "pendingKitta": "Kitta waiting for approval",
+    "beforeLeaving": "Before this member can leave",
+    "nothingInTheWay": "Nothing stands in the way",
+    "governmentBody": "Government body",
+    "ceilingSummary": "Share capital Rs {{capital}}; the ceiling is Rs {{ceiling}}",
+    "ceilingNotChecked": "The ceiling is not being checked",
+    "notFound": "This member was not found.",
+    "failed": "The share position could not be loaded.",
+    "errors": {
+      "ceilingPercent": "Enter a number from 1 to 100"
+    },
+    "note": {
+      "OFF": "The ceiling is not checked",
+      "EXEMPT": "The ceiling does not apply to a government body",
+      "TOO_FEW_MEMBERS": "The ceiling is checked once five members hold shares"
+    },
+    "liability": {
+      "LOAN": "Loan {{reference}}: Rs {{amount}} still to pay",
+      "GUARANTEE": "Guarantor of loan {{reference}} of {{otherParty}}",
+      "CHARGE": "Charge not paid: {{reference}}, Rs {{amount}}",
+      "OVERDRAWN_SAVINGS": "Savings account {{reference}} is overdrawn by Rs {{amount}}"
+    }
+  },
+  "exit": {
+    "title": "Requests to leave",
+    "ask": "Member asks to leave",
+    "settle": "Nothing is owed any more",
+    "refund": "Pay shares back",
+    "cancel": "Cancel request",
+    "cancelConfirm": "The member stays. Cancel this request to leave?",
+    "dueBy": "Shares due back by",
+    "daysLeft": "{{days}} days left",
+    "overdue": "{{days}} days overdue",
+    "daysLeftColumn": "Days left",
+    "requestedOn": "Requested on",
+    "standingInTheWay": "Standing in the way",
+    "history": "Requests to leave so far",
+    "steps": "Steps",
+    "date": "Date",
+    "amount": "Amount paid back",
+    "noSharesLeft": "This member holds no shares any more. Enter the amount that was paid back.",
+    "errors": {
+      "amount": "Enter the amount that was paid back"
+    },
+    "status": {
+      "REQUESTED": "Waiting",
+      "SETTLED": "Ready to pay back",
+      "REFUNDED": "Paid back",
+      "CANCELLED": "Cancelled"
+    },
+    "tab": {
+      "open": "Open",
+      "requested": "Waiting",
+      "settled": "Ready to pay back",
+      "refunded": "Paid back",
+      "cancelled": "Cancelled"
+    }
+  },
+  "error.msg.membership.share.price": "One share (kitta) is Rs 100. Set the price of the share product to 100.",
+  "error.msg.membership.share.ceiling": "No member may hold more than the ceiling of the cooperative's share capital.",
+  "error.msg.membership.exit.liabilities": "This member's last shares cannot be paid back yet, because the member still owes or guarantees something. Settle these first."
 }

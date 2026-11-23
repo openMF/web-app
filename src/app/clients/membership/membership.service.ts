@@ -6,12 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
+import { SILENT_ERRORS } from 'app/core/http/error-handler.interceptor';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import {
+  ExitFilter,
   MemberNominee,
+  MemberShares,
+  MembershipExit,
   MembersWithoutShares,
   MembershipApplication,
   MembershipApplyRequest,
@@ -22,6 +26,7 @@ import {
   MembershipStatus,
   MembershipTemplate,
   Nominee,
+  ShareCeiling,
   OrganisationCategory,
   RelationshipOption
 } from './membership.models';
@@ -158,6 +163,35 @@ export class MembershipService {
   updateOrganisationCategory(codeValueId: number, mayBeMember: boolean): Observable<OrganisationCategory[]> {
     return this.http.put<OrganisationCategory[]>(`/nepal/memberships/organisation-categories/${codeValueId}`, {
       mayBeMember
+    });
+  }
+
+  /** The block shows its own failure and not-found states, so the global alert is off. */
+  shares(clientId: number | string): Observable<MemberShares> {
+    return this.http.get<MemberShares>(`/nepal/memberships/shares/${clientId}`, {
+      context: new HttpContext().set(SILENT_ERRORS, true)
+    });
+  }
+
+  shareCeiling(): Observable<ShareCeiling> {
+    return this.http.get<ShareCeiling>('/nepal/memberships/share-ceiling');
+  }
+
+  exits(filter: { status?: ExitFilter; clientId?: number | string }): Observable<MembershipExit[]> {
+    let params = new HttpParams();
+    if (filter.status) params = params.set('status', filter.status);
+    if (filter.clientId != null) params = params.set('clientId', String(filter.clientId));
+    return this.http.get<MembershipExit[]>('/nepal/memberships/exits', { params });
+  }
+
+  requestExit(body: { clientId: number; requestedOn?: string; reason?: string }): Observable<MembershipExit> {
+    return this.http.post<MembershipExit>('/nepal/memberships/exits', body);
+  }
+
+  /** settle (nothing owed any more), refund (pay the shares back) or cancel */
+  exitCommand(id: number, command: 'settle' | 'refund' | 'cancel', body: object = {}): Observable<MembershipExit> {
+    return this.http.post<MembershipExit>(`/nepal/memberships/exits/${id}`, body, {
+      params: new HttpParams().set('command', command)
     });
   }
 }
