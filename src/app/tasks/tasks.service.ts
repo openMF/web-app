@@ -187,8 +187,20 @@ export class TasksService {
    * Get Grouped Clients Data
    */
   getGroupedClientsData(): Observable<any> {
-    const httpParams = new HttpParams().set('limit', '1000').set('status', 'pending');
-    return this.http.get('/clients', { params: httpParams });
+    return this.getPendingClients({ limit: 1000, offset: 0 });
+  }
+
+  /** Bounded pending-client listing; retain the server's authoritative total. */
+  getPendingClients(params: {
+    limit: number;
+    offset: number;
+    officeId?: number;
+    staffId?: number;
+    displayName?: string;
+  }): Observable<any> {
+    return this.http.get('/clients', {
+      params: this.buildHttpParams({ ...params, status: 'pending', orderBy: 'id', sortOrder: 'ASC' })
+    });
   }
 
   /**

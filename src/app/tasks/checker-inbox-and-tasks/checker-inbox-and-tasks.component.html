@@ -24,7 +24,7 @@
 
 <section class="tasks-container">
   <header class="tasks-heading">
-    <p>{{ 'credits.description' | translate }}</p>
+    <p>{{ (clientApprovalActive ? clientApprovalDescription : 'credits.description') | translate }}</p>
   </header>
   <div class="tasks-layout">
     <mat-card class="queue-panel">
@@ -58,6 +58,9 @@
                 [class.empty-queue]="queue.path === 'credit' && creditCount === 0"
               >
                 <span>{{ queue.label | translate }}</span>
+                @if (queue.path === 'client-approval' && clientApprovalCount !== null) {
+                  <span class="queue-count">{{ clientApprovalCount }}</span>
+                }
                 @if (queue.path === 'credit' && creditCount !== null) {
                   <span class="queue-count">{{ creditCount }}</span>
                 }
