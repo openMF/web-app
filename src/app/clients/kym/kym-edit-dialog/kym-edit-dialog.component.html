@@ -202,7 +202,11 @@
           </button>
         </div>
       }
-      <mifosx-kym-member-picker [exclude]="data.clientId" (picked)="addFamilyHere($event)"></mifosx-kym-member-picker>
+      <mifosx-kym-member-picker
+        data-kym-field="familyHereList"
+        [exclude]="data.clientId"
+        (picked)="addFamilyHere($event)"
+      ></mifosx-kym-member-picker>
     }
 
     <h4 id="kym-income">{{ 'kym.Income and transactions' | translate }}</h4>
@@ -294,6 +298,7 @@
       }
       @if (recommenders().length < 2) {
         <mifosx-kym-member-picker
+          data-kym-field="recommenders"
           label="kym.Find a recommending member"
           [exclude]="data.clientId"
           (picked)="addRecommender($event)"
