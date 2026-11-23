@@ -7,7 +7,7 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { provideHttpClient } from '@angular/common/http';
@@ -15,7 +15,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faEye, faFile, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faEye, faFile, faPlus, faSync, faTrash, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
 import { IdentitiesTabComponent } from './identities-tab.component';
@@ -24,8 +24,11 @@ import { MemberBsDatesService } from 'app/clients/member-bs-dates.service';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 
-describe('IdentitiesTabComponent: Edit with a file', () => {
+describe("IdentitiesTabComponent: an identity's file", () => {
   let component: IdentitiesTabComponent;
+  let fixture: ComponentFixture<IdentitiesTabComponent>;
+  /** What the Delete confirmation returns. */
+  let confirmResult: any;
   let identity: any;
   let clientsService: Record<string, jest.Mock>;
   let dialogInstance: { submitted: EventEmitter<any>; applyServerError: jest.Mock };
@@ -88,10 +91,16 @@ describe('IdentitiesTabComponent: Edit with a file', () => {
       ]
     });
     TestBed.overrideProvider(MatDialog, {
-      useValue: { open: jest.fn(() => ({ componentInstance: dialogInstance, close: dialogClose })) }
+      useValue: {
+        open: jest.fn(() => ({
+          componentInstance: dialogInstance,
+          close: dialogClose,
+          afterClosed: () => of(confirmResult)
+        }))
+      }
     });
-    TestBed.inject(FaIconLibrary).addIcons(faEye, faFile, faPlus);
-    const fixture = TestBed.createComponent(IdentitiesTabComponent);
+    TestBed.inject(FaIconLibrary).addIcons(faDownload, faEye, faFile, faPlus, faSync, faTrash, faUpload);
+    fixture = TestBed.createComponent(IdentitiesTabComponent);
     component = fixture.componentInstance;
     // Renders the table, which saving an edit redraws.
     fixture.detectChanges();
@@ -148,5 +157,101 @@ describe('IdentitiesTabComponent: Edit with a file', () => {
     expect(clientsService.uploadClientIdentifierDocument).not.toHaveBeenCalled();
     expect(clientsService.deleteClientIdentifierDocument).not.toHaveBeenCalled();
     expect(dialogClose).toHaveBeenCalled();
+  });
+  describe('the open row', () => {
+    /** Opens the identity's row and returns its file-action buttons by label. */
+    const openRow = () => {
+      // Opened as a user does, by clicking the row.
+      fixture.nativeElement.querySelector('tr.identity-row').click();
+      fixture.detectChanges();
+      return (label: string) =>
+        fixture.nativeElement.querySelectorAll(`.details-row button[aria-label^="labels.buttons.${label}"]`);
+    };
+    const choose = (file: File) => ({ target: { files: [file], value: 'C:\\fakepath\\x' } }) as any;
+
+    it("shows Download, Replace and Delete on the identity's file", () => {
+      const buttons = openRow();
+
+      expect(buttons('Download').length).toBe(1);
+      expect(buttons('Replace').length).toBe(1);
+      expect(buttons('Delete').length).toBe(1);
+    });
+
+    it('shows Upload when the identity has no file', () => {
+      identity.documents = [];
+      openRow();
+
+      expect(fixture.nativeElement.querySelector('.details-row .upload-file')?.textContent).toContain(
+        'labels.buttons.Upload'
+      );
+    });
+
+    it('uploads a file to an identity that has none', () => {
+      identity.documents = [];
+      const scan = new File(['%PDF'], 'citizenship.pdf');
+
+      component.onIdentityFileChosen(identity, choose(scan));
+
+      expect(((clientsService.uploadClientIdentifierDocument.mock.calls[0] as any[])[1] as FormData).get('file')).toBe(
+        scan
+      );
+      expect(clientsService.deleteClientIdentifierDocument).not.toHaveBeenCalled();
+      expect(identity.documents).toEqual([expect.objectContaining({ id: 51, fileName: 'citizenship.pdf' })]);
+    });
+
+    it('replaces the chosen file in its place, removing the old one after the upload', () => {
+      const back = { id: 60, name: 'back.pdf', fileName: 'back.pdf' };
+      identity.documents = [
+        identity.documents[0],
+        back
+      ];
+
+      component.onIdentityFileChosen(identity, choose(new File(['jpg'], 'back-new.jpg')), back);
+
+      expect(clientsService.deleteClientIdentifierDocument).toHaveBeenCalledWith(10, 60);
+      expect(identity.documents.map((doc: any) => doc.id)).toEqual([
+        50,
+        51
+      ]);
+    });
+
+    it('keeps the file when Replace fails to upload', () => {
+      clientsService.uploadClientIdentifierDocument.mockReturnValue(throwError(() => ({ status: 413 })));
+      const stored = identity.documents[0];
+
+      component.onIdentityFileChosen(identity, choose(new File(['x'], 'huge.pdf')), stored);
+
+      expect(clientsService.deleteClientIdentifierDocument).not.toHaveBeenCalled();
+      expect(identity.documents).toEqual([stored]);
+    });
+
+    it('downloads the file under its own name', () => {
+      (URL as any).createObjectURL = jest.fn(() => 'blob:copy');
+      (URL as any).revokeObjectURL = jest.fn();
+      let downloadedAs = '';
+      const click = jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+        this: HTMLAnchorElement
+      ) {
+        downloadedAs = this.download;
+      });
+
+      component.downloadIdentityDocument(identity, identity.documents[0]);
+
+      expect(clientsService.downloadClientIdentificationDocument).toHaveBeenCalledWith(10, 50);
+      expect(downloadedAs).toBe('citizenship.pdf');
+      click.mockRestore();
+    });
+
+    it('deletes the file once confirmed, and not when the confirmation is dismissed', () => {
+      confirmResult = undefined;
+      component.deleteIdentityDocument(identity, identity.documents[0]);
+      expect(clientsService.deleteClientIdentifierDocument).not.toHaveBeenCalled();
+
+      confirmResult = { delete: true };
+      component.deleteIdentityDocument(identity, identity.documents[0]);
+      expect(clientsService.deleteClientIdentifierDocument).toHaveBeenCalledWith(10, 50);
+      expect(identity.documents).toEqual([]);
+      expect(previewService.release).toHaveBeenCalledWith(50);
+    });
   });
 });
