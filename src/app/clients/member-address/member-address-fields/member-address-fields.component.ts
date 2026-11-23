@@ -7,9 +7,10 @@
  */
 
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, input, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl } from '@angular/forms';
-import { filter } from 'rxjs';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { AbstractControl, FormControl } from '@angular/forms';
+import { filter, startWith } from 'rxjs';
+import { MatSelectSearchComponent } from 'ngx-mat-select-search';
 
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { injectNepaliFirst } from '../nepali-first';
@@ -36,7 +37,10 @@ interface Selection {
   selector: 'mifosx-member-address-fields',
   templateUrl: './member-address-fields.component.html',
   styleUrls: ['./member-address-fields.component.scss'],
-  imports: [...STANDALONE_SHARED_IMPORTS],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatSelectSearchComponent
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MemberAddressFieldsComponent implements OnInit {
@@ -63,6 +67,15 @@ export class MemberAddressFieldsComponent implements OnInit {
   readonly wards = computed(() => this.locations().wards(this.selection().localLevelCode));
 
   private readonly nepaliFirst = injectNepaliFirst();
+
+  /** Search boxes at the top of the province, district and local level lists. */
+  readonly provinceSearch = new FormControl('', { nonNullable: true });
+  readonly districtSearch = new FormControl('', { nonNullable: true });
+  readonly localLevelSearch = new FormControl('', { nonNullable: true });
+
+  readonly filteredProvinces = this.filtered(this.provinces, this.provinceSearch);
+  readonly filteredDistricts = this.filtered(this.districts, this.districtSearch);
+  readonly filteredLocalLevels = this.filtered(this.localLevels, this.localLevelSearch);
 
   ngOnInit(): void {
     const form = this.form();
@@ -121,6 +134,15 @@ export class MemberAddressFieldsComponent implements OnInit {
 
   label(option: LocationOption): string {
     return bilingualName(option.nameEn, option.nameNp, this.nepaliFirst());
+  }
+
+  /** The options whose English or Nepali name contains the typed text, in any case. */
+  private filtered(options: () => LocationOption[], search: FormControl<string>) {
+    const term = toSignal(search.valueChanges.pipe(startWith('')), { initialValue: '' });
+    return computed(() => {
+      const text = term().trim().toLocaleLowerCase();
+      return text ? options().filter((o) => `${o.nameEn} ${o.nameNp}`.toLocaleLowerCase().includes(text)) : options();
+    });
   }
 
   private updateEnabledState(): void {
