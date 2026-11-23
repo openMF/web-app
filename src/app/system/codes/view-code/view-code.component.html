@@ -104,42 +104,31 @@
                 }
                 @if (codeValueRowStatus[i] === 'new') {
                   <button
-                    mat-icon-button
+                    mat-raised-button
                     color="primary"
                     type="button"
-                    title="{{ 'tooltips.Add' | translate }}"
                     [disabled]="!codeValuesForm.get('codeValues').at(i).valid"
-                    matTooltip="{{ 'tooltips.Add' | translate }}"
-                    matTooltipPosition="above"
                     (click)="addCodeValue(i)"
                   >
-                    <fa-icon icon="plus" size="lg"></fa-icon>
+                    <fa-icon icon="plus" class="m-r-10"></fa-icon>
+                    {{ 'tooltips.Add' | translate }}
                   </button>
                 }
                 @if (codeValueRowStatus[i] === 'disabled') {
-                  <button
-                    type="button"
-                    color="primary"
-                    title="{{ 'tooltips.Edit' | translate }}"
-                    mat-icon-button
-                    matTooltip="{{ 'tooltips.Edit' | translate }}"
-                    matTooltipPosition="above"
-                    (click)="enableRow(i)"
-                  >
-                    <fa-icon icon="edit" size="lg"></fa-icon>
+                  <button type="button" color="primary" mat-raised-button (click)="enableRow(i)">
+                    <fa-icon icon="edit" class="m-r-10"></fa-icon>
+                    {{ 'tooltips.Edit' | translate }}
                   </button>
                 }
                 <button
                   type="button"
                   color="warn"
-                  title="{{ 'tooltips.Delete' | translate }}"
-                  mat-icon-button
-                  matTooltip="{{ 'tooltips.Delete' | translate }}"
+                  mat-raised-button
                   *mifosxHasPermission="'DELETE_CODEVALUE'"
-                  matTooltipPosition="above"
                   (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)"
                 >
-                  <fa-icon icon="trash" size="lg"></fa-icon>
+                  <fa-icon icon="trash" class="m-r-10"></fa-icon>
+                  {{ 'tooltips.Delete' | translate }}
                 </button>
               </div>
             </div>
