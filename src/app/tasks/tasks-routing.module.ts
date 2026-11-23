@@ -17,6 +17,10 @@ import { Route } from '../core/route/route.service';
 import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks/checker-inbox-and-tasks.component';
 import { CheckerInboxComponent } from './checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox.component';
 import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-approval/client-approval.component';
+import {
+  loanApprovalReadGuard,
+  loanApprovalBatchGuard
+} from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.guard';
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { CreditApplicationsComponent } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
 import {
@@ -73,10 +77,8 @@ export const routes: Routes = [
           path: 'loan-approval',
           component: LoanApprovalComponent,
           data: { title: 'Loan Approval' },
-          resolve: {
-            officesData: GetOffices,
-            loansData: GetLoansToBeApproved
-          }
+          canActivate: [loanApprovalReadGuard],
+          canDeactivate: [loanApprovalBatchGuard]
         },
         {
           path: 'requests',

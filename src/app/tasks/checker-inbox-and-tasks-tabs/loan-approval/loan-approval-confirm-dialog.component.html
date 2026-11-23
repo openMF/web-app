@@ -1,0 +1,40 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'loanApproval.confirmTitle' | translate: { count: data.loans.length } }}</h2>
+<mat-dialog-content>
+  <p>{{ 'loanApproval.confirmDates' | translate: { approved: data.approved, expected: data.expected } }}</p>
+  @for (total of data.totals; track total.code + total.digits) {
+    <p>
+      <strong>{{ total.amount | loanApprovalMoney: total.code : total.digits }}</strong>
+    </p>
+  }
+  <ul>
+    @for (loan of data.loans; track loan.id) {
+      <li>
+        {{ loan.clientName || loan.group?.name }} · {{ loan.accountNo }} · {{ loan.loanProductName }} ·
+        {{ loan.principal | loanApprovalMoney: loan.currency?.code : loan.currency?.decimalPlaces }}
+      </li>
+    }
+  </ul>
+  @if (data.excluded.length) {
+    <p>{{ 'loanApproval.excluded' | translate }}</p>
+    <ul>
+      @for (loan of data.excluded; track loan.id) {
+        <li>{{ loan.accountNo }} · {{ loan.clientName || loan.group?.name }}</li>
+      }
+    </ul>
+  }
+  <p>{{ 'loanApproval.confirmNotice' | translate }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">
+    {{ 'loanApproval.confirmApproval' | translate }}
+  </button>
+</mat-dialog-actions>

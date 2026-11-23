@@ -48,6 +48,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class CheckerInboxAndTasksComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private countSubscription?: OutputRefSubscription;
+  readonly loanApprovalDescription = extract('loanApproval.description');
+  loanApprovalActive = false;
+  loanApprovalCount: number | null = null;
   readonly clientApprovalDescription = extract('clientApproval.description');
   navigationOpen = false;
   creditCount: number | null = null;
@@ -94,14 +97,22 @@ export class CheckerInboxAndTasksComponent {
   onActivate(component: {
     queueCountChange?: OutputRef<number | null>;
     clientApprovalCountChange?: OutputRef<number | null>;
+    loanApprovalCountChange?: OutputRef<number | null>;
   }): void {
     this.countSubscription?.unsubscribe();
     this.clientApprovalActive = !!component.clientApprovalCountChange;
+    this.loanApprovalActive = !!component.loanApprovalCountChange;
+    this.loanApprovalCount = null;
     this.clientApprovalCount = null;
     this.creditCount = null;
     this.changeDetectorRef.markForCheck();
-    this.countSubscription = (component.clientApprovalCountChange ?? component.queueCountChange)?.subscribe((count) => {
-      if (this.clientApprovalActive) this.clientApprovalCount = count;
+    this.countSubscription = (
+      component.loanApprovalCountChange ??
+      component.clientApprovalCountChange ??
+      component.queueCountChange
+    )?.subscribe((count) => {
+      if (this.loanApprovalActive) this.loanApprovalCount = count;
+      else if (this.clientApprovalActive) this.clientApprovalCount = count;
       else this.creditCount = count;
       this.changeDetectorRef.markForCheck();
     });
