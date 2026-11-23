@@ -75,6 +75,8 @@
 .menu {
   flex: 1;
   overflow: hidden auto;
+  // scrollIntoView keeps this margin, so the revealed page isn't flush against the bottom edge
+  scroll-padding-block: 48px;
   padding: 12px 8px;
   display: flex;
   flex-direction: column;
