@@ -311,6 +311,16 @@ describe('KymEditDialogComponent: expected activity messages', () => {
     expect(errorFor('expectedTransactionsYear')).toBe('kym.transactionsCountError');
   });
 
+  it('shows the transactions message while typing, before leaving the field or pressing Save', () => {
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('[formcontrolname="expectedTransactionsYear"]');
+    input.value = '4300000';
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(component.form.get('expectedTransactionsYear').touched).toBe(false);
+    expect(errorFor('expectedTransactionsYear')).toBe('kym.transactionsCountError');
+  });
+
   it('accepts a whole number from 0 to 10,00,000', () => {
     for (const ok of [
       0,

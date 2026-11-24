@@ -85,7 +85,8 @@
 
     <mat-form-field>
       <mat-label>{{ 'labels.inputs.Age' | translate }}</mat-label>
-      <input type="number" formControlName="age" matInput [min]="0" disabled />
+      <input type="number" formControlName="age" matInput [min]="0" />
+      <mat-hint>{{ 'labels.text.Calculated from Date of Birth' | translate }}</mat-hint>
     </mat-form-field>
 
     <mat-form-field>

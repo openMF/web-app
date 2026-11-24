@@ -539,8 +539,13 @@ input:-webkit-autofill:active {
     color: var(--dk-text-muted, #999) !important;
   }
 
-  .mat-mdc-input-element {
+  .mat-mdc-input-element:not(:disabled) {
     color: inherit !important;
+  }
+
+  // Locked (calculated) inputs: greyed text and a not-allowed cursor, so they don't look editable.
+  .mat-mdc-input-element:disabled {
+    cursor: not-allowed;
   }
 
   .mdc-floating-label {
