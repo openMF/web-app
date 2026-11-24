@@ -1,6 +1,6 @@
 ﻿{
   "error.msg.upload.file.too.big": "El archivo seleccionado supera el límite de {{args.0.value}} MB. Elija un archivo más pequeño e inténtelo de nuevo.",
-  "APP_NAME": "COFMIS",
+  "APP_NAME": "GroFiniX",
   "APP_FULL_NAME": "Cooperative Financial Management & Information System",
   "Logged in as": "Conectado como",
   "Remember me": "Recordar me",
@@ -3141,6 +3141,8 @@
       "Open Menu": "Open menu",
       "Operations": "Operations",
       "Overview": "Overview",
+      "Quick Deposit": "Quick Deposit",
+      "Quick Withdraw": "Quick Withdraw",
       "Unassign Staff": "Desasignar Asesor",
       "Accounting": "Contabilidad",
       "Account Overview": "Descripción de cuenta",
@@ -4875,6 +4877,8 @@
         "SAME": "Same as permanent address",
         "DIFFERENT": "A different address"
       },
+      "search": "Search",
+      "noResults": "No results found",
       "hints": {
         "optional": "Optional",
         "chooseProvinceFirst": "Choose a province first",
@@ -5869,6 +5873,7 @@
   "error.msg.membership.already.decided": "This application has already been decided.",
   "error.msg.membership.date.invalid": "The decision date must be between the application date and today.",
   "error.msg.membership.products.required": "Choose the member savings product and the share product before switching the share-first rule on.",
+  "error.msg.membership.organisation.category.refused": "{{defaultUserMessage}}",
   "compliance": {
     "A year means": "\"A year\" means",
     "Accepted": "Accepted",
@@ -7276,4 +7281,115 @@
       "couldNotLoad": "The list of valuers could not be loaded."
     }
   }
+  "organisationCategory": {
+    "COOPERATIVE": "Cooperative",
+    "GOVERNMENT_BODY": "Government body",
+    "COMMUNITY_SCHOOL": "Community school",
+    "TRUST": "Trust or guthi",
+    "CLUB": "Club",
+    "NGO": "NGO or INGO",
+    "PRODUCTION_OR_SERVICE": "Production or service organisation",
+    "CONSUMER_GROUP": "Consumer group",
+    "PRIVATE_LIMITED": "Private limited company",
+    "PUBLIC_LIMITED": "Public limited company",
+    "PARTNERSHIP": "Partnership firm",
+    "SOLE_PROPRIETORSHIP": "Sole proprietorship"
+  },
+  "organisationCategories": {
+    "title": "Organisations that can be members",
+    "settingsHint": "Switch a type off to refuse new applications from organisations of that type. Organisations of that type that are already members stay members.",
+    "loading": "Loading organisation types…",
+    "failed": "The list of organisation types could not be loaded.",
+    "notMember": "cannot be a member",
+    "greyedHint": "Types shown greyed out cannot be members of the cooperative.",
+    "cannotBeMember": "This type of organisation cannot be a member."
+  },
+  "loanForm": {
+    "Supporting documents": "Supporting documents",
+    "required": "This field is required",
+    "min": "Must be at least {{min}}",
+    "max": "Must be at most {{max}}",
+    "minLength": "Must be at least {{length}} characters",
+    "maxLength": "Must be at most {{length}} characters",
+    "wholeNumber": "Must be a whole number",
+    "pattern": "Not in the expected format",
+    "invalid": "Invalid value",
+    "documentsHint": "Attach the documents this loan needs. They are uploaded to the loan once the application is submitted.",
+    "maxFileSize": "Each file up to {{mb}} MB.",
+    "documentName": "Document name",
+    "documentDescription": "Description",
+    "removeDocument": "Remove document",
+    "noDocuments": "No documents attached.",
+    "addDocuments": "Add documents",
+    "linkSavingsRequired": "Choose the savings account to collect instalments from"
+  },
+  "shareRules": {
+    "title": "Share position",
+    "ceiling": "The most of the share capital one member may hold",
+    "exitOnlyWhenSettled": "Shares are paid back only when the member owes nothing",
+    "membersAbove": "Members above the ceiling",
+    "canStillBuy": "Can still buy",
+    "percentOfCapital": "Part of the share capital",
+    "amount": "Share amount",
+    "pendingKitta": "Kitta waiting for approval",
+    "beforeLeaving": "Before this member can leave",
+    "nothingInTheWay": "Nothing stands in the way",
+    "governmentBody": "Government body",
+    "ceilingSummary": "Share capital Rs {{capital}}; the ceiling is Rs {{ceiling}}",
+    "ceilingNotChecked": "The ceiling is not being checked",
+    "notFound": "This member was not found.",
+    "failed": "The share position could not be loaded.",
+    "errors": {
+      "ceilingPercent": "Enter a number from 1 to 100"
+    },
+    "note": {
+      "OFF": "The ceiling is not checked",
+      "EXEMPT": "The ceiling does not apply to a government body",
+      "TOO_FEW_MEMBERS": "The ceiling is checked once five members hold shares"
+    },
+    "liability": {
+      "LOAN": "Loan {{reference}}: Rs {{amount}} still to pay",
+      "GUARANTEE": "Guarantor of loan {{reference}} of {{otherParty}}",
+      "CHARGE": "Charge not paid: {{reference}}, Rs {{amount}}",
+      "OVERDRAWN_SAVINGS": "Savings account {{reference}} is overdrawn by Rs {{amount}}"
+    }
+  },
+  "exit": {
+    "title": "Requests to leave",
+    "ask": "Member asks to leave",
+    "settle": "Nothing is owed any more",
+    "refund": "Pay shares back",
+    "cancel": "Cancel request",
+    "cancelConfirm": "The member stays. Cancel this request to leave?",
+    "dueBy": "Shares due back by",
+    "daysLeft": "{{days}} days left",
+    "overdue": "{{days}} days overdue",
+    "daysLeftColumn": "Days left",
+    "requestedOn": "Requested on",
+    "standingInTheWay": "Standing in the way",
+    "history": "Requests to leave so far",
+    "steps": "Steps",
+    "date": "Date",
+    "amount": "Amount paid back",
+    "noSharesLeft": "This member holds no shares any more. Enter the amount that was paid back.",
+    "errors": {
+      "amount": "Enter the amount that was paid back"
+    },
+    "status": {
+      "REQUESTED": "Waiting",
+      "SETTLED": "Ready to pay back",
+      "REFUNDED": "Paid back",
+      "CANCELLED": "Cancelled"
+    },
+    "tab": {
+      "open": "Open",
+      "requested": "Waiting",
+      "settled": "Ready to pay back",
+      "refunded": "Paid back",
+      "cancelled": "Cancelled"
+    }
+  },
+  "error.msg.membership.share.price": "One share (kitta) is Rs 100. Set the price of the share product to 100.",
+  "error.msg.membership.share.ceiling": "No member may hold more than the ceiling of the cooperative's share capital.",
+  "error.msg.membership.exit.liabilities": "This member's last shares cannot be paid back yet, because the member still owes or guarantees something. Settle these first."
 }

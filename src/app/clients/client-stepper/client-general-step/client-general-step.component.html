@@ -143,16 +143,10 @@
 
     @if (createClientForm.get('clientNonPersonDetails')) {
       <div formGroupName="clientNonPersonDetails" class="contents-wrapper">
-        <mat-form-field class="flex-13">
-          <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
-          <mat-select formControlName="constitutionId" required>
-            @for (constitution of constitutionOptions; track constitution) {
-              <mat-option [value]="constitution.id">
-                {{ constitution.name }}
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        <mifosx-organisation-category-select
+          [control]="$any(createClientForm.get('clientNonPersonDetails.constitutionId'))"
+          [enforce]="membershipMode || !!createClientForm.value.active"
+        />
         <mat-form-field class="flex-14">
           <mat-label>{{ 'labels.inputs.Main Business Line' | translate }}</mat-label>
           <mat-select formControlName="mainBusinessLineId">

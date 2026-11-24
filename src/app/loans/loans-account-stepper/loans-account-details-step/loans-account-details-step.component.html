@@ -146,6 +146,9 @@
               </mat-option>
             }
           </mat-select>
+          @if (loansAccountDetailsForm.controls.linkAccountId.hasError('required')) {
+            <mat-error>{{ 'loanForm.linkSavingsRequired' | translate }}</mat-error>
+          }
         </mat-form-field>
         <mat-checkbox class="flex-48" formControlName="createStandingInstructionAtDisbursement">
           <p>{{ 'labels.inputs.Create standing instructions at disbursement' | translate }}</p>

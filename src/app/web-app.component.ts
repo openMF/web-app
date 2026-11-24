@@ -206,7 +206,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
-        this.titleService.setTitle('COFMIS');
+        this.titleService.setTitle('GroFiniX');
       });
 
     // Stores top 100 user activites as local storage object.

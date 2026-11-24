@@ -1,6 +1,6 @@
 ﻿{
   "error.msg.upload.file.too.big": "चयन गरिएको फाइल {{args.0.value}} MB सीमाभन्दा ठूलो छ। कृपया सानो फाइल छान्नुहोस् र फेरि प्रयास गर्नुहोस्।",
-  "APP_NAME": "COFMIS",
+  "APP_NAME": "GroFiniX",
   "APP_FULL_NAME": "Cooperative Financial Management & Information System",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
@@ -3135,6 +3135,8 @@
       "Collapse Sidebar": "साइडबार सानो गर्नुहोस्",
       "Collections": "सङ्कलन",
       "Expand Sidebar": "साइडबार ठूलो गर्नुहोस्",
+      "Quick Deposit": "द्रुत जम्मा",
+      "Quick Withdraw": "द्रुत निकासी",
       "Switch to dark theme": "डार्क थिम प्रयोग गर्नुहोस्",
       "Switch to light theme": "लाइट थिम प्रयोग गर्नुहोस्",
       "Finance": "वित्त",
@@ -4882,6 +4884,8 @@
         "SAME": "स्थायी ठेगाना जस्तै",
         "DIFFERENT": "फरक ठेगाना"
       },
+      "search": "खोज्नुहोस्",
+      "noResults": "कुनै नतिजा भेटिएन",
       "hints": {
         "optional": "ऐच्छिक",
         "chooseProvinceFirst": "पहिले प्रदेश छान्नुहोस्",
@@ -5876,6 +5880,7 @@
   "error.msg.membership.already.decided": "यो आवेदनको निर्णय भइसकेको छ।",
   "error.msg.membership.date.invalid": "निर्णय मिति आवेदन मितिदेखि आजसम्मको हुनुपर्छ।",
   "error.msg.membership.products.required": "शेयर-पहिले नियम लागू गर्नुअघि सदस्य बचत प्रोडक्ट र शेयर प्रोडक्ट छान्नुहोस्।",
+  "error.msg.membership.organisation.category.refused": "यो प्रकारको संस्था सहकारीको सदस्य बन्न सक्दैन।",
   "compliance": {
     "A year means": "\"एक वर्ष\" भनेको",
     "Accepted": "स्वीकृत",
@@ -8013,4 +8018,115 @@
       "couldNotLoad": "मूल्याङ्कनकर्ताको सूची खोल्न सकिएन।"
     }
   }
+  "organisationCategory": {
+    "COOPERATIVE": "सहकारी संस्था",
+    "GOVERNMENT_BODY": "सरकारी निकाय",
+    "COMMUNITY_SCHOOL": "सामुदायिक विद्यालय",
+    "TRUST": "गुठी",
+    "CLUB": "क्लब",
+    "NGO": "गैरसरकारी संस्था",
+    "PRODUCTION_OR_SERVICE": "उत्पादनमूलक वा सेवामूलक संस्था",
+    "CONSUMER_GROUP": "उपभोक्ता समूह",
+    "PRIVATE_LIMITED": "प्राइभेट लिमिटेड कम्पनी",
+    "PUBLIC_LIMITED": "पब्लिक लिमिटेड कम्पनी",
+    "PARTNERSHIP": "साझेदारी फर्म",
+    "SOLE_PROPRIETORSHIP": "एकल स्वामित्वको फर्म"
+  },
+  "organisationCategories": {
+    "title": "सदस्य बन्न सक्ने संस्थाहरू",
+    "settingsHint": "कुनै प्रकार बन्द गर्दा त्यस प्रकारका संस्थाका नयाँ आवेदन अस्वीकार हुन्छन्। त्यस प्रकारका संस्था पहिल्यै सदस्य भए सदस्य नै रहन्छन्।",
+    "loading": "संस्थाका प्रकारहरू लोड हुँदैछन्…",
+    "failed": "संस्थाका प्रकारहरूको सूची लोड हुन सकेन।",
+    "notMember": "सदस्य बन्न सक्दैन",
+    "greyedHint": "धूमिल देखिएका प्रकारका संस्था सहकारीको सदस्य बन्न सक्दैनन्।",
+    "cannotBeMember": "यो प्रकारको संस्था सदस्य बन्न सक्दैन।"
+  },
+  "loanForm": {
+    "Supporting documents": "सहायक कागजातहरू",
+    "required": "यो विवरण आवश्यक छ",
+    "min": "कम्तीमा {{min}} हुनुपर्छ",
+    "max": "बढीमा {{max}} हुनुपर्छ",
+    "minLength": "कम्तीमा {{length}} अक्षर हुनुपर्छ",
+    "maxLength": "बढीमा {{length}} अक्षर हुनुपर्छ",
+    "wholeNumber": "पूर्ण संख्या हुनुपर्छ",
+    "pattern": "अपेक्षित ढाँचामा छैन",
+    "invalid": "अमान्य मान",
+    "documentsHint": "यो ऋणका लागि चाहिने कागजातहरू संलग्न गर्नुहोस्। आवेदन पेश भएपछि ती ऋणमा अपलोड हुन्छन्।",
+    "maxFileSize": "प्रत्येक फाइल बढीमा {{mb}} MB।",
+    "documentName": "कागजातको नाम",
+    "documentDescription": "विवरण",
+    "removeDocument": "कागजात हटाउनुहोस्",
+    "noDocuments": "कुनै कागजात संलग्न छैन।",
+    "addDocuments": "कागजात थप्नुहोस्",
+    "linkSavingsRequired": "स्थायी निर्देशन दिन बचत खाता छान्नुहोस्"
+  },
+  "shareRules": {
+    "title": "शेयरको अवस्था",
+    "ceiling": "एक सदस्यले राख्न सक्ने शेयर पूँजीको अधिकतम हिस्सा",
+    "exitOnlyWhenSettled": "सदस्यको कुनै दायित्व बाँकी नभएपछि मात्र शेयर फिर्ता गरिन्छ",
+    "membersAbove": "सीमाभन्दा बढी शेयर भएका सदस्यहरू",
+    "canStillBuy": "अझै किन्न सकिने",
+    "percentOfCapital": "शेयर पूँजीको हिस्सा",
+    "amount": "शेयर रकम",
+    "pendingKitta": "स्वीकृतिको प्रतीक्षामा रहेको किट्टा",
+    "beforeLeaving": "यो सदस्यले सदस्यता त्याग्न अघि",
+    "nothingInTheWay": "कुनै दायित्व बाँकी छैन",
+    "governmentBody": "सरकारी निकाय",
+    "ceilingSummary": "शेयर पूँजी रु {{capital}}; सीमा रु {{ceiling}}",
+    "ceilingNotChecked": "सीमा जाँच गरिएको छैन",
+    "notFound": "यो सदस्य फेला परेन।",
+    "failed": "शेयरको अवस्था लोड गर्न सकिएन।",
+    "errors": {
+      "ceilingPercent": "१ देखि १०० सम्मको संख्या लेख्नुहोस्"
+    },
+    "note": {
+      "OFF": "सीमा जाँच गरिँदैन",
+      "EXEMPT": "सरकारी निकायलाई सीमा लागू हुँदैन",
+      "TOO_FEW_MEMBERS": "पाँच जना सदस्यले शेयर लिएपछि सीमा जाँच हुन्छ"
+    },
+    "liability": {
+      "LOAN": "ऋण {{reference}}: रु {{amount}} तिर्न बाँकी",
+      "GUARANTEE": "{{otherParty}} को ऋण {{reference}} को जमानी",
+      "CHARGE": "शुल्क तिर्न बाँकी: {{reference}}, रु {{amount}}",
+      "OVERDRAWN_SAVINGS": "बचत खाता {{reference}} मा रु {{amount}} बढी निकालिएको छ"
+    }
+  },
+  "exit": {
+    "title": "सदस्यता त्याग्ने निवेदनहरू",
+    "ask": "सदस्यता त्याग्ने निवेदन",
+    "settle": "सबै दायित्व चुक्ता भयो",
+    "refund": "शेयर रकम फिर्ता गर्नुहोस्",
+    "cancel": "निवेदन रद्द गर्नुहोस्",
+    "cancelConfirm": "सदस्य रहिरहन्छन्। यो निवेदन रद्द गर्ने?",
+    "dueBy": "शेयर फिर्ता गर्नुपर्ने मिति",
+    "daysLeft": "{{days}} दिन बाँकी",
+    "overdue": "{{days}} दिन ढिलो",
+    "daysLeftColumn": "बाँकी दिन",
+    "requestedOn": "निवेदन मिति",
+    "standingInTheWay": "बाँकी दायित्व",
+    "history": "अहिलेसम्मका निवेदनहरू",
+    "steps": "चरणहरू",
+    "date": "मिति",
+    "amount": "फिर्ता गरिएको रकम",
+    "noSharesLeft": "यो सदस्यसँग अब कुनै शेयर छैन। फिर्ता गरिएको रकम लेख्नुहोस्।",
+    "errors": {
+      "amount": "फिर्ता गरिएको रकम लेख्नुहोस्"
+    },
+    "status": {
+      "REQUESTED": "प्रतीक्षामा",
+      "SETTLED": "फिर्ता गर्न तयार",
+      "REFUNDED": "फिर्ता भइसकेको",
+      "CANCELLED": "रद्द"
+    },
+    "tab": {
+      "open": "खुला",
+      "requested": "प्रतीक्षामा",
+      "settled": "फिर्ता गर्न तयार",
+      "refunded": "फिर्ता भइसकेको",
+      "cancelled": "रद्द"
+    }
+  },
+  "error.msg.membership.share.price": "एक शेयर (किट्टा) रु १०० हो। शेयर उत्पादनको मूल्य १०० राख्नुहोस्।",
+  "error.msg.membership.share.ceiling": "कुनै पनि सदस्यले सहकारीको शेयर पूँजीको तोकिएको सीमाभन्दा बढी राख्न पाउँदैन।",
+  "error.msg.membership.exit.liabilities": "यो सदस्यको दायित्व वा जमानी बाँकी भएकाले अन्तिम शेयर अहिले फिर्ता गर्न मिल्दैन। पहिला ती चुक्ता गर्नुहोस्।"
 }

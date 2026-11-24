@@ -6,31 +6,78 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.expandcollapsebutton {
-  margin-top: -7px;
-}
+@use '../../../shared/styles/compact-stepper' as *;
 
-.container {
-  max-width: 37rem;
-}
+// Same field sizing as the other redesigned forms: no card, fields as wide as what they hold.
+@include compact-stepper;
 
-.right-input {
-  text-align: right;
-}
-
-.right-label {
-  padding-right: 25px !important;
+// Lined up with the page title above.
+.transaction {
+  width: 90%;
+  max-width: 84rem;
+  margin: 0 auto;
+  padding-bottom: 32px;
 }
 
 .form-heading {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  font-size: 1.125rem;
+  font-weight: 600;
+
+  i {
+    color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+  }
 }
 
-/* Stepper styles */
-:host ::ng-deep .mat-stepper-vertical {
-  margin-top: 1rem;
+// Who and which account the money moves for, with what is there to withdraw.
+.account-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  margin-bottom: 8px;
+  padding: 16px 24px;
+  border: 1px solid var(--md-sys-color-outline-variant, var(--dk-border, #e0e0e0));
+  border-radius: 8px;
+  background: var(--md-sys-color-surface, var(--dk-surface, #fff));
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 600;
+  }
+
+  .summary-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.6;
+  }
+
+  .balance {
+    margin-left: auto;
+    color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+    font-size: 1.125rem;
+  }
+}
+
+// The amount field is a component, so the stepper's mat-form-field widths miss it.
+:host ::ng-deep .layout-row-wrap > mifosx-input-amount {
+  flex: 0 1 260px;
+  max-width: 100%;
+}
+
+.full-row {
+  flex: 1 1 100%;
+  margin: 0 0 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 0;
 }
 
 /* Confirmation container styles */
@@ -38,14 +85,10 @@
   padding: 1rem 0;
 }
 
-.confirmation-title {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-}
-
 .confirmation-details {
-  border-radius: 4px;
+  max-width: 560px;
+  border: 1px solid var(--md-sys-color-outline-variant, var(--dk-border, #e0e0e0));
+  border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -120,9 +163,13 @@
 
 /* Responsive adjustments */
 @media (width <= 600px) {
-  .container {
-    max-width: 100%;
-    padding: 0.5rem;
+  .transaction {
+    width: auto;
+    padding: 0 16px 16px;
+  }
+
+  .account-summary .balance {
+    margin-left: 0;
   }
 
   .detail-row {

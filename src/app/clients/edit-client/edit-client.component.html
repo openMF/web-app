@@ -183,16 +183,11 @@
 
       @if (editClientForm.contains('clientNonPersonDetails')) {
         <div class="non-person" formGroupName="clientNonPersonDetails">
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
-            <mat-select formControlName="constitutionId" required>
-              @for (constitution of constitutionOptions; track constitution) {
-                <mat-option [value]="constitution.id">
-                  {{ constitution.name }}
-                </mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
+          <mifosx-organisation-category-select
+            [control]="$any(editClientForm.get('clientNonPersonDetails.constitutionId'))"
+            [enforce]="!!clientDataAndTemplate.active"
+            [current]="clientDataAndTemplate.clientNonPersonDetails?.constitution"
+          />
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Main Business Line' | translate }}</mat-label>
             <mat-select formControlName="mainBusinessLineId">

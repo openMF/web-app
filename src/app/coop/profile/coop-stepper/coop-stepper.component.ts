@@ -124,7 +124,7 @@ export class CoopStepperComponent {
   // =====================================================
 
   /**
-   * Persisted (not just in-memory) so the "Welcome to COFMIS" page never
+   * Persisted (not just in-memory) so the "Welcome to GroFiniX" page never
    * shows again once dismissed - a NO_PROFILE user who closes the tab
    * mid-form and logs back in still has status NO_PROFILE from the
    * server, so the query-param trick used for `showActivationWelcome`
@@ -142,7 +142,7 @@ export class CoopStepperComponent {
   }
 
   /**
-   * Full-page "Welcome to COFMIS" onboarding, shown in place of the
+   * Full-page "Welcome to GroFiniX" onboarding, shown in place of the
    * stepper on a NO_PROFILE user's first login only - reuses
    * `CoopSystemStatusComponent`'s existing NO_PROFILE case rather than
    * a new component/step (see the template).

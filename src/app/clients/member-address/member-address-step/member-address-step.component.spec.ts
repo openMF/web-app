@@ -92,6 +92,19 @@ describe('MemberAddressStepComponent', () => {
     expect(component.temporaryPreview()?.localLevelNameEn).toBe('Bhaktapur Municipality');
   });
 
+  it('shows a different temporary address untouched, even after Next was pressed without one', () => {
+    component.markAllAsTouched();
+    expect(component.temporaryForm.touched).toBe(false);
+
+    component.temporaryChoice.setValue('DIFFERENT');
+    component.markAllAsTouched();
+    expect(component.temporaryForm.controls.provinceCode.touched).toBe(true);
+
+    component.temporaryChoice.setValue('NONE');
+    component.temporaryChoice.setValue('DIFFERENT');
+    expect(component.temporaryForm.touched).toBe(false);
+  });
+
   it('previews the permanent address as it will be saved', () => {
     expect(component.permanentPreview()).toBeNull();
     fill(component.permanentForm, '32702', '27', 5);

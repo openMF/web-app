@@ -149,7 +149,11 @@
         @if (clientViewData.clientNonPersonDetails.constitution) {
           <div class="data-item">
             <span class="label">{{ 'labels.inputs.Constitution' | translate }}</span>
-            <span class="value">{{ clientViewData.clientNonPersonDetails.constitution.name }}</span>
+            <span class="value">{{
+              clientViewData.clientNonPersonDetails.constitution.id
+                | organisationCategoryName: clientViewData.clientNonPersonDetails.constitution.name
+                | async
+            }}</span>
           </div>
         }
         @if (clientViewData.clientNonPersonDetails.mainBusinessLine) {

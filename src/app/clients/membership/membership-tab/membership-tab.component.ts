@@ -32,6 +32,7 @@ import {
   MembershipApplyData,
   MembershipApplyDialogComponent
 } from '../membership-apply-dialog/membership-apply-dialog.component';
+import { MembershipSharesComponent } from '../membership-shares/membership-shares.component';
 import { MembershipNomineeDialogComponent } from '../membership-nominee-dialog/membership-nominee-dialog.component';
 
 /**
@@ -50,7 +51,8 @@ import { MembershipNomineeDialogComponent } from '../membership-nominee-dialog/m
     RouterLink,
     FaIconComponent,
     FormatNumberPipe,
-    MembershipDeadlineComponent
+    MembershipDeadlineComponent,
+    MembershipSharesComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -80,6 +82,12 @@ export class MembershipTabComponent {
       .filter((s) => s.status?.active)
       .reduce((sum, s) => sum + Number(s.totalApprovedShares ?? 0), 0)
   );
+
+  /** The share position and leaving: for a user who may read memberships, once the person is not just an applicant */
+  readonly showShares = computed(() => {
+    const status = this.client()?.status?.value;
+    return this.membershipService.canRead() && !!status && status !== 'Pending' && status !== 'Rejected';
+  });
 
   /** The nominee and the ones before; null for an organisation, or until loaded */
   readonly nominee = signal<MemberNominee | null>(null);

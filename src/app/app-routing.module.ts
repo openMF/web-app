@@ -129,6 +129,16 @@ const routes: Routes = [
       path: 'lending',
       data: { title: 'Lending' },
       loadChildren: () => import('./lending/lending.routes').then((m) => m.LENDING_ROUTES)
+      path: 'quick-deposit',
+      loadComponent: () =>
+        import('./savings/quick-transaction/quick-transaction.component').then((m) => m.QuickTransactionComponent),
+      data: { title: 'Quick Deposit', breadcrumb: 'Quick Deposit', command: 'Deposit' }
+    },
+    {
+      path: 'quick-withdraw',
+      loadComponent: () =>
+        import('./savings/quick-transaction/quick-transaction.component').then((m) => m.QuickTransactionComponent),
+      data: { title: 'Quick Withdraw', breadcrumb: 'Quick Withdraw', command: 'Withdrawal' }
     },
     {
       path: 'compliance',

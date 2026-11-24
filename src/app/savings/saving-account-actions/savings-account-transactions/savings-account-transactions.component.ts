@@ -12,7 +12,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { EMPTY, finalize, of, switchMap } from 'rxjs';
+import { EMPTY, Observable, finalize, of, switchMap } from 'rxjs';
 import { SourceOfFundsService } from 'app/compliance/source-of-funds/source-of-funds.service';
 
 /** Custom Services */
@@ -82,6 +82,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   transactionResponse: any = null;
   /** Flag to track if transaction is being submitted */
   isSubmitting: boolean = false;
+  /** The account, for the summary above the form: member, number, product and available balance. */
+  account$: Observable<any>;
 
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
@@ -102,6 +104,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
     this.transactionType[this.transactionCommand as 'deposit' | 'withdrawal'] = true;
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];
+    this.account$ = this.savingsService.getSavingsAccountSummary(this.savingAccountId);
   }
 
   /**

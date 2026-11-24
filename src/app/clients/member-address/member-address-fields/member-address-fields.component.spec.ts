@@ -74,6 +74,24 @@ describe('MemberAddressFieldsComponent', () => {
       expect(form.valid).toBe(true);
     });
 
+    it('filters a list by typing, in English or Nepali, anywhere in the name and in any case', () => {
+      form.controls.provinceCode.setValue('3');
+      const all = component.districts().length;
+      const [first] = component.districts();
+
+      component.districtSearch.setValue(first.nameEn.slice(1, 4).toUpperCase());
+      expect(component.filteredDistricts().map((d) => d.code)).toContain(first.code);
+
+      component.districtSearch.setValue(first.nameNp.slice(0, 2));
+      expect(component.filteredDistricts().map((d) => d.code)).toContain(first.code);
+
+      component.districtSearch.setValue('no such place');
+      expect(component.filteredDistricts()).toEqual([]);
+
+      component.districtSearch.setValue('');
+      expect(component.filteredDistricts()).toHaveLength(all);
+    });
+
     it('clears everything below a changed province or district', () => {
       form.controls.provinceCode.setValue('3');
       form.controls.districtCode.setValue('27');

@@ -10,7 +10,14 @@
   <mat-form-field appearance="outline">
     <mat-label>{{ 'clients.memberAddress.fields.province' | translate }}</mat-label>
     <mat-select formControlName="provinceCode" data-testid="address-province">
-      @for (province of provinces(); track province.code) {
+      <mat-option>
+        <ngx-mat-select-search
+          [formControl]="provinceSearch"
+          [placeholderLabel]="'clients.memberAddress.search' | translate"
+          [noEntriesFoundLabel]="'clients.memberAddress.noResults' | translate"
+        ></ngx-mat-select-search>
+      </mat-option>
+      @for (province of filteredProvinces(); track province.code) {
         <mat-option [value]="province.code">{{ label(province) }}</mat-option>
       }
     </mat-select>
@@ -22,7 +29,14 @@
   <mat-form-field appearance="outline">
     <mat-label>{{ 'clients.memberAddress.fields.district' | translate }}</mat-label>
     <mat-select formControlName="districtCode" data-testid="address-district">
-      @for (district of districts(); track district.code) {
+      <mat-option>
+        <ngx-mat-select-search
+          [formControl]="districtSearch"
+          [placeholderLabel]="'clients.memberAddress.search' | translate"
+          [noEntriesFoundLabel]="'clients.memberAddress.noResults' | translate"
+        ></ngx-mat-select-search>
+      </mat-option>
+      @for (district of filteredDistricts(); track district.code) {
         <mat-option [value]="district.code">{{ label(district) }}</mat-option>
       }
     </mat-select>
@@ -37,7 +51,14 @@
   <mat-form-field appearance="outline">
     <mat-label>{{ 'clients.memberAddress.fields.localLevel' | translate }}</mat-label>
     <mat-select formControlName="localLevelCode" data-testid="address-local-level">
-      @for (localLevel of localLevels(); track localLevel.code) {
+      <mat-option>
+        <ngx-mat-select-search
+          [formControl]="localLevelSearch"
+          [placeholderLabel]="'clients.memberAddress.search' | translate"
+          [noEntriesFoundLabel]="'clients.memberAddress.noResults' | translate"
+        ></ngx-mat-select-search>
+      </mat-option>
+      @for (localLevel of filteredLocalLevels(); track localLevel.code) {
         <mat-option [value]="localLevel.code">
           {{ label(localLevel) }}
           @if (!localLevel.active) {

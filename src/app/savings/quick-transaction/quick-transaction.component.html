@@ -1,0 +1,74 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container">
+  <div class="filters">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>{{ 'labels.inputs.Client Name' | translate }}</mat-label>
+      <mat-icon matPrefix>person_search</mat-icon>
+      <input matInput [formControl]="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>{{ 'labels.inputs.Account No' | translate }}</mat-label>
+      <mat-icon matPrefix>tag</mat-icon>
+      <input matInput [formControl]="accountNo" />
+    </mat-form-field>
+  </div>
+  @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  @if (rows?.length) {
+    <table mat-table [dataSource]="rows">
+      <ng-container matColumnDef="member">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Member' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="member-name">{{ row.memberName }}</div>
+          @if (row.memberNo) {
+            <div class="member-no">{{ row.memberNo }}</div>
+          }
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="accountNo">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          <span class="status-chip" [ngClass]="row.account.status.code | statusLookup">{{
+            row.account.status.value
+          }}</span>
+          <mifosx-account-number [accountNo]="row.account.accountNo"></mifosx-account-number>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Savings Product' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.account.productName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.account.accountBalance | currency: row.account.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          <button class="account-action-button main" mat-raised-button (click)="open(row)">
+            @if (command === 'Deposit') {
+              <i class="fa fa-arrow-up"></i><span class="action-label">{{ 'tooltips.Deposit' | translate }}</span>
+            } @else {
+              <i class="fa fa-arrow-down"></i><span class="action-label">{{ 'tooltips.Withdraw' | translate }}</span>
+            }
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  } @else if (rows && !loading) {
+    <div class="empty">{{ 'labels.messages.No Active Saving Accounts Found' | translate }}</div>
+  }
+</div>

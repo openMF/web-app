@@ -31,6 +31,9 @@
       </mat-form-field>
     </div>
     <div class="toolbar-right">
+      <button mat-stroked-button [routerLink]="['/members', 'exits']">
+        {{ 'exit.title' | translate }}
+      </button>
       @if (template()?.settings?.shareFirstEnabled) {
         <button
           mat-stroked-button

@@ -28,16 +28,16 @@ import { TranslatePipe } from '@ngx-translate/core';
         white-space: nowrap;
       }
       .red {
-        color: #9f1f17;
-        background: #fdeceb;
+        color: var(--dk-danger, #9f1f17);
+        background: var(--dk-danger-soft, #fdeceb);
       }
       .amber {
-        color: #7a4a00;
-        background: #fff0d1;
+        color: var(--dk-warning, #7a4a00);
+        background: var(--dk-warning-soft, #fff0d1);
       }
       .grey {
-        color: #3f4448;
-        background: #eceff1;
+        color: var(--dk-text-2, #3f4448);
+        background: var(--dk-surface-3, #eceff1);
       }
     `
   ],

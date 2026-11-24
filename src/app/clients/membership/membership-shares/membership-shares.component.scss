@@ -1,0 +1,85 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+h3 {
+  margin: 24px 0 8px;
+}
+
+h4 {
+  margin: 16px 0 8px;
+}
+
+.details {
+  border-collapse: collapse;
+
+  td {
+    padding: 6px 24px 6px 0;
+    vertical-align: top;
+  }
+
+  td:first-child {
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+}
+
+.muted {
+  opacity: 0.7;
+}
+
+.liabilities {
+  margin: 0 0 8px 16px;
+  padding: 0;
+  line-height: 1.8;
+}
+
+.failed {
+  color: var(--dk-danger, #c62828);
+}
+
+.overdue {
+  color: var(--dk-warning, #f29400);
+  font-weight: 600;
+}
+
+// The classes are the request's status as the server sends it.
+/* stylelint-disable selector-class-pattern */
+.status {
+  font-weight: 600;
+
+  &.REQUESTED {
+    color: var(--dk-warning, #f29400);
+  }
+
+  &.SETTLED {
+    color: var(--dk-success, #2e7d32);
+  }
+}
+/* stylelint-enable selector-class-pattern */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.accounts {
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 6px 16px 6px 0;
+    text-align: left;
+    vertical-align: top;
+  }
+}

@@ -156,6 +156,18 @@ export const navSections: NavSection[] = [
     heading: 'labels.menus.Operations',
     items: [
       {
+        label: 'labels.menus.Quick Deposit',
+        icon: 'savings',
+        path: ['/quick-deposit'],
+        permission: 'DEPOSIT_SAVINGSACCOUNT'
+      },
+      {
+        label: 'labels.menus.Quick Withdraw',
+        icon: 'payments',
+        path: ['/quick-withdraw'],
+        permission: 'WITHDRAWAL_SAVINGSACCOUNT'
+      },
+      {
         label: 'labels.menus.Collections',
         icon: 'receipt_long',
         children: [

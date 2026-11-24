@@ -1,0 +1,151 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '../../../shared/styles/list-layout' as *;
+
+.rule {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background: var(--dk-warning-soft, #fff4e0);
+  color: var(--dk-warning, #8a5300);
+
+  &.on {
+    background: var(--dk-primary-soft, #e8f3fc);
+    color: var(--dk-primary, #0b4f80);
+  }
+}
+
+// Same frameless look and toolbar as the Members list.
+.container {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.list-toolbar {
+  margin-bottom: 16px;
+
+  .search-field {
+    --mat-form-field-container-height: 36px;
+    --mat-form-field-container-vertical-padding: 6px;
+  }
+}
+
+.tabs {
+  margin-bottom: 12px;
+
+  a {
+    cursor: pointer;
+  }
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--dk-border, #e2e8f0);
+  border-radius: 8px;
+}
+
+.list {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background: var(--dk-fill, #2460b9);
+    color: #fff;
+    text-align: left;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  // White partition between header columns, as on the Members list.
+  th + th {
+    border-left: 1px solid rgb(255 255 255 / 35%);
+  }
+
+  td {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    border-bottom: 1px solid var(--dk-border, #e2e8f0);
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) td {
+    background: var(--dk-surface-2, #fafafa);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .name {
+    font-weight: 500;
+    color: var(--dk-primary, #2460b9);
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .row {
+    cursor: pointer;
+  }
+
+  .row:hover td,
+  .row:focus td {
+    background: rgb(var(--dk-tint-rgb, 36 96 185) / 6%);
+    outline: none;
+  }
+
+  .sub {
+    display: block;
+    font-size: 12.5px;
+    opacity: 0.7;
+  }
+
+  .tag {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 0 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    line-height: 20px;
+    color: var(--dk-text-2, #3f4448);
+    background: var(--dk-surface-2, #eceff1);
+  }
+
+  .kym {
+    display: block;
+    margin-top: 2px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--dk-danger, #9f1f17);
+
+    &.done {
+      color: var(--dk-success, #1b6b2a);
+    }
+  }
+
+  .waiting {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    background: var(--dk-warning-soft, #fff1dc);
+    color: var(--dk-warning, #a15c00);
+  }
+
+  .empty {
+    text-align: center;
+    padding: 28px;
+    opacity: 0.7;
+  }
+}

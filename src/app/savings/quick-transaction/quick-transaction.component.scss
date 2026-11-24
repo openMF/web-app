@@ -1,0 +1,62 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// Same blue-header table, status chips and light row buttons as the member page's savings list.
+@use '../../clients/clients-view/member-tab' as *;
+
+@include member-tab;
+
+.tab-container {
+  // Lined up with the page title above, as on the loan calculator.
+  width: 90%;
+  max-width: 84rem;
+  margin: 0 auto;
+  padding: 0 0 32px;
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    mat-form-field {
+      width: 280px;
+      max-width: 100%;
+    }
+  }
+
+  mat-progress-bar {
+    margin-bottom: 16px;
+  }
+
+  table.mat-mdc-table {
+    margin-top: 8px;
+  }
+
+  .member-name {
+    font-weight: 600;
+  }
+
+  .member-no {
+    opacity: 0.6;
+    font-size: 0.8rem;
+  }
+
+  // The row's one action: solid, so it reads as the thing to click.
+  table.mat-mdc-table .account-action-button.main {
+    --mat-button-protected-container-color: var(--md-sys-color-primary, #2460b9);
+    --mat-button-protected-label-text-color: #fff;
+  }
+
+  .empty {
+    padding: 16px;
+    border: 1px solid rgb(127 127 127 / 20%);
+    border-radius: 8px;
+    opacity: 0.7;
+  }
+}

@@ -140,7 +140,10 @@
             <span class="label">{{ 'labels.inputs.Constitution' | translate }}</span>
             <span class="value">{{
               client.clientNonPersonDetails.constitutionId
-                | find: clientTemplate.clientNonPersonConstitutionOptions : 'id' : 'name'
+                | organisationCategoryName
+                  : (client.clientNonPersonDetails.constitutionId
+                      | find: clientTemplate.clientNonPersonConstitutionOptions : 'id' : 'name')
+                | async
             }}</span>
           </div>
         }
