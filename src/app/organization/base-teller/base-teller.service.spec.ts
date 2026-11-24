@@ -12,7 +12,7 @@ import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 import { describe, expect, it, beforeEach, afterEach } from '@jest/globals';
 
-import { BaseTellerService } from './base-teller.service';
+import { BaseTellerService, CashAllocationContext } from './base-teller.service';
 import { CashierClosingRequest, CashOperationRequest } from './cash-management/cash-management.models';
 
 describe('BaseTellerService', () => {
@@ -517,5 +517,42 @@ describe('BaseTellerService', () => {
     expect(reprintRequest.request.method).toBe('GET');
     reprintRequest.flush({ id: 77, reference: 'CA-77' });
     expect((await reprintPromise).reference).toBe('CA-77');
+  });
+
+  it('loads the complete cash allocation catalog using only the supplied authenticated office', async () => {
+    const result = firstValueFrom(service.getCashAllocationContext(37));
+    const request = httpMock.expectOne((req) => req.url === '/v2/base-teller/cash-allocations/context');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.params.get('officeId')).toBe('37');
+    expect(request.request.params.has('currencyCode')).toBe(false);
+    const context: CashAllocationContext = {
+      officeId: 37,
+      officeName: 'Branch',
+      currencyCode: null,
+      businessDate: '2026-11-25',
+      vaultBalance: 0,
+      currencies: [
+        { code: 'USD', name: 'US Dollar', decimalPlaces: 2, displaySymbol: '$', denominations: [] },
+        { code: 'JPY', name: null, decimalPlaces: 0, displaySymbol: '', denominations: [] }
+      ],
+      cashiers: []
+    };
+    request.flush(context);
+    expect(await result).toEqual(context);
+  });
+
+  it.each([
+    401,
+    403,
+    404,
+    500
+  ])('preserves cash allocation context HTTP status %s for the caller', async (status) => {
+    const result = firstValueFrom(service.getCashAllocationContext(37, 'JPY'));
+    const rejected = expect(result).rejects.toMatchObject({ status });
+    const request = httpMock.expectOne((req) => req.url === '/v2/base-teller/cash-allocations/context');
+    expect(request.request.params.get('officeId')).toBe('37');
+    expect(request.request.params.get('currencyCode')).toBe('JPY');
+    request.flush({ errors: [] }, { status, statusText: 'Request failed' });
+    await rejected;
   });
 });

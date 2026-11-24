@@ -612,7 +612,7 @@ export interface CashAllocationDenomination {
 
 export interface CashAllocationCurrency {
   code: string;
-  name: string;
+  name: string | null;
   displaySymbol: string;
   decimalPlaces: number;
   denominations: CashAllocationDenomination[];
@@ -632,7 +632,7 @@ export interface CashAllocationContext {
   businessDate: string;
   officeId: FineractId;
   officeName: string;
-  currencyCode?: string;
+  currencyCode?: string | null;
   vaultBalance: CashAllocationAmount;
   currencies: CashAllocationCurrency[];
   cashiers: CashAllocationCashier[];

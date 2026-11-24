@@ -258,11 +258,15 @@
     },
     "empty": {
       "cashiers": "Bu ofis üçün aktiv kassir mövcud deyil",
-      "currencies": "Heç bir valyuta konfiqurasiya edilməyib",
+      "currencies": "Bu tenant üçün valyutalar konfiqurasiya edilməyib. Administratordan təşkilatın valyutalarını konfiqurasiya etməsini xahiş edin.",
       "denominations": "Bu valyuta üçün aktiv nominal konfiqurasiya edilməyib",
       "headCashiers": "Bu valyuta üçün vəsaiti olan baş kassir mövcud deyil"
     },
     "errors": {
+      "office": "Ofisiniz yoxlanıla bilmədi. Yenidən daxil olun və ya administratorla əlaqə saxlayın.",
+      "currencyUnavailable": "Seçilmiş valyuta artıq mövcud deyil. Konfiqurasiyanı yenidən yükləyin və ya başqa valyuta seçin.",
+      "authentication": "Sessiyanızın müddəti bitib. Valyutaları yükləmək üçün yenidən daxil olun.",
+      "apiUnavailable": "Nağd pul bölgüsü API-si mövcud deyil. Administratordan Savings Plugin quraşdırmasını yoxlamasını xahiş edin.",
       "context": "Nağd pul bölgüsü konfiqurasiyasını yükləmək mümkün olmadı",
       "create": "Nağd pul bölgüsünü tamamlamaq mümkün olmadı",
       "integerQuantity": "Tam ədəd miqdar daxil edin",

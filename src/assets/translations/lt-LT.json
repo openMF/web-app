@@ -258,11 +258,15 @@
     },
     "empty": {
       "cashiers": "Šiam padaliniui nėra aktyvių kasininkų",
-      "currencies": "Nesukonfigūruota jokių valiutų",
+      "currencies": "Šiam nuomininkui nesukonfigūruotos valiutos. Paprašykite administratoriaus sukonfigūruoti organizacijos valiutas.",
       "denominations": "Šiai valiutai nesukonfigūruoti jokie aktyvūs nominalai",
       "headCashiers": "Šiai valiutai nėra lėšų turinčio vyriausiojo kasininko"
     },
     "errors": {
+      "office": "Nepavyko patikrinti jūsų skyriaus. Prisijunkite iš naujo arba kreipkitės į administratorių.",
+      "currencyUnavailable": "Pasirinkta valiuta nebepasiekiama. Įkelkite konfigūraciją iš naujo arba pasirinkite kitą valiutą.",
+      "authentication": "Jūsų seansas baigėsi. Prisijunkite iš naujo, kad įkeltumėte valiutas.",
+      "apiUnavailable": "Grynųjų pinigų paskirstymo API nepasiekiama. Paprašykite administratoriaus patikrinti Savings Plugin diegimą.",
       "context": "Nepavyko įkelti grynųjų pinigų paskirstymo konfigūracijos",
       "create": "Nepavyko užbaigti grynųjų pinigų paskirstymo",
       "integerQuantity": "Įveskite sveikąjį vienetų skaičių",

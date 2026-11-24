@@ -258,11 +258,15 @@
     },
     "empty": {
       "cashiers": "Für diese Filiale sind keine aktiven Kassenmitarbeiter verfügbar",
-      "currencies": "Es sind keine Währungen konfiguriert",
+      "currencies": "Für diesen Mandanten sind keine Währungen konfiguriert. Bitten Sie einen Administrator, die Organisationswährungen zu konfigurieren.",
       "denominations": "Für diese Währung sind keine aktiven Stückelungen konfiguriert",
       "headCashiers": "Für diese Währung ist kein Hauptkassierer mit verfügbarem Guthaben vorhanden"
     },
     "errors": {
+      "office": "Ihre Geschäftsstelle konnte nicht bestätigt werden. Melden Sie sich erneut an oder kontaktieren Sie einen Administrator.",
+      "currencyUnavailable": "Die gewählte Währung ist nicht mehr verfügbar. Laden Sie die Konfiguration neu oder wählen Sie eine andere Währung.",
+      "authentication": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an, um Währungen zu laden.",
+      "apiUnavailable": "Die API für Bargeldzuweisungen ist nicht verfügbar. Lassen Sie die Savings-Plugin-Bereitstellung prüfen.",
       "context": "Die Konfiguration der Bargeldzuweisung konnte nicht geladen werden",
       "create": "Die Bargeldzuweisung konnte nicht abgeschlossen werden",
       "integerQuantity": "Geben Sie eine ganze Stückzahl ein",
