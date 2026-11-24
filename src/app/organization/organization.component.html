@@ -130,6 +130,16 @@
       <span class="card-label">{{ 'labels.heading.Manage Loan Originators' | translate }}</span>
     </a>
     <a
+      #valuers
+      class="management-card"
+      [routerLink]="['/lending', 'valuers']"
+      [title]="'lending.valuers.menuHint' | translate"
+      *mifosxHasPermission="'READ_LOANFILE'"
+    >
+      <div class="icon-circle"><fa-icon icon="user-check" size="2x"></fa-icon></div>
+      <span class="card-label">{{ 'lending.valuers.Valuers' | translate }}</span>
+    </a>
+    <a
       #bulkloan
       class="management-card"
       [routerLink]="['bulkloan']"

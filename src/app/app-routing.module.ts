@@ -125,6 +125,10 @@ const routes: Routes = [
       data: { title: 'Loan Calculator', breadcrumb: 'Loan Calculator' }
     },
     {
+      // Our own lending module (fineract-dbug ADR-0061): its routes live in src/app/lending.
+      path: 'lending',
+      data: { title: 'Lending' },
+      loadChildren: () => import('./lending/lending.routes').then((m) => m.LENDING_ROUTES)
       path: 'quick-deposit',
       loadComponent: () =>
         import('./savings/quick-transaction/quick-transaction.component').then((m) => m.QuickTransactionComponent),

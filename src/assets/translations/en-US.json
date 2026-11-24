@@ -3357,6 +3357,7 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "Valuers": "Valuers",
       "Calculated from Date of Birth": "Calculated from Date of Birth",
       "Welcome back": "Welcome back, {{name}}!",
       "Home subtitle": "Manage and monitor your cooperative efficiently with {{app}}.",
@@ -7983,6 +7984,39 @@
       "FAMILY_ALSO_STANDING": "A member of the same family stands too: only one of them may be elected."
     }
   },
+  "lending": {
+    "valuers": {
+      "Valuers": "Valuers",
+      "menuHint": "The staff and registered technical valuers who value land for loans",
+      "Save": "Save",
+      "Add valuer": "Add valuer",
+      "Edit valuer": "Edit valuer",
+      "Edit": "Edit",
+      "Name": "Name",
+      "Type": "Type",
+      "Staff": "Staff",
+      "Registered": "Registered",
+      "Registration no": "Registration no.",
+      "Listed for": "Listed for",
+      "Phone": "Phone",
+      "Address": "Address",
+      "Active": "Active",
+      "Yes": "Yes",
+      "No": "No",
+      "Show inactive": "Show inactive",
+      "Listed this year": "Listed this year",
+      "notListedFor": "Not listed for {{year}}",
+      "Registered technical valuer": "Registered technical valuer",
+      "Fiscal year": "Fiscal year",
+      "fiscalYearHint": "The fiscal year they are listed for",
+      "nameRequired": "Enter the valuer's name.",
+      "registrationNoRequired": "A registered valuer needs a registration number.",
+      "fiscalYearRequired": "A registered valuer needs the fiscal year they are listed for.",
+      "activeHint": "Turn this off to stop using the valuer. Valuers are kept, never deleted.",
+      "empty": "No valuers yet. Add the staff who value land and the registered technical valuers the cooperative uses.",
+      "couldNotLoad": "The list of valuers could not be loaded."
+    }
+  }
   "organisationCategory": {
     "COOPERATIVE": "Cooperative",
     "GOVERNMENT_BODY": "Government body",

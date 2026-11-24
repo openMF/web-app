@@ -1,0 +1,89 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// The Members list's toolbar, blue-header table and empty state.
+@use '../../../shared/styles/list-layout' as *;
+
+// Same frameless look as the Members list.
+.container {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+mat-progress-bar {
+  margin-bottom: 8px;
+}
+
+// On a phone the table keeps readable columns and scrolls sideways.
+.table-scroll {
+  overflow-x: auto;
+
+  .members-table {
+    min-width: 760px;
+  }
+}
+
+.members-table {
+  .name {
+    font-weight: 500;
+  }
+
+  .sub {
+    display: block;
+    margin-top: 2px;
+    color: var(--dk-text-muted, #64748b);
+    font-size: 0.75rem;
+  }
+
+  .not-listed {
+    display: block;
+    margin-top: 2px;
+    color: var(--dk-text-muted, #64748b);
+    font-size: 0.75rem;
+  }
+
+  .listed {
+    margin-left: 8px;
+  }
+
+  // A valuer no longer used stays listed (there is no delete), dimmed.
+  .inactive td {
+    color: var(--dk-text-muted, #64748b);
+  }
+
+  .actions {
+    text-align: right;
+    white-space: nowrap;
+
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+}
+
+.chip {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+
+  &.listed,
+  &.on {
+    color: var(--dk-success, #1b6b2a);
+    background: var(--dk-success-soft, #e3f3e6);
+  }
+
+  &.off {
+    color: var(--dk-text-2, #3f4448);
+    background: var(--dk-surface-2, #eceff1);
+  }
+}
