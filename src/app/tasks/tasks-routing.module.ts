@@ -33,7 +33,6 @@ import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pendin
 import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
 import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
-import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inbox.component';
 
 /** Custom Resolvers */
 import { GetMakerCheckers } from './common-resolvers/getmakercheckers.resolver';
@@ -53,6 +52,10 @@ import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInbo
 export const routes: Routes = [
   Route.withShell([
     {
+      path: 'checker-inbox/:id/view',
+      redirectTo: ({ params }) => '/checker-inbox-and-tasks/checker-inbox?request=' + encodeURIComponent(params['id'])
+    },
+    {
       path: '',
       component: CheckerInboxAndTasksComponent,
       data: { title: 'Checker Inbox & Tasks', breadcrumb: 'Checker Inbox & Tasks' },
@@ -60,6 +63,7 @@ export const routes: Routes = [
         {
           path: 'checker-inbox',
           component: CheckerInboxComponent,
+          canDeactivate: [(component: CheckerInboxComponent) => component.canLeave],
           data: { title: 'Checker Inbox' },
           resolve: {
             makerCheckerResource: GetMakerCheckers,
@@ -139,11 +143,8 @@ export const routes: Routes = [
       children: [
         {
           path: ':id/view',
-          component: ViewCheckerInboxComponent,
-          data: { title: 'View Checker Inbox Component', routeParamBreadcrumb: 'clientId' },
-          resolve: {
-            checkerInboxDetail: GetCheckerInboxDetailResolver
-          }
+          redirectTo: ({ params }) =>
+            '/checker-inbox-and-tasks/checker-inbox?request=' + encodeURIComponent(params['id'])
         }
       ]
     }
