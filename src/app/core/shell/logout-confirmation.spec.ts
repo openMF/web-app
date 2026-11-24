@@ -20,6 +20,7 @@ import { DocumentationLinksService } from 'app/shared/services/documentation-lin
 import { SettingsService } from 'app/settings/settings.service';
 import { LogoutDialogComponent } from 'app/shared/logout-dialog/logout-dialog.component';
 import { ToolbarComponent } from 'app/core/shell/toolbar/toolbar.component';
+import { CheckerInboxCountService } from 'app/tasks/checker-inbox-count.service';
 import { SidenavComponent } from 'app/core/shell/sidenav/sidenav.component';
 
 /* The confirmation gate lives in the component class, not in its presentation,
@@ -66,6 +67,7 @@ describe('Logout confirmation gate — toolbar and sidenav', () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       providers: [
+        { provide: CheckerInboxCountService, useValue: { count: (): number | null => null } },
         { provide: MatDialog, useValue: { open: mockDialogOpen } },
         { provide: BreakpointObserver, useValue: mockBreakpointObserver },
         { provide: Router, useValue: mockRouter },
