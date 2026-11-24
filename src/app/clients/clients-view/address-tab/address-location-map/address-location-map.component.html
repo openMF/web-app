@@ -11,7 +11,12 @@
     @if (!compact) {
       <h4>{{ 'labels.heading.Location Map' | translate }}</h4>
     }
-    <div #mapContainer class="map-container" [attr.aria-label]="'labels.heading.Location Map' | translate"></div>
+    <div
+      #mapContainer
+      class="map-container"
+      role="region"
+      [attr.aria-label]="'labels.heading.Location Map' | translate"
+    ></div>
     @if (tileLoadFailed) {
       <div class="map-error">{{ 'labels.text.Map tiles unavailable' | translate }}</div>
     }
