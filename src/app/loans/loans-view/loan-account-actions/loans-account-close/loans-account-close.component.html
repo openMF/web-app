@@ -44,7 +44,7 @@
           <button
             mat-raised-button
             color="primary"
-            [disabled]="!closeLoanForm.valid"
+            [disabled]="!closeLoanForm.valid || isSubmitting"
             *mifosxHasPermission="'CLOSE_LOAN'"
           >
             {{ 'labels.buttons.Submit' | translate }}

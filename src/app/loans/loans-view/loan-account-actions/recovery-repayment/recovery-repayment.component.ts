@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { Dates } from 'app/core/utils/dates';
@@ -37,6 +39,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   /** Payment Type Options */
   paymentTypes: any;
@@ -49,6 +53,8 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
   /** Recovery Repayment Loan Form */
   recoveryRepaymentLoanForm: UntypedFormGroup;
   currency: Currency | null = null;
+  /** Whether the recovery payment request is in flight. */
+  isSubmitting = false;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -124,6 +130,12 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
 
   /** Submits the recovery payment form */
   submit() {
+    if (this.recoveryRepaymentLoanForm.invalid || this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+
     const recoveryRepaymentLoanFormData = this.recoveryRepaymentLoanForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
@@ -137,11 +149,24 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'recoverypayment').subscribe({
-      next: (response: any) => {
-        this.gotoLoanDefaultView();
-      },
-      error: (error) => {}
-    });
+    this.loanService
+      .submitLoanActionButton(this.loanId, data, 'recoverypayment')
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.isSubmitting = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          this.gotoLoanDefaultView();
+        },
+        error: () => {
+          // ErrorHandlerInterceptor already alerts the user about the failed request. Handle the
+          // rejection here so it does not become an unhandled RxJS error; finalize resets the
+          // submitting state so the user can retry.
+        }
+      });
   }
 }
