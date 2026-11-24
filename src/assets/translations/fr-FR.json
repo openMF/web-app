@@ -7282,7 +7282,7 @@
       "empty": "No valuers yet. Add the staff who value land and the registered technical valuers the cooperative uses.",
       "couldNotLoad": "The list of valuers could not be loaded."
     }
-  }
+  },
   "organisationCategory": {
     "COOPERATIVE": "Cooperative",
     "GOVERNMENT_BODY": "Government body",

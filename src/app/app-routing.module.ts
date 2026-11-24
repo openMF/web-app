@@ -129,6 +129,8 @@ const routes: Routes = [
       path: 'lending',
       data: { title: 'Lending' },
       loadChildren: () => import('./lending/lending.routes').then((m) => m.LENDING_ROUTES)
+    },
+    {
       path: 'quick-deposit',
       loadComponent: () =>
         import('./savings/quick-transaction/quick-transaction.component').then((m) => m.QuickTransactionComponent),
