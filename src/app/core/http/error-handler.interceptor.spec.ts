@@ -818,4 +818,110 @@ describe('ErrorHandlerInterceptor', () => {
       })
     );
   });
+
+  describe('loan account action failure notifications', () => {
+    const TRANSLATED_FAILURE = 'The loan action could not be completed.';
+    const RAW_BACKEND_MESSAGE = 'java.sql.SQLException: private account data';
+
+    /**
+     * Drives the interceptor with a failing loan action request that carries a
+     * backend globalisation code, so the localized message can be asserted.
+     * @param url Loan action endpoint that failed
+     * @param status HTTP status returned by the backend
+     * @returns The failure the interceptor passed on to the caller
+     */
+    function interceptLoanAction(url: string, status: number): unknown {
+      const parser = new TranslateDefaultParser();
+      const code = 'error.msg.loan.account.action.failed';
+      const translations: { [key: string]: string } = { [code]: TRANSLATED_FAILURE };
+      TestBed.resetTestingModule();
+      alert = jest.fn();
+      TestBed.configureTestingModule({
+        providers: [
+          ErrorHandlerInterceptor,
+          { provide: AlertService, useValue: { alert } },
+          {
+            provide: TranslateService,
+            useValue: {
+              instant: (key: string, params?: object) => parser.interpolate(translations[key] ?? key, params)
+            }
+          }
+        ]
+      });
+      const localInterceptor = TestBed.inject(ErrorHandlerInterceptor);
+      const response = new HttpErrorResponse({
+        status,
+        url,
+        error: {
+          userMessageGlobalisationCode: code,
+          defaultUserMessage: RAW_BACKEND_MESSAGE,
+          developerMessage: RAW_BACKEND_MESSAGE
+        }
+      });
+      const request = new HttpRequest('POST', url, {});
+      const oauthEnabled = environment.oauth.enabled;
+      environment.oauth.enabled = false;
+      const log = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      let received: unknown;
+      try {
+        localInterceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+          error: (error: unknown) => (received = error)
+        });
+      } finally {
+        log.mockRestore();
+        environment.oauth.enabled = oauthEnabled;
+      }
+      return received;
+    }
+
+    it('shows a localized notification when an interest pause request fails', () => {
+      const received = interceptLoanAction('/fineract-provider/api/v1/loans/1/interest-pauses', 400);
+
+      expect(received).toBeInstanceOf(HttpErrorResponse);
+      expect(alert).toHaveBeenCalledWith({
+        type: 'errors.error.bad.request.type',
+        message: TRANSLATED_FAILURE
+      });
+    });
+
+    it('shows a localized notification when a recovery repayment request fails', () => {
+      const received = interceptLoanAction(
+        '/fineract-provider/api/v1/loans/1/transactions?command=recoverypayment',
+        403
+      );
+
+      expect(received).toBeInstanceOf(HttpErrorResponse);
+      expect(alert).toHaveBeenCalledWith({
+        type: 'errors.error.unauthorized.type',
+        message: TRANSLATED_FAILURE
+      });
+    });
+
+    it('shows a localized notification when a loan close request fails', () => {
+      const received = interceptLoanAction('/fineract-provider/api/v1/loans/1/transactions?command=close', 500);
+
+      expect(received).toBeInstanceOf(HttpErrorResponse);
+      expect(alert).toHaveBeenCalledWith({
+        type: 'errors.error.server.internal.type',
+        message: TRANSLATED_FAILURE
+      });
+    });
+
+    it('shows a localized notification when a charge adjustment request fails', () => {
+      const received = interceptLoanAction('/fineract-provider/api/v1/loans/1/charges/5?command=adjustment', 409);
+
+      expect(received).toBeInstanceOf(HttpErrorResponse);
+      expect(alert).toHaveBeenCalledWith({
+        type: 'errors.error.unknown.type',
+        message: TRANSLATED_FAILURE
+      });
+    });
+
+    it('does not expose raw backend details in the loan action notification', () => {
+      interceptLoanAction('/fineract-provider/api/v1/loans/1/transactions?command=close', 500);
+
+      expect(JSON.stringify(alert.mock.calls)).not.toContain('SQLException');
+      expect(JSON.stringify(alert.mock.calls)).not.toContain('private account data');
+    });
+  });
 });

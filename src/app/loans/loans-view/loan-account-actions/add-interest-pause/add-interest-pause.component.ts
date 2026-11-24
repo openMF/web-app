@@ -6,8 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -26,6 +28,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   /** Payment Type Options */
   paymentTypes: any;
@@ -39,6 +43,8 @@ export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent i
   maturityDate: Date | null = null;
   /** Interest Pause Loan Form */
   interestPauseLoanForm: UntypedFormGroup;
+  /** Whether the interest pause request is in flight. */
+  isSubmitting = false;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -80,6 +86,12 @@ export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent i
 
   /** Submits the Interest Pause form */
   submit() {
+    if (this.interestPauseLoanForm.invalid || this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+
     const interestPauseLoanFormData = this.interestPauseLoanForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
@@ -96,11 +108,24 @@ export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent i
       dateFormat,
       locale
     };
-    this.loanService.addInterestPauseToLoan(this.loanId, data).subscribe({
-      next: (response: any) => {
-        this.gotoLoanView('term-variations');
-      },
-      error: (error) => {}
-    });
+    this.loanService
+      .addInterestPauseToLoan(this.loanId, data)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.isSubmitting = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          this.gotoLoanView('term-variations');
+        },
+        error: () => {
+          // ErrorHandlerInterceptor already alerts the user about the failed request. Handle the
+          // rejection here so it does not become an unhandled RxJS error; finalize resets the
+          // submitting state so the user can retry.
+        }
+      });
   }
 }
