@@ -257,7 +257,15 @@
     <div class="row three" id="kym-money">
       <mat-form-field>
         <mat-label>{{ 'kym.field.expectedTransactionsYear' | translate }}</mat-label>
-        <input matInput type="number" min="0" max="1000000" step="1" formControlName="expectedTransactionsYear" />
+        <input
+          matInput
+          type="number"
+          min="0"
+          max="1000000"
+          step="1"
+          formControlName="expectedTransactionsYear"
+          [errorStateMatcher]="errorWhileTyping"
+        />
         <mat-error>{{ 'kym.transactionsCountError' | translate }}</mat-error>
       </mat-form-field>
       <mat-form-field>

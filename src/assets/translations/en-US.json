@@ -3357,6 +3357,7 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "Calculated from Date of Birth": "Calculated from Date of Birth",
       "Welcome back": "Welcome back, {{name}}!",
       "Home subtitle": "Manage and monitor your cooperative efficiently with {{app}}.",
       "Total Members": "Total Members",

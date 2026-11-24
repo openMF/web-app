@@ -11,6 +11,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatIcon } from '@angular/material/icon';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { NepaliDateInputComponent } from 'app/shared/nepali-date-input/nepali-date-input.component';
 import { CodeOption, KymService } from '../kym.service';
@@ -168,6 +169,10 @@ export class KymEditDialogComponent implements AfterViewInit {
   readonly today = new Date();
   readonly busy = signal(false);
   readonly recommenders = signal<KymPerson[]>([]);
+  /** Shows a field's error as soon as the user types into it, not only after leaving it or pressing Save. */
+  readonly errorWhileTyping: ErrorStateMatcher = {
+    isErrorState: (control, form) => !!control?.invalid && (control.dirty || control.touched || !!form?.submitted)
+  };
 
   readonly form: FormGroup;
   private readonly initial: Record<string, unknown>;
