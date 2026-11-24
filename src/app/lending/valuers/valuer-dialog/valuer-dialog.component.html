@@ -1,0 +1,68 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ (editing ? 'lending.valuers.Edit valuer' : 'lending.valuers.Add valuer') | translate }}</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <mat-form-field class="full">
+      <mat-label>{{ 'lending.valuers.Name' | translate }}</mat-label>
+      <input matInput formControlName="name" maxlength="200" />
+      <mat-error>{{ 'lending.valuers.nameRequired' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="registered" class="registered">
+      {{ 'lending.valuers.Registered technical valuer' | translate }}
+    </mat-checkbox>
+
+    <div class="row">
+      <mat-form-field>
+        <mat-label>{{ 'lending.valuers.Registration no' | translate }}</mat-label>
+        <input matInput formControlName="registrationNo" maxlength="100" />
+        <mat-error>{{ 'lending.valuers.registrationNoRequired' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'lending.valuers.Fiscal year' | translate }}</mat-label>
+        <mat-select formControlName="fiscalYear">
+          @if (!registered) {
+            <mat-option [value]="null">—</mat-option>
+          }
+          @for (y of years; track y) {
+            <mat-option [value]="y">{{ yearLabel(y) }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{ 'lending.valuers.fiscalYearHint' | translate }}</mat-hint>
+        <mat-error>{{ 'lending.valuers.fiscalYearRequired' | translate }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field>
+        <mat-label>{{ 'lending.valuers.Phone' | translate }}</mat-label>
+        <input matInput formControlName="phone" maxlength="50" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'lending.valuers.Address' | translate }}</mat-label>
+        <input matInput formControlName="address" maxlength="300" />
+      </mat-form-field>
+    </div>
+
+    <mat-slide-toggle formControlName="active" color="primary">
+      {{ 'lending.valuers.Active' | translate }}
+    </mat-slide-toggle>
+    <p class="hint">{{ 'lending.valuers.activeHint' | translate }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close [disabled]="busy()">
+      {{ 'labels.buttons.Cancel' | translate }}
+    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="busy()">
+      {{ 'lending.valuers.Save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>

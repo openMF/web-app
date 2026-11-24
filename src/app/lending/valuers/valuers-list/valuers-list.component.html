@@ -1,0 +1,109 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container valuers">
+  <div class="list-toolbar">
+    <div class="toolbar-left">
+      <mat-slide-toggle color="primary" [checked]="showInactive()" (change)="toggleInactive($event.checked)">
+        {{ 'lending.valuers.Show inactive' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div class="toolbar-right">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="add()"
+        *mifosxHasPermission="'UPDATE_LENDINGVALUER'"
+      >
+        <fa-icon icon="plus" class="btn-icon"></fa-icon>{{ 'lending.valuers.Add valuer' | translate }}
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  @if (rows().length) {
+    <div class="table-scroll">
+      <table mat-table [dataSource]="rows()" class="members-table">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.valuers.Name' | translate }}</th>
+          <td mat-cell *matCellDef="let v">
+            <span class="name">{{ v.name }}</span>
+            @if (v.listedThisYear) {
+              <span class="chip listed">{{ 'lending.valuers.Listed this year' | translate }}</span>
+            } @else if (v.registered && v.active) {
+              <span class="not-listed">{{ 'lending.valuers.notListedFor' | translate: { year: thisYear } }}</span>
+            }
+            @if (v.address) {
+              <span class="sub">{{ v.address }}</span>
+            }
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.valuers.Type' | translate }}</th>
+          <td mat-cell *matCellDef="let v">
+            {{ (v.registered ? 'lending.valuers.Registered' : 'lending.valuers.Staff') | translate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="registrationNo">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.valuers.Registration no' | translate }}</th>
+          <td mat-cell *matCellDef="let v">{{ v.registrationNo ?? '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fiscalYear">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.valuers.Listed for' | translate }}</th>
+          <td mat-cell *matCellDef="let v">{{ v.fiscalYear ? yearLabel(v.fiscalYear) : '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.valuers.Phone' | translate }}</th>
+          <td mat-cell *matCellDef="let v">{{ v.phone ?? '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="active">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.valuers.Active' | translate }}</th>
+          <td mat-cell *matCellDef="let v">
+            <span class="chip" [class.on]="v.active" [class.off]="!v.active">
+              {{ (v.active ? 'lending.valuers.Yes' : 'lending.valuers.No') | translate }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let v" class="actions">
+            <button
+              mat-stroked-button
+              color="primary"
+              type="button"
+              (click)="edit(v)"
+              *mifosxHasPermission="'UPDATE_LENDINGVALUER'"
+            >
+              <mat-icon>edit</mat-icon>{{ 'lending.valuers.Edit' | translate }}
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns" [class.inactive]="!row.active"></tr>
+      </table>
+    </div>
+  } @else if (!loading()) {
+    <div class="empty-state">
+      <fa-icon icon="users" size="3x" class="empty-icon"></fa-icon>
+      <p>
+        {{ (failed() ? 'lending.valuers.couldNotLoad' : 'lending.valuers.empty') | translate }}
+      </p>
+    </div>
+  }
+</div>
