@@ -211,11 +211,15 @@
     },
     "empty": {
       "cashiers": "Nessun cassiere attivo è disponibile per questa filiale",
-      "currencies": "Nessuna valuta configurata",
+      "currencies": "Nessuna valuta configurata per questo tenant. Chiedi a un amministratore di configurare le valute dell’organizzazione.",
       "denominations": "Nessun taglio attivo configurato per questa valuta",
       "headCashiers": "Nessun cassiere capo con fondi è disponibile per questa valuta"
     },
     "errors": {
+      "office": "Impossibile verificare la filiale. Accedi di nuovo o contatta un amministratore.",
+      "currencyUnavailable": "La valuta selezionata non è più disponibile. Ricarica la configurazione o seleziona un’altra valuta.",
+      "authentication": "La sessione è scaduta. Accedi di nuovo per caricare le valute.",
+      "apiUnavailable": "L’API delle assegnazioni di contante non è disponibile. Chiedi a un amministratore di controllare Savings Plugin.",
       "context": "Impossibile caricare la configurazione dell’allocazione di contante",
       "create": "Impossibile completare l’allocazione di contante",
       "integerQuantity": "Inserisci un numero intero di elementi",

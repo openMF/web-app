@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -18,10 +18,11 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { finalize, map, of, switchMap, tap } from 'rxjs';
+import { finalize, map, of, Subscription, switchMap, tap } from 'rxjs';
 
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { SettingsService } from 'app/settings/settings.service';
 import { environment } from 'environments/environment';
 import {
   BaseTellerService,
@@ -57,10 +58,11 @@ const integerValidator = (control: AbstractControl): ValidationErrors | null =>
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CashAllocationComponent implements OnInit {
+export class CashAllocationComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   private baseTellerService = inject(BaseTellerService);
   private authenticationService = inject(AuthenticationService);
+  private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
   private cdr = inject(ChangeDetectorRef);
 
@@ -89,6 +91,9 @@ export class CashAllocationComponent implements OnInit {
   canRead = false;
   canCreate = false;
   canReprint = false;
+  contextLoadFailed = false;
+  private contextSubscription?: Subscription;
+  private contextScope = '';
   private pendingRequest?: CashAllocationRequest;
   private pendingSignature = '';
   private pendingAllocationId?: FineractId;
@@ -131,6 +136,9 @@ export class CashAllocationComponent implements OnInit {
     return (
       this.canCreate &&
       !this.isLoading &&
+      !this.contextLoadFailed &&
+      !!this.selectedCurrency &&
+      this.contextScope === this.currentContextScope() &&
       !this.isPreviewing &&
       !this.isPosting &&
       this.allocationForm.valid &&
@@ -156,6 +164,14 @@ export class CashAllocationComponent implements OnInit {
       this.errorMessage = 'cashAllocation.errors.noReadPermission';
       return;
     }
+    this.loadContext();
+  }
+
+  ngOnDestroy(): void {
+    this.contextSubscription?.unsubscribe();
+  }
+
+  retryContext(): void {
     this.loadContext();
   }
 
@@ -270,28 +286,68 @@ export class CashAllocationComponent implements OnInit {
       note: ''
     });
     this.denominations.controls.forEach((control) => control.controls.quantity.setValue(0));
-    this.loadContext(this.allocationForm.controls.currencyCode.value);
+    this.loadContext();
   }
 
   private loadContext(currencyCode?: string): void {
+    // Cancel before starting the next request so a slow response cannot overwrite a newer selection.
+    this.contextSubscription?.unsubscribe();
+    this.setDenominations([]);
+    this.clearPendingRequest();
+    this.errorMessage = '';
+    this.contextLoadFailed = false;
     const officeId = this.authenticationService.getCredentials()?.officeId;
-    if (!officeId || this.isLoading) {
+    const scope = this.currentContextScope();
+    if (scope !== this.contextScope) {
+      this.context = undefined;
+      this.allocationForm.controls.currencyCode.setValue('');
+      currencyCode = undefined;
+      this.contextScope = scope;
+    }
+    if (!Number.isSafeInteger(officeId) || officeId <= 0) {
+      this.context = undefined;
+      this.allocationForm.controls.currencyCode.setValue('');
+      this.contextLoadFailed = true;
+      this.errorMessage = 'cashAllocation.errors.office';
       return;
     }
     this.isLoading = true;
-    this.errorMessage = '';
-    this.baseTellerService
+    // Only the unfiltered context defines the available currencies for this office and tenant.
+    const catalog = this.context?.currencies ?? [];
+    this.contextSubscription = this.baseTellerService
       .getCashAllocationContext(officeId, currencyCode)
       .pipe(
         switchMap((context) => {
-          if (currencyCode || context.currencies.length === 0) {
-            return of(context);
+          if (scope !== this.currentContextScope() || String(context.officeId) !== String(officeId)) {
+            throw new Error('cashAllocation.errors.office');
           }
-          const firstCurrency = context.currencies[0].code;
-          this.allocationForm.controls.currencyCode.setValue(firstCurrency);
+          const currencies = Array.from(
+            new Map(
+              context.currencies.map((currency) => [
+                currency.code,
+                currency
+              ])
+            ).values()
+          );
+          if (currencyCode) {
+            return of(this.mergeCurrencyContext(context, catalog, currencyCode));
+          }
+          this.context = { ...context, currencies };
+          this.cdr.markForCheck();
+          const previousCode = this.allocationForm.controls.currencyCode.value;
+          if (currencies.length === 0) {
+            this.allocationForm.controls.currencyCode.setValue('');
+            return of(this.context);
+          }
+          if (previousCode && !currencies.some((currency) => currency.code === previousCode)) {
+            this.allocationForm.controls.currencyCode.setValue('');
+            throw new Error('cashAllocation.errors.currencyUnavailable');
+          }
+          const selectedCode = previousCode || currencies[0].code;
+          this.allocationForm.controls.currencyCode.setValue(selectedCode);
           return this.baseTellerService
-            .getCashAllocationContext(officeId, firstCurrency)
-            .pipe(map((selectedContext) => ({ ...selectedContext, currencies: context.currencies })));
+            .getCashAllocationContext(officeId, selectedCode)
+            .pipe(map((selectedContext) => this.mergeCurrencyContext(selectedContext, currencies, selectedCode)));
         }),
         finalize(() => {
           this.isLoading = false;
@@ -300,21 +356,87 @@ export class CashAllocationComponent implements OnInit {
       )
       .subscribe({
         next: (context) => {
-          const allCurrencies = this.context?.currencies ?? context.currencies;
-          const mergedContext = currencyCode ? { ...context, currencies: allCurrencies } : context;
-          this.context = mergedContext;
-          this.setDenominations(
-            mergedContext.currencies.find(
-              (currency) => currency.code === this.allocationForm.controls.currencyCode.value
-            )?.denominations ?? []
-          );
+          if (scope !== this.currentContextScope() || String(context.officeId) !== String(officeId)) {
+            this.context = undefined;
+            this.allocationForm.controls.currencyCode.setValue('');
+            this.contextLoadFailed = true;
+            this.errorMessage = 'cashAllocation.errors.office';
+            return;
+          }
+          this.context = context;
+          this.setDenominations(this.selectedCurrency?.denominations ?? []);
         },
         error: (error: unknown) => {
-          this.context = undefined;
-          this.setDenominations([]);
-          this.errorMessage = this.extractErrorMessage(error) || 'cashAllocation.errors.context';
+          this.contextLoadFailed = true;
+          this.errorMessage = this.contextErrorMessage(error);
+          if (this.errorMessage === 'cashAllocation.errors.currencyUnavailable') {
+            if (this.context) {
+              const unavailableCode = this.allocationForm.controls.currencyCode.value;
+              this.context = {
+                ...this.context,
+                currencies: this.context.currencies.filter((currency) => currency.code !== unavailableCode)
+              };
+            }
+            this.allocationForm.controls.currencyCode.setValue('');
+          }
+          if (scope !== this.currentContextScope() || this.errorMessage === 'cashAllocation.errors.office') {
+            this.context = undefined;
+            this.allocationForm.controls.currencyCode.setValue('');
+          }
         }
       });
+  }
+
+  private mergeCurrencyContext(
+    context: CashAllocationContext,
+    catalog: CashAllocationCurrency[],
+    currencyCode: string
+  ): CashAllocationContext {
+    const selected = context.currencies.find((currency) => currency.code === currencyCode);
+    if (!selected) {
+      throw new Error('cashAllocation.errors.currencyUnavailable');
+    }
+    return {
+      ...context,
+      currencies: catalog.map((currency) => (currency.code === currencyCode ? selected : currency))
+    };
+  }
+
+  private currentContextScope(): string {
+    const credentials = this.authenticationService.getCredentials();
+    return JSON.stringify([
+      this.settingsService.server,
+      this.settingsService.tenantIdentifier,
+      credentials?.userId,
+      credentials?.officeId
+    ]);
+  }
+
+  private contextErrorMessage(error: unknown): string {
+    if (error instanceof Error && error.message.startsWith('cashAllocation.errors.')) {
+      return error.message;
+    }
+    const response = error as {
+      status?: number;
+      error?: { errors?: Array<{ userMessageGlobalisationCode?: string }> };
+    };
+    const code = response?.error?.errors?.[0]?.userMessageGlobalisationCode ?? '';
+    if (code.includes('office.')) {
+      return 'cashAllocation.errors.office';
+    }
+    if (code.endsWith('currency.unsupported')) {
+      return 'cashAllocation.errors.currencyUnavailable';
+    }
+    switch (response?.status) {
+      case 401:
+        return 'cashAllocation.errors.authentication';
+      case 403:
+        return 'cashAllocation.errors.noReadPermission';
+      case 404:
+        return 'cashAllocation.errors.apiUnavailable';
+      default:
+        return this.extractErrorMessage(error) || 'cashAllocation.errors.context';
+    }
   }
 
   private setDenominations(configurations: CashAllocationDenomination[]): void {

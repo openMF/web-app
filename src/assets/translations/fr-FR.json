@@ -211,11 +211,15 @@
     },
     "empty": {
       "cashiers": "Aucun caissier actif n’est disponible pour cette agence",
-      "currencies": "Aucune devise n’est configurée",
+      "currencies": "Aucune devise n’est configurée pour ce tenant. Demandez à un administrateur de configurer les devises de l’organisation.",
       "denominations": "Aucune coupure active n’est configurée pour cette devise",
       "headCashiers": "Aucun caissier principal approvisionné n’est disponible pour cette devise"
     },
     "errors": {
+      "office": "Votre agence n’a pas pu être vérifiée. Reconnectez-vous ou contactez un administrateur.",
+      "currencyUnavailable": "La devise sélectionnée n’est plus disponible. Rechargez la configuration ou sélectionnez une autre devise.",
+      "authentication": "Votre session a expiré. Reconnectez-vous pour charger les devises.",
+      "apiUnavailable": "L’API d’allocation des espèces est indisponible. Demandez à un administrateur de vérifier Savings Plugin.",
       "context": "Impossible de charger la configuration de l’affectation d’espèces",
       "create": "Impossible de terminer l’affectation d’espèces",
       "integerQuantity": "Saisissez un nombre entier d’unités",

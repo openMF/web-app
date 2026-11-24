@@ -211,11 +211,15 @@
     },
     "empty": {
       "cashiers": "Não existem caixas ativos disponíveis para esta agência",
-      "currencies": "Não existem moedas configuradas",
+      "currencies": "Não existem moedas configuradas para este tenant. Peça a um administrador para configurar as moedas da organização.",
       "denominations": "Não existem denominações ativas configuradas para esta moeda",
       "headCashiers": "Não existe um caixa principal com fundos disponível para esta moeda"
     },
     "errors": {
+      "office": "Não foi possível verificar a sua agência. Inicie sessão novamente ou contacte um administrador.",
+      "currencyUnavailable": "A moeda selecionada já não está disponível. Recarregue a configuração ou selecione outra moeda.",
+      "authentication": "A sua sessão expirou. Inicie sessão novamente para carregar as moedas.",
+      "apiUnavailable": "A API de alocação de numerário está indisponível. Peça a um administrador para verificar o Savings Plugin.",
       "context": "Não foi possível carregar a configuração da alocação de numerário",
       "create": "Não foi possível concluir a alocação de numerário",
       "integerQuantity": "Introduza um número inteiro de unidades",

@@ -211,11 +211,15 @@
     },
     "empty": {
       "cashiers": "Hakuna wahudumu hai wa fedha wanaopatikana katika ofisi hii",
-      "currencies": "Hakuna sarafu zilizosanidiwa",
+      "currencies": "Hakuna sarafu zilizosanidiwa kwa mpangaji huyu. Mwombe msimamizi asanidi sarafu za shirika.",
       "denominations": "Hakuna madhehebu hai yaliyosanidiwa kwa sarafu hii",
       "headCashiers": "Hakuna mhudumu mkuu wa fedha mwenye salio anayepatikana kwa sarafu hii"
     },
     "errors": {
+      "office": "Ofisi yako haikuweza kuthibitishwa. Ingia tena au wasiliana na msimamizi.",
+      "currencyUnavailable": "Sarafu iliyochaguliwa haipatikani tena. Pakia usanidi upya au chagua sarafu nyingine.",
+      "authentication": "Kipindi chako kimeisha. Ingia tena ili kupakia sarafu.",
+      "apiUnavailable": "API ya ugawaji wa fedha haipatikani. Mwombe msimamizi akague usakinishaji wa Savings Plugin.",
       "context": "Imeshindikana kupakia usanidi wa ugawaji wa fedha taslimu",
       "create": "Imeshindikana kukamilisha ugawaji wa fedha taslimu",
       "integerQuantity": "Weka idadi kamili ya vipande",

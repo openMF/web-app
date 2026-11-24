@@ -211,11 +211,15 @@
     },
     "empty": {
       "cashiers": "Pro tuto pobočku nejsou k dispozici žádní aktivní pokladníci",
-      "currencies": "Nejsou nakonfigurovány žádné měny",
+      "currencies": "Pro tohoto tenanta nejsou nakonfigurovány žádné měny. Požádejte správce o konfiguraci měn organizace.",
       "denominations": "Pro tuto měnu nejsou nakonfigurovány žádné aktivní nominální hodnoty",
       "headCashiers": "Pro tuto měnu není k dispozici žádný hlavní pokladník s prostředky"
     },
     "errors": {
+      "office": "Pobočku se nepodařilo ověřit. Přihlaste se znovu nebo kontaktujte správce.",
+      "currencyUnavailable": "Vybraná měna již není dostupná. Načtěte konfiguraci znovu nebo vyberte jinou měnu.",
+      "authentication": "Platnost relace vypršela. Pro načtení měn se přihlaste znovu.",
+      "apiUnavailable": "API pro přidělování hotovosti není dostupné. Požádejte správce o kontrolu nasazení Savings Plugin.",
       "context": "Konfiguraci přidělení hotovosti se nepodařilo načíst",
       "create": "Přidělení hotovosti se nepodařilo dokončit",
       "integerQuantity": "Zadejte celé číslo kusů",

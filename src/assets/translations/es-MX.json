@@ -211,11 +211,15 @@
     },
     "empty": {
       "cashiers": "No hay cajeros activos disponibles para esta sucursal",
-      "currencies": "No hay monedas configuradas",
+      "currencies": "No hay monedas configuradas para este tenant. Solicite al administrador que configure las monedas de la organización.",
       "denominations": "No hay denominaciones activas configuradas para esta moneda",
       "headCashiers": "No hay un cajero principal con fondos disponible para esta moneda"
     },
     "errors": {
+      "office": "No se pudo verificar su oficina. Inicie sesión de nuevo o contacte al administrador.",
+      "currencyUnavailable": "La moneda seleccionada ya no está disponible. Recargue la configuración o seleccione otra moneda.",
+      "authentication": "Su sesión ha caducado. Inicie sesión de nuevo para cargar las monedas.",
+      "apiUnavailable": "La API de asignación de efectivo no está disponible. Solicite al administrador que revise Savings Plugin.",
       "context": "No se pudo cargar la configuración de asignación de efectivo",
       "create": "No se pudo completar la asignación de efectivo",
       "integerQuantity": "Ingrese una cantidad entera de unidades",

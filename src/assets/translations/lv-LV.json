@@ -211,11 +211,15 @@
     },
     "empty": {
       "cashiers": "Šai filiālei nav pieejams neviens aktīvs kasieris",
-      "currencies": "Nav konfigurēta neviena valūta",
+      "currencies": "Šim nomniekam nav konfigurētu valūtu. Lūdziet administratoram konfigurēt organizācijas valūtas.",
       "denominations": "Šai valūtai nav konfigurēts neviens aktīvs nomināls",
       "headCashiers": "Šai valūtai nav pieejams galvenais kasieris ar līdzekļiem"
     },
     "errors": {
+      "office": "Neizdevās pārbaudīt jūsu filiāli. Piesakieties vēlreiz vai sazinieties ar administratoru.",
+      "currencyUnavailable": "Izvēlētā valūta vairs nav pieejama. Ielādējiet konfigurāciju vēlreiz vai izvēlieties citu valūtu.",
+      "authentication": "Jūsu sesija ir beigusies. Piesakieties vēlreiz, lai ielādētu valūtas.",
+      "apiUnavailable": "Skaidras naudas piešķiršanas API nav pieejams. Lūdziet administratoram pārbaudīt Savings Plugin izvietojumu.",
       "context": "Neizdevās ielādēt skaidras naudas piešķīruma konfigurāciju",
       "create": "Neizdevās pabeigt skaidras naudas piešķīrumu",
       "integerQuantity": "Ievadiet veselu vienību skaitu",

@@ -8,15 +8,19 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { By } from '@angular/platform-browser';
+import { MatSelect } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, of, throwError } from 'rxjs';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
+import { SettingsService } from 'app/settings/settings.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import {
   BaseTellerService,
   CashAllocationContext,
+  CashAllocationCurrency,
   CashAllocationPreview,
   CashAllocationReceipt
 } from '../base-teller.service';
@@ -26,6 +30,7 @@ describe('CashAllocationComponent', () => {
   let component: CashAllocationComponent;
   let fixture: ComponentFixture<CashAllocationComponent>;
   let service: jest.Mocked<BaseTellerService>;
+  const settings = { server: '/fineract-provider', tenantIdentifier: 'default', language: { code: 'en-US' } };
   let dialog: { open: jest.Mock };
 
   const context: CashAllocationContext = {
@@ -117,8 +122,17 @@ describe('CashAllocationComponent', () => {
   };
 
   beforeEach(async () => {
+    settings.tenantIdentifier = 'default';
     service = {
-      getCashAllocationContext: jest.fn(() => of(context)),
+      getCashAllocationContext: jest.fn((_officeId, currencyCode) =>
+        of({
+          ...context,
+          currencyCode: currencyCode ?? null,
+          currencies: currencyCode
+            ? context.currencies.filter((currency) => currency.code === currencyCode)
+            : context.currencies
+        })
+      ),
       previewCashAllocation: jest.fn(() => of(preview)),
       createCashAllocation: jest.fn(() => of(receipt)),
       getCashAllocation: jest.fn(() => of(receipt)),
@@ -147,6 +161,7 @@ describe('CashAllocationComponent', () => {
           }
         },
         { provide: MatDialog, useValue: dialog },
+        { provide: SettingsService, useValue: settings },
         provideAnimationsAsync()
       ]
     }).compileComponents();
@@ -336,5 +351,304 @@ describe('CashAllocationComponent', () => {
     component.denominations.clear();
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('cashAllocation.empty.currencies');
+  });
+
+  function currencyOptions(): string[] {
+    fixture.detectChanges();
+    const select = fixture.debugElement.query(By.css('mat-select[formControlName="currencyCode"]'))
+      .componentInstance as MatSelect;
+    return select.options.map((option) => option.viewValue);
+  }
+
+  function selectCurrency(code: string): void {
+    component.allocationForm.controls.currencyCode.setValue(code);
+    component.currencyChanged();
+  }
+
+  function restart(): void {
+    fixture.destroy();
+    service.getCashAllocationContext.mockClear();
+    fixture = TestBed.createComponent(CashAllocationComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }
+
+  it('merges fresh selected-currency names and denominations without truncating or duplicating the catalog', () => {
+    const updated = { ...context.currencies[1], name: 'Configured Yen', denominations: [
+        { identifier: 'jpy-coin-500', type: 'COIN', value: 500, quantity: 0, subtotal: 0 }
+      ] };
+    service.getCashAllocationContext.mockReturnValueOnce(
+      of({ ...context, currencyCode: 'JPY', currencies: [updated] })
+    );
+    selectCurrency('JPY');
+    expect(component.context?.currencies.map((currency) => currency.code)).toEqual([
+      'CRC',
+      'JPY'
+    ]);
+    expect(component.selectedCurrency?.name).toBe('Configured Yen');
+    expect(component.denominations.at(0).controls.denominationId.value).toBe('jpy-coin-500');
+    expect(component.allocationForm.controls.currencyCode.value).toBe('JPY');
+    selectCurrency('CRC');
+    expect(service.getCashAllocationContext).toHaveBeenLastCalledWith(1, 'CRC');
+    expect(component.denominations.at(0).controls.denominationId.value).toBe('crc-note-100');
+    expect(component.context?.currencies).toHaveLength(2);
+  });
+
+  it('uses fresh selected-currency data on initial automatic selection', () => {
+    const selected = { ...context.currencies[0], denominations: [context.currencies[0].denominations[1]] };
+    service.getCashAllocationContext
+      .mockReturnValueOnce(of({ ...context, currencyCode: null }))
+      .mockReturnValueOnce(of({ ...context, currencies: [selected] }));
+    restart();
+    expect(component.denominations.length).toBe(1);
+    expect(component.denominations.at(0).controls.denominationId.value).toBe('crc-coin-025');
+    expect(component.context?.currencies).toHaveLength(2);
+  });
+
+  it.each([
+    '',
+    '   ',
+    null
+  ])('renders a localized label for a %s backend name while preserving the code', (name) => {
+    service.getCashAllocationContext.mockReturnValueOnce(
+      of({ ...context, currencyCode: 'JPY', currencies: [{ ...context.currencies[1], name }] })
+    );
+    selectCurrency('JPY');
+    fixture.detectChanges();
+    expect(currencyOptions()).toContain('JPY \u2014 Japanese Yen');
+    expect(component.selectedCurrency?.code).toBe('JPY');
+    expect(fixture.nativeElement.textContent).not.toMatch(/undefined|null/);
+  });
+
+  it('renders configured currency names and codes unchanged', () => {
+    fixture.detectChanges();
+    expect(currencyOptions()).toEqual([
+      'CRC \u2014 Col\u00f3n',
+      'JPY \u2014 Yen'
+    ]);
+  });
+
+  it('uses the code as final fallback when no localized name is available', () => {
+    const currency: CashAllocationCurrency = { ...context.currencies[1], code: 'ZZZ', name: null };
+    service.getCashAllocationContext
+      .mockReturnValueOnce(of({ ...context, currencyCode: null, currencies: [currency] }))
+      .mockReturnValueOnce(of({ ...context, currencyCode: 'ZZZ', currencies: [currency] }));
+    restart();
+    expect(currencyOptions()).toEqual(['ZZZ \u2014 ZZZ']);
+    expect(component.selectedCurrency?.code).toBe('ZZZ');
+  });
+
+  it('keeps enabled currencies visible independently of missing denominations', () => {
+    service.getCashAllocationContext.mockReturnValueOnce(
+      of({ ...context, currencyCode: 'JPY', currencies: [{ ...context.currencies[1], denominations: [] }] })
+    );
+    selectCurrency('JPY');
+    fixture.detectChanges();
+    expect(component.context?.currencies).toHaveLength(2);
+    expect(component.denominations.length).toBe(0);
+    expect(component.canPreview).toBe(false);
+    expect(fixture.nativeElement.textContent).toContain('cashAllocation.empty.denominations');
+    expect(currencyOptions()).toContain('JPY \u2014 Yen');
+  });
+
+  it('loads an empty authoritative catalog without fabricating options or making a selected request', () => {
+    service.getCashAllocationContext.mockReturnValueOnce(of({ ...context, currencyCode: null, currencies: [] }));
+    restart();
+    expect(service.getCashAllocationContext).toHaveBeenCalledTimes(1);
+    expect(component.allocationForm.controls.currencyCode.value).toBe('');
+    expect(component.isLoading).toBe(false);
+    expect(component.canPreview).toBe(false);
+    expect(fixture.nativeElement.textContent).toContain('cashAllocation.empty.currencies');
+  });
+
+  it('removes duplicate currency codes from the authoritative catalog', () => {
+    service.getCashAllocationContext.mockReturnValueOnce(
+      of({ ...context, currencies: [
+          ...context.currencies,
+          context.currencies[0]
+        ] })
+    );
+    restart();
+    expect(component.context?.currencies.map((currency) => currency.code)).toEqual([
+      'CRC',
+      'JPY'
+    ]);
+  });
+
+  it('clears a currency missing from a refreshed catalog without silently selecting a different one', () => {
+    service.getCashAllocationContext.mockReturnValueOnce(
+      of({ ...context, currencyCode: null, currencies: [context.currencies[1]] })
+    );
+    component.retryContext();
+    expect(component.context?.currencies.map((currency) => currency.code)).toEqual(['JPY']);
+    expect(component.allocationForm.controls.currencyCode.value).toBe('');
+    expect(component.denominations.length).toBe(0);
+    expect(component.errorMessage).toBe('cashAllocation.errors.currencyUnavailable');
+    selectCurrency('JPY');
+    expect(component.selectedCurrency?.code).toBe('JPY');
+    expect(component.errorMessage).toBe('');
+  });
+
+  it('blocks stale denominations when the selected-currency response omits the selection', () => {
+    service.getCashAllocationContext.mockReturnValueOnce(of({ ...context, currencyCode: 'JPY', currencies: [] }));
+    selectCurrency('JPY');
+    expect(component.allocationForm.controls.currencyCode.value).toBe('');
+    expect(component.denominations.length).toBe(0);
+    expect(component.canPreview).toBe(false);
+    expect(component.errorMessage).toBe('cashAllocation.errors.currencyUnavailable');
+    expect(component.isLoading).toBe(false);
+  });
+
+  it.each([
+    [
+      401,
+      'authentication'
+    ],
+    [
+      403,
+      'noReadPermission'
+    ],
+    [
+      404,
+      'apiUnavailable'
+    ],
+    [
+      500,
+      'context'
+    ],
+    [
+      503,
+      'context'
+    ],
+    [
+      0,
+      'context'
+    ]
+  ])('handles API status %s without reporting missing configuration and allows recovery', (status, key) => {
+    service.getCashAllocationContext.mockReturnValueOnce(throwError(() => ({ status, error: {} })));
+    selectCurrency('JPY');
+    expect(component.errorMessage).toBe('cashAllocation.errors.' + key);
+    expect(component.isLoading).toBe(false);
+    expect(component.canPreview).toBe(false);
+    expect(component.denominations.length).toBe(0);
+    component.retryContext();
+    expect(component.selectedCurrency?.code).toBe('JPY');
+    expect(component.errorMessage).toBe('');
+  });
+
+  it.each([
+    'office.required',
+    'office.forbidden'
+  ])('identifies backend %s errors as office errors', (code) => {
+    service.getCashAllocationContext.mockReturnValueOnce(
+      throwError(() => ({
+        status: 400,
+        error: { errors: [{ userMessageGlobalisationCode: 'error.msg.base.teller.cash.allocation.' + code }] }
+      }))
+    );
+    selectCurrency('JPY');
+    expect(component.errorMessage).toBe('cashAllocation.errors.office');
+    expect(component.context).toBeUndefined();
+  });
+
+  it('cancels slow requests during rapid currency switching and accepts only the latest response', () => {
+    const slow = new Subject<CashAllocationContext>();
+    const latest = new Subject<CashAllocationContext>();
+    service.getCashAllocationContext.mockReturnValueOnce(slow).mockReturnValueOnce(latest);
+    selectCurrency('JPY');
+    expect(component.isLoading).toBe(true);
+    expect(component.denominations.length).toBe(0);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('mat-select[formControlName="currencyCode"]')).toBeTruthy();
+    selectCurrency('CRC');
+    expect(slow.observed).toBe(false);
+    expect(component.isLoading).toBe(true);
+    slow.next({ ...context, currencyCode: 'JPY', currencies: [context.currencies[1]] });
+    slow.complete();
+    expect(component.isLoading).toBe(true);
+    latest.next({ ...context, currencyCode: 'CRC', currencies: [context.currencies[0]] });
+    latest.complete();
+    expect(component.selectedCurrency?.code).toBe('CRC');
+    expect(component.denominations.at(0).controls.denominationId.value).toBe('crc-note-100');
+    expect(component.isLoading).toBe(false);
+    expect(component.context?.currencies).toHaveLength(2);
+  });
+
+  it('cancels the initial selected request if the user selects another currency', () => {
+    const slow = new Subject<CashAllocationContext>();
+    service.getCashAllocationContext
+      .mockReturnValueOnce(of({ ...context, currencyCode: null }))
+      .mockReturnValueOnce(slow);
+    restart();
+    expect(component.isLoading).toBe(true);
+    expect(component.context?.currencies).toHaveLength(2);
+    selectCurrency('JPY');
+    expect(slow.observed).toBe(false);
+    expect(component.selectedCurrency?.code).toBe('JPY');
+    expect(component.isLoading).toBe(false);
+  });
+
+  it('cancels pending requests when destroyed', () => {
+    const slow = new Subject<CashAllocationContext>();
+    service.getCashAllocationContext.mockReturnValueOnce(slow);
+    selectCurrency('JPY');
+    fixture.destroy();
+    expect(slow.observed).toBe(false);
+    expect(component.isLoading).toBe(false);
+  });
+
+  it.each([
+    undefined,
+    0,
+    -1,
+    NaN,
+    1.5
+  ])('rejects invalid authenticated office %s without requesting a guessed office', (officeId) => {
+    const authentication = TestBed.inject(AuthenticationService);
+    jest
+      .spyOn(authentication, 'getCredentials')
+      .mockReturnValue({ ...authentication.getCredentials(), officeId } as ReturnType<
+        AuthenticationService['getCredentials']
+      >);
+    service.getCashAllocationContext.mockClear();
+    component.retryContext();
+    expect(service.getCashAllocationContext).not.toHaveBeenCalled();
+    expect(component.context).toBeUndefined();
+    expect(component.errorMessage).toBe('cashAllocation.errors.office');
+    expect(component.canPreview).toBe(false);
+    expect(component.isLoading).toBe(false);
+  });
+
+  it('rejects a response for a different office', () => {
+    service.getCashAllocationContext.mockReturnValueOnce(of({ ...context, officeId: 2 }));
+    selectCurrency('JPY');
+    expect(component.context).toBeUndefined();
+    expect(component.errorMessage).toBe('cashAllocation.errors.office');
+    expect(component.denominations.length).toBe(0);
+  });
+
+  it('discards the previous tenant catalog before loading another tenant', () => {
+    const slow = new Subject<CashAllocationContext>();
+    settings.tenantIdentifier = 'another-tenant';
+    service.getCashAllocationContext.mockReturnValueOnce(slow);
+    selectCurrency('JPY');
+    expect(service.getCashAllocationContext).toHaveBeenLastCalledWith(1, undefined);
+    expect(component.context).toBeUndefined();
+    expect(component.allocationForm.controls.currencyCode.value).toBe('');
+    slow.next({ ...context, currencies: [] });
+    slow.complete();
+    expect(component.context?.currencies).toEqual([]);
+  });
+
+  it('rejects a slow response if the tenant changed while it was pending', () => {
+    const slow = new Subject<CashAllocationContext>();
+    service.getCashAllocationContext.mockReturnValueOnce(slow);
+    selectCurrency('JPY');
+    settings.tenantIdentifier = 'another-tenant';
+    slow.next({ ...context, currencyCode: 'JPY', currencies: [context.currencies[1]] });
+    slow.complete();
+    expect(component.context).toBeUndefined();
+    expect(component.errorMessage).toBe('cashAllocation.errors.office');
+    expect(component.isLoading).toBe(false);
   });
 });
