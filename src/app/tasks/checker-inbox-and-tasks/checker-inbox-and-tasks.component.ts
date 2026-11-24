@@ -32,6 +32,7 @@ import {
 } from '@angular/core';
 import { _ as extract } from '@ngx-translate/core';
 import { RouterLinkActive, RouterOutlet } from '@angular/router';
+import { CheckerInboxCountService } from '../checker-inbox-count.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -52,6 +53,8 @@ export class CheckerInboxAndTasksComponent {
   loanApprovalActive = false;
   loanApprovalCount: number | null = null;
   readonly clientApprovalDescription = extract('clientApproval.description');
+  checkerCount = inject(CheckerInboxCountService);
+  checkerInboxActive = false;
   navigationOpen = false;
   creditCount: number | null = null;
   clientApprovalCount: number | null = null;
@@ -95,11 +98,13 @@ export class CheckerInboxAndTasksComponent {
   ];
 
   onActivate(component: {
+    checkerInboxWorkspace?: boolean;
     queueCountChange?: OutputRef<number | null>;
     clientApprovalCountChange?: OutputRef<number | null>;
     loanApprovalCountChange?: OutputRef<number | null>;
   }): void {
     this.countSubscription?.unsubscribe();
+    this.checkerInboxActive = !!component.checkerInboxWorkspace;
     this.clientApprovalActive = !!component.clientApprovalCountChange;
     this.loanApprovalActive = !!component.loanApprovalCountChange;
     this.loanApprovalCount = null;

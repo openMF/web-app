@@ -30,7 +30,9 @@
           ? loanApprovalDescription
           : clientApprovalActive
             ? clientApprovalDescription
-            : 'credits.description'
+            : checkerInboxActive
+              ? 'checkerInbox.review.description'
+              : 'credits.description'
         ) | translate
       }}
     </p>
@@ -67,6 +69,13 @@
                 [class.empty-queue]="queue.path === 'credit' && creditCount === 0"
               >
                 <span>{{ queue.label | translate }}</span>
+                @if (queue.path === 'checker-inbox' && checkerCount.count() !== null) {
+                  <span
+                    class="queue-count"
+                    [attr.aria-label]="'checkerInbox.review.pending' | translate: { count: checkerCount.count() }"
+                    >{{ checkerCount.count() }}</span
+                  >
+                }
                 @if (queue.path === 'loan-approval' && loanApprovalCount !== null) {
                   <span class="queue-count">{{ loanApprovalCount }}</span>
                 }

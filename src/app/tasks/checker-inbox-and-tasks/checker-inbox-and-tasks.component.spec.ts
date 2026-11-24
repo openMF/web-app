@@ -17,6 +17,7 @@ import { environment } from 'environments/environment';
 import { CreditApplicationsComponent } from '../checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
 import { PendingProspectsComponent } from '../checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { routes } from '../tasks-routing.module';
+import { CheckerInboxCountService } from '../checker-inbox-count.service';
 import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks.component';
 
 describe('CheckerInboxAndTasksComponent', () => {
@@ -32,6 +33,15 @@ describe('CheckerInboxAndTasksComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
+        {
+          provide: CheckerInboxCountService,
+          useValue: {
+            count: (): number | null => null,
+            scope: () => 'test',
+            update: jest.fn(),
+            begin: jest.fn(() => 1)
+          }
+        },
         provideRouter([
           {
             path: 'checker-inbox-and-tasks',
@@ -55,6 +65,15 @@ describe('CheckerInboxAndTasksComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
+        {
+          provide: CheckerInboxCountService,
+          useValue: {
+            count: (): number | null => null,
+            scope: () => 'test',
+            update: jest.fn(),
+            begin: jest.fn(() => 1)
+          }
+        },
         provideRouter([
           {
             path: 'checker-inbox-and-tasks',
