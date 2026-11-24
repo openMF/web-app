@@ -1,0 +1,58 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>
+  {{ (isDone ? 'lending.file.Tick done' : 'lending.file.Not applicable') | translate }}
+</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <p class="doc-label">{{ data.label }}</p>
+
+    @if (isDone) {
+      <mat-form-field class="full">
+        <mat-label>{{ 'lending.file.Scan' | translate }}</mat-label>
+        <mat-select formControlName="scan">
+          <mat-option [value]="null">{{ 'lending.file.No scan' | translate }}</mat-option>
+          @for (s of scans(); track s.key) {
+            <mat-option [value]="s.key">
+              {{ s.name }} ({{
+                (s.from === 'loan' ? 'lending.file.On the loan' : 'lending.file.On the member') | translate
+              }})
+            </mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{ 'lending.file.scanHint' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <div class="upload">
+        <input #picker type="file" hidden (change)="upload($event)" />
+        <button mat-stroked-button type="button" [disabled]="uploading() || busy()" (click)="picker.click()">
+          <mat-icon>upload</mat-icon>{{ 'lending.file.Upload a scan' | translate }}
+        </button>
+        @if (uploading()) {
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+      </div>
+    }
+
+    <mat-form-field class="full">
+      <mat-label>{{ (isDone ? 'lending.file.Note' : 'lending.file.Reason') | translate }}</mat-label>
+      <textarea matInput formControlName="note" rows="3" maxlength="500"></textarea>
+      <mat-error>{{ 'lending.file.reasonRequired' | translate }}</mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close [disabled]="busy()">
+      {{ 'labels.buttons.Cancel' | translate }}
+    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="busy() || uploading()">
+      {{ 'lending.file.Save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>

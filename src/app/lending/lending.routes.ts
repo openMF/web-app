@@ -10,7 +10,22 @@ import { Routes } from '@angular/router';
 
 /** The lending module's screens (fineract-dbug ADR-0061, docs/lending.md), lazy-loaded under /lending. */
 export const LENDING_ROUTES: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'valuers' },
+  { path: '', pathMatch: 'full', redirectTo: 'files' },
+  {
+    path: 'files',
+    loadComponent: () => import('./files/work-page/work-page.component').then((m) => m.WorkPageComponent),
+    data: { title: 'Lending', breadcrumb: 'Lending' }
+  },
+  {
+    path: 'files/:loanId',
+    loadComponent: () => import('./files/loan-file/loan-file.component').then((m) => m.LoanFileComponent),
+    data: {
+      title: 'Loan file',
+      breadcrumb: 'Loan file',
+      routeParamBreadcrumb: false,
+      parentBreadcrumb: { label: 'Lending', url: '/lending/files' }
+    }
+  },
   {
     path: 'valuers',
     loadComponent: () => import('./valuers/valuers-list/valuers-list.component').then((m) => m.ValuersListComponent),

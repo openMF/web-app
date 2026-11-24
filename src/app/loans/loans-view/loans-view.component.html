@@ -540,6 +540,11 @@
             {{ 'labels.inputs.Loan Reschedules' | translate }}
           </a>
         }
+        @if (loanProductService.isLoanProduct) {
+          <a mat-tab-link *mifosxHasPermission="'READ_LOANFILE'" [routerLink]="['/lending/files', loanId]">
+            {{ 'lending.file.Loan file' | translate }}
+          </a>
+        }
         <a
           mat-tab-link
           [routerLink]="['./loan-documents']"

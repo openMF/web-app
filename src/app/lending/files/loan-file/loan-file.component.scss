@@ -1,0 +1,215 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// Same frameless page as the other lending lists.
+.container {
+  display: block;
+  width: 90%;
+  max-width: 84rem;
+  margin: 0 auto 24px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.section {
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0 0 16px;
+  }
+}
+
+.full {
+  width: 100%;
+}
+
+.hint {
+  margin: 8px 0 0;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.875rem;
+}
+
+.title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+
+    // The member's name links to the member page, in the app's link colour rather than the browser's.
+    a {
+      color: var(--dk-primary, #2460b9);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 0;
+
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.75rem;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+  color: var(--dk-text-2, #3f4448);
+  background: var(--dk-surface-2, #eceff1);
+
+  &.on,
+  &.stage {
+    color: var(--dk-success, #1b6b2a);
+    background: var(--dk-success-soft, #e3f3e6);
+  }
+
+  // Over a week in the stage, or a required document still missing.
+  &.slow,
+  &.missing {
+    color: var(--dk-danger, #b3261e);
+    background: var(--dk-danger-soft, #fbe9e7);
+  }
+}
+
+.checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--dk-border, #e2e8f0);
+
+  &.greyed {
+    opacity: 0.55;
+  }
+
+  .doc-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .doc-name {
+    font-weight: 500;
+  }
+
+  .doc-sub {
+    grid-column: 1;
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.875rem;
+  }
+
+  .doc-actions {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.return-box {
+  margin-top: 16px;
+}
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 0 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--dk-border, #e2e8f0);
+  }
+
+  .when {
+    grid-row: span 3;
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.875rem;
+  }
+
+  .what {
+    font-weight: 500;
+  }
+
+  .who,
+  .detail {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.875rem;
+  }
+}
+
+.empty-state {
+  padding: 48px 0;
+  text-align: center;
+}
+
+@media (width <= 600px) {
+  .doc {
+    grid-template-columns: minmax(0, 1fr);
+
+    .doc-actions {
+      grid-column: 1;
+      grid-row: auto;
+    }
+  }
+
+  .timeline li {
+    grid-template-columns: minmax(0, 1fr);
+
+    .when {
+      grid-row: auto;
+    }
+  }
+}

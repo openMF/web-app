@@ -1,0 +1,231 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container loan-file">
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  @if (file(); as f) {
+    <mat-card class="section header">
+      <mat-card-content>
+        <div class="title-row">
+          <h2>
+            <a [routerLink]="['/members', f.clientId]">{{ f.clientName }}</a>
+          </h2>
+          <span class="chip stage">{{ 'lending.stage.' + f.stage | translate }}</span>
+          @if (f.registerNumber) {
+            <span class="chip on">{{ 'lending.file.Register no' | translate }} {{ f.registerNumber }}</span>
+          }
+        </div>
+        <dl class="facts">
+          <div>
+            <dt>{{ 'lending.work.Loan no' | translate }}</dt>
+            <dd>{{ f.accountNo }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'lending.work.Product' | translate }}</dt>
+            <dd>{{ f.product }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'lending.work.Amount' | translate }}</dt>
+            <dd>{{ f.amount | number: '1.0-2' }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'lending.work.Officer' | translate }}</dt>
+            <dd>{{ f.officerName ?? '—' }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'lending.work.Office' | translate }}</dt>
+            <dd>{{ f.officeName }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'lending.work.Days in stage' | translate }}</dt>
+            <dd>
+              <span class="chip" [class.slow]="isSlow" [title]="date(f.since)">{{ f.daysInStage }}</span>
+            </dd>
+          </div>
+          @if (f.policyVersion !== null) {
+            <div>
+              <dt>{{ 'lending.file.Policy version' | translate }}</dt>
+              <dd>{{ f.policyVersion }}</dd>
+            </div>
+          }
+        </dl>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-content>
+        <h3>{{ 'lending.file.Security' | translate }}</h3>
+        <div class="chips">
+          @for (s of f.security; track s) {
+            <span class="chip">{{ 'lending.security.' + s | translate }}</span>
+          }
+        </div>
+        @if (editable) {
+          <p class="hint">{{ 'lending.file.securityHint' | translate }}</p>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-content>
+        <h3>{{ 'lending.file.Documents' | translate }}</h3>
+        @if (readOnly) {
+          <p class="hint">{{ 'lending.file.readOnly' | translate }}</p>
+        }
+        <ul class="checklist">
+          @for (d of documents; track d.code) {
+            <li class="doc" [class.greyed]="!d.applies">
+              <div class="doc-main">
+                <span class="doc-name">{{ docLabel(d.code, d.label) }}</span>
+                <span class="chip" [class.required]="d.required">
+                  {{ (d.required ? 'lending.file.Required' : 'lending.file.If it applies') | translate }}
+                </span>
+                @switch (d.status) {
+                  @case ('DONE') {
+                    <span class="chip on">{{ 'lending.file.Done' | translate }}</span>
+                  }
+                  @case ('NOT_APPLICABLE') {
+                    <span class="chip">{{ 'lending.file.Not applicable' | translate }}</span>
+                  }
+                  @default {
+                    @if (d.applies) {
+                      <span class="chip missing">{{ 'lending.file.Missing' | translate }}</span>
+                    }
+                  }
+                }
+              </div>
+              @if (d.status) {
+                <div class="doc-sub">
+                  @if (d.updatedByName) {
+                    {{ d.updatedByName }}
+                  }
+                  @if (d.updatedAt) {
+                    · {{ date(d.updatedAt) }}
+                  }
+                  @if (d.note) {
+                    · {{ d.note }}
+                  }
+                </div>
+              }
+              @if (editable && d.applies) {
+                <div class="doc-actions" *mifosxHasPermission="'UPDATE_LOANFILE'">
+                  @if (d.status) {
+                    <button mat-stroked-button type="button" [disabled]="busy()" (click)="undo(d)">
+                      {{ 'lending.file.Undo' | translate }}
+                    </button>
+                  } @else {
+                    <button
+                      mat-stroked-button
+                      color="primary"
+                      type="button"
+                      [disabled]="busy()"
+                      (click)="tick(d, 'DONE')"
+                    >
+                      {{ 'lending.file.Tick done' | translate }}
+                    </button>
+                    <button mat-button type="button" [disabled]="busy()" (click)="tick(d, 'NOT_APPLICABLE')">
+                      {{ 'lending.file.Not applicable' | translate }}
+                    </button>
+                  }
+                </div>
+              }
+            </li>
+          }
+        </ul>
+
+        @if (editable) {
+          <div class="file-actions" *mifosxHasPermission="'UPDATE_LOANFILE'">
+            @if (f.stage === 'DOCUMENTS') {
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                [disabled]="!canComplete || busy()"
+                (click)="complete()"
+              >
+                {{ 'lending.file.Mark file complete' | translate }}
+              </button>
+              @if (!canComplete) {
+                <span class="hint">{{ 'lending.file.missingCount' | translate: { count: f.missing.length } }}</span>
+              }
+            }
+            @if (canReturn && !returning()) {
+              <button mat-stroked-button type="button" [disabled]="busy()" (click)="startReturn()">
+                {{ 'lending.file.Return file' | translate }}
+              </button>
+            }
+          </div>
+          @if (returning()) {
+            <div class="return-box" *mifosxHasPermission="'UPDATE_LOANFILE'">
+              <mat-form-field class="full">
+                <mat-label>{{ 'lending.file.Reason' | translate }}</mat-label>
+                <textarea matInput [formControl]="reason" rows="3" maxlength="500"></textarea>
+                <mat-error>{{ 'lending.file.reasonRequired' | translate }}</mat-error>
+              </mat-form-field>
+              <button mat-button type="button" [disabled]="busy()" (click)="returning.set(false)">
+                {{ 'labels.buttons.Cancel' | translate }}
+              </button>
+              <button mat-raised-button color="primary" type="button" [disabled]="busy()" (click)="confirmReturn()">
+                {{ 'lending.file.Return file' | translate }}
+              </button>
+            </div>
+          }
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-content>
+        <h3>{{ 'lending.file.Notes' | translate }}</h3>
+        @if (!readOnly) {
+          <div *mifosxHasPermission="'UPDATE_LOANFILE'">
+            <mat-form-field class="full">
+              <mat-label>{{ 'lending.file.Add a note' | translate }}</mat-label>
+              <textarea matInput [formControl]="note" rows="3" [maxlength]="noteMax"></textarea>
+              <mat-hint align="end">{{ note.value?.length ?? 0 }} / {{ noteMax }}</mat-hint>
+            </mat-form-field>
+            <button mat-stroked-button color="primary" type="button" [disabled]="busy()" (click)="addNote()">
+              {{ 'lending.file.Add note' | translate }}
+            </button>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-content>
+        <h3>{{ 'lending.file.History' | translate }}</h3>
+        @if (history.length) {
+          <ol class="timeline">
+            @for (h of history; track $index) {
+              <li>
+                <span class="when">{{ date(h.at ?? h.on) }}</span>
+                <span class="what">{{ historyText(h) }}</span>
+                @if (h.userName) {
+                  <span class="who">{{ h.userName }}</span>
+                }
+                @if (h.detail) {
+                  <span class="detail">{{ h.detail }}</span>
+                }
+              </li>
+            }
+          </ol>
+        } @else {
+          <p class="hint">{{ 'lending.file.noHistory' | translate }}</p>
+        }
+      </mat-card-content>
+    </mat-card>
+  } @else if (!loading()) {
+    <div class="empty-state">
+      <p>{{ 'lending.file.couldNotLoad' | translate }}</p>
+    </div>
+  }
+</div>

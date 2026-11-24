@@ -1,0 +1,85 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// The Members list's toolbar, blue-header table and empty state.
+@use '../../../shared/styles/list-layout' as *;
+
+// Same frameless look as the Members list.
+.container {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.stage-tabs {
+  max-width: 100%;
+  margin-bottom: 16px;
+  // On a phone the three tabs scroll sideways instead of running off the page.
+  overflow-x: auto;
+
+  .count {
+    margin-left: 8px;
+    padding: 0 8px;
+    border-radius: 10px;
+    background: var(--dk-surface-2, #eceff1);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 20px;
+  }
+}
+
+mat-progress-bar {
+  margin-bottom: 8px;
+}
+
+// On a phone the table keeps readable columns and scrolls sideways.
+.table-scroll {
+  overflow-x: auto;
+
+  .members-table {
+    min-width: 960px;
+  }
+}
+
+.members-table {
+  .name {
+    font-weight: 500;
+  }
+
+  .num {
+    text-align: right;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+}
+
+.chip {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+  color: var(--dk-text-2, #3f4448);
+  background: var(--dk-surface-2, #eceff1);
+
+  &.on {
+    color: var(--dk-success, #1b6b2a);
+    background: var(--dk-success-soft, #e3f3e6);
+  }
+
+  // Over a week in the stage, or documents still missing.
+  &.slow,
+  &.missing {
+    color: var(--dk-danger, #b3261e);
+    background: var(--dk-danger-soft, #fbe9e7);
+  }
+}

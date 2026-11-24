@@ -1,0 +1,28 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.full {
+  width: 100%;
+}
+
+.doc-label {
+  margin: 0 0 16px;
+  font-weight: 500;
+}
+
+.upload {
+  margin: 0 0 16px;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+
+  mat-progress-bar {
+    margin-top: 8px;
+  }
+}

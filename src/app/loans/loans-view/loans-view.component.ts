@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationExtras, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoansService } from '../loans.service';
 
 /** Custom Buttons Configuration */
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { LoanFileService } from 'app/lending/files/loan-file.service';
 import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 
 /** Dialog Components */
@@ -81,6 +83,9 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   loansService = inject(LoansService);
   private translateService = inject(TranslateService);
   dialog = inject(MatDialog);
+  private loanFiles = inject(LoanFileService);
+  private cdr = inject(ChangeDetectorRef);
+  private authenticationService = inject(AuthenticationService);
 
   /** Loan Details Data */
   loanDetailsData: any;
@@ -250,12 +255,39 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     });
   }
 
+  /**
+   * A loan whose file is still in the Documents stage is not approved yet (fineract-dbug #324): the backend refuses
+   * Approve until the file is complete, so the button is not offered. Only users who can read loan files are checked.
+   */
+  private hideApproveWhileCollectingDocuments(): void {
+    const permissions: string[] = this.authenticationService.getCredentials()?.permissions ?? [];
+    const canRead = permissions.includes('ALL_FUNCTIONS') || permissions.includes('READ_LOANFILE');
+    if (this.status !== 'Submitted and pending approval' || !canRead || !this.loanId) {
+      return;
+    }
+    this.loanFiles
+      .get(this.loanId, true)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (file) => {
+          if (file.stage === 'DOCUMENTS' && this.buttonConfig) {
+            this.buttonConfig.buttonsArray = this.buttonConfig.buttonsArray.filter((b) => b.name !== 'Approve');
+            this.buttonConfig.optionArray = this.buttonConfig.optionArray?.filter((o) => o.name !== 'Approve');
+            this.cdr.markForCheck();
+          }
+        },
+        // No file to read (a group loan, or no access): leave the buttons as they are.
+        error: () => undefined
+      });
+  }
+
   // Defines the buttons based on the status of the loan account
   setConditionalButtons() {
     if (!this.loanDetailsData) {
       return;
     }
     this.buttonConfig = new LoansAccountButtonConfiguration(this.status, this.loanSubStatus);
+    this.hideApproveWhileCollectingDocuments();
     if (this.canShowWorkingCapitalDiscountUpdate()) {
       this.buttonConfig.addButton({
         name: 'Discount Fee',

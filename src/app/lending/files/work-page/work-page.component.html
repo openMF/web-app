@@ -1,0 +1,142 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container work-page">
+  <mat-button-toggle-group
+    class="stage-tabs"
+    [value]="stage()"
+    (change)="chooseStage($event.value)"
+    [attr.aria-label]="'lending.work.Stage' | translate"
+  >
+    @for (s of stages; track s) {
+      <mat-button-toggle [value]="s">
+        {{ 'lending.stage.' + s | translate }}
+        <span class="count">{{ page().counts[s] }}</span>
+      </mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+
+  <div class="list-toolbar">
+    <div class="toolbar-left">
+      <mat-form-field class="search-field" subscriptSizing="dynamic">
+        <mat-label>{{ 'lending.work.Search' | translate }}</mat-label>
+        <input matInput [formControl]="search" />
+        <fa-icon matSuffix icon="search"></fa-icon>
+      </mat-form-field>
+
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>{{ 'lending.work.Loans of' | translate }}</mat-label>
+        <mat-select [formControl]="officer">
+          <mat-option [value]="ME">{{ 'lending.work.My loans' | translate }}</mat-option>
+          <mat-option [value]="EVERYONE">{{ 'lending.work.Everyone' | translate }}</mat-option>
+          <mat-option [value]="NONE">{{ 'lending.work.No officer' | translate }}</mat-option>
+          @for (o of officers(); track o.id) {
+            <mat-option [value]="'' + o.id">{{ o.displayName }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>{{ 'lending.work.Office' | translate }}</mat-label>
+        <mat-select [formControl]="office">
+          <mat-option [value]="null">{{ 'lending.work.All offices' | translate }}</mat-option>
+          @for (o of offices(); track o.id) {
+            <mat-option [value]="o.id">{{ o.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  @if (page().rows.length) {
+    <div class="table-scroll">
+      <table mat-table [dataSource]="page().rows" class="members-table">
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.work.Member' | translate }}</th>
+          <td mat-cell *matCellDef="let r">
+            <span class="name">{{ r.clientName }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accountNo">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.work.Loan no' | translate }}</th>
+          <td mat-cell *matCellDef="let r">{{ r.accountNo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.work.Product' | translate }}</th>
+          <td mat-cell *matCellDef="let r">{{ r.product }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef class="num">{{ 'lending.work.Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let r" class="num">{{ r.amount | number: '1.0-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="officerName">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.work.Officer' | translate }}</th>
+          <td mat-cell *matCellDef="let r">{{ r.officerName ?? '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="officeName">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.work.Office' | translate }}</th>
+          <td mat-cell *matCellDef="let r">{{ r.officeName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="registerNumber">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.work.Register no' | translate }}</th>
+          <td mat-cell *matCellDef="let r">{{ r.registerNumber ?? '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="daysInStage">
+          <th mat-header-cell *matHeaderCellDef class="num">{{ 'lending.work.Days in stage' | translate }}</th>
+          <td mat-cell *matCellDef="let r" class="num">
+            <span class="chip" [class.slow]="isSlow(r)" [title]="date(r.since)">{{ r.daysInStage }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="missing">
+          <th mat-header-cell *matHeaderCellDef>{{ 'lending.work.Documents' | translate }}</th>
+          <td mat-cell *matCellDef="let r">
+            @if (r.missing) {
+              <span class="chip missing">{{ 'lending.work.missing' | translate: { count: r.missing } }}</span>
+            } @else {
+              <span class="chip on">{{ 'lending.work.All in' | translate }}</span>
+            }
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columns"
+          class="clickable"
+          tabindex="0"
+          (click)="open(row)"
+          (keydown.enter)="open(row)"
+        ></tr>
+      </table>
+    </div>
+    <mat-paginator
+      [length]="page().total"
+      [pageIndex]="pageIndex()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="pageSizes"
+      (page)="changePage($event)"
+    ></mat-paginator>
+  } @else if (!loading()) {
+    <div class="empty-state">
+      <fa-icon icon="folder-open" size="3x" class="empty-icon"></fa-icon>
+      <p>{{ (failed() ? 'lending.work.couldNotLoad' : 'lending.work.empty.' + stage()) | translate }}</p>
+    </div>
+  }
+</div>
