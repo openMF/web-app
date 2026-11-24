@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { ValidatorFn } from '@angular/forms';
+
 export type CoordinateType = 'latitude' | 'longitude';
 
 export type CoordinatePair = [
@@ -59,17 +61,40 @@ export function hasValidCoordinatePair(latitude: any, longitude: any): boolean {
   return getCoordinatePair(latitude, longitude) !== null;
 }
 
+/** Decimal input, including scientific notation, without converting the form's text value. */
+export function coordinateValidator(type: CoordinateType, required = false): ValidatorFn {
+  return (control) => {
+    const value = control.value;
+    if (value === null || value === undefined || (typeof value === 'string' && value.trim() === '')) {
+      return required ? { required: true } : null;
+    }
+    return /^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(String(value).trim()) &&
+      parseCoordinate(value, type) !== null
+      ? null
+      : { invalidNumber: true };
+  };
+}
+
 export function normalizeAddressCoordinates<T extends Record<string, any>>(
   addressData: T,
-  coordinatesEnabled = true
+  coordinatesEnabled = true,
+  enabledFields: Partial<Record<CoordinateType, boolean>> = {}
 ): T {
   const normalizedAddressData = { ...addressData };
 
-  if (!coordinatesEnabled || !hasCoordinateValue(normalizedAddressData.latitude, 'latitude')) {
+  if (
+    !coordinatesEnabled ||
+    enabledFields.latitude === false ||
+    !hasCoordinateValue(normalizedAddressData.latitude, 'latitude')
+  ) {
     delete normalizedAddressData.latitude;
   }
 
-  if (!coordinatesEnabled || !hasCoordinateValue(normalizedAddressData.longitude, 'longitude')) {
+  if (
+    !coordinatesEnabled ||
+    enabledFields.longitude === false ||
+    !hasCoordinateValue(normalizedAddressData.longitude, 'longitude')
+  ) {
     delete normalizedAddressData.longitude;
   }
 
