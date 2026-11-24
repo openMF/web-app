@@ -59,6 +59,16 @@ $hues: 'client', 'group', 'center', 'loan', 'saving', 'share', 'journal', 'id';
     font-size: 22px;
     font-weight: 600;
     letter-spacing: -0.01em;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ds-blue-600, #1976d2);
+      outline-offset: 4px;
+      border-radius: var(--ds-radius, 4px);
+    }
   }
 
   .ico {
