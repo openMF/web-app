@@ -33,7 +33,7 @@
         (click)="navigateToNotification(row)"
       ></tr>
       <tr *matNoDataRow>
-        <td [attr.colspan]="displayedColumns.length">You don't have any notifications</td>
+        <td [attr.colspan]="displayedColumns.length">{{ 'labels.text.No notifications' | translate }}</td>
       </tr>
     </table>
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
