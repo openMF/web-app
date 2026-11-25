@@ -198,21 +198,26 @@ export class SettingsService {
   /**
    * Returns list of default server
    */
-  get servers() {
-    return JSON.parse(localStorage.getItem('mifosXServers'));
+  get servers(): string[] {
+    const servers = localStorage.getItem('mifosXServers');
+    try {
+      return servers ? JSON.parse(servers) : [];
+    } catch {
+      return [];
+    }
   }
 
   /**
    * Returns server setting
    */
-  get server() {
+  get server(): string {
     if (localStorage.getItem('mifosXServerURL')) {
       return localStorage.getItem('mifosXServerURL');
     }
     if (environment.baseApiUrl && environment.baseApiUrl !== '') {
       return environment.baseApiUrl;
     } else {
-      return this.servers()[0];
+      return this.servers[0] || '';
     }
   }
 
@@ -300,12 +305,15 @@ export class SettingsService {
   /**
    * Validate If the enable_business_date configuration is enabled or disabled.
    */
-  validateBusinessDateStatus(configurations: any) {
-    configurations.some((config: any) => {
-      if (config.name === SettingsService.businessDateConfigName) {
-        return config.enabled;
-      }
-    });
+  validateBusinessDateStatus(configurations: any[]): boolean {
+    return (
+      configurations?.some((config: any) => {
+        if (config.name === SettingsService.businessDateConfigName) {
+          return config.enabled;
+        }
+        return false;
+      }) ?? false
+    );
   }
 
   /**
