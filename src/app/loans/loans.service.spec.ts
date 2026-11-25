@@ -57,6 +57,31 @@ describe('LoansService - Working Capital transaction template', () => {
     expect(result.proposedPrincipal).toBe('90071992547409.91');
   });
 
+  it('preserves the exact approval amount in an approval-template read', () => {
+    let response: any;
+    service.getLoanApprovalTemplate('42', true).subscribe((data) => (response = data));
+    const request = httpMock.expectOne((req) => req.url === '/loans/42/template');
+    expect(request.request.params.get('templateType')).toBe('approval');
+    expect(request.request.params.get('associations')).toBe('delinquency');
+    expect(request.request.responseType).toBe('text');
+    request.flush('{"approvalAmount":90071992547409.910001,"expectedDisbursementDate":[2026,9,30]}');
+    expect(response.approvalAmount).toBe('90071992547409.910001');
+    expect(response.expectedDisbursementDate).toEqual([
+      2026,
+      9,
+      30
+    ]);
+  });
+
+  it('keeps the existing JSON approval-template contract for other callers', () => {
+    let response: any;
+    service.getLoanApprovalTemplate('42').subscribe((data) => (response = data));
+    const request = httpMock.expectOne((req) => req.url === '/loans/42/template');
+    expect(request.request.responseType).toBe('json');
+    request.flush({ approvalAmount: 1200 });
+    expect(response.approvalAmount).toBe(1200);
+  });
+
   it('gets the typed credit origination board from the WEB-1059 endpoint', () => {
     const board: CreditOriginationBoard = {
       creditApplicationId: 87,

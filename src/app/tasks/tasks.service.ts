@@ -196,14 +196,10 @@ export class TasksService {
    * Get Credit Applications Data.
    * @param {any} searchData Credit applications search and paging parameters.
    */
-  getCreditApplications(searchData?: any, exactAmounts = false): Observable<any> {
-    const params = this.buildHttpParams(searchData);
-    if (exactAmounts) {
-      return this.http
-        .get('/v2/credit-applications', { params, responseType: 'text' })
-        .pipe(map((text) => parseExactJson(text, ['amount'])));
-    }
-    return this.http.get('/v2/credit-applications', { params });
+  getCreditApplications(searchData?: any): Observable<any> {
+    return this.http
+      .get('/v2/credit-applications', { params: this.buildHttpParams(searchData), responseType: 'text' })
+      .pipe(map((text) => parseExactJson(text, ['amount'])));
   }
 
   /**

@@ -97,7 +97,7 @@ describe('CheckerInboxAndTasksComponent', () => {
     environment.productionModeEnableRBAC = rbacEnabled;
   });
 
-  it('shows the Credit tab for users who can read loans', () => {
+  it('shows a single Credit Applications entry for users who can read loans', () => {
     createComponent(['READ_LOAN']);
 
     const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('nav a')).map((tab: HTMLElement) =>
@@ -105,7 +105,7 @@ describe('CheckerInboxAndTasksComponent', () => {
     );
 
     expect(tabLabels).toContain('labels.inputs.Credit Applications');
-    expect(tabLabels).toContain('labels.inputs.Credit');
+    expect(tabLabels).not.toContain('labels.inputs.Credit');
     expect(tabLabels).toContain('labels.heading.Mass Rejection');
   });
 
@@ -128,7 +128,8 @@ describe('CheckerInboxAndTasksComponent', () => {
     expect(groups[0].textContent).toContain('labels.inputs.Credit Applications');
     expect(groups[0].textContent).toContain('labels.inputs.Pending Prospects');
     expect(groups[1].textContent).toContain('labels.inputs.Loan Approval');
-    expect(groups[2].textContent).toContain('labels.inputs.Credit');
+    expect(groups[2].textContent).toContain('labels.heading.Mass Rejection');
+    expect(groups[2].textContent).not.toContain('labels.inputs.Credit');
     expect(fixture.nativeElement.querySelectorAll('.queue-count')).toHaveLength(0);
   });
 
@@ -142,14 +143,9 @@ describe('CheckerInboxAndTasksComponent', () => {
     expect(requestsTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/requests');
   });
 
-  it('routes Credit to the credit applications page', async () => {
+  it('does not expose the legacy Credit alias as a duplicate queue', async () => {
     const routeElement = await navigateToComponent(['READ_LOAN']);
-
-    const creditTab = Array.from(routeElement.querySelectorAll('nav a')).find(
-      (tab: HTMLElement) => tab.textContent?.trim() === 'labels.inputs.Credit'
-    ) as HTMLAnchorElement;
-
-    expect(creditTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/credit');
+    expect(routeElement.querySelector('a[href$="/credit"]')).toBeNull();
   });
 
   it('routes Mass Rejection to its dedicated task tab', async () => {
@@ -187,7 +183,7 @@ describe('CheckerInboxAndTasksComponent', () => {
     expect(pendingProspectsTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/pending-prospects');
   });
 
-  it('uses CreditApplicationsComponent for Requests, Credit, and Mass Rejection routes', () => {
+  it('keeps guarded Requests and Mass Rejection routes and redirects legacy Credit links', () => {
     const shellRoute = routes[0] as AngularRoute;
     const taskRoute = shellRoute.children?.find((route: AngularRoute) => route.path === '');
     const requestsRoute = taskRoute?.children?.find((route: AngularRoute) => route.path === 'requests');
@@ -195,16 +191,14 @@ describe('CheckerInboxAndTasksComponent', () => {
     const massRejectionRoute = taskRoute?.children?.find((route: AngularRoute) => route.path === 'mass-rejection');
 
     expect(requestsRoute?.component).toBe(CreditApplicationsComponent);
-    expect(creditRoute?.component).toBe(CreditApplicationsComponent);
+    expect(creditRoute?.redirectTo).toBe('requests');
+    expect(creditRoute?.pathMatch).toBe('full');
     expect(massRejectionRoute?.component).toBe(CreditApplicationsComponent);
     expect(requestsRoute?.data?.permissions).toEqual(['READ_LOAN']);
-    expect(creditRoute?.data?.permissions).toEqual(['READ_LOAN']);
     expect(massRejectionRoute?.data?.permissions).toEqual(['READ_LOAN']);
     expect(requestsRoute?.canActivate).toHaveLength(1);
-    expect(creditRoute?.canActivate).toHaveLength(1);
     expect(massRejectionRoute?.canActivate).toHaveLength(1);
     expect(requestsRoute?.canDeactivate).toHaveLength(1);
-    expect(creditRoute?.canDeactivate).toHaveLength(1);
     expect(massRejectionRoute?.canDeactivate).toHaveLength(1);
   });
 
@@ -238,7 +232,7 @@ describe('CheckerInboxAndTasksComponent', () => {
     expect(credit.getAttribute('disabled')).toBeNull();
   });
 
-  it('preserves every existing deep-link path in the grouped navigation', async () => {
+  it('lists canonical queue paths once in the grouped navigation', async () => {
     const element = await navigateToComponent(['ALL_FUNCTIONS']);
     expect(Array.from(element.querySelectorAll('nav a')).map((link) => link.getAttribute('href'))).toEqual(
       [
@@ -250,7 +244,6 @@ describe('CheckerInboxAndTasksComponent', () => {
         'council-approval',
         'loan-disbursal',
         'reschedule-loan',
-        'credit',
         'mass-rejection'
       ].map((path) => '/checker-inbox-and-tasks/' + path)
     );
@@ -274,7 +267,23 @@ describe('CheckerInboxAndTasksComponent', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.queue-count').textContent.trim()).toBe('0');
   });
-  it('routes verified rejection counts to the Mass Rejection badge independently from Credit', () => {
+  it('places the authoritative Requests count beside Credit Applications only', () => {
+    createComponent(['READ_LOAN']);
+    fixture.componentInstance.onActivate({
+      isRequests: true,
+      queueCountChange: {
+        subscribe: (callback: (count: number | null) => void) => {
+          callback(58);
+          return { unsubscribe: jest.fn() };
+        }
+      } as any
+    });
+    fixture.detectChanges();
+    const badge = fixture.nativeElement.querySelector('.queue-count');
+    expect(badge.textContent.trim()).toBe('58');
+    expect(badge.closest('a').getAttribute('href')).toContain('/requests');
+  });
+  it('routes verified rejection counts to the Mass Rejection badge independently from Credit Applications', () => {
     createComponent(['READ_LOAN']);
     let emit!: (count: number | null) => void;
     fixture.componentInstance.onActivate({
@@ -288,7 +297,9 @@ describe('CheckerInboxAndTasksComponent', () => {
     });
     emit(9);
     fixture.detectChanges();
-    expect(fixture.componentInstance.massRejectionCount).toBe(9);
+    const badge = fixture.nativeElement.querySelector('.queue-count');
+    expect(badge.textContent.trim()).toBe('9');
+    expect(badge.closest('a').getAttribute('href')).toContain('/mass-rejection');
     expect(fixture.componentInstance.creditCount).toBeNull();
     expect(fixture.nativeElement.querySelector('.tasks-heading').textContent).toContain('massRejection.description');
     emit(null);

@@ -204,11 +204,13 @@ test('view-first dashboard uses real intervals and remains readable at all refer
 test('edit, cancel and authoritative save preserve the complete-week contract', async ({ page }, testInfo) => {
   const calls = await mockHours(page);
   const screen = page.locator('mifosx-office-schedules-tab');
-  await screen.getByRole('button', { name: 'Edit schedule', exact: true }).focus();
-  await page.keyboard.press('Enter');
+  const edit = screen.getByRole('button', { name: 'Edit schedule', exact: true });
+  await expect(edit).toBeEnabled();
+  await edit.press('Enter');
+  const opening = screen.getByLabel('Monday Opening Time', { exact: true });
+  await expect(opening).toBeVisible();
   await page.setViewportSize({ width: 390, height: 3600 });
   await settleLayout(page, 390);
-  const opening = screen.getByLabel('Monday Opening Time', { exact: true });
   await opening.fill('05:30');
   await expect(screen.getByRole('button', { name: 'Save Changes', exact: true })).toBeInViewport();
   expect(await screen.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);

@@ -10,6 +10,8 @@ import {
   compareCreditAmounts,
   creditCalendarDate,
   creditCsvCell,
+  creditAge,
+  creditOverdueParams,
   creditFilterError,
   creditStatusId
 } from './credit-workspace.utils';
@@ -57,6 +59,91 @@ describe('Credit workspace financial presentation', () => {
     expect(creditFilterError({ submittedFrom: new Date(2026, 10, 22), submittedTo: new Date(2026, 10, 1) })).toBe(
       'labels.text.From Date cannot be after To Date'
     );
+  });
+  it('uses an inclusive eleven-day cutoff and preserves the date-filter intersection', () => {
+    const reference = [
+      2026,
+      11,
+      22
+    ];
+    expect(creditOverdueParams({}, reference)).toEqual({ status: 100, submittedTo: '2026-11-11' });
+    expect(creditOverdueParams({ submittedTo: '2026-11-01' }, reference)).toEqual({
+      status: 100,
+      submittedTo: '2026-11-01'
+    });
+    expect(creditOverdueParams({ submittedFrom: '2026-11-12' }, reference)).toBeNull();
+    expect(creditOverdueParams({ submittedFrom: '2026-11-11' }, reference)).not.toBeNull();
+    expect(creditOverdueParams({}, null)).toBeNull();
+  });
+  it('handles business-date boundaries, invalid dates, leap days and future submissions', () => {
+    expect(
+      creditAge(
+        [
+          2026,
+          11,
+          12
+        ],
+        [
+          2026,
+          11,
+          22
+        ]
+      )
+    ).toBe(10);
+    expect(
+      creditAge(
+        '2026-11-11',
+        [
+          2026,
+          11,
+          22
+        ]
+      )
+    ).toBe(11);
+    expect(
+      creditAge(
+        '2026-11-23',
+        [
+          2026,
+          11,
+          22
+        ]
+      )
+    ).toBe(-1);
+    expect(
+      creditAge(
+        [
+          2026,
+          2,
+          30
+        ],
+        [
+          2026,
+          3,
+          2
+        ]
+      )
+    ).toBeNull();
+    expect(
+      creditAge(
+        null,
+        [
+          2026,
+          11,
+          22
+        ]
+      )
+    ).toBeNull();
+    expect(
+      creditAge(
+        '2024-02-29',
+        [
+          2024,
+          3,
+          11
+        ]
+      )
+    ).toBe(11);
   });
   it('uses authoritative status identifiers and never guesses from display text', () => {
     expect(creditStatusId({ status: { code: 'loanStatusType.active' } })).toBe(300);

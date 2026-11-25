@@ -24,11 +24,11 @@
 
 <div
   class="tab-container mat-typography"
-  [class.credits-workspace]="isCreditSearch || isMassRejection"
+  [class.credits-workspace]="isWorkspace || isMassRejection"
   [class.mass-rejection-workspace]="isMassRejection"
   [attr.aria-busy]="loading || busy"
 >
-  @if (isCreditSearch) {
+  @if (isWorkspace) {
     <section
       [attr.aria-busy]="summaryLoading"
       class="status-summaries"
@@ -47,6 +47,14 @@
             ><span class="status-dot" [class]="card.tone" aria-hidden="true"></span>{{ card.key | translate }}</span
           >
           <strong>{{ summaryCounts[card.status] ?? '—' }}</strong>
+          @if (card.status === 100) {
+            <small class="summary-detail">{{
+              'credits.overdueCount' | translate: { count: overduePendingCount ?? '—' }
+            }}</small>
+          }
+          @if (card.status === 200) {
+            <small class="summary-detail">{{ 'credits.readyToDisburse' | translate }}</small>
+          }
           @if (summaryCounts[card.status] === null) {
             <span class="visually-hidden">{{ 'credits.unavailable' | translate }}</span>
           }
@@ -64,7 +72,7 @@
     <p class="summary-scope">{{ 'credits.summaryScope' | translate }}</p>
   }
   <section class="results-card">
-    @if (isCreditSearch || isMassRejection) {
+    @if (isWorkspace || isMassRejection) {
       <form [formGroup]="creditApplicationsForm" class="compact-filters" (ngSubmit)="applyFilters()">
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="page-search">
           <mat-label>{{ (isMassRejection ? 'massRejection.search' : 'credits.pageSearch') | translate }}</mat-label>
@@ -96,16 +104,21 @@
           <i class="fa fa-calendar" aria-hidden="true"></i> {{ 'labels.inputs.Submitted Date' | translate }}
           <i class="fa fa-angle-down" aria-hidden="true"></i>
         </button>
-        @if (!isMassRejection) {
-          <button
-            mat-stroked-button
-            type="button"
-            [disabled]="busy"
-            [class.active-filter]="filterActive('amount')"
-            (click)="openFilter('amount')"
+        @if (isWorkspace) {
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="product-filter"
+            [class.active-filter]="creditApplicationsForm.value.clientTypeId"
           >
-            {{ 'labels.inputs.Amount' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
-          </button>
+            <mat-label>{{ 'labels.inputs.Customer Type' | translate }}</mat-label>
+            <mat-select formControlName="clientTypeId" (selectionChange)="applyFilters()">
+              <mat-option [value]="''">{{ 'labels.inputs.All' | translate }}</mat-option>
+              @for (clientType of clientTypeOptions; track optionValue(clientType)) {
+                <mat-option [value]="optionValue(clientType)">{{ optionLabel(clientType) }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         }
         <mat-form-field
           appearance="outline"
@@ -121,7 +134,16 @@
             }
           </mat-select>
         </mat-form-field>
-        @if (!isMassRejection) {
+        @if (isWorkspace) {
+          <button
+            mat-stroked-button
+            type="button"
+            [disabled]="busy"
+            [class.active-filter]="filterActive('amount')"
+            (click)="openFilter('amount')"
+          >
+            {{ 'labels.inputs.Amount' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </button>
           <button
             mat-stroked-button
             type="button"
@@ -129,11 +151,11 @@
             [class.active-filter]="filterActive('location')"
             (click)="openFilter('location')"
           >
-            {{ 'labels.inputs.State / Municipality' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+            {{ 'credits.location' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
           </button>
         }
         <button mat-button type="button" [disabled]="busy" (click)="clearFilters()">
-          {{ 'labels.buttons.Clear' | translate }}
+          {{ (isMassRejection ? 'labels.buttons.Clear' : 'credits.reset') | translate }}
         </button>
       </form>
       @if (selectedClientName) {
@@ -153,7 +175,7 @@
         [formGroup]="creditApplicationsForm"
         (ngSubmit)="applyFilters()"
         class="credit-applications-filter"
-        [class.credit-search-filter]="isCreditSearch || isMassRejection"
+        [class.credit-search-filter]="isWorkspace || isMassRejection"
         [class.requests-filter]="isRequests"
       >
         <mat-form-field>
@@ -169,26 +191,6 @@
           <mat-datepicker-toggle matSuffix [for]="submittedToPicker"></mat-datepicker-toggle>
           <mat-datepicker #submittedToPicker></mat-datepicker>
         </mat-form-field>
-
-        @if (isRequests) {
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Customer Type' | translate }}</mat-label>
-            <mat-select formControlName="clientTypeId">
-              @for (clientType of clientTypeOptions; track optionValue(clientType)) {
-                <mat-option [value]="optionValue(clientType)">{{ optionLabel(clientType) }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.State' | translate }}</mat-label>
-            <mat-select formControlName="stateProvinceId">
-              @for (state of stateOptions; track optionValue(state)) {
-                <mat-option [value]="optionValue(state)">{{ optionLabel(state) }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        }
 
         @if (!isMassRejection) {
           <mat-form-field>
@@ -219,23 +221,6 @@
           </mat-form-field>
         }
 
-        @if (isRequests) {
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Maximum Amount' | translate }}</mat-label>
-            <input matInput inputmode="decimal" formControlName="maxAmount" />
-          </mat-form-field>
-        }
-
-        @if (isRequests) {
-          <mat-form-field
-            ><mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
-            <mat-select formControlName="currencyCode">
-              @for (currency of currencyOptions; track currency.code) {
-                <mat-option [value]="currency.code">{{ currency.code }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        }
         <div class="filter-actions">
           <button mat-raised-button color="primary" type="submit">
             {{ 'labels.buttons.Advanced Search' | translate }}
@@ -307,6 +292,9 @@
     }
 
     @if (batchOutcomes.length) {
+      @if (outcomeCounts.queued) {
+        <p class="alert" role="status">{{ 'credits.queuedCount' | translate: { count: outcomeCounts.queued } }}</p>
+      }
       <p class="alert" role="status">
         {{ (isMassRejection ? 'massRejection.batchCounts' : 'credits.batchCounts') | translate: outcomeCounts }}
       </p>
@@ -314,9 +302,14 @@
         @for (result of batchOutcomes; track result.application.loanId) {
           <li>
             {{ result.application.accountNo ?? result.application.loanId }} —
-            {{ (result.outcome === 'queued' ? 'massRejection.queued' : 'credits.' + result.outcome) | translate }}
-            @if (result.reason) {
-              <small>{{ result.reason | translate }}</small>
+            @if (result.safeToRetry) {
+              {{ 'credits.notSubmitted' | translate }}
+              <span> — {{ result.reason || 'credits.preflightUnavailable' | translate }}</span>
+            } @else {
+              {{ 'credits.' + result.outcome | translate }}
+              @if (result.reason) {
+                <small>{{ result.reason | translate }}</small>
+              }
             }
           </li>
         }
@@ -328,10 +321,20 @@
     @if (exportError) {
       <p class="alert error" role="alert">{{ 'credits.exportFailed' | translate }}</p>
     }
-    @if (isCreditSearch && selectedApplicationIds.size > 0) {
+    @if ((isWorkspace || isMassRejection) && selectedApplicationIds.size > 0) {
       <div class="mass-actions" role="region" [attr.aria-label]="'credits.selection' | translate">
-        <strong>{{ 'credits.selectedCount' | translate: { count: selectedApplicationIds.size } }}</strong>
-        @if (isCreditSearch && hasPermission('APPROVE_LOAN')) {
+        <strong aria-live="polite">{{
+          'credits.selectedCount' | translate: { count: selectedApplicationIds.size }
+        }}</strong>
+        @if (isWorkspace) {
+          @for (total of selectedTotals; track total.code + ':' + total.digits) {
+            <strong class="selection-total">· {{ total.amount | loanApprovalMoney: total.code : total.digits }}</strong>
+          }
+          @if (selectedTotals === null) {
+            <span>{{ 'loanApproval.amountUnavailable' | translate }}</span>
+          }
+        }
+        @if (isWorkspace && hasPermission('APPROVE_LOAN')) {
           <button
             mat-raised-button
             color="primary"
@@ -342,7 +345,7 @@
             <i class="fa fa-check" aria-hidden="true"></i> {{ 'labels.buttons.Approve' | translate }}
           </button>
         }
-        @if (isCreditSearch && hasPermission('APPROVE_LOAN') && !canApproveSelection) {
+        @if (isWorkspace && hasPermission('APPROVE_LOAN') && !canApproveSelection) {
           <span class="approval-hint">{{ 'credits.approvalLimit' | translate }}</span>
         }
         @if (hasPermission('REJECT_LOAN')) {
@@ -356,7 +359,7 @@
             <i class="fa fa-times" aria-hidden="true"></i> {{ 'labels.buttons.Reject Selected' | translate }}
           </button>
         }
-        @if (isCreditSearch) {
+        @if (isWorkspace) {
           <button mat-stroked-button [disabled]="busy || exporting" (click)="exportCsv()">
             <i class="fa fa-download" aria-hidden="true"></i> {{ 'credits.exportSelected' | translate }}
           </button>
@@ -365,7 +368,7 @@
           {{ 'credits.clearSelection' | translate }}
         </button>
       </div>
-    } @else if (isCreditSearch) {
+    } @else if (isWorkspace) {
       <div class="export-actions">
         <button
           mat-button
@@ -377,7 +380,12 @@
         </button>
       </div>
     }
-    <div class="table-wrapper" tabindex="0" [attr.aria-label]="'labels.inputs.Credit Applications' | translate">
+    <div
+      class="table-wrapper"
+      tabindex="0"
+      role="region"
+      [attr.aria-label]="'labels.inputs.Credit Applications' | translate"
+    >
       <table
         mat-table
         [dataSource]="dataSource"
@@ -434,7 +442,7 @@
             {{ 'labels.inputs.Customer' | translate }}
           </th>
           <td mat-cell *matCellDef="let application">
-            @if (isCreditSearch) {
+            @if (isWorkspace) {
               <div class="client-cell">
                 <span class="avatar" aria-hidden="true">{{ initials(application.clientName) }}</span>
                 <div class="client-info">
@@ -477,7 +485,11 @@
         <ng-container matColumnDef="amount">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="amount">{{ 'labels.inputs.Amount' | translate }}</th>
           <td mat-cell *matCellDef="let application" [attr.data-label]="'labels.inputs.Amount' | translate">
-            @if (isMassRejection) {
+            @if (isWorkspace) {
+              <strong>{{
+                application.amount?.toString() | accountMoney: undefined : currencyDigits(application.currencyCode)
+              }}</strong>
+            } @else if (isMassRejection) {
               <strong>{{
                 amountText(application.amount)
                   | loanApprovalMoney: application.currencyCode : currencyDigits(application.currencyCode)
@@ -485,7 +497,7 @@
             } @else {
               <strong>{{ application.amount | formatNumber: '' : currencyDigits(application.currencyCode) }}</strong>
             }
-            @if (isCreditSearch) {
+            @if (isWorkspace) {
               <small class="currency">{{ application.currencyCode }}</small>
             }
           </td>
@@ -502,7 +514,14 @@
           </th>
           <td mat-cell *matCellDef="let application" [attr.data-label]="'labels.inputs.Submitted Date' | translate">
             {{ application.submittedOnDate | dateFormat }}
-            @if (isCreditSearch || isMassRejection) {
+            @if (isWorkspace) {
+              <small class="relative-date" [class.overdue]="isOverdue(application)"
+                >{{ relativeDate(application.submittedOnDate) }}
+                @if (isOverdue(application)) {
+                  · {{ 'credits.overdue' | translate }}
+                }
+              </small>
+            } @else if (isMassRejection) {
               <small class="relative-date">{{ relativeDate(application.submittedOnDate) }}</small>
             }
           </td>
@@ -567,7 +586,7 @@
         (creditApplicationsForm.value.pageSearch ? 'credits.pageMatches' : 'credits.visibleRange')
           | translate: { start: rangeStart, end: rangeEnd, total: totalFilteredRecords, count: dataSource.data.length }
       }}</span>
-      @if (isCreditSearch) {
+      @if (isWorkspace) {
         <div class="page-numbers">
           @for (page of pageNumbers; track page) {
             <button

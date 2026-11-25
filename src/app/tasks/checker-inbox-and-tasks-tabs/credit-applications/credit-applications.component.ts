@@ -31,10 +31,12 @@ import {
   OnInit,
   ViewChild,
   inject,
+  effect,
+  signal,
   output,
-  HostListener,
-  effect
+  HostListener
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -58,7 +60,7 @@ import {
 } from '@angular/material/table';
 
 /** rxjs Imports */
-import { EMPTY, BehaviorSubject, Subject, timer, forkJoin, from, of, throwError, defer } from 'rxjs';
+import { EMPTY, BehaviorSubject, Subject, defer, timer, forkJoin, from, of, throwError } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -92,21 +94,24 @@ import {
   creditStatusId,
   creditFilterError,
   creditCalendarDate,
-  creditCsvCell
+  creditCsvCell,
+  creditOverdueParams,
+  creditAge
 } from './credit-workspace.utils';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
+import { AccountMoneyPipe } from 'app/clients/clients-view/account-management/account-money.pipe';
+import { LoanApprovalMoneyPipe } from '../loan-approval/loan-approval-money.pipe';
+import { totals, reviewLoan, minorUnits } from '../loan-approval/loan-approval.models';
 import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { MatIconButton } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { LoanApprovalMoneyPipe } from '../loan-approval/loan-approval-money.pipe';
-import { totals, minorUnits } from '../loan-approval/loan-approval.models';
 import { MassRejectionAttemptsService } from './mass-rejection-attempts.service';
 import { TasksService } from '../../tasks.service';
 import {
@@ -123,6 +128,12 @@ interface OptionItem {
   displayLabel?: string;
   labelKey?: string;
   productType?: string;
+}
+
+interface CreditCommandFailure {
+  error: any;
+  commandSubmitted: boolean;
+  reason?: string;
 }
 
 const CREDIT_APPLICATION_STATUS_OPTIONS: OptionItem[] = [
@@ -153,6 +164,7 @@ const CREDIT_APPLICATION_STATUS_OPTIONS: OptionItem[] = [
     MatSortHeader,
     FormatNumberPipe,
     LoanApprovalMoneyPipe,
+    AccountMoneyPipe,
     MatSlideToggleModule,
     MatIconButton,
     MatAutocompleteModule,
@@ -176,6 +188,8 @@ export class CreditApplicationsComponent implements OnInit {
   private summaries = new Subject<any>();
   private exportCancel = new Subject<void>();
   private summaryScope = '';
+  private summaryReferenceDay = '';
+  private summaryRefreshPending = false;
   private allPageObservation = 0;
   private selectionVersion = 0;
   private currencyLoading = false;
@@ -192,6 +206,10 @@ export class CreditApplicationsComponent implements OnInit {
   private clientsService = inject(ClientsService);
   private productsService = inject(ProductsService);
   private settingsService = inject(SettingsService);
+  private document = inject(DOCUMENT);
+  private localReferenceDay = signal(moment().startOf('day').toDate(), {
+    equal: (previous, current) => previous.getTime() === current.getTime()
+  });
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
   private route = inject(ActivatedRoute);
@@ -202,53 +220,51 @@ export class CreditApplicationsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private routePath = this.route.snapshot.routeConfig?.path;
-  isCreditSearch = this.routePath === 'credit' || this.route.snapshot.data['title'] === 'Credit';
   isMassRejection = this.routePath === 'mass-rejection' || this.route.snapshot.data['title'] === 'Mass Rejection';
-  isRequests = !this.isCreditSearch && !this.isMassRejection;
+  isRequests = !this.isMassRejection;
   creditApplicationsForm: UntypedFormGroup = this.createSearchForm();
 
   dataSource = new MatTableDataSource<any>([]);
-  displayedColumns: string[] = this.isMassRejection ? [
+  get isWorkspace(): boolean {
+    return !this.isMassRejection;
+  }
+  displayedColumns: string[] = this.isWorkspace ? [
+        'select',
+        'accountNo',
+        'clientName',
+        'productName',
+        'amount',
+        'submittedOnDate',
+        'status',
+        'actions'
+      ] : [
         'select',
         'clientName',
         'accountNo',
         'amount',
         'submittedOnDate',
         'status'
-      ] : this.isCreditSearch ? [
-          'select',
-          'accountNo',
-          'clientName',
-          'productName',
-          'amount',
-          'submittedOnDate',
-          'status',
-          'actions'
-        ] : [
-          ...(this.isMassRejection ? ['select'] : []),
-          'accountNo',
-          'clientName',
-          'clientType',
-          'productName',
-          'amount',
-          'currencyCode',
-          'submittedOnDate',
-          'location',
-          'status'
-        ];
+      ];
   currencyOptions: CreditCurrencyOption[] = [];
   readonly summaryCards = [
     { status: '', key: 'labels.inputs.All', tone: 'all' },
     { status: 100, key: extract('credits.pending'), tone: 'pending' },
+    { status: 200, key: 'labels.inputs.Approved', tone: 'approved' },
     { status: 300, key: 'labels.status.Active', tone: 'active' },
     { status: 500, key: 'labels.inputs.Rejected', tone: 'rejected' }
   ];
   summaryCounts: Record<string, number | null> = {};
   summaryLoading = false;
+  overduePendingCount: number | null = null;
   exporting = false;
   exportError = false;
   approving = false;
-  batchOutcomes: { application: any; outcome: 'succeeded' | 'failed' | 'uncertain' | 'queued'; reason?: string }[] = [];
+  batchOutcomes: {
+    application: any;
+    outcome: 'succeeded' | 'failed' | 'uncertain' | 'queued';
+    safeToRetry: boolean;
+    reason?: string;
+  }[] = [];
   readonly presentationKeys = [
     extract('credits.pageMatches'),
     extract('credits.visibleRange'),
@@ -264,7 +280,7 @@ export class CreditApplicationsComponent implements OnInit {
     extract('credits.approveConfirmation')
   ];
   readonly outcomeKeys = {
-    queued: extract('massRejection.queued'),
+    queued: extract('credits.queued'),
     succeeded: extract('credits.succeeded'),
     failed: extract('credits.failed'),
     uncertain: extract('credits.uncertain')
@@ -275,7 +291,7 @@ export class CreditApplicationsComponent implements OnInit {
   stateOptions: CreditStateOption[] = [];
   statusOptions: OptionItem[] = [...CREDIT_APPLICATION_STATUS_OPTIONS];
 
-  pageSize = this.isCreditSearch ? 25 : 10;
+  pageSize = this.isWorkspace ? 25 : 10;
   pageIndex = 0;
   totalFilteredRecords = 0;
   orderBy = 'submittedOnDate';
@@ -291,6 +307,62 @@ export class CreditApplicationsComponent implements OnInit {
   selectedApplicationIds = new Set<number | string>();
   selectedApplications = new Map<number | string, any>();
   failedApplications: any[] = [];
+
+  constructor() {
+    effect(() => {
+      const businessDate = this.settingsService.businessDate;
+      if (
+        this.isMassRejection &&
+        !this.rejectionForm.controls.rejectedOnDate.dirty &&
+        businessDate instanceof Date &&
+        !Number.isNaN(businessDate.getTime())
+      ) {
+        this.rejectionForm.patchValue({ rejectedOnDate: new Date(businessDate) });
+        this.changeDetectorRef.markForCheck();
+      }
+    });
+    effect((onCleanup) => {
+      const businessDate = this.settingsService.businessDate;
+      if (businessDate && creditCalendarDate(businessDate).isValid()) return;
+      let midnight: ReturnType<typeof setTimeout>;
+      const refreshLocalDay = () => {
+        const today = moment().startOf('day');
+        this.localReferenceDay.set(today.toDate());
+        clearTimeout(midnight);
+        midnight = setTimeout(refreshLocalDay, today.add(1, 'day').valueOf() - Date.now());
+      };
+      const resume = () => {
+        if (!this.document.hidden) refreshLocalDay();
+      };
+      refreshLocalDay();
+      this.document.addEventListener('visibilitychange', resume);
+      this.document.defaultView?.addEventListener('focus', resume);
+      this.document.defaultView?.addEventListener('pageshow', resume);
+      onCleanup(() => {
+        clearTimeout(midnight);
+        this.document.removeEventListener('visibilitychange', resume);
+        this.document.defaultView?.removeEventListener('focus', resume);
+        this.document.defaultView?.removeEventListener('pageshow', resume);
+      });
+    });
+    // Business date may arrive after the queue renders. Recalculate the scoped summary
+    // when SettingsService publishes it, rather than keeping a system-date cutoff.
+    effect(() => {
+      const day = creditCalendarDate(this.referenceDate).format('YYYY-MM-DD');
+      if (this.isWorkspace && this.summaryReferenceDay) {
+        this.summaryRefreshPending = day !== this.summaryReferenceDay;
+        this.refreshDeferredSummary();
+      }
+    });
+  }
+
+  private refreshDeferredSummary(): void {
+    if (!this.summaryRefreshPending || this.busy) return;
+    this.summaryRefreshPending = false;
+    if (creditCalendarDate(this.referenceDate).format('YYYY-MM-DD') !== this.summaryReferenceDay) {
+      this.loadSummaries();
+    }
+  }
 
   rejectableOnly = false;
   rejectableCount: number | null = null;
@@ -314,21 +386,6 @@ export class CreditApplicationsComponent implements OnInit {
     ]
   });
 
-  constructor() {
-    effect(() => {
-      const businessDate = this.settingsService.businessDate;
-      if (
-        this.isMassRejection &&
-        !this.rejectionForm.controls.rejectedOnDate.dirty &&
-        businessDate instanceof Date &&
-        !Number.isNaN(businessDate.getTime())
-      ) {
-        this.rejectionForm.patchValue({ rejectedOnDate: new Date(businessDate) });
-        this.changeDetectorRef.markForCheck();
-      }
-    });
-  }
-
   @HostListener('window:beforeunload', ['$event'])
   protectPendingBatch(event: BeforeUnloadEvent): void {
     if (this.isMassRejection && this.rejecting) {
@@ -343,16 +400,6 @@ export class CreditApplicationsComponent implements OnInit {
   }
   get selectedRows(): any[] {
     return Array.from(this.selectedApplications.values());
-  }
-  get selectedTotals() {
-    return totals(
-      this.selectedRows.map((row) => ({
-        id: row.loanId,
-        accountNo: row.accountNo,
-        principal: String(row.amount),
-        currency: { code: row.currencyCode, decimalPlaces: this.currencyDigits(row.currencyCode) }
-      }))
-    );
   }
   amountText(value: unknown): string {
     return value == null ? '' : String(value);
@@ -451,11 +498,7 @@ export class CreditApplicationsComponent implements OnInit {
         switchMap(() => {
           this.loading = true;
           this.loadFailed = false;
-          return (
-            this.isMassRejection
-              ? this.tasksService.getCreditApplications(this.buildSearchParams(), true)
-              : this.tasksService.getCreditApplications(this.buildSearchParams())
-          ).pipe(
+          return this.tasksService.getCreditApplications(this.buildSearchParams()).pipe(
             map((data: any) => ({ data, failed: false })),
             catchError(() => of({ data: null, failed: true }))
           );
@@ -476,7 +519,7 @@ export class CreditApplicationsComponent implements OnInit {
           this.totalFilteredRecords = data?.totalFilteredRecords ?? 0;
           if (this.isMassRejection) this.mergeStatusOptions(this.loadedPage);
           this.pruneSelectionWithRefreshedPage(this.loadedPage);
-          if (!this.appliedFilters.status && this.isCreditSearch) {
+          if (!this.appliedFilters.status && this.isWorkspace) {
             if (typeof data?.totalFilteredRecords === 'number') {
               this.allPageObservation++;
               this.summaryCounts[''] = data.totalFilteredRecords;
@@ -491,24 +534,33 @@ export class CreditApplicationsComponent implements OnInit {
         switchMap((scope) => {
           this.summaryLoading = true;
           this.summaryCounts = {};
+          this.overduePendingCount = null;
           const allPageObservation = this.allPageObservation;
           return forkJoin(
-            this.summaryCards.map((card) =>
-              this.tasksService
-                .getCreditApplications({
-                  ...scope,
-                  ...(card.status === '' ? {} : { status: card.status }),
-                  offset: 0,
-                  limit: 1
-                })
-                .pipe(
-                  map((data: any) => ({
-                    status: card.status,
-                    allPageObservation,
-                    count: typeof data?.totalFilteredRecords === 'number' ? data.totalFilteredRecords : null
-                  })),
-                  catchError(() => of({ status: card.status, allPageObservation, count: null }))
-                )
+            [
+              ...this.summaryCards,
+              { status: 'overdue', key: '', tone: '' }
+            ].map((card) =>
+              (card.status === 'overdue' && !creditOverdueParams(scope, this.referenceDate)
+                ? of({ totalFilteredRecords: 0 })
+                : this.tasksService.getCreditApplications({
+                    ...scope,
+                    ...(card.status === 'overdue'
+                      ? creditOverdueParams(scope, this.referenceDate)
+                      : card.status === ''
+                        ? {}
+                        : { status: card.status }),
+                    offset: 0,
+                    limit: 1
+                  })
+              ).pipe(
+                map((data: any) => ({
+                  status: card.status,
+                  allPageObservation,
+                  count: typeof data?.totalFilteredRecords === 'number' ? data.totalFilteredRecords : null
+                })),
+                catchError(() => of({ status: card.status, allPageObservation, count: null }))
+              )
             )
           );
         }),
@@ -518,13 +570,14 @@ export class CreditApplicationsComponent implements OnInit {
         counts.forEach(({ status, count, allPageObservation }) => {
           // A newer unfiltered page is a fresher All observation than this summary request.
           if (status === '' && allPageObservation !== this.allPageObservation) return;
-          this.summaryCounts[String(status)] = count;
+          if (status === 'overdue') this.overduePendingCount = count;
+          else this.summaryCounts[String(status)] = count;
           if (status === '' && this.summaryScope === '{}') this.queueCountChange.emit(count);
         });
         this.summaryLoading = false;
         this.changeDetectorRef.markForCheck();
       });
-    if (this.isCreditSearch || this.isMassRejection) {
+    if (this.isWorkspace || this.isMassRejection) {
       this.creditApplicationsForm
         .get('pageSearch')
         .valueChanges.pipe(
@@ -566,10 +619,10 @@ export class CreditApplicationsComponent implements OnInit {
           switchMap((scope) =>
             forkJoin({
               all: this.tasksService
-                .getCreditApplications({ ...scope, offset: 0, limit: 1 }, true)
+                .getCreditApplications({ ...scope, offset: 0, limit: 1 })
                 .pipe(catchError(() => of(null))),
               pending: this.tasksService
-                .getCreditApplications({ ...scope, status: 100, offset: 0, limit: 200 }, true)
+                .getCreditApplications({ ...scope, status: 100, offset: 0, limit: 200 })
                 .pipe(catchError(() => of(null)))
             })
           ),
@@ -719,6 +772,13 @@ export class CreditApplicationsComponent implements OnInit {
 
   changePaging(event: PageEvent): void {
     if (this.busy) return;
+    if (![
+        10,
+        25,
+        50,
+        100,
+        200
+      ].includes(event.pageSize) || !Number.isInteger(event.pageIndex) || event.pageIndex < 0) return;
     this.clearSelection();
     this.creditApplicationsForm.get('pageSearch')?.reset('');
     this.pageSize = event.pageSize;
@@ -728,6 +788,17 @@ export class CreditApplicationsComponent implements OnInit {
 
   sortData(sort: Sort): void {
     if (this.busy) return;
+    const sortable = [
+      'accountNo',
+      'clientName',
+      'clientTypeId',
+      'productName',
+      'amount',
+      'currencyCode',
+      'submittedOnDate',
+      'status'
+    ];
+    if (sort.direction && !sortable.includes(sort.active)) return;
     this.orderBy = sort.direction ? sort.active : 'submittedOnDate';
     this.sortOrder = sort.direction === 'asc' ? 'ASC' : 'DESC';
     this.clearSelection();
@@ -791,7 +862,8 @@ export class CreditApplicationsComponent implements OnInit {
     if (!value) return '';
     const date = creditCalendarDate(value);
     if (!date.isValid()) return '';
-    const days = moment().startOf('day').diff(date.startOf('day'), 'days');
+    const days = creditAge(value, this.referenceDate);
+    if (days === null) return '';
     return this.translateService.instant(
       days === 0
         ? extract('credits.today')
@@ -801,6 +873,26 @@ export class CreditApplicationsComponent implements OnInit {
             ? extract('credits.futureDays')
             : extract('credits.daysAgo'),
       { count: Math.abs(days) }
+    );
+  }
+  get referenceDate(): Date {
+    const businessDate = this.settingsService.businessDate;
+    return businessDate && creditCalendarDate(businessDate).isValid()
+      ? creditCalendarDate(businessDate).toDate()
+      : this.localReferenceDay();
+  }
+  isOverdue(application: any): boolean {
+    const age = creditAge(application.submittedOnDate, this.referenceDate);
+    return creditStatusId(application) === 100 && age !== null && age > 10;
+  }
+  get selectedTotals() {
+    return totals(
+      Array.from(this.selectedApplications.values()).map((row) => ({
+        id: row.loanId,
+        accountNo: row.accountNo,
+        principal: String(row.amount ?? ''),
+        currency: { code: row.currencyCode, decimalPlaces: this.currencyDigits(row.currencyCode) }
+      }))
     );
   }
   currencyDigits(code: string): number {
@@ -868,7 +960,10 @@ export class CreditApplicationsComponent implements OnInit {
   }
 
   get summaryFailed(): boolean {
-    return Object.values(this.summaryCounts).some((count) => count === null);
+    return (
+      !this.summaryLoading &&
+      (this.overduePendingCount === null || Object.values(this.summaryCounts).some((count) => count === null))
+    );
   }
   retrySummary(): void {
     if (this.busy || this.summaryLoading) return;
@@ -878,8 +973,8 @@ export class CreditApplicationsComponent implements OnInit {
 
   get outcomeCounts() {
     return {
+      queued: this.batchOutcomes.filter((row) => row.outcome === 'queued').length,
       total: this.batchOutcomes.length,
-      ...(this.isMassRejection ? { queued: this.batchOutcomes.filter((row) => row.outcome === 'queued').length } : {}),
       succeeded: this.batchOutcomes.filter((row) => row.outcome === 'succeeded').length,
       failed: this.batchOutcomes.filter((row) => row.outcome === 'failed').length,
       uncertain: this.batchOutcomes.filter((row) => row.outcome === 'uncertain').length
@@ -997,10 +1092,12 @@ export class CreditApplicationsComponent implements OnInit {
         this.rejectionForm.enable({ emitEvent: false });
         if (!dialogResult?.confirm) {
           this.creditApplicationsForm.enable({ emitEvent: false });
+          this.refreshDeferredSummary();
           this.changeDetectorRef.markForCheck();
           return;
         }
         if (
+          !this.validCommandDate((reviewedData || dialogResult?.data)?.rejectedOnDate) ||
           !this.hasPermission('REJECT_LOAN') ||
           selectionVersion !== this.selectionVersion ||
           !Array.from(snapshot.values()).every((row) => this.isRejectable(row) && this.isSelected(row))
@@ -1009,6 +1106,7 @@ export class CreditApplicationsComponent implements OnInit {
           this.rejectionResultMessage = extract('credits.rejectionCanceled');
           this.rejectionResultParams = {};
           this.rejectionResultType = 'error';
+          this.refreshDeferredSummary();
           this.changeDetectorRef.markForCheck();
           return;
         }
@@ -1074,18 +1172,9 @@ export class CreditApplicationsComponent implements OnInit {
       .pipe(
         mergeMap((loanId) => {
           const application = selectedSnapshot.get(loanId);
-          const request$ = this.isWorkingCapitalApplication(application)
-            ? this.loansService.applyWorkingCapitalLoanAccountCommand(loanId, 'reject', rejectionPayload)
-            : this.loansService.loanActionButtons(loanId, 'reject', rejectionPayload);
-
-          return request$.pipe(
-            map(() => ({ loanId, error: null as any })),
-            catchError((error) =>
-              of({
-                error,
-                loanId
-              })
-            )
+          return this.verifiedCommand(application, 'reject', rejectionPayload).pipe(
+            map((response) => ({ loanId, error: null as any, response })),
+            catchError((error) => of({ error, loanId, response: null }))
           );
         }, 3),
         toArray(),
@@ -1121,10 +1210,19 @@ export class CreditApplicationsComponent implements OnInit {
           });
         }
 
-        this.batchOutcomes = results.map((result) => ({
-          application: selectedSnapshot.get(result.loanId),
-          outcome: this.commandOutcome(result.error)
-        }));
+        this.batchOutcomes = results.map((result) =>
+          result.error
+            ? this.failedCommand(selectedSnapshot.get(result.loanId), result.error)
+            : {
+                application: selectedSnapshot.get(result.loanId),
+                outcome: this.responseOutcome(result.response, result.loanId),
+                safeToRetry: false
+              }
+        );
+        if (this.batchOutcomes.some((result) => result.outcome === 'queued')) {
+          this.rejectionResultMessage = extract('credits.batchComplete');
+          if (failed === 0) this.rejectionResultType = '';
+        }
         if (this.batchOutcomes.some((result) => result.outcome === 'uncertain')) {
           this.rejectionResultMessage = extract('credits.uncertainResult');
           this.rejectionResultType = 'error';
@@ -1190,9 +1288,19 @@ export class CreditApplicationsComponent implements OnInit {
             switchMap((response) => {
               responseReceived = true;
               if (response?.rollbackTransaction === true || (response?.commandId && !response?.resourceId))
-                return of({ application, outcome: 'queued' as const, reason: extract('massRejection.queued') });
+                return of({
+                  application,
+                  outcome: 'queued' as const,
+                  safeToRetry: false,
+                  reason: extract('massRejection.queued')
+                });
               if (String(response?.resourceId) !== id)
-                return of({ application, outcome: 'uncertain' as const, reason: extract('massRejection.readback') });
+                return of({
+                  application,
+                  outcome: 'uncertain' as const,
+                  safeToRetry: false,
+                  reason: extract('massRejection.readback')
+                });
               return forkJoin({
                 loan: detail(),
                 notes: workingCapital ? of(null) : this.loansService.getLoanNotes(id)
@@ -1206,6 +1314,7 @@ export class CreditApplicationsComponent implements OnInit {
                     workingCapital || (Array.isArray(notes) && notes.some((note) => note.note === payload.note));
                   return {
                     application,
+                    safeToRetry: false,
                     outcome: matched && persisted ? ('succeeded' as const) : ('uncertain' as const),
                     ...(matched && persisted ? {} : { reason: extract('massRejection.readback') })
                   };
@@ -1222,6 +1331,7 @@ export class CreditApplicationsComponent implements OnInit {
         if (submitted && !uncertain) this.attempts.unlock(application.loanId, workingCapital);
         return of({
           application,
+          safeToRetry: !submitted,
           outcome: uncertain ? ('uncertain' as const) : ('failed' as const),
           reason: uncertain
             ? extract('massRejection.readback')
@@ -1236,6 +1346,7 @@ export class CreditApplicationsComponent implements OnInit {
     if (this.busy || !this.canApproveSelection) return;
     const snapshot = new Map(this.selectedApplications);
     const businessDate = this.settingsService.businessDate;
+    const selectionVersion = this.selectionVersion;
     this.confirmingRejection = true;
     this.creditApplicationsForm.disable({ emitEvent: false });
     this.dialog
@@ -1251,8 +1362,15 @@ export class CreditApplicationsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
         this.confirmingRejection = false;
-        if (!result?.confirm || !this.hasPermission('APPROVE_LOAN')) {
+        if (
+          !result?.confirm ||
+          !this.validCommandDate(result?.data?.rejectedOnDate) ||
+          !this.canApproveSelection ||
+          selectionVersion !== this.selectionVersion ||
+          !Array.from(snapshot.values()).every((row) => this.isSelected(row) && this.isApprovable(row))
+        ) {
           this.creditApplicationsForm.enable({ emitEvent: false });
+          this.refreshDeferredSummary();
           this.changeDetectorRef.markForCheck();
           return;
         }
@@ -1269,9 +1387,13 @@ export class CreditApplicationsComponent implements OnInit {
           .pipe(
             mergeMap(
               (application) =>
-                this.loansService.loanActionButtons(application.loanId, 'approve', payload).pipe(
-                  map(() => ({ application, outcome: 'succeeded' as const })),
-                  catchError((error) => of({ application, outcome: this.commandOutcome(error) }))
+                this.verifiedCommand(application, 'approve', payload).pipe(
+                  map((response) => ({
+                    application,
+                    outcome: this.responseOutcome(response, application.loanId),
+                    safeToRetry: false
+                  })),
+                  catchError((failure: CreditCommandFailure) => of(this.failedCommand(application, failure)))
                 ),
               3
             ),
@@ -1286,7 +1408,11 @@ export class CreditApplicationsComponent implements OnInit {
             this.rejectionResultMessage = outcomes.some((row) => row.outcome === 'uncertain')
               ? extract('credits.uncertainResult')
               : extract('credits.batchComplete');
-            this.rejectionResultType = outcomes.every((row) => row.outcome === 'succeeded') ? 'success' : 'error';
+            this.rejectionResultType = outcomes.some((row) => row.outcome === 'failed' || row.outcome === 'uncertain')
+              ? 'error'
+              : outcomes.some((row) => row.outcome === 'queued')
+                ? ''
+                : 'success';
             this.queueCountChange.emit(null);
             this.summaryScope = '';
             this.loadCreditApplications();
@@ -1294,9 +1420,142 @@ export class CreditApplicationsComponent implements OnInit {
       });
   }
 
-  private commandOutcome(error: any): 'succeeded' | 'failed' | 'uncertain' {
-    if (!error) return 'succeeded';
-    return !error.status || error.status >= 500 ? 'uncertain' : 'failed';
+  private validCommandDate(value: any): boolean {
+    const date = creditCalendarDate(value);
+    return date.isValid() && !date.isAfter(creditCalendarDate(this.referenceDate), 'day');
+  }
+
+  private verifiedCommand(application: any, operation: 'approve' | 'reject', payload: any) {
+    return defer(() => {
+      let commandSubmitted = false;
+      // Keep synchronous setup errors inside this application's result, too.
+      return defer(() => {
+        const denied = (creditReason: string) => throwError(() => ({ status: 409, creditReason }));
+        const workingCapital = this.isWorkingCapitalApplication(application);
+        const permission = operation === 'approve' ? 'APPROVE_LOAN' : 'REJECT_LOAN';
+        if (operation === 'approve' && workingCapital) return denied(extract('credits.approvalLimit'));
+        if (!this.hasPermission(permission)) return denied(extract('credits.permissionChanged'));
+        if (!this.isRejectable(application)) return denied(extract('credits.applicationChanged'));
+        const id = String(application.loanId);
+        const detail$ = workingCapital
+          ? this.loansService.getWorkingCapitalLoanDetails(id, operation === 'approve')
+          : this.loansService.getLoanAccountDetails(id, operation === 'approve');
+        return forkJoin({
+          detail: detail$,
+          template: operation === 'approve' ? this.loansService.getLoanApprovalTemplate(id, true) : of(null)
+        }).pipe(
+          switchMap(({ detail, template }) => {
+            const date = operation === 'approve' ? payload.approvedOnDate : payload.rejectedOnDate;
+            // Dates in payload use the configured display format; validate with that format, without UTC shifts.
+            const commandDate = moment(
+              date,
+              this.dateUtils.angularToMomentFormat(this.settingsService.dateFormat),
+              true
+            );
+            const submitted = creditCalendarDate(detail?.timeline?.submittedOnDate);
+            if (!this.hasPermission(permission)) return denied(extract('credits.permissionChanged'));
+            if (String(detail?.id) !== id || detail?.status?.id !== 100 || detail.accountNo !== application.accountNo)
+              return denied(extract('credits.applicationChanged'));
+            if (
+              !commandDate.isValid() ||
+              !submitted.isValid() ||
+              commandDate.isBefore(submitted, 'day') ||
+              commandDate.isAfter(creditCalendarDate(this.referenceDate), 'day')
+            )
+              return denied(extract('credits.commandDateInvalid'));
+            if (operation === 'approve') {
+              const clientId = application.clientId ?? application.client?.id;
+              const groupId = application.groupId ?? application.group?.id;
+              const selectedClientId = clientId == null ? undefined : Number(clientId);
+              const selectedGroupId = groupId == null ? undefined : Number(groupId);
+              if (
+                (selectedClientId == null && selectedGroupId == null) ||
+                (selectedClientId != null &&
+                  (!Number.isSafeInteger(selectedClientId) ||
+                    selectedClientId <= 0 ||
+                    selectedClientId !== detail.clientId)) ||
+                (selectedGroupId != null &&
+                  (!Number.isSafeInteger(selectedGroupId) ||
+                    selectedGroupId <= 0 ||
+                    selectedGroupId !== detail.group?.id)) ||
+                (selectedClientId == null && detail.clientId != null) ||
+                (selectedGroupId == null && detail.group?.id != null)
+              )
+                return denied(extract('credits.approvalDataChanged'));
+              if (detail.multiDisburseLoan || detail.disbursementDetails?.length)
+                return denied(extract('credits.multiDisbursementReview'));
+              if (detail.isTopup) return denied(extract('credits.topUpReview'));
+              if (detail.isLoanProductLinkedToFloatingRate) return denied(extract('credits.floatingRateReview'));
+              if (template?.discountAmount != null) return denied(extract('credits.discountedReview'));
+              const review = reviewLoan(
+                {
+                  ...detail,
+                  clientId: selectedClientId,
+                  group: selectedGroupId == null ? undefined : { ...detail.group, id: selectedGroupId },
+                  accountNo: application.accountNo,
+                  principal: String(application.amount),
+                  loanProductId: application.productId,
+                  currency: {
+                    code: application.currencyCode,
+                    decimalPlaces: this.currencyDigits(application.currencyCode)
+                  }
+                },
+                { ...detail, principal: String(detail.principal) },
+                { ...template, approvalAmount: String(template?.approvalAmount ?? '') }
+              );
+              if (!review) return denied(extract('credits.approvalDataChanged'));
+              if (commandDate.isAfter(review.expected, 'day')) return denied(extract('credits.approvalDateInvalid'));
+              payload = {
+                ...payload,
+                expectedDisbursementDate: this.dateUtils.formatDate(review.expected, this.settingsService.dateFormat)
+              };
+            }
+            const command$ = workingCapital
+              ? this.loansService.applyWorkingCapitalLoanAccountCommand(application.loanId, operation, payload)
+              : this.loansService.loanActionButtons(application.loanId, operation, payload);
+            return defer(() => {
+              commandSubmitted = true;
+              return command$;
+            });
+          })
+        );
+      }).pipe(
+        catchError((error) =>
+          throwError(
+            () =>
+              ({
+                error,
+                commandSubmitted,
+                reason: commandSubmitted ? undefined : error?.creditReason || extract('credits.preflightUnavailable')
+              }) satisfies CreditCommandFailure
+          )
+        )
+      );
+    });
+  }
+
+  private responseOutcome(response: any, loanId: number | string): 'succeeded' | 'uncertain' | 'queued' {
+    if (response?.resourceId && String(response.resourceId) !== String(loanId)) return 'uncertain';
+    if (response?.resourceId && response.rollbackTransaction === true) return 'queued';
+    if (response?.commandId && !response?.resourceId) return 'queued';
+    return response?.resourceId && String(response.resourceId) === String(loanId) && !response?.rollbackTransaction
+      ? 'succeeded'
+      : 'uncertain';
+  }
+
+  private commandOutcome(failure: CreditCommandFailure): 'failed' | 'uncertain' {
+    if (!failure.commandSubmitted) return 'failed';
+    const status = failure.error?.status;
+    return !status || status >= 500 || status === 408 ? 'uncertain' : 'failed';
+  }
+
+  private failedCommand(application: any, failure: CreditCommandFailure) {
+    return {
+      application,
+      outcome: this.commandOutcome(failure),
+      safeToRetry: !failure.commandSubmitted,
+      ...(!failure.commandSubmitted ? { reason: failure.reason } : {})
+    };
   }
 
   exportCsv(): void {
@@ -1500,21 +1759,25 @@ export class CreditApplicationsComponent implements OnInit {
   }
 
   private loadCreditApplications(): void {
+    this.summaryRefreshPending = false;
+    this.clearSelection();
     this.exportCancel.next();
     this.exportError = false;
     this.filterError = '';
-    if (!this.isCreditSearch) {
-      if (this.isMassRejection) this.refreshMassCounts();
-      this.reads.next();
-      return;
-    }
+    if (this.isWorkspace) this.loadSummaries();
+    else if (this.isMassRejection) this.refreshMassCounts();
+    this.reads.next();
+  }
+
+  private loadSummaries(): void {
     const { status, ...scope } = this.appliedFilters;
     const key = JSON.stringify(scope);
-    if (key !== this.summaryScope) {
+    const referenceDay = creditCalendarDate(this.referenceDate).format('YYYY-MM-DD');
+    if (key !== this.summaryScope || referenceDay !== this.summaryReferenceDay) {
+      this.summaryReferenceDay = referenceDay;
       this.summaryScope = key;
       this.summaries.next(scope);
     }
-    this.reads.next();
   }
 
   private refreshMassCounts(): void {
@@ -1566,23 +1829,11 @@ export class CreditApplicationsComponent implements OnInit {
       status: [''],
       stateProvinceId: [''],
       municipality: [''],
-      productId: ['']
+      productId: [''],
+      clientTypeId: ['']
     };
 
-    if (this.isCreditSearch) {
-      return this.formBuilder.group(prototypeControls);
-    }
-
-    return this.formBuilder.group({
-      submittedFrom: [''],
-      submittedTo: [''],
-      clientTypeId: [''],
-      stateProvinceId: [''],
-      municipality: [''],
-      productId: [''],
-      maxAmount: [''],
-      currencyCode: ['']
-    });
+    return this.formBuilder.group(prototypeControls);
   }
 
   private removeEmptyParams(params: any): any {

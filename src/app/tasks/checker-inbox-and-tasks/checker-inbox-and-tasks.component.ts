@@ -57,6 +57,7 @@ export class CheckerInboxAndTasksComponent {
   checkerInboxActive = false;
   navigationOpen = false;
   creditCount: number | null = null;
+  readonly creditQueuePath = 'requests';
   massRejectionActive = false;
   massRejectionCount: number | null = null;
   clientApprovalCount: number | null = null;
@@ -93,7 +94,6 @@ export class CheckerInboxAndTasksComponent {
       queues: [
         { path: 'loan-disbursal', label: 'labels.inputs.Loan Disbursal', permissions: ['READ_LOAN'] },
         { path: 'reschedule-loan', label: 'labels.inputs.Reschedule Loan', permissions: ['RESCHEDULE_LOAN'] },
-        { path: 'credit', label: 'labels.inputs.Credit', permissions: ['READ_LOAN'] },
         { path: 'mass-rejection', label: 'labels.heading.Mass Rejection', permissions: ['READ_LOAN'] }
       ]
     }
@@ -101,6 +101,7 @@ export class CheckerInboxAndTasksComponent {
 
   onActivate(component: {
     checkerInboxWorkspace?: boolean;
+    isRequests?: boolean;
     isMassRejection?: boolean;
     queueCountChange?: OutputRef<number | null>;
     clientApprovalCountChange?: OutputRef<number | null>;

@@ -18,6 +18,7 @@ let rows: any[];
 let reads: URL[];
 let writes: { path: string; command: string; payload: any }[];
 let failRejection: boolean;
+let makerChecker: boolean;
 let summaryFailure: boolean;
 let currencyDelay: Promise<void> | undefined;
 let currencyFailures: number;
@@ -32,6 +33,7 @@ test.beforeEach(async ({ page, creditsPermissions }) => {
   reads = [];
   writes = [];
   failRejection = false;
+  makerChecker = false;
   summaryFailure = false;
   currencyDelay = undefined;
   currencyFailures = 0;
@@ -52,6 +54,7 @@ test.beforeEach(async ({ page, creditsPermissions }) => {
     clientTypeId: 3,
     status: index < 8 ? pending : index < 47 ? { id: 300, value: 'Active' } : { id: 500, value: 'Rejected' }
   }));
+  await page.clock.setFixedTime(new Date('2026-11-22T10:00:00+05:30'));
   await page.addInitScript((permissions) => {
     sessionStorage.setItem(
       'mifosXCredentials',
@@ -87,6 +90,12 @@ test.beforeEach(async ({ page, creditsPermissions }) => {
       let filtered = rows.filter(
         (row) => !url.searchParams.get('status') || String(row.status.id) === url.searchParams.get('status')
       );
+      if (url.searchParams.has('submittedFrom'))
+        filtered = filtered.filter((row) => row.submittedOnDate >= url.searchParams.get('submittedFrom')!);
+      if (url.searchParams.has('submittedTo'))
+        filtered = filtered.filter((row) => row.submittedOnDate <= url.searchParams.get('submittedTo')!);
+      if (url.searchParams.has('clientTypeId'))
+        filtered = filtered.filter((row) => String(row.clientTypeId) === url.searchParams.get('clientTypeId'));
       if (url.searchParams.get('productId') === '20') filtered = [];
       if (url.searchParams.has('clientId'))
         filtered = filtered.filter((row) => String(row.clientId) === url.searchParams.get('clientId'));
@@ -97,6 +106,35 @@ test.beforeEach(async ({ page, creditsPermissions }) => {
       });
       return;
     }
+    const loanRead = /\/(loans|working-capital-loans)\/(\d+)(\/template)?$/.exec(path);
+    if (request.method() === 'GET' && loanRead) {
+      const row = rows.find((item) => item.loanId === Number(loanRead[2]));
+      await route.fulfill({
+        json: loanRead[3]
+          ? { approvalAmount: row.amount, expectedDisbursementDate: [
+                2026,
+                11,
+                30
+              ] }
+          : {
+              id: row.loanId,
+              accountNo: row.accountNo,
+              principal: row.amount,
+              loanProductId: row.productId,
+              clientId: row.clientId,
+              currency: { code: row.currencyCode, decimalPlaces: 2 },
+              status: { ...row.status, pendingApproval: row.status.id === 100 },
+              timeline: { submittedOnDate: row.submittedOnDate, expectedDisbursementDate: [
+                  2026,
+                  11,
+                  30
+                ] },
+              loanType: { id: 1 },
+              multiDisburseLoan: false
+            }
+      });
+      return;
+    }
     if (request.method() === 'POST' && /\/(loans|working-capital-loans)\/\d+$/.test(path)) {
       const id = Number(path.split('/').pop());
       const command = url.searchParams.get('command')!;
@@ -104,6 +142,10 @@ test.beforeEach(async ({ page, creditsPermissions }) => {
       if (commandDelay) await commandDelay;
       if (failRejection && id === 2) {
         await route.fulfill({ status: 400, json: { errors: [] } });
+        return;
+      }
+      if (makerChecker) {
+        await route.fulfill({ json: { commandId: 777, resourceId: id, rollbackTransaction: true } });
         return;
       }
       rows.find((row) => row.loanId === id).status = {
@@ -162,7 +204,7 @@ test.beforeEach(async ({ page, creditsPermissions }) => {
 });
 
 async function open(page: Page) {
-  await page.goto('/#/checker-inbox-and-tasks/credit');
+  await page.goto('/#/checker-inbox-and-tasks/requests');
   await expect(page.locator('mifosx-credit-applications tbody tr')).toHaveCount(25);
 }
 async function selectFirst(page: Page) {
@@ -179,7 +221,7 @@ for (const width of [
   test(`renders the blue workspace without page overflow at ${width}px`, async ({ page }, info) => {
     await page.setViewportSize({ width, height: 1200 });
     await open(page);
-    await expect(page.locator('.summary-card')).toHaveCount(4);
+    await expect(page.locator('.summary-card')).toHaveCount(5);
     await expect(page.locator('.summary-card').first()).toContainText('52');
     await expect(page.locator('.visible-range')).toContainText('1–25 of 52');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -229,7 +271,7 @@ test('filters by status, product, dates, currency-aware amounts and location usi
   await page.getByRole('combobox', { name: 'Currency', exact: true }).click();
   await page.getByRole('option', { name: 'USD — US Dollar' }).click();
   await page.getByRole('button', { name: 'Apply', exact: true }).click();
-  await page.getByRole('button', { name: 'State / Municipality', exact: true }).click();
+  await page.getByRole('button', { name: 'Location', exact: true }).click();
   await page.getByRole('combobox', { name: 'State', exact: true }).click();
   await page.getByRole('option', { name: 'Synthetic state' }).click();
   await page.locator('input[formcontrolname="municipality"]').fill('Synthetic town');
@@ -259,7 +301,7 @@ test('filters by status, product, dates, currency-aware amounts and location usi
   });
   expect(params).not.toHaveProperty('query');
   expect(params).not.toHaveProperty('productIds');
-  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await page.getByRole('button', { name: 'Reset', exact: true }).click();
   await expect(page.locator('.visible-range')).toContainText('1–25 of 52');
   await expect
     .poll(() =>
@@ -307,6 +349,7 @@ test('requires confirmation and uses standard approval command with business dat
     dateFormat: 'dd MMMM yyyy',
     locale: 'en'
   });
+  expect(writes[0].payload).not.toHaveProperty('approvedLoanAmount');
   await expect(page.locator('tbody tr').first()).toContainText('Approved');
   await expect(page.locator('.mass-actions')).toHaveCount(0);
 });
@@ -487,7 +530,7 @@ test('keeps all ten existing queue deep links usable', async ({ page }) => {
     await expect(page.locator(selector)).toBeVisible();
     await expect(page.locator('nav a[aria-current="page"]')).toHaveAttribute(
       'href',
-      '#/checker-inbox-and-tasks/' + queue
+      '#/checker-inbox-and-tasks/' + (queue === 'credit' ? 'requests' : queue)
     );
   }
   expect(errors).toEqual([]);
@@ -538,7 +581,7 @@ test('Enter in page search does not submit server filters', async ({ page }) => 
 });
 
 test('an open Amount dialog receives currencies after a delayed load', async ({ page }) => {
-  let release: () => void;
+  let release!: () => void;
   currencyDelay = new Promise<void>((resolve) => (release = resolve));
   await open(page);
   await page.locator('form').getByRole('button', { name: 'Amount', exact: true }).click();
@@ -594,12 +637,12 @@ for (const action of [
   'reject'
 ]) {
   test(`blocks navigation until every confirmed ${action} command completes`, async ({ page }) => {
-    let release: () => void;
+    let release!: () => void;
     commandDelay = new Promise<void>((resolve) => (release = resolve));
     // Establish a real history entry for the attempted navigation.
-    await page.goto('/#/checker-inbox-and-tasks/requests');
+    await page.goto('/#/checker-inbox-and-tasks/mass-rejection');
     await expect(page.locator('tbody tr')).toHaveCount(10);
-    await page.locator('nav a[href$="/credit"]').click();
+    await page.locator('nav a[href$="/requests"]').click();
     await expect(page.locator('tbody tr')).toHaveCount(25);
     for (const id of [
       1,
@@ -624,32 +667,127 @@ for (const action of [
       );
     });
     await page.goBack();
-    // Back changes the URL to Requests first. Returning to Credit then proves
+    // Back changes the URL to Mass Rejection first. Returning to Requests then proves
     // the guard has canceled that navigation, rather than observing the old URL.
     await expect
       .poll(() => page.evaluate(() => (window as Window & { creditsAttemptedHash?: string }).creditsAttemptedHash))
-      .toBe('#/checker-inbox-and-tasks/requests');
-    await expect(page).toHaveURL(/\/credit$/);
+      .toBe('#/checker-inbox-and-tasks/mass-rejection');
+    await expect(page).toHaveURL(/\/requests$/);
     expect(writes).toHaveLength(3);
     release();
     await expect(page.locator('.batch-outcomes li')).toHaveCount(4);
     expect(writes).toHaveLength(4);
     expect(writes.every((write) => write.command === action)).toBe(true);
-    await page.locator('nav a[href$="/requests"]').click();
-    await expect(page).toHaveURL(/\/requests$/);
+    await page.locator('nav a[href$="/mass-rejection"]').click();
+    await expect(page).toHaveURL(/\/mass-rejection$/);
   });
 }
 
 test('navigation before confirmation cancels without issuing a rejection', async ({ page }) => {
-  await page.goto('/#/checker-inbox-and-tasks/requests');
+  await page.goto('/#/checker-inbox-and-tasks/mass-rejection');
   await expect(page.locator('tbody tr')).toHaveCount(10);
-  await page.locator('nav a[href$="/credit"]').click();
+  await page.locator('nav a[href$="/requests"]').click();
   await expect(page.locator('tbody tr')).toHaveCount(25);
   await selectFirst(page);
   await page.getByRole('button', { name: 'Reject Selected', exact: true }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.goBack();
-  await expect(page).toHaveURL(/\/requests$/);
+  await expect(page).toHaveURL(/\/mass-rejection$/);
   await expect(page.getByRole('dialog')).toHaveCount(0);
+  expect(writes).toHaveLength(0);
+});
+
+test('Requests shows five authoritative stages, overdue business-date boundaries and currency totals', async ({
+  page
+}) => {
+  rows[0].submittedOnDate = '2026-11-11';
+  rows[1].submittedOnDate = '2026-11-12';
+  rows[2].status = { id: 200, value: 'Approved' };
+  rows[0].clientTypeId = null;
+  rows[0].stateProvinceId = null;
+  rows[0].municipality = null;
+  await open(page);
+  await expect(page.locator('.summary-card')).toHaveCount(5);
+  await expect(page.locator('.summary-card').nth(1)).toContainText('1 waiting over 10 days');
+  await expect(page.locator('.summary-card').nth(2)).toContainText('Approved');
+  await expect(page.locator('tbody tr').first()).toContainText('Type not set');
+  await expect(page.locator('tbody tr').first()).toContainText('No location');
+  await expect(page.locator('tbody tr').first().locator('.relative-date')).toHaveClass(/overdue/);
+  await expect(page.locator('tbody tr').nth(1).locator('.relative-date')).not.toHaveClass(/overdue/);
+  await expect(page.getByRole('checkbox', { name: 'Select application 000000003', exact: true })).toBeDisabled();
+  await selectFirst(page);
+  await page.getByRole('checkbox', { name: 'Select application 000000002', exact: true }).check();
+  await expect(page.locator('.mass-actions')).toContainText('24,691.00 USD');
+  await page.locator('.summary-card').nth(2).click();
+  await expect(page.locator('tbody tr')).toHaveCount(1);
+  await expect(page.locator('.mass-actions')).toHaveCount(0);
+  await expect(page.locator('.summary-card').nth(2)).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'Reset', exact: true }).click();
+  await page.getByRole('combobox', { name: 'Customer Type', exact: true }).click();
+  await page.getByRole('option', { name: 'Business', exact: true }).click();
+  await expect(page.locator('.visible-range')).toContainText('of 51');
+});
+
+test('legacy Credit links redirect to the canonical workspace while Mass Rejection stays separate', async ({
+  page
+}) => {
+  await page.goto('/#/checker-inbox-and-tasks/credit');
+  await expect(page).toHaveURL(/\/requests$/);
+  await expect(page.locator('nav a[href$="/credit"]')).toHaveCount(0);
+  await expect(page.locator('.summary-card')).toHaveCount(5);
+  await expect(page.locator('tbody tr')).toHaveCount(25);
+  await page.goto('/#/checker-inbox-and-tasks/mass-rejection');
+  await expect(page.locator('.summary-card')).toHaveCount(0);
+  await expect(page.locator('.rejection-panel')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Advanced Search', exact: true })).toHaveCount(0);
+  await expect(page.locator('tbody tr')).toHaveCount(10);
+});
+
+for (const operation of [
+  'approve',
+  'reject'
+]) {
+  test(`shows the verified maker-checker response as queued for ${operation}`, async ({ page }) => {
+    makerChecker = true;
+    await open(page);
+    await selectFirst(page);
+    await page
+      .getByRole('button', { name: operation === 'approve' ? 'Approve' : 'Reject Selected', exact: true })
+      .click();
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+    await expect(page.locator('.batch-outcomes')).toContainText('Queued for checker approval');
+    await expect(page.locator('.batch-outcomes')).not.toContainText('Uncertain');
+    await expect(page.locator('tbody tr').first()).toContainText('Pending approval');
+    await expect(page.locator('div.alert.error')).toHaveCount(0);
+    expect(writes).toHaveLength(1);
+  });
+}
+
+test('explains a locally refused approval without issuing a command', async ({ page }) => {
+  await page.route('**/loans/1', async (route) => {
+    if (route.request().method() !== 'GET') return route.fallback();
+    await route.fulfill({
+      json: {
+        id: 1,
+        accountNo: rows[0].accountNo,
+        clientId: rows[0].clientId,
+        loanProductId: rows[0].productId,
+        principal: rows[0].amount,
+        currency: { code: rows[0].currencyCode, decimalPlaces: 2 },
+        loanType: { id: 1 },
+        status: { id: 100, pendingApproval: true },
+        timeline: { submittedOnDate: rows[0].submittedOnDate },
+        multiDisburseLoan: true
+      }
+    });
+  });
+  await open(page);
+  await expect(page.locator('.summary-card').nth(2)).toContainText('Ready to disburse');
+  await expect(page.locator('.summary-card').nth(2)).toContainText('Subject to account checks');
+  await selectFirst(page);
+  await page.getByRole('button', { name: 'Approve', exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm', exact: true }).click();
+  await expect(page.locator('.batch-outcomes')).toContainText('Not submitted');
+  await expect(page.locator('.batch-outcomes')).toContainText('Multi-disbursement loan. Use individual approval.');
   expect(writes).toHaveLength(0);
 });
