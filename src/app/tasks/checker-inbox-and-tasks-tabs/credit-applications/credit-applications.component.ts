@@ -31,10 +31,12 @@ import {
   OnInit,
   ViewChild,
   inject,
-  output
+  output,
+  HostListener,
+  effect
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Angular Material Imports */
@@ -56,7 +58,7 @@ import {
 } from '@angular/material/table';
 
 /** rxjs Imports */
-import { EMPTY, BehaviorSubject, Subject, timer, forkJoin, from, of, throwError } from 'rxjs';
+import { EMPTY, BehaviorSubject, Subject, timer, forkJoin, from, of, throwError, defer } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -101,6 +103,11 @@ import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { MatIconButton } from '@angular/material/button';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { LoanApprovalMoneyPipe } from '../loan-approval/loan-approval-money.pipe';
+import { totals, minorUnits } from '../loan-approval/loan-approval.models';
+import { MassRejectionAttemptsService } from './mass-rejection-attempts.service';
 import { TasksService } from '../../tasks.service';
 import {
   MassRejectCreditApplicationsDialogComponent,
@@ -145,6 +152,9 @@ const CREDIT_APPLICATION_STATUS_OPTIONS: OptionItem[] = [
     MatSort,
     MatSortHeader,
     FormatNumberPipe,
+    LoanApprovalMoneyPipe,
+    MatSlideToggleModule,
+    MatIconButton,
     MatAutocompleteModule,
     MatMenuModule,
     MatTooltipModule
@@ -161,6 +171,8 @@ export class CreditApplicationsComponent implements OnInit {
   private translateService = inject(TranslateService);
   readonly queueCountChange = output<number | null>();
   private reads = new Subject<void>();
+  private massCounts = new Subject<any>();
+  private attempts = inject(MassRejectionAttemptsService);
   private summaries = new Subject<any>();
   private exportCancel = new Subject<void>();
   private summaryScope = '';
@@ -196,27 +208,34 @@ export class CreditApplicationsComponent implements OnInit {
   creditApplicationsForm: UntypedFormGroup = this.createSearchForm();
 
   dataSource = new MatTableDataSource<any>([]);
-  displayedColumns: string[] = this.isCreditSearch ? [
+  displayedColumns: string[] = this.isMassRejection ? [
         'select',
-        'accountNo',
         'clientName',
-        'productName',
+        'accountNo',
         'amount',
         'submittedOnDate',
-        'status',
-        'actions'
-      ] : [
-        ...(this.isMassRejection ? ['select'] : []),
-        'accountNo',
-        'clientName',
-        'clientType',
-        'productName',
-        'amount',
-        'currencyCode',
-        'submittedOnDate',
-        'location',
         'status'
-      ];
+      ] : this.isCreditSearch ? [
+          'select',
+          'accountNo',
+          'clientName',
+          'productName',
+          'amount',
+          'submittedOnDate',
+          'status',
+          'actions'
+        ] : [
+          ...(this.isMassRejection ? ['select'] : []),
+          'accountNo',
+          'clientName',
+          'clientType',
+          'productName',
+          'amount',
+          'currencyCode',
+          'submittedOnDate',
+          'location',
+          'status'
+        ];
   currencyOptions: CreditCurrencyOption[] = [];
   readonly summaryCards = [
     { status: '', key: 'labels.inputs.All', tone: 'all' },
@@ -229,7 +248,7 @@ export class CreditApplicationsComponent implements OnInit {
   exporting = false;
   exportError = false;
   approving = false;
-  batchOutcomes: { application: any; outcome: 'succeeded' | 'failed' | 'uncertain' }[] = [];
+  batchOutcomes: { application: any; outcome: 'succeeded' | 'failed' | 'uncertain' | 'queued'; reason?: string }[] = [];
   readonly presentationKeys = [
     extract('credits.pageMatches'),
     extract('credits.visibleRange'),
@@ -245,6 +264,7 @@ export class CreditApplicationsComponent implements OnInit {
     extract('credits.approveConfirmation')
   ];
   readonly outcomeKeys = {
+    queued: extract('massRejection.queued'),
     succeeded: extract('credits.succeeded'),
     failed: extract('credits.failed'),
     uncertain: extract('credits.uncertain')
@@ -272,13 +292,170 @@ export class CreditApplicationsComponent implements OnInit {
   selectedApplications = new Map<number | string, any>();
   failedApplications: any[] = [];
 
+  rejectableOnly = false;
+  rejectableCount: number | null = null;
+  scopeTotal: number | null = null;
+  rejectionForm = this.formBuilder.group({
+    rejectedOnDate: [
+      null,
+      Validators.required
+    ],
+    reason: [
+      '',
+      Validators.required
+    ],
+    customReason: [
+      '',
+      Validators.maxLength(1000)
+    ],
+    note: [
+      '',
+      Validators.maxLength(1000)
+    ]
+  });
+
+  constructor() {
+    effect(() => {
+      const businessDate = this.settingsService.businessDate;
+      if (
+        this.isMassRejection &&
+        !this.rejectionForm.controls.rejectedOnDate.dirty &&
+        businessDate instanceof Date &&
+        !Number.isNaN(businessDate.getTime())
+      ) {
+        this.rejectionForm.patchValue({ rejectedOnDate: new Date(businessDate) });
+        this.changeDetectorRef.markForCheck();
+      }
+    });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  protectPendingBatch(event: BeforeUnloadEvent): void {
+    if (this.isMassRejection && this.rejecting) {
+      event.preventDefault();
+      event.returnValue = '';
+    }
+  }
+
+  get businessDate(): Date | null {
+    const date = this.settingsService.businessDate;
+    return date instanceof Date && !Number.isNaN(date.getTime()) ? date : null;
+  }
+  get selectedRows(): any[] {
+    return Array.from(this.selectedApplications.values());
+  }
+  get selectedTotals() {
+    return totals(
+      this.selectedRows.map((row) => ({
+        id: row.loanId,
+        accountNo: row.accountNo,
+        principal: String(row.amount),
+        currency: { code: row.currencyCode, decimalPlaces: this.currencyDigits(row.currencyCode) }
+      }))
+    );
+  }
+  amountText(value: unknown): string {
+    return value == null ? '' : String(value);
+  }
+  get rejectionNote(): string {
+    const { reason, customReason, note } = this.rejectionForm.getRawValue();
+    const reasonText =
+      reason === 'custom'
+        ? String(customReason || '').trim()
+        : reason === 'documentation'
+          ? this.translateService.instant(extract('massRejection.documentation'))
+          : '';
+    return reasonText
+      ? this.translateService.instant(extract('massRejection.reasonPrefix')) +
+          ': ' +
+          reasonText +
+          (String(note || '').trim()
+            ? '\n' + this.translateService.instant(extract('massRejection.notePrefix')) + ': ' + String(note).trim()
+            : '')
+      : '';
+  }
+  get rejectionDateError(): string {
+    const value = this.rejectionForm.controls.rejectedOnDate.value;
+    const date = value instanceof Date ? creditCalendarDate(value) : null;
+    if (
+      !date?.isValid() ||
+      !this.businessDate ||
+      this.rejectionForm.controls.rejectedOnDate.invalid ||
+      date.isAfter(creditCalendarDate(this.businessDate), 'day')
+    )
+      return extract('massRejection.invalidDate');
+    if (
+      this.selectedRows.some(
+        (row) =>
+          !row.submittedOnDate ||
+          !creditCalendarDate(row.submittedOnDate).isValid() ||
+          date.isBefore(creditCalendarDate(row.submittedOnDate), 'day')
+      )
+    )
+      return extract('massRejection.beforeSubmission');
+    return '';
+  }
+  get canRejectSelection(): boolean {
+    return (
+      !this.busy &&
+      !this.loading &&
+      this.hasPermission('REJECT_LOAN') &&
+      this.selectedRows.length > 0 &&
+      this.selectedRows.every(
+        (row) => this.isRejectable(row) && !this.attempts.locked(row.loanId, this.isWorkingCapitalApplication(row))
+      ) &&
+      this.rejectionForm.controls.note.valid &&
+      (this.rejectionForm.controls.reason.value !== 'custom' || this.rejectionForm.controls.customReason.valid) &&
+      !this.rejectionDateError &&
+      !!this.rejectionNote &&
+      this.rejectionNote.length <= 1000 &&
+      this.selectedTotals !== null
+    );
+  }
+  disabledReason(application: any): string {
+    if (this.attempts.locked(application.loanId, this.isWorkingCapitalApplication(application)))
+      return extract('massRejection.previousAttempt');
+    if (this.isRejectable(application))
+      return this.hasPermission('REJECT_LOAN') ? '' : extract('massRejection.permission');
+    return (
+      (
+        {
+          200: extract('massRejection.approved'),
+          300: extract('massRejection.active'),
+          500: extract('massRejection.rejected')
+        } as Record<number, string>
+      )[creditStatusId(application)] || extract('massRejection.ineligible')
+    );
+  }
+  toggleRejectableOnly(checked: boolean): void {
+    if (this.busy) return;
+    this.rejectableOnly = checked;
+    this.applyFilters();
+  }
+  removeSelected(application: any): void {
+    if (this.busy) return;
+    this.selectedApplicationIds.delete(application.loanId);
+    this.selectedApplications.delete(application.loanId);
+    this.selectionVersion++;
+    this.changeDetectorRef.markForCheck();
+  }
+  cancelRejection(): void {
+    if (this.busy) return;
+    this.clearSelection();
+    this.rejectionForm.reset({ rejectedOnDate: this.businessDate, reason: '', customReason: '', note: '' });
+  }
+
   ngOnInit(): void {
     this.reads
       .pipe(
         switchMap(() => {
           this.loading = true;
           this.loadFailed = false;
-          return this.tasksService.getCreditApplications(this.buildSearchParams()).pipe(
+          return (
+            this.isMassRejection
+              ? this.tasksService.getCreditApplications(this.buildSearchParams(), true)
+              : this.tasksService.getCreditApplications(this.buildSearchParams())
+          ).pipe(
             map((data: any) => ({ data, failed: false })),
             catchError(() => of({ data: null, failed: true }))
           );
@@ -347,7 +524,7 @@ export class CreditApplicationsComponent implements OnInit {
         this.summaryLoading = false;
         this.changeDetectorRef.markForCheck();
       });
-    if (this.isCreditSearch) {
+    if (this.isCreditSearch || this.isMassRejection) {
       this.creditApplicationsForm
         .get('pageSearch')
         .valueChanges.pipe(
@@ -380,6 +557,39 @@ export class CreditApplicationsComponent implements OnInit {
           this.clientMatches = (matches || [])
             .filter((match) => match.entityType === 'CLIENT' && match.entityId && match.entityName)
             .slice(0, 20);
+          this.changeDetectorRef.markForCheck();
+        });
+    }
+    if (this.isMassRejection) {
+      this.massCounts
+        .pipe(
+          switchMap((scope) =>
+            forkJoin({
+              all: this.tasksService
+                .getCreditApplications({ ...scope, offset: 0, limit: 1 }, true)
+                .pipe(catchError(() => of(null))),
+              pending: this.tasksService
+                .getCreditApplications({ ...scope, status: 100, offset: 0, limit: 200 }, true)
+                .pipe(catchError(() => of(null)))
+            })
+          ),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe(({ all, pending }) => {
+          this.scopeTotal = Number.isSafeInteger(all?.totalFilteredRecords) ? all.totalFilteredRecords : null;
+          this.rejectableCount =
+            Number.isSafeInteger(pending?.totalFilteredRecords) &&
+            Array.isArray(pending?.pageItems) &&
+            pending.totalFilteredRecords === pending.pageItems.length &&
+            pending.totalFilteredRecords <= 200 &&
+            new Set(pending.pageItems.map((row: any) => String(row.loanId))).size === pending.pageItems.length
+              ? pending.pageItems.filter(
+                  (row: any) =>
+                    this.isRejectable(row) && !this.attempts.locked(row.loanId, this.isWorkingCapitalApplication(row))
+                ).length
+              : null;
+          if (Object.keys(this.appliedFilters).every((key) => key === 'status'))
+            this.queueCountChange.emit(this.rejectableCount);
           this.changeDetectorRef.markForCheck();
         });
     }
@@ -459,8 +669,12 @@ export class CreditApplicationsComponent implements OnInit {
     const query = String(this.creditApplicationsForm.get('pageSearch')?.value || '')
       .trim()
       .toLocaleLowerCase();
+    const eligiblePage =
+      this.isMassRejection && this.rejectableOnly
+        ? this.loadedPage.filter((row) => this.isRejectable(row))
+        : this.loadedPage;
     this.dataSource.data = query
-      ? this.loadedPage.filter((row) =>
+      ? eligiblePage.filter((row) =>
           [
             row.clientName,
             row.accountNo ?? row.loanId
@@ -470,7 +684,7 @@ export class CreditApplicationsComponent implements OnInit {
               .includes(query)
           )
         )
-      : this.loadedPage;
+      : eligiblePage;
   }
 
   applyFilters(): void {
@@ -486,6 +700,7 @@ export class CreditApplicationsComponent implements OnInit {
 
   clearFilters(): void {
     if (this.busy) return;
+    this.rejectableOnly = false;
     this.selectedClientName = '';
     this.clientMatches = [];
     this.clientLookupFailed = false;
@@ -590,6 +805,7 @@ export class CreditApplicationsComponent implements OnInit {
   }
   currencyDigits(code: string): number {
     const currency = this.currencyOptions.find((item) => item.code === code);
+    if (this.isMassRejection && currency?.decimalPlaces == null) return NaN;
     if (currency?.decimalPlaces != null) return currency.decimalPlaces;
     try {
       return new Intl.NumberFormat('en', { style: 'currency', currency: code }).resolvedOptions().maximumFractionDigits;
@@ -621,6 +837,13 @@ export class CreditApplicationsComponent implements OnInit {
   }
 
   isRejectable(application: any): boolean {
+    if (
+      this.isMassRejection &&
+      !(typeof application?.loanId === 'number'
+        ? Number.isSafeInteger(application.loanId) && application.loanId > 0
+        : typeof application?.loanId === 'string' && /^[1-9][0-9]{0,18}$/.test(application.loanId))
+    )
+      return false;
     return (
       !!application?.loanId && this.isSupportedApplicationProduct(application) && creditStatusId(application) === 100
     );
@@ -632,6 +855,12 @@ export class CreditApplicationsComponent implements OnInit {
   }
 
   canSelect(application: any): boolean {
+    if (this.isMassRejection)
+      return (
+        this.hasPermission('REJECT_LOAN') &&
+        this.isRejectable(application) &&
+        !this.attempts.locked(application.loanId, this.isWorkingCapitalApplication(application))
+      );
     return (
       (this.hasPermission('REJECT_LOAN') && this.isRejectable(application)) ||
       (this.hasPermission('APPROVE_LOAN') && this.isApprovable(application))
@@ -650,6 +879,7 @@ export class CreditApplicationsComponent implements OnInit {
   get outcomeCounts() {
     return {
       total: this.batchOutcomes.length,
+      ...(this.isMassRejection ? { queued: this.batchOutcomes.filter((row) => row.outcome === 'queued').length } : {}),
       succeeded: this.batchOutcomes.filter((row) => row.outcome === 'succeeded').length,
       failed: this.batchOutcomes.filter((row) => row.outcome === 'failed').length,
       uncertain: this.batchOutcomes.filter((row) => row.outcome === 'uncertain').length
@@ -730,13 +960,31 @@ export class CreditApplicationsComponent implements OnInit {
     }
 
     if (!Array.from(this.selectedApplications.values()).every((row) => this.isRejectable(row))) return;
-    const snapshot = new Map(this.selectedApplications);
+    if (this.isMassRejection && !this.canRejectSelection) {
+      this.rejectionForm.markAllAsTouched();
+      return;
+    }
+    const reviewedData = this.isMassRejection
+      ? { ...this.rejectionForm.getRawValue(), note: this.rejectionNote }
+      : null;
+    const snapshot = new Map(
+      this.selectedRows.map((row) => [
+        row.loanId,
+        JSON.parse(
+          JSON.stringify(this.isMassRejection ? { ...row, productType: this.applicationProductType(row) } : row)
+        )
+      ])
+    );
     const selectionVersion = this.selectionVersion;
     this.confirmingRejection = true;
     this.creditApplicationsForm.disable({ emitEvent: false });
+    if (this.isMassRejection) this.rejectionForm.disable({ emitEvent: false });
     const dialogRef = this.dialog.open(MassRejectCreditApplicationsDialogComponent, {
       data: {
         selectedCount: this.selectedApplicationIds.size,
+        ...(this.isMassRejection
+          ? { accounts: this.selectedRows.map((row) => row.accountNo ?? row.loanId), confirmation: reviewedData }
+          : {}),
         rejectedOnDate: this.settingsService.businessDate || new Date()
       } as MassRejectCreditApplicationsDialogData
     });
@@ -746,6 +994,7 @@ export class CreditApplicationsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((dialogResult: any) => {
         this.confirmingRejection = false;
+        this.rejectionForm.enable({ emitEvent: false });
         if (!dialogResult?.confirm) {
           this.creditApplicationsForm.enable({ emitEvent: false });
           this.changeDetectorRef.markForCheck();
@@ -763,11 +1012,51 @@ export class CreditApplicationsComponent implements OnInit {
           this.changeDetectorRef.markForCheck();
           return;
         }
-        this.rejectSelectedApplications(dialogResult.data, snapshot);
+        this.rejectSelectedApplications(reviewedData || dialogResult.data, snapshot);
       });
   }
 
   private rejectSelectedApplications(formData: any, selectedSnapshot: Map<number | string, any>): void {
+    if (!this.isMassRejection) {
+      this.rejectLegacyApplications(formData, selectedSnapshot);
+      return;
+    }
+    if (this.rejecting || !this.hasPermission('REJECT_LOAN') || this.selectedApplicationIds.size === 0) {
+      return;
+    }
+
+    this.rejecting = true;
+    this.rejectionResultMessage = '';
+    this.rejectionResultParams = {};
+    this.rejectionResultType = '';
+    this.failedApplications = [];
+    this.batchOutcomes = [];
+    this.rejectionForm.disable({ emitEvent: false });
+    const rejectionPayload = this.buildRejectionPayload(formData);
+    from(Array.from(selectedSnapshot.values()))
+      .pipe(
+        mergeMap((application) => this.verifiedRejection(application, rejectionPayload), 3),
+        toArray(),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((outcomes) => {
+        this.batchOutcomes = outcomes;
+        this.failedApplications = [];
+        this.rejectionResultMessage = outcomes.some((row) => row.outcome === 'uncertain')
+          ? extract('credits.uncertainResult')
+          : extract('credits.batchComplete');
+        this.rejectionResultType = outcomes.every((row) => row.outcome === 'succeeded') ? 'success' : 'error';
+        this.clearSelection();
+        this.rejecting = false;
+        this.creditApplicationsForm.enable({ emitEvent: false });
+        this.rejectionForm.enable({ emitEvent: false });
+        this.queueCountChange.emit(null);
+        this.summaryScope = '';
+        this.loadCreditApplications();
+      });
+  }
+
+  private rejectLegacyApplications(formData: any, selectedSnapshot: Map<number | string, any>): void {
     if (this.rejecting || !this.hasPermission('REJECT_LOAN') || this.selectedApplicationIds.size === 0) {
       return;
     }
@@ -847,6 +1136,100 @@ export class CreditApplicationsComponent implements OnInit {
         this.summaryScope = '';
         this.loadCreditApplications();
       });
+  }
+
+  private verifiedRejection(application: any, payload: any) {
+    const id = String(application.loanId);
+    const workingCapital = this.isWorkingCapitalApplication(application);
+    let submitted = false;
+    let responseReceived = false;
+    const detail = () =>
+      workingCapital
+        ? this.loansService.getWorkingCapitalLoanDetails(id, true)
+        : this.loansService.getLoanAccountDetails(id, true);
+    const denied = (reason: string) => throwError(() => ({ status: 409, reason }));
+    return defer(() => {
+      if (!this.hasPermission('REJECT_LOAN') || !this.isRejectable(application))
+        return denied(extract('massRejection.permission'));
+      return detail().pipe(
+        switchMap((loan) => {
+          if (String(loan?.id) !== id || loan.accountNo !== application.accountNo || loan.status?.id !== 100)
+            return denied(extract('massRejection.changed'));
+          const digits = this.currencyDigits(application.currencyCode);
+          const requested = minorUnits(String(application.amount), digits);
+          if (
+            String(loan.loanProductId) !== String(application.productId) ||
+            (application.clientId != null && String(loan.clientId) !== String(application.clientId)) ||
+            loan.currency?.code !== application.currencyCode ||
+            loan.currency?.decimalPlaces !== digits ||
+            requested === null ||
+            minorUnits(loan.proposedPrincipal ?? loan.principal, digits) !== requested
+          )
+            return denied(extract('massRejection.changed'));
+          const date = moment(payload.rejectedOnDate, this.dateUtils.angularToMomentFormat(payload.dateFormat), true);
+          const submittedDate = loan.timeline?.submittedOnDate ?? loan.submittedOnDate;
+          if (
+            !date.isValid() ||
+            !this.businessDate ||
+            !submittedDate ||
+            !creditCalendarDate(submittedDate).isValid() ||
+            date.isBefore(creditCalendarDate(submittedDate), 'day') ||
+            date.isAfter(creditCalendarDate(this.businessDate), 'day')
+          )
+            return denied(extract('massRejection.invalidDate'));
+          // Fineract enforces client office-joining restrictions atomically; its loan detail does not expose that date.
+          if (!this.hasPermission('REJECT_LOAN')) return denied(extract('massRejection.permission'));
+          if (!this.attempts.lock(application.loanId, workingCapital))
+            return denied(extract('massRejection.previousAttempt'));
+          return defer(() => {
+            submitted = true;
+            return workingCapital
+              ? this.loansService.applyWorkingCapitalLoanAccountCommand(application.loanId, 'reject', payload)
+              : this.loansService.loanActionButtons(application.loanId, 'reject', payload);
+          }).pipe(
+            switchMap((response) => {
+              responseReceived = true;
+              if (response?.rollbackTransaction === true || (response?.commandId && !response?.resourceId))
+                return of({ application, outcome: 'queued' as const, reason: extract('massRejection.queued') });
+              if (String(response?.resourceId) !== id)
+                return of({ application, outcome: 'uncertain' as const, reason: extract('massRejection.readback') });
+              return forkJoin({
+                loan: detail(),
+                notes: workingCapital ? of(null) : this.loansService.getLoanNotes(id)
+              }).pipe(
+                map(({ loan: current, notes }) => {
+                  const matched =
+                    String(current?.id) === id &&
+                    current.accountNo === application.accountNo &&
+                    current.status?.id === 500;
+                  const persisted =
+                    workingCapital || (Array.isArray(notes) && notes.some((note) => note.note === payload.note));
+                  return {
+                    application,
+                    outcome: matched && persisted ? ('succeeded' as const) : ('uncertain' as const),
+                    ...(matched && persisted ? {} : { reason: extract('massRejection.readback') })
+                  };
+                })
+              );
+            })
+          );
+        })
+      );
+    }).pipe(
+      catchError((error) => {
+        const uncertain =
+          submitted && (responseReceived || !error?.status || error.status >= 500 || error.status === 408);
+        if (submitted && !uncertain) this.attempts.unlock(application.loanId, workingCapital);
+        return of({
+          application,
+          outcome: uncertain ? ('uncertain' as const) : ('failed' as const),
+          reason: uncertain
+            ? extract('massRejection.readback')
+            : error?.reason ||
+              (submitted ? extract('massRejection.backendValidation') : extract('massRejection.preflight'))
+        });
+      })
+    );
   }
 
   massApprove(): void {
@@ -1077,7 +1460,7 @@ export class CreditApplicationsComponent implements OnInit {
   }
 
   private loadFilterOptions(): void {
-    if (!this.isMassRejection) this.loadCurrencies();
+    this.loadCurrencies();
     forkJoin({
       loanProducts: this.productsService.getLoanProductsBasicDetails().pipe(catchError(() => of([]))),
       clientTemplate: this.clientsService.getClientTemplate().pipe(catchError(() => of({}))),
@@ -1088,6 +1471,11 @@ export class CreditApplicationsComponent implements OnInit {
         this.loanProductOptions = data.loanProducts || [];
         this.clientTypeOptions = data.clientTemplate?.clientTypeOptions || [];
         this.stateOptions = data.addressTemplate?.stateProvinceIdOptions || [];
+        if (this.isMassRejection && !this.busy) {
+          this.clearSelection();
+          this.filterCurrentPage();
+          this.refreshMassCounts();
+        }
         this.changeDetectorRef.markForCheck();
       });
   }
@@ -1116,6 +1504,7 @@ export class CreditApplicationsComponent implements OnInit {
     this.exportError = false;
     this.filterError = '';
     if (!this.isCreditSearch) {
+      if (this.isMassRejection) this.refreshMassCounts();
       this.reads.next();
       return;
     }
@@ -1126,6 +1515,13 @@ export class CreditApplicationsComponent implements OnInit {
       this.summaries.next(scope);
     }
     this.reads.next();
+  }
+
+  private refreshMassCounts(): void {
+    const { status, ...scope } = this.appliedFilters;
+    this.rejectableCount = null;
+    this.scopeTotal = null;
+    this.massCounts.next(scope);
   }
 
   private buildSearchParams(): any {
@@ -1142,6 +1538,7 @@ export class CreditApplicationsComponent implements OnInit {
     const { submittedFrom, submittedTo, pageSearch, ...values } = this.creditApplicationsForm.value;
     return this.removeEmptyParams({
       ...values,
+      ...(this.isMassRejection ? { status: this.rejectableOnly ? 100 : '' } : {}),
       submittedFrom: this.formatApiDate(submittedFrom),
       submittedTo: this.formatApiDate(submittedTo)
     });
@@ -1152,7 +1549,8 @@ export class CreditApplicationsComponent implements OnInit {
       return this.formBuilder.group({
         submittedFrom: [''],
         submittedTo: [''],
-        status: [''],
+        pageSearch: [''],
+        clientId: [''],
         productId: ['']
       });
     }

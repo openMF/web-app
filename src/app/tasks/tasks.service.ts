@@ -13,6 +13,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { map, Observable, tap } from 'rxjs';
 import type { MakerCheckerRecord } from './checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox-audit';
+import { parseExactJson } from 'app/products/saving-products/product-editor/interest-rate.model';
 import { CheckerInboxCountService } from './checker-inbox-count.service';
 
 /**
@@ -194,8 +195,14 @@ export class TasksService {
    * Get Credit Applications Data.
    * @param {any} searchData Credit applications search and paging parameters.
    */
-  getCreditApplications(searchData?: any): Observable<any> {
-    return this.http.get('/v2/credit-applications', { params: this.buildHttpParams(searchData) });
+  getCreditApplications(searchData?: any, exactAmounts = false): Observable<any> {
+    const params = this.buildHttpParams(searchData);
+    if (exactAmounts) {
+      return this.http
+        .get('/v2/credit-applications', { params, responseType: 'text' })
+        .pipe(map((text) => parseExactJson(text, ['amount'])));
+    }
+    return this.http.get('/v2/credit-applications', { params });
   }
 
   /**
