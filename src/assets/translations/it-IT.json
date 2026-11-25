@@ -6405,7 +6405,8 @@
       "workingCapitalDiscountUpdated": "Lo sconto del prestito di capitale circolante è stato aggiornato correttamente.",
       "identityDescriptionsUpdated": "Le descrizioni dei documenti d'identità sono state aggiornate correttamente.",
       "identityDescriptionsUpdateFailed": "Alcune descrizioni dei documenti d'identità non sono state aggiornate.",
-      "unableToAdjustDiscountFee": "Impossibile rettificare la commissione di sconto."
+      "unableToAdjustDiscountFee": "Impossibile rettificare la commissione di sconto.",
+      "documentDeleted": "Documento eliminato con successo."
     },
     "selections": {
       "standingInstructions": {

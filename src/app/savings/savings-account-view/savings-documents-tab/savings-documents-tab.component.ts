@@ -9,6 +9,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -82,7 +83,6 @@ export class SavingsDocumentsTabComponent {
     return this.savingsService.loadSavingsDocument(this.entityId, formData);
   }
 
-  deleteDocument(documentId: any) {
-    this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res: any) => {});
-  }
+  deleteDocument = (documentId: any): Observable<any> =>
+    this.savingsService.deleteSavingsDocument(this.entityId, documentId);
 }

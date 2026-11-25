@@ -14,7 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faDownload, faEye, faFile, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 
 import { ClientsService } from 'app/clients/clients.service';
@@ -115,7 +115,7 @@ describe('EntityDocumentsTabComponent', () => {
     component.entityId = '3616';
     component.entityType = 'clients';
     component.callbackUpload = jest.fn(() => of({}));
-    component.callbackDelete = jest.fn();
+    component.callbackDelete = jest.fn(() => of({}));
   });
 
   afterEach(() => {
@@ -433,5 +433,239 @@ describe('EntityDocumentsTabComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Issuance Date: 02 January 2024');
     expect(text).toContain('Expiry Date: 30 June 2030');
+  });
+
+  describe('deleteDocument', () => {
+    const originalDocuments = () => [
+      { id: 201, name: 'first.pdf', fileName: 'first.pdf' },
+      { id: 202, name: 'second.png', fileName: 'second.png' }
+    ];
+
+    beforeEach(() => {
+      component.entityDocuments = originalDocuments();
+      documentPreviewService.isPreviewable.mockReturnValue(false);
+      dialog.open.mockReturnValue({ afterClosed: () => of({ delete: true }) } as any);
+    });
+
+    it('removes only the confirmed document and announces the deletion', () => {
+      const deleteRequest = new Subject<any>();
+      component.callbackDelete = jest.fn(() => deleteRequest.asObservable());
+
+      component.deleteDocument(201, 'first.pdf');
+
+      // Nothing leaves the list until the server has answered.
+      expect(component.isDeleting(201)).toBe(true);
+      expect(component.entityDocuments.map((doc: any) => doc.id)).toEqual([
+        201,
+        202
+      ]);
+
+      deleteRequest.next({});
+      deleteRequest.complete();
+
+      expect(component.callbackDelete).toHaveBeenCalledWith(201);
+      expect(component.entityDocuments.map((doc: any) => doc.id)).toEqual([202]);
+      expect(component.isDeleting(201)).toBe(false);
+      expect(documentPreviewService.release).toHaveBeenCalledWith('201');
+      expect(alertService.alert).toHaveBeenCalledWith({
+        type: 'success',
+        message: 'labels.messages.documentDeleted'
+      });
+    });
+
+    it('keeps the document and announces nothing when the delete fails', () => {
+      const deleteRequest = new Subject<any>();
+      component.callbackDelete = jest.fn(() => deleteRequest.asObservable());
+
+      component.deleteDocument(201, 'first.pdf');
+      deleteRequest.error(new Error('delete failed'));
+
+      expect(component.entityDocuments.map((doc: any) => doc.id)).toEqual([
+        201,
+        202
+      ]);
+      expect(component.isDeleting(201)).toBe(false);
+      expect(documentPreviewService.release).not.toHaveBeenCalled();
+      expect(alertService.alert).not.toHaveBeenCalled();
+    });
+
+    it('ignores repeated delete attempts while the request is pending', () => {
+      const deleteRequest = new Subject<any>();
+      component.callbackDelete = jest.fn(() => deleteRequest.asObservable());
+
+      component.deleteDocument(201, 'first.pdf');
+      component.deleteDocument(201, 'first.pdf');
+
+      expect(component.callbackDelete).toHaveBeenCalledTimes(1);
+      expect(dialog.open).toHaveBeenCalledTimes(1);
+    });
+
+    it('does nothing when the confirmation dialog is dismissed', () => {
+      dialog.open.mockReturnValue({ afterClosed: () => of({ delete: false }) } as any);
+
+      component.deleteDocument(201, 'first.pdf');
+
+      expect(component.callbackDelete).not.toHaveBeenCalled();
+      expect(component.entityDocuments.map((doc: any) => doc.id)).toEqual([
+        201,
+        202
+      ]);
+      expect(alertService.alert).not.toHaveBeenCalled();
+    });
+
+    it('opens only one confirmation dialog for repeated requests before the first closes', () => {
+      const dialogResponse = new Subject<any>();
+      dialog.open.mockReturnValue({ afterClosed: () => dialogResponse.asObservable() } as any);
+
+      component.deleteDocument(201, 'first.pdf');
+      component.deleteDocument(201, 'first.pdf');
+
+      expect(dialog.open).toHaveBeenCalledTimes(1);
+      expect(component.callbackDelete).not.toHaveBeenCalled();
+    });
+
+    it('allows another attempt after the confirmation dialog is dismissed', () => {
+      const dialogResponse = new Subject<any>();
+      dialog.open.mockReturnValue({ afterClosed: () => dialogResponse.asObservable() } as any);
+
+      component.deleteDocument(201, 'first.pdf');
+      dialogResponse.next({ delete: false });
+      dialogResponse.complete();
+
+      component.deleteDocument(201, 'first.pdf');
+
+      expect(dialog.open).toHaveBeenCalledTimes(2);
+      expect(component.callbackDelete).not.toHaveBeenCalled();
+    });
+
+    it('transfers a confirmed deletion into request protection', () => {
+      const dialogResponse = new Subject<any>();
+      const deleteRequest = new Subject<any>();
+      dialog.open.mockReturnValue({ afterClosed: () => dialogResponse.asObservable() } as any);
+      component.callbackDelete = jest.fn(() => deleteRequest.asObservable());
+
+      component.deleteDocument(201, 'first.pdf');
+      expect(component.isDeleting(201)).toBe(false);
+
+      dialogResponse.next({ delete: true });
+      dialogResponse.complete();
+
+      expect(component.isDeleting(201)).toBe(true);
+      expect(component.callbackDelete).toHaveBeenCalledTimes(1);
+
+      // A second attempt cannot open another dialog or send a second request while it is pending.
+      component.deleteDocument(201, 'first.pdf');
+      expect(dialog.open).toHaveBeenCalledTimes(1);
+      expect(component.callbackDelete).toHaveBeenCalledTimes(1);
+
+      deleteRequest.next({});
+      deleteRequest.complete();
+
+      expect(component.isDeleting(201)).toBe(false);
+      expect(component.entityDocuments.map((doc: any) => doc.id)).toEqual([202]);
+    });
+
+    it('opens independent confirmation dialogs for different documents', () => {
+      const firstDialog = new Subject<any>();
+      const secondDialog = new Subject<any>();
+      dialog.open
+        .mockReturnValueOnce({ afterClosed: () => firstDialog.asObservable() } as any)
+        .mockReturnValueOnce({ afterClosed: () => secondDialog.asObservable() } as any);
+
+      component.deleteDocument(201, 'first.pdf');
+      component.deleteDocument(202, 'second.png');
+
+      expect(dialog.open).toHaveBeenCalledTimes(2);
+      expect(dialog.open.mock.calls[0][1]).toEqual({ data: { deleteContext: 'Document: first.pdf' } });
+      expect(dialog.open.mock.calls[1][1]).toEqual({ data: { deleteContext: 'Document: second.png' } });
+    });
+
+    it('revokes a numeric-id preview through the real deletion flow', async () => {
+      const originalCreateObjectURL = URL.createObjectURL;
+      const originalRevokeObjectURL = URL.revokeObjectURL;
+      const objectUrl = 'blob:document-201';
+      URL.createObjectURL = jest.fn(() => objectUrl) as any;
+      URL.revokeObjectURL = jest.fn() as any;
+      try {
+        const previewService = new DocumentPreviewService();
+        (component as any).documentPreviewService = previewService;
+        const download = jest.fn(() => of(new Blob(['%PDF-1.4'], { type: 'application/pdf' })));
+        await previewService.resolvePreviewUrl({ id: 201, fileName: 'first.pdf' }, download);
+        component.callbackDelete = jest.fn(() => of({}));
+
+        component.deleteDocument(201, 'first.pdf');
+
+        expect(URL.revokeObjectURL).toHaveBeenCalledWith(objectUrl);
+        // The entry is gone, so a later resolve downloads the file again instead of leaking the URL.
+        await previewService.resolvePreviewUrl({ id: 201, fileName: 'first.pdf' }, download);
+        expect(download).toHaveBeenCalledTimes(2);
+      } finally {
+        URL.createObjectURL = originalCreateObjectURL;
+        URL.revokeObjectURL = originalRevokeObjectURL;
+      }
+    });
+
+    it('does not repopulate a thumbnail after its preview is invalidated by deletion', async () => {
+      let resolvePreview!: (value: any) => void;
+      component.entityDocuments = [{ id: 201, name: 'first.pdf', fileName: 'first.pdf' }];
+      documentPreviewService.isPreviewable.mockReturnValue(true);
+      documentPreviewService.resolvePreviewUrl.mockReturnValue(
+        new Promise<any>((resolve) => {
+          resolvePreview = resolve;
+        })
+      );
+      component.callbackDelete = jest.fn(() => of({}));
+
+      component.ngOnInit();
+      component.deleteDocument(201, 'first.pdf');
+
+      resolvePreview(null);
+      await Promise.resolve();
+
+      expect(component.previewThumbnails[201]).toBeUndefined();
+    });
+
+    it('disables the delete button for the document whose request is in flight', () => {
+      const deleteRequest = new Subject<any>();
+      component.callbackDelete = jest.fn(() => deleteRequest.asObservable());
+
+      fixture.detectChanges();
+      component.deleteDocument(201, 'first.pdf');
+      fixture.detectChanges();
+
+      const deleteButton = fixture.nativeElement.querySelector('.actions button[color="warn"]');
+      expect(deleteButton.disabled).toBe(true);
+
+      deleteRequest.error(new Error('delete failed'));
+      fixture.detectChanges();
+
+      expect(deleteButton.disabled).toBe(false);
+    });
+
+    it('does not send a second delete request when a request is already pending', () => {
+      const deleteRequest = new Subject<any>();
+      component.callbackDelete = jest.fn(() => deleteRequest.asObservable());
+
+      (component as any).requestDocumentDeletion(201);
+      (component as any).requestDocumentDeletion(201);
+
+      expect(component.callbackDelete).toHaveBeenCalledTimes(1);
+    });
+
+    it('removes the document when the id type differs between the document and the delete argument', () => {
+      component.entityDocuments = [
+        { id: '201', name: 'first.pdf', fileName: 'first.pdf' },
+        { id: 202, name: 'second.png', fileName: 'second.png' }
+      ];
+      component.callbackDelete = jest.fn(() => of({}));
+
+      component.deleteDocument(201, 'first.pdf');
+
+      expect(component.entityDocuments.map((doc: any) => doc.id)).toEqual([202]);
+      expect(alertService.alert).toHaveBeenCalledWith({
+        type: 'success',
+        message: 'labels.messages.documentDeleted'
+      });
+    });
   });
 });

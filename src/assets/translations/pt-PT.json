@@ -6405,7 +6405,8 @@
       "workingCapitalDiscountUpdated": "O desconto do empréstimo de fundo de maneio foi atualizado com sucesso.",
       "identityDescriptionsUpdated": "As descrições de identidade foram atualizadas com sucesso.",
       "identityDescriptionsUpdateFailed": "Algumas descrições de identidade não puderam ser atualizadas.",
-      "unableToAdjustDiscountFee": "Não foi possível ajustar a taxa de desconto."
+      "unableToAdjustDiscountFee": "Não foi possível ajustar a taxa de desconto.",
+      "documentDeleted": "Documento eliminado com sucesso."
     },
     "selections": {
       "standingInstructions": {

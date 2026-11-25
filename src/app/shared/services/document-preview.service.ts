@@ -56,7 +56,7 @@ export const PDF_GALLERY_THUMBNAIL =
   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MCA2MCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIj48cmVjdCB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIGZpbGw9IiMyZjJmMmYiLz48cGF0aCBkPSJNMTggMTFoMTZsMTAgMTB2MjhhMiAyIDAgMCAxLTIgMkgxOGEyIDIgMCAwIDEtMi0yVjEzYTIgMiAwIDAgMSAyLTJ6IiBmaWxsPSIjZjJmMmYyIi8+PHBhdGggZD0iTTM0IDExbDEwIDEwSDM2YTIgMiAwIDAgMS0yLTJ6IiBmaWxsPSIjYzRjNGM0Ii8+PHRleHQgeD0iMzAiIHk9IjQzIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjYzAzOTJiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5QREY8L3RleHQ+PC9zdmc+';
 
 export interface DocumentDescriptor {
-  id: string;
+  id: string | number;
   name?: string;
   description?: string;
   fileName?: string;
@@ -70,11 +70,28 @@ interface CachedPreview {
   isObjectUrl: boolean;
 }
 
+interface ResolvedPreview {
+  url: string;
+  type: DocumentPreviewType;
+}
+
+interface PendingPreview {
+  token: number;
+  promise: Promise<ResolvedPreview | null>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentPreviewService {
   private readonly previewCache = new Map<string, CachedPreview>();
+  /**
+   * In-flight preview downloads per document, shared by concurrent callers. Releasing a document
+   * removes its entry, so a download that finishes afterwards can recognise that it was
+   * invalidated and must not cache anything.
+   */
+  private readonly pendingPreviews = new Map<string, PendingPreview>();
+  private previewTokenSequence = 0;
 
   /**
    * Determine whether the document can be previewed inline.
@@ -103,12 +120,14 @@ export class DocumentPreviewService {
 
   /**
    * Resolve a preview URL for a document, caching object URLs to avoid duplicate downloads.
+   * Resolves to `null` when the document was released while its download was still in flight.
    */
   async resolvePreviewUrl(
     document: DocumentDescriptor,
     downloadFn: (descriptor: DocumentDescriptor) => Observable<Blob>
-  ): Promise<{ url: string; type: DocumentPreviewType }> {
-    const cached = this.previewCache.get(document.id);
+  ): Promise<ResolvedPreview | null> {
+    const idKey = this.cacheKey(document.id);
+    const cached = this.previewCache.get(idKey);
     if (cached) {
       return { url: cached.url, type: cached.type };
     }
@@ -116,42 +135,78 @@ export class DocumentPreviewService {
     const inline = this.getInlineData(document);
     if (inline) {
       const type = this.detectType(inline.mimeType, document.fileName, document.fileData);
-      this.previewCache.set(document.id, { url: inline.url, type, isObjectUrl: inline.isObjectUrl });
+      this.previewCache.set(idKey, { url: inline.url, type, isObjectUrl: inline.isObjectUrl });
       return { url: inline.url, type };
     }
 
-    const blob = await firstValueFrom(downloadFn(document));
-    const type = this.detectType(
-      this.preferSpecificMimeType(blob.type, document.mimeType),
-      document.fileName,
-      document.fileData
-    );
-    const objectUrl = URL.createObjectURL(this.withPreviewableMimeType(blob, type));
-    this.previewCache.set(document.id, { url: objectUrl, type, isObjectUrl: true });
-    return { url: objectUrl, type };
+    const pending = this.pendingPreviews.get(idKey);
+    if (pending) {
+      return pending.promise;
+    }
+
+    const token = ++this.previewTokenSequence;
+    const promise = this.loadPreview(document, downloadFn, idKey, token);
+    this.pendingPreviews.set(idKey, { token, promise });
+    try {
+      return await promise;
+    } finally {
+      // Only the request that still owns the id clears its tracking entry; a newer one keeps it.
+      if (this.isCurrentPreview(idKey, token)) {
+        this.pendingPreviews.delete(idKey);
+      }
+    }
   }
 
   /**
-   * Revoke an object URL if it was created by this service.
+   * Revoke an object URL if it was created by this service, and invalidate any download still
+   * running for the document so it cannot cache a preview after deletion.
    */
-  release(documentId: string): void {
-    const cached = this.previewCache.get(documentId);
+  release(documentId: string | number): void {
+    const idKey = this.cacheKey(documentId);
+    this.pendingPreviews.delete(idKey);
+    const cached = this.previewCache.get(idKey);
     if (cached?.isObjectUrl) {
       URL.revokeObjectURL(cached.url);
     }
-    this.previewCache.delete(documentId);
+    this.previewCache.delete(idKey);
   }
 
   /**
    * Clean up all cached URLs.
    */
   clear(): void {
+    this.pendingPreviews.clear();
     this.previewCache.forEach((cached) => {
       if (cached.isObjectUrl) {
         URL.revokeObjectURL(cached.url);
       }
     });
     this.previewCache.clear();
+  }
+
+  private async loadPreview(
+    document: DocumentDescriptor,
+    downloadFn: (descriptor: DocumentDescriptor) => Observable<Blob>,
+    idKey: string,
+    token: number
+  ): Promise<ResolvedPreview | null> {
+    const blob = await firstValueFrom(downloadFn(document));
+    if (!this.isCurrentPreview(idKey, token)) {
+      // Released, or superseded by a newer request, while the download was running.
+      return null;
+    }
+    const type = this.detectType(
+      this.preferSpecificMimeType(blob.type, document.mimeType),
+      document.fileName,
+      document.fileData
+    );
+    const objectUrl = URL.createObjectURL(this.withPreviewableMimeType(blob, type));
+    this.previewCache.set(idKey, { url: objectUrl, type, isObjectUrl: true });
+    return { url: objectUrl, type };
+  }
+
+  private isCurrentPreview(idKey: string, token: number): boolean {
+    return this.pendingPreviews.get(idKey)?.token === token;
   }
 
   private getInlineData(document: DocumentDescriptor): { url: string; mimeType?: string; isObjectUrl: boolean } | null {
@@ -214,6 +269,15 @@ export class DocumentPreviewService {
    */
   private toMediaType(mimeType: string): string {
     return mimeType.split(';', 1)[0].trim().toLowerCase();
+  }
+
+  /**
+   * Cache keys are always strings: document ids arrive as numbers from the API but the same
+   * document is also released by the deletion flow with a string id. Normalising at every cache
+   * boundary keeps insertion, lookup and release pointing at the same entry.
+   */
+  private cacheKey(documentId: string | number): string {
+    return String(documentId);
   }
 
   /**

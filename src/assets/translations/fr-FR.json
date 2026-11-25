@@ -6405,7 +6405,8 @@
       "workingCapitalDiscountUpdated": "Le rabais du prêt de fonds de roulement a été mis à jour avec succès.",
       "identityDescriptionsUpdated": "Les descriptions des pièces d'identité ont été mises à jour.",
       "identityDescriptionsUpdateFailed": "Certaines descriptions de pièces d'identité n'ont pas pu être mises à jour.",
-      "unableToAdjustDiscountFee": "Impossible d'ajuster les frais de remise."
+      "unableToAdjustDiscountFee": "Impossible d'ajuster les frais de remise.",
+      "documentDeleted": "Document supprimé avec succès."
     },
     "selections": {
       "standingInstructions": {

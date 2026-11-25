@@ -9,6 +9,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -44,9 +45,8 @@ export class DocumentsTabComponent {
     this.entityId = this.route.parent.snapshot.paramMap.get('clientId');
   }
 
-  deleteDocument(documentId: string) {
-    this.clientsService.deleteClientDocument(this.entityId, documentId).subscribe((res) => {});
-  }
+  deleteDocument = (documentId: string | number): Observable<any> =>
+    this.clientsService.deleteClientDocument(this.entityId, documentId);
 
   uploadDocument(formData: FormData): any {
     return this.clientsService.uploadClientDocument(this.entityId, formData);

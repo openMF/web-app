@@ -39,7 +39,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { DocumentPreviewService, PDF_GALLERY_THUMBNAIL } from 'app/shared/services/document-preview.service';
 import { SpreadsheetPreview, SpreadsheetPreviewService } from 'app/shared/services/spreadsheet-preview.service';
 import { SpreadsheetPreviewDialogComponent } from 'app/shared/documents/spreadsheet-preview-dialog/spreadsheet-preview-dialog.component';
-import { Observable, firstValueFrom, throwError } from 'rxjs';
+import { Observable, finalize, firstValueFrom, throwError } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { TranslateService } from '@ngx-translate/core';
@@ -81,7 +81,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   @Input() entityDocuments: any;
 
   @Input() callbackUpload: (documentData: FormData) => Observable<any>;
-  @Input() callbackDelete: (documentId: string) => void;
+  @Input() callbackDelete: (documentId: string | number) => Observable<any>;
 
   previewThumbnails: Record<string, string> = {};
   pdfThumbnails: Record<string, SafeResourceUrl> = {};
@@ -92,6 +92,10 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
    * before it settles, so callers share the pending promise rather than each fetching the file.
    */
   private spreadsheetLoads = new Map<string, Promise<SpreadsheetPreview>>();
+  /** Documents with a delete request in flight, so a double click cannot send two deletes. */
+  private deletingDocumentIds = new Set<string>();
+  /** Documents whose confirmation dialog is open, so a click cannot stack a second dialog. */
+  private confirmationPendingDocumentIds = new Set<string>();
   private lightboxInstance: LightGallery | null = null;
   private readonly lightboxPlugins = [
     lgZoom,
@@ -149,31 +153,83 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteDocument(documentId: string, name: string): void {
-    if (!this.isValidDocumentId(documentId)) {
+  deleteDocument(documentId: string | number, name: string): void {
+    const idKey = String(documentId);
+    if (
+      !this.isValidDocumentId(documentId) ||
+      this.isDeleting(documentId) ||
+      this.confirmationPendingDocumentIds.has(idKey)
+    ) {
       return;
     }
+    this.confirmationPendingDocumentIds.add(idKey);
     const deleteDocumentDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Document: ${name}` }
     });
-    deleteDocumentDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
-        this.callbackDelete(documentId);
-        const index = this.entityDocuments.findIndex((doc: any) => doc.id === documentId);
-        if (index !== -1) {
-          this.entityDocuments.splice(index, 1);
+    deleteDocumentDialogRef
+      .afterClosed()
+      .pipe(
+        finalize(() => {
+          // Confirmation, cancellation and dismissal all have to release the id for a retry.
+          this.confirmationPendingDocumentIds.delete(idKey);
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe((response: any) => {
+        if (response?.delete) {
+          this.requestDocumentDeletion(documentId);
         }
-        this.documentPreviewService.release(documentId);
-        this.previewThumbnails = { ...this.previewThumbnails };
-        delete this.previewThumbnails[documentId];
-        this.pdfThumbnails = { ...this.pdfThumbnails };
-        delete this.pdfThumbnails[documentId];
-        this.spreadsheetPreviews = { ...this.spreadsheetPreviews };
-        delete this.spreadsheetPreviews[documentId];
-        this.spreadsheetLoads.delete(documentId);
-        this.cdr.markForCheck();
-      }
-    });
+      });
+  }
+
+  /** True while the delete request for this document is still in flight. */
+  isDeleting(documentId: string | number): boolean {
+    return this.deletingDocumentIds.has(String(documentId));
+  }
+
+  /**
+   * Wait for the server to confirm the deletion before touching the list, so a failed request
+   * leaves the document where it is. The global error interceptor already reports failures, so
+   * the error path only has to clear the pending state.
+   */
+  private requestDocumentDeletion(documentId: string | number): void {
+    const idKey = String(documentId);
+    if (this.isDeleting(idKey)) {
+      return;
+    }
+    this.deletingDocumentIds.add(idKey);
+    this.cdr.markForCheck();
+    this.callbackDelete(documentId)
+      .pipe(
+        finalize(() => {
+          this.deletingDocumentIds.delete(idKey);
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: () => {
+          const index = this.entityDocuments.findIndex((doc: any) => String(doc.id) === idKey);
+          if (index !== -1) {
+            this.entityDocuments.splice(index, 1);
+          }
+          this.documentPreviewService.release(idKey);
+          this.previewThumbnails = { ...this.previewThumbnails };
+          delete this.previewThumbnails[idKey];
+          this.pdfThumbnails = { ...this.pdfThumbnails };
+          delete this.pdfThumbnails[idKey];
+          this.spreadsheetPreviews = { ...this.spreadsheetPreviews };
+          delete this.spreadsheetPreviews[idKey];
+          this.spreadsheetLoads.delete(idKey);
+          this.alertService.alert({
+            type: 'success',
+            message: this.translateService.instant('labels.messages.documentDeleted')
+          });
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          // Reported by the error interceptor; the document stays visible for a retry.
+        }
+      });
   }
 
   /**
@@ -228,6 +284,10 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
           const preview = await this.documentPreviewService.resolvePreviewUrl(item, (descriptor) =>
             this.getDownloadObservable(descriptor.id)
           );
+          if (!preview) {
+            // Deleted while its preview was still loading.
+            continue;
+          }
           if (preview.type === 'image') {
             this.previewThumbnails = { ...this.previewThumbnails, [item.id]: preview.url };
             this.cdr.markForCheck();
@@ -332,15 +392,16 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getDownloadObservable(documentId: string): Observable<Blob> {
+  private getDownloadObservable(documentId: string | number): Observable<Blob> {
     if (!this.isValidDocumentId(documentId)) {
       return throwError(() => new Error('Invalid document id.'));
     }
+    const idKey = String(documentId);
     if (this.entityType === 'savings') {
-      return this.savingsService.downloadSavingsDocument(this.entityId, documentId);
+      return this.savingsService.downloadSavingsDocument(this.entityId, idKey);
     }
     if (this.entityType === 'loans') {
-      return this.loansService.downloadLoanDocument(this.entityId, documentId);
+      return this.loansService.downloadLoanDocument(this.entityId, idKey);
     }
     return this.clientsService.downloadClientDocument(this.entityId, documentId);
   }
@@ -392,6 +453,10 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     this.documentPreviewService
       .resolvePreviewUrl(document, () => this.getDownloadObservable(document.id))
       .then((preview) => {
+        if (!preview) {
+          // The document was deleted before this download finished; do not add a thumbnail.
+          return;
+        }
         if (preview.type === 'image') {
           this.previewThumbnails = { ...this.previewThumbnails, [document.id]: preview.url };
           this.cdr.markForCheck();

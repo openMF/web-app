@@ -6343,7 +6343,8 @@
       "workingCapitalDiscountUpdated": "Betriebskapitalrabatt wurde erfolgreich aktualisiert.",
       "identityDescriptionsUpdated": "Die Beschreibungen der Ausweisdokumente wurden erfolgreich aktualisiert.",
       "identityDescriptionsUpdateFailed": "Einige Beschreibungen der Ausweisdokumente konnten nicht aktualisiert werden.",
-      "unableToAdjustDiscountFee": "Die Rabattgebühr konnte nicht angepasst werden."
+      "unableToAdjustDiscountFee": "Die Rabattgebühr konnte nicht angepasst werden.",
+      "documentDeleted": "Dokument erfolgreich gelöscht."
     },
     "selections": {
       "standingInstructions": {

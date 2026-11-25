@@ -6405,7 +6405,8 @@
       "workingCapitalDiscountUpdated": "Apyvartinio kapitalo paskolos nuolaida buvo sėkmingai atnaujinta.",
       "identityDescriptionsUpdated": "Tapatybės dokumentų aprašai sėkmingai atnaujinti.",
       "identityDescriptionsUpdateFailed": "Kai kurių tapatybės dokumentų aprašų atnaujinti nepavyko.",
-      "unableToAdjustDiscountFee": "Nepavyko koreguoti nuolaidos mokesčio."
+      "unableToAdjustDiscountFee": "Nepavyko koreguoti nuolaidos mokesčio.",
+      "documentDeleted": "Dokumentas sėkmingai ištrintas."
     },
     "selections": {
       "standingInstructions": {

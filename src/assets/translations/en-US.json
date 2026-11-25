@@ -6406,7 +6406,8 @@
       "workingCapitalDiscountUpdated": "Working capital discount was updated successfully.",
       "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
       "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update.",
-      "unableToAdjustDiscountFee": "Unable to adjust the discount fee."
+      "unableToAdjustDiscountFee": "Unable to adjust the discount fee.",
+      "documentDeleted": "Document deleted successfully."
     },
     "cbild": {
       "fields": {

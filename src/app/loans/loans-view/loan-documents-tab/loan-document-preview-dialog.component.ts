@@ -124,6 +124,9 @@ export class LoanDocumentPreviewDialogComponent implements OnInit, OnDestroy {
             ? new Blob([blob], { type: 'application/pdf' })
             : blob;
         const preview = await this.previews.resolvePreviewUrl(descriptor, () => of(safeBlob));
+        if (!preview) {
+          return;
+        }
         if (this.destroyed) {
           this.previews.release(key);
           return;

@@ -6405,7 +6405,8 @@
       "workingCapitalDiscountUpdated": "Punguzo la mkopo wa mtaji wa kufanya kazi limefanikiwa kusasishwa.",
       "identityDescriptionsUpdated": "Maelezo ya vitambulisho yamesasishwa kwa mafanikio.",
       "identityDescriptionsUpdateFailed": "Baadhi ya maelezo ya vitambulisho hayakuweza kusasishwa.",
-      "unableToAdjustDiscountFee": "Imeshindwa kurekebisha ada ya punguzo."
+      "unableToAdjustDiscountFee": "Imeshindwa kurekebisha ada ya punguzo.",
+      "documentDeleted": "Hati imefutwa kwa mafanikio."
     },
     "selections": {
       "standingInstructions": {

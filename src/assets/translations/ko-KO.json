@@ -6405,7 +6405,8 @@
       "workingCapitalDiscountUpdated": "운전자금 대출 할인율이 성공적으로 업데이트되었습니다.",
       "identityDescriptionsUpdated": "신분증 설명이 성공적으로 수정되었습니다.",
       "identityDescriptionsUpdateFailed": "일부 신분증 설명을 수정하지 못했습니다.",
-      "unableToAdjustDiscountFee": "할인 수수료를 조정할 수 없습니다."
+      "unableToAdjustDiscountFee": "할인 수수료를 조정할 수 없습니다.",
+      "documentDeleted": "문서가 삭제되었습니다."
     },
     "selections": {
       "standingInstructions": {
