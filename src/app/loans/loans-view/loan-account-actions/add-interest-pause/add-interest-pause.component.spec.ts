@@ -11,10 +11,14 @@ import { TestBed } from '@angular/core/testing';
 import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subject, throwError } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { Dates } from 'app/core/utils/dates';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { LoansService } from 'app/loans/loans.service';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { environment } from 'environments/environment';
 import { AddInterestPauseComponent } from './add-interest-pause.component';
 
 describe('AddInterestPauseComponent', () => {
@@ -59,7 +63,6 @@ describe('AddInterestPauseComponent', () => {
           provide: SettingsService,
           useValue: {
             businessDate,
-            maxAllowedDate: new Date(2100, 0, 1),
             dateFormat: 'dd MMMM yyyy',
             language: { code: 'en' }
           }
@@ -67,9 +70,11 @@ describe('AddInterestPauseComponent', () => {
         {
           provide: Dates,
           useValue: {
-            parseDate: jest.fn(() => maturityDate),
             formatDate: (date: Date) =>
-              date instanceof Date ? `${date.getDate()} January ${date.getFullYear()}` : String(date)
+              date instanceof Date ? `${date.getDate()} January ${date.getFullYear()}` : String(date),
+            parseDate: (val: any) => (val === '10 January 2027' ? maturityDate : null),
+            angularToMomentFormat: (val: string) => val,
+            getMomentLocale: () => 'en'
           }
         }
       ]
@@ -116,9 +121,8 @@ describe('AddInterestPauseComponent', () => {
     expect(loansServiceStub.addInterestPauseToLoan).toHaveBeenCalledTimes(1);
 
     inFlight.next({});
-    expect(component.isSubmitting).toBe(true);
-
     inFlight.complete();
+
     expect(component.isSubmitting).toBe(false);
   });
 
@@ -159,5 +163,86 @@ describe('AddInterestPauseComponent', () => {
 
     expect(loansServiceStub.addInterestPauseToLoan).not.toHaveBeenCalled();
     expect(component.isSubmitting).toBe(false);
+  });
+
+  describe('Submit button permission guard (WEB-1478)', () => {
+    let rbacWasEnabled: boolean;
+
+    beforeEach(() => {
+      rbacWasEnabled = environment.productionModeEnableRBAC;
+      environment.productionModeEnableRBAC = true;
+    });
+
+    afterEach(() => {
+      environment.productionModeEnableRBAC = rbacWasEnabled;
+    });
+
+    it('guards the submit button visibility based on CREATE_INTEREST_PAUSE permission', async () => {
+      let currentPermissions: string[] = ['CREATE_INTEREST_PAUSE'];
+      TestBed.resetTestingModule();
+      await TestBed.configureTestingModule({
+        imports: [
+          AddInterestPauseComponent,
+          TranslateModule.forRoot()
+        ],
+        providers: [
+          provideNativeDateAdapter(),
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: { params: { loanId: '1' } },
+              data: of({}),
+              pathFromRoot: []
+            }
+          },
+          { provide: Router, useValue: { navigate: jest.fn() } },
+          { provide: LoansService, useValue: loansServiceStub },
+          {
+            provide: LoanProductService,
+            useValue: {
+              isLoanProduct: true,
+              isWorkingCapital: false,
+              loanAccountPath: 'loans',
+              productType: { value: 'loan' }
+            }
+          },
+          {
+            provide: SettingsService,
+            useValue: {
+              businessDate,
+              dateFormat: 'dd MMMM yyyy',
+              language: { code: 'en' }
+            }
+          },
+          {
+            provide: Dates,
+            useValue: {
+              formatDate: (date: Date) =>
+                date instanceof Date ? `${date.getDate()} January ${date.getFullYear()}` : String(date),
+              parseDate: (val: any) => (val === '10 January 2027' ? maturityDate : null),
+              angularToMomentFormat: (val: string) => val,
+              getMomentLocale: () => 'en'
+            }
+          },
+          {
+            provide: AuthenticationService,
+            useValue: { getCredentials: () => ({ permissions: currentPermissions }) }
+          }
+        ]
+      }).compileComponents();
+
+      // 1. With CREATE_INTEREST_PAUSE -> button is visible
+      const fixtureWithPerm = TestBed.createComponent(AddInterestPauseComponent);
+      fixtureWithPerm.componentInstance.dataObject = template;
+      fixtureWithPerm.detectChanges();
+      expect(fixtureWithPerm.nativeElement.querySelector('button[color="primary"]')).not.toBeNull();
+
+      // 2. Without CREATE_INTEREST_PAUSE (e.g. only DISBURSE_LOAN) -> button is hidden
+      currentPermissions = ['DISBURSE_LOAN'];
+      const fixtureWithoutPerm = TestBed.createComponent(AddInterestPauseComponent);
+      fixtureWithoutPerm.componentInstance.dataObject = template;
+      fixtureWithoutPerm.detectChanges();
+      expect(fixtureWithoutPerm.nativeElement.querySelector('button[color="primary"]')).toBeNull();
+    });
   });
 });

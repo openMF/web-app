@@ -63,7 +63,7 @@
             mat-raised-button
             color="primary"
             [disabled]="!interestPauseLoanForm.valid || isSubmitting"
-            *mifosxHasPermission="'DISBURSE_LOAN'"
+            *mifosxHasPermission="'CREATE_INTEREST_PAUSE'"
           >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
