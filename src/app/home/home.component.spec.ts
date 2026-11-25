@@ -8,6 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -142,5 +143,52 @@ describe('HomeComponent search empty state', () => {
     expect(emptyState()).toBeNull();
     const options = Array.from(document.querySelectorAll('mat-option')).map((option) => option.textContent!.trim());
     expect(options).toContain('reports');
+  });
+
+  describe('opening an activity', () => {
+    let navigateSpy: jest.SpyInstance;
+
+    beforeEach(async () => {
+      navigateSpy = jest.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
+
+      const input = searchInput();
+      input.focus();
+      input.dispatchEvent(new Event('focusin', { bubbles: true }));
+      typeIntoSearch('loan p');
+      await fixture.whenStable();
+      fixture.detectChanges();
+    });
+
+    const pressKey = (keyCode: number): void => {
+      const event = new KeyboardEvent('keydown', { bubbles: true });
+      Object.defineProperty(event, 'keyCode', { get: () => keyCode });
+      searchInput().dispatchEvent(event);
+      fixture.detectChanges();
+    };
+
+    it('opens the highlighted activity when Enter is pressed', () => {
+      pressKey(40); // Arrow down
+      pressKey(13); // Enter
+
+      expect(navigateSpy).toHaveBeenCalledWith('/products/loan-products/create');
+    });
+
+    it('opens an activity when it is clicked', () => {
+      const option = document.querySelector('mat-option') as HTMLElement;
+      option.click();
+
+      expect(navigateSpy).toHaveBeenCalledWith('/products/loan-products/create');
+    });
+
+    it('does not show the empty state for a selected translated activity', () => {
+      const translate = TestBed.inject(TranslateService);
+      translate.setTranslation('en', { labels: { heading: { 'Savings Account Deposit': 'Savings Account Deposit' } } });
+      translate.use('en');
+
+      component.searchText.setValue({ activity: 'labels.heading.Savings Account Deposit', path: '/deposit' });
+      fixture.detectChanges();
+
+      expect(emptyState()).toBeNull();
+    });
   });
 });

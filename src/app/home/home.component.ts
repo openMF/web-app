@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // One filtered result per query, shared by the option list and the empty state,
     // so the activity index is only filtered once per keystroke.
     const search$ = this.searchText.valueChanges.pipe(
-      map((activity: any) => (typeof activity === 'string' ? activity : activity?.activity)),
+      map((activity: any) => (typeof activity === 'string' ? activity : this.displayActivity(activity))),
       map((activityName: string) => ({
         activityName,
         matches: activityName ? this.filterActivity(activityName) : this.allActivities
@@ -158,6 +158,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   activityLabel(activity: any): string {
     const label = this.translateService.instant(activity.activity);
     return typeof label === 'string' ? label : activity.activity;
+  }
+
+  /** Shows the activity label in the search box. */
+  displayActivity = (activity: any): string => (activity ? this.activityLabel(activity) : '');
+
+  /**
+   * Opens the page of the selected activity.
+   * @param activity Selected activity.
+   */
+  openActivity(activity: any) {
+    this.router.navigateByUrl(activity.path);
   }
 
   private getPermittedActivities(): any[] {
