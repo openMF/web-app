@@ -6173,7 +6173,11 @@
       "Pre-release backend": "O backend está a executar uma versão de pré-lançamento. Não recomendado para dados de produção.",
       "Diagnostics copied": "Diagnóstico copiado para a área de transferência",
       "Items per page:": "Itens por página:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} de {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} de {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Cada atalho utiliza Ctrl+Alt (Control+Option no macOS) para evitar conflitos com ações do navegador.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "Em campos de formulário e entradas editáveis, apenas Guardar/Submeter (Ctrl+Alt+S) e Cancelar (Ctrl+Alt+X) estão ativos.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "No Windows e Linux, as combinações de teclas AltGr em campos de formulário não acionam atalhos.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Executar Relatório usa P e Terminar Sessão usa O para evitar conflitos com atalhos do sistema."
     },
     "permissions": {
       "actions": {

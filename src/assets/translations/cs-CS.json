@@ -6174,7 +6174,11 @@
       "Pre-release backend": "Backend běží na předběžné verzi. Nedoporučuje se pro produkční data.",
       "Diagnostics copied": "Diagnostika zkopírována do schránky",
       "Items per page:": "Položek na stránku:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} z {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} z {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Každá zkratka používá Ctrl+Alt (Control+Option na macOS), aby se předešlo konfliktům s akcemi prohlížeče.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "Ve formulářových polích a upravitelných vstupech jsou aktivní pouze Uložit/Předložit (Ctrl+Alt+S) a Zrušit (Ctrl+Alt+X).",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "Ve Windows a Linuxu kombinace kláves AltGr ve formulářových polích nespouštějí zkratky.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Spustit zprávu používá P a Odhlásit se používá O, aby se zabránilo konfliktům se systémovými zkratkami plochy."
     },
     "permissions": {
       "actions": {

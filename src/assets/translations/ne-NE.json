@@ -6173,7 +6173,11 @@
       "Pre-release backend": "ब्याकइन्ड पूर्व-रिलिज संस्करणमा चलिरहेको छ। उत्पादन डाटाका लागि सिफारिस गरिँदैन।",
       "Diagnostics copied": "निदान क्लिपबोर्डमा प्रतिलिपि गरियो",
       "Items per page:": "प्रति पृष्ठ वस्तुहरू:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "ब्राउजर कार्यहरूसँगको द्वन्द्वबाट बच्न प्रत्येक सर्टकटले Ctrl+Alt (macOS मा Control+Option) प्रयोग गर्छ।",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "फारम क्षेत्रहरू र सम्पादन योग्य इनपुटहरूमा, केवल सुरक्षित/पेश गर्नुहोस् (Ctrl+Alt+S) र रद्द गर्नुहोस् (Ctrl+Alt+X) सक्रिय छन्।",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "Windows र Linux मा, फारम क्षेत्रहरूमा AltGr कुञ्जी संयोजनहरूले सर्टकटहरू ट्रिगर गर्दैनन्।",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "डेस्कटप प्रणाली सर्टकटहरूसँगको द्वन्द्वबाट बच्न रिपोर्ट चलाउनुहोस् ले P र बाहिर निस्कनु ले O प्रयोग गर्छ।"
     },
     "permissions": {
       "actions": {

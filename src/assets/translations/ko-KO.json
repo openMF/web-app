@@ -6173,7 +6173,11 @@
       "Pre-release backend": "백엔드가 사전 릴리스 빌드로 실행 중입니다. 운영 데이터에는 권장되지 않습니다.",
       "Diagnostics copied": "진단 정보가 클립보드에 복사되었습니다",
       "Items per page:": "페이지당 항목 수:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "브라우저 동작과의 충돌을 방지하기 위해 모든 단축키는 Ctrl+Alt(macOS의 경우 Control+Option)를 사용합니다.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "양식 필드 및 편집 가능한 입력에서는 저장/제출(Ctrl+Alt+S) 및 취소(Ctrl+Alt+X)만 활성화됩니다.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "Windows 및 Linux에서는 양식 필드의 AltGr 키 조합이 단축키를 실행하지 않습니다.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "데스크톱 시스템 단축키와의 충돌을 방지하기 위해 보고서 실행은 P를, 로그아웃은 O를 사용합니다."
     },
     "permissions": {
       "actions": {

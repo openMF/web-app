@@ -6173,7 +6173,11 @@
       "Pre-release backend": "Aizmugursistēma darbojas ar pirmsizlaides versiju. Nav ieteicams ražošanas datiem.",
       "Diagnostics copied": "Diagnostika nokopēta starpliktuvē",
       "Items per page:": "Vienumi lapā:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} no {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} no {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Katra saīsne izmanto Ctrl+Alt (Control+Option operētājsistēmā macOS), lai izvairītos no konfliktiem ar pārlūkprogrammas darbībām.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "Formas laukos un rediģējamos ievades laukos ir aktīvi tikai Saglabāt/Iesniegt (Ctrl+Alt+S) un Atcelt (Ctrl+Alt+X).",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "Operētājsistēmās Windows un Linux AltGr taustiņu kombinācijas formas laukos neaktivizē saīsnes.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Palaist ziņojumu izmanto P un Izlogoties izmanto O, lai izvairītos no konfliktiem ar darbvirsmas sistēmas saīsnēm."
     },
     "permissions": {
       "actions": {
