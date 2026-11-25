@@ -114,7 +114,10 @@ export class EditChargeComponent implements OnInit {
       ],
       amount: [
         this.chargeData.amount,
-        Validators.required
+        [
+          Validators.required,
+          Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')
+        ]
       ],
       active: [this.chargeData.active],
       penalty: [this.chargeData.penalty],
