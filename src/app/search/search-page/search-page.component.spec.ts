@@ -352,4 +352,37 @@ describe('SearchPageComponent', () => {
       'L784'
     ]);
   });
+
+  it('marks results heading with tabindex -1 and provides focusHeading to focus it', async () => {
+    await setup([]);
+    const heading = fixture.nativeElement.querySelector('.page-head h1') as HTMLElement;
+    expect(heading).toBeTruthy();
+    expect(heading.getAttribute('tabindex')).toBe('-1');
+
+    component.focusHeading();
+    expect(document.activeElement).toBe(heading);
+  });
+
+  it('does not focus results heading if a search dialog or modal is open', async () => {
+    await setup([]);
+    const heading = fixture.nativeElement.querySelector('.page-head h1') as HTMLElement;
+    const dummyButton = document.createElement('button');
+    document.body.appendChild(dummyButton);
+    dummyButton.focus();
+    expect(document.activeElement).toBe(dummyButton);
+
+    const dialogEl = document.createElement('div');
+    dialogEl.className = 'spotlight-wrap';
+    dialogEl.setAttribute('role', 'dialog');
+    document.body.appendChild(dialogEl);
+
+    try {
+      component.focusHeading();
+      expect(document.activeElement).toBe(dummyButton);
+      expect(document.activeElement).not.toBe(heading);
+    } finally {
+      dialogEl.remove();
+      dummyButton.remove();
+    }
+  });
 });
