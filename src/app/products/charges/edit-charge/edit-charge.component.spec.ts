@@ -108,4 +108,69 @@ describe('EditChargeComponent - down payment fee', () => {
 
     expect(component.chargeForm.get('chargeCalculationType').value).toBe(2);
   });
+
+  describe('amount validation', () => {
+    it('rejects zero as an invalid amount', () => {
+      const component = createComponent(2);
+
+      component.chargeForm.patchValue({ amount: '0' });
+
+      expect(component.chargeForm.controls.amount.hasError('pattern')).toBe(true);
+      expect(component.chargeForm.controls.amount.valid).toBe(false);
+    });
+
+    it('rejects a negative amount', () => {
+      const component = createComponent(2);
+
+      component.chargeForm.patchValue({ amount: '-5' });
+
+      expect(component.chargeForm.controls.amount.hasError('pattern')).toBe(true);
+      expect(component.chargeForm.controls.amount.valid).toBe(false);
+    });
+
+    it('rejects a non-numeric amount', () => {
+      const component = createComponent(2);
+
+      component.chargeForm.patchValue({ amount: 'abc' });
+
+      expect(component.chargeForm.controls.amount.hasError('pattern')).toBe(true);
+      expect(component.chargeForm.controls.amount.valid).toBe(false);
+    });
+
+    it('accepts a valid positive decimal amount', () => {
+      const component = createComponent(2);
+
+      component.chargeForm.patchValue({ amount: '10.50' });
+
+      expect(component.chargeForm.controls.amount.valid).toBe(true);
+      expect(component.chargeForm.controls.amount.hasError('pattern')).toBe(false);
+    });
+
+    it('accepts a small positive decimal amount', () => {
+      const component = createComponent(2);
+
+      component.chargeForm.patchValue({ amount: '0.01' });
+
+      expect(component.chargeForm.controls.amount.valid).toBe(true);
+      expect(component.chargeForm.controls.amount.hasError('pattern')).toBe(false);
+    });
+
+    it('still requires a non-empty amount', () => {
+      const component = createComponent(2);
+
+      component.chargeForm.patchValue({ amount: '' });
+
+      expect(component.chargeForm.controls.amount.hasError('required')).toBe(true);
+      expect(component.chargeForm.controls.amount.valid).toBe(false);
+    });
+
+    it('shows the pattern error message when the amount is invalid', () => {
+      const component = createComponent(2);
+
+      component.chargeForm.patchValue({ amount: '0' });
+      component.chargeForm.controls.amount.markAsTouched();
+
+      expect(component.chargeForm.controls.amount.hasError('pattern')).toBe(true);
+    });
+  });
 });
