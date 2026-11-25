@@ -92,7 +92,10 @@ export class EditEmployeeComponent implements OnInit {
         ]
       ],
       isLoanOfficer: [this.employeeData.isLoanOfficer],
-      mobileNo: [this.employeeData.mobileNo],
+      mobileNo: [
+        this.employeeData.mobileNo,
+        [Validators.pattern(/^(?=.{0,25}$)\+?[0-9. ()-]*$/)]
+      ],
       isActive: [this.employeeData.isActive],
       joiningDate: [
         this.employeeData.joiningDate && this.dateUtils.parseDate(this.employeeData.joiningDate),
