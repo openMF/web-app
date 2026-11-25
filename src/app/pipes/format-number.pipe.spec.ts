@@ -37,4 +37,27 @@ describe('FormatNumberPipe', () => {
   it('returns the default value when the value is undefined', () => {
     expect(pipe.transform(undefined, '-', 0)).toBe('-');
   });
+
+  it('returns the default value when the value is null', () => {
+    expect(pipe.transform(null as any, '-', 0)).toBe('-');
+  });
+
+  it('returns the default value when the value is an empty string', () => {
+    expect(pipe.transform('', '-', 0)).toBe('-');
+  });
+
+  it('returns empty string when value is null or undefined and no defaultValue is provided', () => {
+    expect(pipe.transform(null as any)).toBe('');
+    expect(pipe.transform(undefined)).toBe('');
+  });
+
+  it('preserves numeric 0 as defaultValue when value is null or undefined', () => {
+    expect(pipe.transform(null as any, 0)).toBe('0');
+    expect(pipe.transform(undefined, 0)).toBe('0');
+  });
+
+  it('correctly formats number 0 as a valid value', () => {
+    expect(pipe.transform(0)).toBe('0.00');
+    expect(pipe.transform(0, '-', 0)).toBe('0');
+  });
 });
