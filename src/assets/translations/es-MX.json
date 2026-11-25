@@ -1159,6 +1159,9 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Add sub-office": "Agregar subsucursal",
+      "Expand": "Expandir",
+      "Collapse": "Contraer",
       "Clone": "Clonar",
       "Finalize": "Finalizar",
       "New Operation": "Nueva operación",
@@ -2544,6 +2547,10 @@
       "Session": "Sesión"
     },
     "inputs": {
+      "Search by office name or external ID": "Buscar por nombre de sucursal o ID externo",
+      "Sub-offices": "Subsucursales",
+      "Tree": "Árbol",
+      "List": "Lista",
       "Breach Start Type": "Tipo de inicio de incumplimiento",
       "Calculated Annual EIR": "EIR anual calculada",
       "Daily Effective Rate": "Tasa efectiva diaria",
@@ -4906,6 +4913,9 @@
       "Remove tenant": "Eliminar la entrada de registro de {{identifier}} — su base de datos queda intacta y no se elimina ningún dato de la instancia"
     },
     "text": {
+      "Manage offices description": "Sucursales de su organización y la jerarquía entre ellas.",
+      "Showing offices of total": "Mostrando {{shown}} de {{total}} sucursales",
+      "No offices match the search": "Ninguna sucursal coincide con la búsqueda.",
       "Investment": {
         "title": "Productos de inversión",
         "overview": "Descripción general y contabilidad",

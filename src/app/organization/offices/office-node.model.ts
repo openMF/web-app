@@ -7,36 +7,34 @@
  */
 
 /**
+ * Office as returned by the server.
+ */
+export interface Office {
+  id: number;
+  name: string;
+  hierarchy: string;
+  parentId?: number;
+  parentName?: string;
+  externalId?: string;
+  openingDate?: number[] | string;
+}
+
+/**
  * Office Node model.
  */
 export class OfficeNode {
-  /** Office Node children. */
-  children: OfficeNode[];
-
-  name: string;
-  id: string;
-  parentId: string;
-  hierarchy: string;
-  externalId: string;
-  parentName: string;
-  openingDate: string;
+  /** Parent of the office. Not set when the parent is not in the list of offices. */
+  parent?: OfficeNode;
+  /** Offices directly under the office. */
+  children: OfficeNode[] = [];
 
   constructor(
-    name: string,
-    id: string = '',
-    parentId: string = '',
-    hierarchy: string = '',
-    externalId: string = '',
-    parentName: string = '',
-    openingDate: string = ''
-  ) {
-    this.name = name;
-    this.id = id;
-    this.parentId = parentId;
-    this.hierarchy = hierarchy;
-    this.externalId = externalId;
-    this.parentName = parentName;
-    this.openingDate = openingDate;
-    this.children = [];
-  }
+    public name: string,
+    public id: number,
+    public parentId?: number,
+    public hierarchy: string = '',
+    public externalId: string = '',
+    public parentName: string = '',
+    public openingDate?: number[] | string
+  ) {}
 }

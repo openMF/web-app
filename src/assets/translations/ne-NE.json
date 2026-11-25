@@ -1159,6 +1159,9 @@
       "Home": "घर"
     },
     "buttons": {
+      "Add sub-office": "उप-कार्यालय थप्नुहोस्",
+      "Expand": "विस्तार गर्नुहोस्",
+      "Collapse": "संक्षिप्त गर्नुहोस्",
       "Clone": "क्लोन गर्नुहोस्",
       "Finalize": "अन्तिम रूप दिनुहोस्",
       "New Operation": "नयाँ कारोबार",
@@ -2544,6 +2547,10 @@
       "Session": "सत्र"
     },
     "inputs": {
+      "Search by office name or external ID": "कार्यालयको नाम वा बाह्य आईडीद्वारा खोज्नुहोस्",
+      "Sub-offices": "उप-कार्यालयहरू",
+      "Tree": "ट्री",
+      "List": "सूची",
       "Breach Start Type": "उल्लङ्घन सुरु प्रकार",
       "Calculated Annual EIR": "गणना गरिएको वार्षिक EIR",
       "Daily Effective Rate": "दैनिक प्रभावकारी दर",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "Manage offices description": "तपाईंको संस्थाका कार्यालयहरू र तिनीहरूको पदानुक्रम।",
+      "Showing offices of total": "{{total}} मध्ये {{shown}} कार्यालयहरू देखाइँदै",
+      "No offices match the search": "खोजसँग मेल खाने कुनै कार्यालय छैन।",
       "Investment": {
         "title": "लगानी उत्पादनहरू",
         "overview": "अवलोकन र लेखा",

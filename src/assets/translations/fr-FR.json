@@ -1159,6 +1159,9 @@
       "Home": "Maison"
     },
     "buttons": {
+      "Add sub-office": "Ajouter un sous-bureau",
+      "Expand": "Développer",
+      "Collapse": "Réduire",
       "Clone": "Cloner",
       "Finalize": "Finaliser",
       "New Operation": "Nouvelle opération",
@@ -2544,6 +2547,10 @@
       "Session": "Session"
     },
     "inputs": {
+      "Search by office name or external ID": "Rechercher par nom de bureau ou ID externe",
+      "Sub-offices": "Sous-bureaux",
+      "Tree": "Arborescence",
+      "List": "Liste",
       "Breach Start Type": "Type de début de manquement",
       "Calculated Annual EIR": "TEG annuel calculé (EIR)",
       "Daily Effective Rate": "Taux effectif journalier",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "Manage offices description": "Bureaux et agences de votre organisation et leur hiérarchie.",
+      "Showing offices of total": "Affichage de {{shown}} bureaux sur {{total}}",
+      "No offices match the search": "Aucun bureau ne correspond à la recherche.",
       "Investment": {
         "title": "Produits d'investissement",
         "overview": "Présentation et comptabilité",

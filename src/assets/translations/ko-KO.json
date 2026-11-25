@@ -1159,6 +1159,9 @@
       "Home": "집"
     },
     "buttons": {
+      "Add sub-office": "하위 지점 추가",
+      "Expand": "확장",
+      "Collapse": "축소",
       "Clone": "복제",
       "Finalize": "완료",
       "New Operation": "새 작업",
@@ -2544,6 +2547,10 @@
       "Session": "세션"
     },
     "inputs": {
+      "Search by office name or external ID": "지점 이름 또는 외부 ID로 검색",
+      "Sub-offices": "하위 지점",
+      "Tree": "트리",
+      "List": "목록",
       "Breach Start Type": "위반 시작 유형",
       "Calculated Annual EIR": "계산된 연간 EIR",
       "Daily Effective Rate": "일일 실효 이율",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
+      "Manage offices description": "조직의 지점 및 사무소와 그 상하 관계입니다.",
+      "Showing offices of total": "전체 {{total}}개 지점 중 {{shown}}개 표시",
+      "No offices match the search": "검색과 일치하는 지점이 없습니다.",
       "Investment": {
         "title": "투자상품",
         "overview": "개요 및 회계",

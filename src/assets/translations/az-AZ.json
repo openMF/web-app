@@ -1115,6 +1115,9 @@
       "Home": "Əsas səhifə"
     },
     "buttons": {
+      "Add sub-office": "Alt filial əlavə et",
+      "Expand": "Genişləndir",
+      "Collapse": "Yığ",
       "Accept Transfer": "Köçürməni qəbul et",
       "Actions": "Əməliyyatlar",
       "Activate": "Aktivləşdir",
@@ -2500,6 +2503,10 @@
       "Session": "Sessiya"
     },
     "inputs": {
+      "Search by office name or external ID": "Filialın adı və ya xarici ID üzrə axtarın",
+      "Sub-offices": "Alt filiallar",
+      "Tree": "Ağac",
+      "List": "Siyahı",
       "Breach Start Type": "Pozuntunun başlanğıc növü",
       "Calculated Annual EIR": "Hesablanmış illik EIR",
       "Daily Effective Rate": "Gündəlik effektiv dərəcə",
@@ -4861,6 +4868,9 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "Manage offices description": "Təşkilatınızın filialları və onların tabeçilik quruluşu.",
+      "Showing offices of total": "{{total}} filialdan {{shown}} filial göstərilir",
+      "No offices match the search": "Axtarışa uyğun filial yoxdur.",
       "Investment": {
         "title": "İnvestisiya Məhsulları",
         "overview": "Baxış və Mühasibat",

@@ -1159,6 +1159,9 @@
       "Home": "Casa"
     },
     "buttons": {
+      "Add sub-office": "Aggiungi sottoufficio",
+      "Expand": "Espandi",
+      "Collapse": "Comprimi",
       "Clone": "Clona",
       "Finalize": "Finalizza",
       "New Operation": "Nuova operazione",
@@ -2544,6 +2547,10 @@
       "Session": "Sessione"
     },
     "inputs": {
+      "Search by office name or external ID": "Cerca per nome ufficio o ID esterno",
+      "Sub-offices": "Sottouffici",
+      "Tree": "Albero",
+      "List": "Elenco",
       "Breach Start Type": "Tipo di inizio violazione",
       "Calculated Annual EIR": "EIR annuo calcolato",
       "Daily Effective Rate": "Tasso effettivo giornaliero",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "Rimuovere la voce di registro di {{identifier}} — il suo database resta intatto e nessun dato del tenant viene eliminato"
     },
     "text": {
+      "Manage offices description": "Uffici e filiali della tua organizzazione e la loro gerarchia.",
+      "Showing offices of total": "Visualizzati {{shown}} di {{total}} uffici",
+      "No offices match the search": "Nessun ufficio corrisponde alla ricerca.",
       "Investment": {
         "title": "Prodotti di investimento",
         "overview": "Panoramica e contabilità",

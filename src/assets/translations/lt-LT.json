@@ -1159,6 +1159,9 @@
       "Home": "Namai"
     },
     "buttons": {
+      "Add sub-office": "Pridėti pavaldų skyrių",
+      "Expand": "Išplėsti",
+      "Collapse": "Sutraukti",
       "Clone": "Klonuoti",
       "Finalize": "Užbaigti",
       "New Operation": "Nauja operacija",
@@ -2544,6 +2547,10 @@
       "Session": "Sesija"
     },
     "inputs": {
+      "Search by office name or external ID": "Ieškoti pagal skyriaus pavadinimą arba išorinį ID",
+      "Sub-offices": "Pavaldūs skyriai",
+      "Tree": "Medis",
+      "List": "Sąrašas",
       "Breach Start Type": "Pažeidimo pradžios tipas",
       "Calculated Annual EIR": "Apskaičiuota metinė EIR",
       "Daily Effective Rate": "Dienos efektyvioji norma",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "Pašalinti {{identifier}} registro įrašą — jo duomenų bazė lieka nepaliesta ir jokie nuomininko duomenys nėra ištrinami"
     },
     "text": {
+      "Manage offices description": "Jūsų organizacijos skyriai ir jų pavaldumas.",
+      "Showing offices of total": "Rodoma skyrių: {{shown}} iš {{total}}",
+      "No offices match the search": "Paieškos neatitinka nė vienas skyrius.",
       "Investment": {
         "title": "Investiciniai produktai",
         "overview": "Apžvalga ir apskaita",

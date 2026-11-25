@@ -1161,6 +1161,9 @@
       "Home": "Heim"
     },
     "buttons": {
+      "Add sub-office": "Unterfiliale hinzufügen",
+      "Expand": "Erweitern",
+      "Collapse": "Reduzieren",
       "Clone": "Klonen",
       "Finalize": "Abschließen",
       "New Operation": "Neuer Vorgang",
@@ -2546,6 +2549,10 @@
       "Session": "Sitzung"
     },
     "inputs": {
+      "Search by office name or external ID": "Nach Filialname oder externer ID suchen",
+      "Sub-offices": "Unterfilialen",
+      "Tree": "Baum",
+      "List": "Liste",
       "Breach Start Type": "Starttyp des Verstoßes",
       "Calculated Annual EIR": "Berechneter jährlicher Effektivzins (EIR)",
       "Daily Effective Rate": "Täglicher Effektivzins",
@@ -4913,6 +4920,9 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "Manage offices description": "Filialen Ihrer Organisation und ihre Über- und Unterordnung.",
+      "Showing offices of total": "{{shown}} von {{total}} Filialen werden angezeigt",
+      "No offices match the search": "Keine Filialen entsprechen der Suche.",
       "Investment": {
         "title": "Anlageprodukte",
         "overview": "Übersicht & Buchhaltung",
