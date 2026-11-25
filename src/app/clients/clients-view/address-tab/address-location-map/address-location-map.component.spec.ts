@@ -228,4 +228,25 @@ describe('AddressLocationMapComponent', () => {
 
     expect(fixture.nativeElement.textContent).toContain('labels.text.Map tiles unavailable');
   });
+  it('cancels pending dimension refreshes and disconnects observers on destruction', () => {
+    jest.useFakeTimers();
+    fixture.componentRef.setInput('latitude', '28.6139123456789');
+    fixture.componentRef.setInput('longitude', '-77.2090123456789');
+    fixture.detectChanges();
+    mockMapInvalidateSize.mockClear();
+    fixture.destroy();
+    jest.runOnlyPendingTimers();
+    expect(mockMapInvalidateSize).not.toHaveBeenCalled();
+    expect(mockResizeDisconnect).toHaveBeenCalled();
+    expect(mockMapRemove).toHaveBeenCalledTimes(1);
+  });
+
+  it('names the interactive map region accessibly', () => {
+    fixture.componentRef.setInput('latitude', 0);
+    fixture.componentRef.setInput('longitude', 0);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('[role="region"]').getAttribute('aria-label')).toBe(
+      'labels.heading.Location Map'
+    );
+  });
 });

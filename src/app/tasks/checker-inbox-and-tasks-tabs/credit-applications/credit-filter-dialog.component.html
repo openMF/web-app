@@ -1,0 +1,102 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ heading | translate }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="filter-fields" (ngSubmit)="apply()" id="credit-filter-form">
+    @if (data.kind === 'dates') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
+        <input matInput [matDatepicker]="fromPicker" formControlName="submittedFrom" />
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle
+        ><mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
+        <input matInput [matDatepicker]="toPicker" formControlName="submittedTo" />
+        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle
+        ><mat-datepicker #toPicker></mat-datepicker>
+      </mat-form-field>
+    }
+    @if (data.kind === 'amount') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Minimum Amount' | translate }}</mat-label>
+        <input matInput inputmode="decimal" formControlName="minAmount" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Maximum Amount' | translate }}</mat-label>
+        <input matInput inputmode="decimal" formControlName="maxAmount" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
+        <mat-select formControlName="currencyCode">
+          @for (currency of currencyState.options; track currency.code) {
+            <mat-option [value]="currency.code">{{ currency.code }} — {{ currency.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <p>{{ 'credits.currencyRequired' | translate }}</p>
+      @if (currencyState.loading) {
+        <p role="status">{{ 'credits.currencyLoading' | translate }}</p>
+      }
+      @if (currencyState.failed) {
+        <p role="alert">{{ 'credits.currencyUnavailable' | translate }}</p>
+        <button mat-button type="button" (click)="data.retryCurrencies()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      }
+    }
+    @if (data.kind === 'location') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.State' | translate }}</mat-label>
+        <mat-select formControlName="stateProvinceId">
+          <mat-option [value]="''">{{ 'labels.inputs.All' | translate }}</mat-option>
+          @for (state of data.states; track state.id) {
+            <mat-option [value]="state.id">{{ state.displayLabel || state.name || state.value }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Municipality' | translate }}</mat-label>
+        <input matInput formControlName="municipality" maxlength="100" />
+      </mat-form-field>
+    }
+    @if (error) {
+      <p role="alert">{{ error | translate }}</p>
+    }
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="clear()">{{ 'labels.buttons.Clear' | translate }}</button>
+  <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    form="credit-filter-form"
+    [disabled]="data.kind === 'amount' && currencyState.loading"
+  >
+    {{ 'credits.apply' | translate }}
+  </button>
+</mat-dialog-actions>

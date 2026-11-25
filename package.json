@@ -37,7 +37,8 @@
     "e2e:docker:down": "docker compose -f docker-compose.e2e.yml down -v --remove-orphans",
     "e2e:docker:logs": "docker compose -f docker-compose.e2e.yml logs -f",
     "headers:check": "node scripts/check-file-headers.js",
-    "headers:add": "node scripts/add-file-headers.js"
+    "headers:add": "node scripts/add-file-headers.js",
+    "playwright:credits": "playwright test --config playwright.credits.config.ts"
   },
   "dependencies": {
     "@angular/animations": "20.3.34",

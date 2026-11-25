@@ -133,35 +133,49 @@ test('office details reflect persisted addresses, maps and available backend ser
     const latitude = dialog.getByLabel('Latitude', { exact: false });
     const longitude = dialog.getByLabel('Longitude', { exact: false });
     const saveButton = dialog.getByRole('button', { name: 'Edit', exact: true });
-    await latitude.fill('9.92806912');
+    await latitude.fill('19.3673440111718');
     await longitude.focus();
     await longitude.blur();
     await expect(saveButton).toBeDisabled();
     await expect(dialog.locator('mat-error')).toContainText('required');
-    await longitude.fill('-84.09072512');
+    await longitude.fill('-99.05897965');
     await latitude.fill('91');
     await latitude.blur();
     await expect(saveButton).toBeDisabled();
     await expect(dialog.locator('mat-error')).toContainText('Maximum Value must be 90');
-    await latitude.fill('9.92806912');
+    await latitude.fill('19.3673440111718');
     await expect(saveButton).toBeEnabled();
+    await expect(dialog.locator('mat-error')).toHaveCount(0);
     for (const coordinate of [
       latitude,
       longitude
     ]) {
       const originalValue = await coordinate.inputValue();
       for (const value of [
-        '0.123456789',
-        '-5e-9'
+        '19.36734401117181',
+        '-1e-14'
       ]) {
         await coordinate.fill(value);
         await coordinate.blur();
         await expect(saveButton).toBeDisabled();
-        await expect(dialog.locator('mat-error')).toHaveText('Up to 8 decimal places allowed');
+        await expect(dialog.locator('mat-error')).toHaveText('Up to 13 decimal places allowed');
       }
       await coordinate.fill(originalValue);
       await expect(saveButton).toBeEnabled();
     }
+    for (const coordinate of [
+      latitude,
+      longitude
+    ]) {
+      await expect(coordinate).toHaveAttribute('type', 'text');
+      await expect(coordinate).toHaveAttribute('inputmode', 'decimal');
+      await expect(coordinate).not.toHaveAttribute('step', '0.00000001');
+    }
+    const precisionWrite = page.waitForRequest(
+      (request) =>
+        request.method() === 'PUT' &&
+        request.url().endsWith(`/v2/offices/${officeId}/addresses/${original.officeAddressId}`)
+    );
     // The form remains scrollable and its actions usable at all required widths.
     for (const width of [
       390,
@@ -176,10 +190,32 @@ test('office details reflect persisted addresses, maps and available backend ser
       await expect(saveButton).toBeInViewport();
       expect(await dialog.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
       await page.screenshot({ path: testInfo.outputPath(`edit-${width}.png`), fullPage: true });
+      await latitude.fill('19.36734401117181');
+      await latitude.blur();
+      const precisionError = dialog.locator('mat-error');
+      await expect(precisionError).toHaveText('Up to 13 decimal places allowed');
+      await expect(precisionError).toBeVisible();
+      await expect(precisionError.locator('..')).toHaveCSS('opacity', '1');
+      await expect(saveButton).toBeDisabled();
+      await expect(saveButton).toBeInViewport();
+      const errorBounds = await precisionError.boundingBox();
+      const longitudeBounds = await longitude.boundingBox();
+      expect(errorBounds).not.toBeNull();
+      expect(longitudeBounds).not.toBeNull();
+      expect(errorBounds!.y + errorBounds!.height).toBeLessThanOrEqual(longitudeBounds!.y);
+      await page.screenshot({ path: testInfo.outputPath(`invalid-${width}.png`), fullPage: true });
+      await latitude.fill('19.3673440111718');
+      await expect(saveButton).toBeEnabled();
     }
     await saveEdit();
+    expect((await precisionWrite).postDataJSON()).toMatchObject({
+      latitude: '19.3673440111718',
+      longitude: '-99.05897965',
+      locale: 'en'
+    });
     const located = await readAddress();
-    expect(located).toMatchObject({ ...original, latitude: 9.92806912, longitude: -84.09072512 });
+    await expect(page.locator('mifosx-office-address-tab .leaflet-marker-icon')).toBeVisible();
+    expect(located).toMatchObject({ ...original, latitude: 19.3673440111718, longitude: -99.05897965 });
 
     // A text-only edit must keep the location and the same office-address record.
     await openEdit();
@@ -198,7 +234,7 @@ test('office details reflect persisted addresses, maps and available backend ser
     await openEdit();
     await latitude.fill('10.12345678');
     await saveEdit();
-    expect(await readAddress()).toMatchObject({ latitude: 10.12345678, longitude: -84.09072512 });
+    expect(await readAddress()).toMatchObject({ latitude: 10.12345678, longitude: -99.05897965 });
     await openEdit();
     await longitude.fill('-85.12345678');
     await saveEdit();
@@ -222,10 +258,10 @@ test('office details reflect persisted addresses, maps and available backend ser
     await page.getByRole('tab', { name: 'Summary', exact: true }).click();
     await expect(summary.locator('.leaflet-marker-icon')).toBeVisible();
     expect(await readAddress()).toMatchObject({ latitude: 0, longitude: 0 });
-    // Dynamic number inputs can return strings; the locale parser needs decimal text instead of e notation.
+    // The locale parser needs decimal text instead of exponent notation.
     await openEdit();
-    await latitude.fill('5e-8');
-    await longitude.fill('-5e-8');
+    await latitude.fill('1e-13');
+    await longitude.fill('-1e-13');
     const exponentWrite = page.waitForRequest(
       (request) =>
         request.method() === 'PUT' &&
@@ -233,23 +269,23 @@ test('office details reflect persisted addresses, maps and available backend ser
     );
     await saveEdit();
     expect((await exponentWrite).postDataJSON()).toMatchObject({
-      latitude: '0.00000005',
-      longitude: '-0.00000005',
+      latitude: '0.0000000000001',
+      longitude: '-0.0000000000001',
       locale: 'en'
     });
-    expect(await readAddress()).toMatchObject({ latitude: 0.00000005, longitude: -0.00000005 });
+    expect(await readAddress()).toMatchObject({ latitude: 0.0000000000001, longitude: -0.0000000000001 });
 
     await openEdit();
-    await latitude.fill('9.92806912');
-    await longitude.fill('-84.09072512');
+    await latitude.fill('19.3673440111718');
+    await longitude.fill('-99.05897965');
     await saveEdit();
     // Reopen through a new document so no component state can satisfy these assertions.
     await page.getByRole('tab', { name: 'Summary', exact: true }).click();
     await expect(summary).toBeVisible();
     await page.reload();
     await expect(summary).toContainText(street);
-    await expect(summary).toContainText('9.92806912');
-    await expect(summary).toContainText('-84.09072512');
+    await expect(summary).toContainText('19.3673440111718');
+    await expect(summary).toContainText('-99.05897965');
     await expect(summary.locator('.leaflet-marker-icon')).toHaveCount(1);
     await expect(summary.locator('.leaflet-container')).toBeVisible();
     await expect(summary.locator('.leaflet-marker-icon')).toBeVisible();
@@ -257,6 +293,18 @@ test('office details reflect persisted addresses, maps and available backend ser
     await expect(
       summary.locator('mifosx-office-address-tab').getByRole('button', { name: 'Copy', exact: true })
     ).toBeVisible();
+    await page.context().grantPermissions(
+      [
+        'clipboard-read',
+        'clipboard-write'
+      ],
+      { origin: new URL(baseURL).origin }
+    );
+    await summary.locator('mifosx-office-address-tab').getByRole('button', { name: 'Copy', exact: true }).click();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('19.3673440111718, -99.05897965');
+    await expect(
+      summary.locator('mifosx-office-address-tab').getByRole('link', { name: 'Open in map' })
+    ).toHaveAttribute('href', /mlat=19\.3673440111718&mlon=-99\.05897965/);
     await expect(summary.locator('mifosx-office-address-tab .address-actions')).toHaveCount(0);
     await expect(summary.locator('mifosx-address-location-map')).toContainText('Map tiles unavailable');
     for (const width of [
@@ -286,7 +334,7 @@ test('office details reflect persisted addresses, maps and available backend ser
     const persisted = await request.get(`${api}/v2/offices/${officeId}/addresses`, { headers });
     expect(persisted.ok()).toBeTruthy();
     addresses = await persisted.json();
-    expect(addresses[0]).toMatchObject({ street, officeId, latitude: 9.92806912, longitude: -84.09072512 });
+    expect(addresses[0]).toMatchObject({ street, officeId, latitude: 19.3673440111718, longitude: -99.05897965 });
   }
   const services = await request.get(`${api}/v2/offices/${officeId}/services`, { headers });
   expect([

@@ -188,3 +188,37 @@
     }
   }
 }
+
+.checker-pending-count {
+  display: inline-block;
+  margin-inline-start: 8px;
+  padding: 0 8px;
+  border-radius: 16px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary, var(--ds-action-on-fill));
+  font-size: 0.75rem;
+}
+
+.checker-menu-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100% - 40px);
+  vertical-align: middle;
+}
+
+.checker-menu-text {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.checker-menu-label .checker-pending-count {
+  flex-shrink: 0;
+  margin-inline-start: 0;
+}
+
+:host-context(.dark-theme) .checker-pending-count {
+  color: var(--md-sys-color-on-primary, var(--ds-surface-alt));
+}

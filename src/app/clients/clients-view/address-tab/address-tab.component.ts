@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
@@ -25,8 +33,8 @@ import { PostalCodeLookupService } from 'app/shared/services/postal-code-lookup.
 import { ResolvedAddress } from 'app/shared/models/postal-code-lookup.model';
 
 /** rxjs Imports */
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { of, Subscription } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+import { EMPTY, Observable, of, Subscription } from 'rxjs';
 import { ClientsService } from '../../clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -37,16 +45,18 @@ import {
   MatExpansionPanelDescription
 } from '@angular/material/expansion';
 import { MatDivider } from '@angular/material/divider';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { AddressLocationMapComponent } from './address-location-map/address-location-map.component';
 import {
+  coordinateValidator,
   hasCoordinateValue,
   hasValidCoordinatePair,
   normalizeAddressCoordinates
 } from 'app/clients/utils/address-coordinate.util';
 import { environment } from 'environments/environment';
 import { YesnoPipe } from 'app/pipes/yesno.pipe';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 
 /**
  * Clients Address Tab Component
@@ -87,6 +97,8 @@ export class AddressTabComponent {
   private translateService = inject(TranslateService);
   private postalCodeLookup = inject(PostalCodeLookupService);
   private destroyRef = inject(DestroyRef);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private authenticationService = inject(AuthenticationService);
 
   /** Client Address Data */
   clientAddressData: any;
@@ -119,6 +131,7 @@ export class AddressTabComponent {
    * Adds a client address.
    */
   addAddress() {
+    if (!this.canManageAddress('CREATE_ADDRESS') || !this.clientAddressTemplate?.addressTypeIdOptions?.length) return;
     const data = {
       title:
         this.translateService.instant('labels.buttons.Add') +
@@ -130,23 +143,23 @@ export class AddressTabComponent {
       contentTemplate: this.addressLocationMapDialogTemplate
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupLocationMapPreview(addAddressDialogRef);
     this.setupPostalCodeLookup(addAddressDialogRef);
-    addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response?.data) {
-        const normalizedAddressData = this.normalizeAddressData(response.data.value);
-        this.clientService
-          .createClientAddress(this.clientId, normalizedAddressData.addressType, normalizedAddressData)
-          .subscribe((res: any) => {
-            normalizedAddressData.addressId = res.resourceId;
-            normalizedAddressData.addressType = this.getSelectedValue(
-              'addressTypeIdOptions',
-              normalizedAddressData.addressType
-            ).name;
-            normalizedAddressData.isActive = false;
-            this.clientAddressData.push(normalizedAddressData);
-          });
-      }
-    });
+    addAddressDialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((response: any) => {
+        if (response?.data && response.data.valid !== false) {
+          const normalizedAddressData = this.normalizeAddressData(response.data.value);
+          this.saveAddress(
+            this.clientService.createClientAddress(
+              this.clientId,
+              normalizedAddressData.addressType,
+              normalizedAddressData
+            )
+          );
+        }
+      });
   }
 
   /**
@@ -155,6 +168,7 @@ export class AddressTabComponent {
    * @param {number} index address index
    */
   editAddress(address: any, index: number) {
+    if (!this.canManageAddress('UPDATE_ADDRESS') || !this.clientAddressTemplate) return;
     const data = {
       title:
         this.translateService.instant('labels.buttons.Edit') +
@@ -167,21 +181,57 @@ export class AddressTabComponent {
       layout: { addButtonText: 'Edit' }
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupLocationMapPreview(editAddressDialogRef);
     this.setupPostalCodeLookup(editAddressDialogRef);
-    editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response?.data) {
-        const normalizedAddressData = this.normalizeAddressData(response.data.value);
-        normalizedAddressData.addressId = address.addressId;
-        normalizedAddressData.isActive = address.isActive;
-        this.clientService
-          .editClientAddress(this.clientId, address.addressTypeId, normalizedAddressData)
-          .subscribe((res: any) => {
-            normalizedAddressData.addressTypeId = address.addressTypeId;
-            normalizedAddressData.addressType = address.addressType;
-            this.clientAddressData[index] = normalizedAddressData;
-          });
-      }
-    });
+    editAddressDialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((response: any) => {
+        if (response?.data && response.data.valid !== false) {
+          const normalizedAddressData = this.normalizeAddressData(response.data.value);
+          normalizedAddressData.addressId = address.addressId;
+          normalizedAddressData.isActive = address.isActive;
+          this.saveAddress(
+            this.clientService.editClientAddress(this.clientId, address.addressTypeId, normalizedAddressData)
+          );
+        }
+      });
+  }
+
+  /** Keep the declaration view of the dialog's map template in sync with its reactive form. */
+  private setupLocationMapPreview(dialogRef: MatDialogRef<FormDialogComponent>): void {
+    if (!this.clientAddressLocationEnabled || !this.isFieldEnabled('latitude') || !this.isFieldEnabled('longitude'))
+      return;
+    dialogRef
+      .afterOpened()
+      .pipe(takeUntil(dialogRef.afterClosed()), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        dialogRef.componentInstance.form.valueChanges
+          .pipe(takeUntil(dialogRef.afterClosed()), takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => this.changeDetectorRef.markForCheck());
+        this.changeDetectorRef.markForCheck();
+      });
+  }
+
+  /** Only the authoritative read may update the displayed address, including fields not present in the form. */
+  private saveAddress(request: Observable<any>): void {
+    request
+      .pipe(
+        switchMap(() => this.clientService.getClientAddressData(this.clientId)),
+        takeUntilDestroyed(this.destroyRef),
+        // The shared HTTP interceptor presents backend validation/authorization errors.
+        catchError(() => EMPTY)
+      )
+      .subscribe((addresses: any) => {
+        this.clientAddressData = addresses;
+        this.changeDetectorRef.markForCheck();
+      });
+  }
+
+  canManageAddress(permission: 'CREATE_ADDRESS' | 'UPDATE_ADDRESS'): boolean {
+    if (!environment.productionModeEnableRBAC) return true;
+    const permissions = this.authenticationService.getCredentials()?.permissions ?? [];
+    return permissions.includes('ALL_FUNCTIONS') || permissions.includes(permission);
   }
 
   /** Tracks which fields were auto-filled by the postal code lookup. */
@@ -321,14 +371,14 @@ export class AddressTabComponent {
    * Toggles address activity.
    * @param {any} address Client Address
    */
-  toggleAddress(address: any) {
+  toggleAddress(address: any, event?: MatSlideToggleChange) {
+    if (event) event.source.checked = address.isActive;
+    if (!this.canManageAddress('UPDATE_ADDRESS')) return;
     const addressData = {
       addressId: address.addressId,
       isActive: address.isActive ? false : true
     };
-    this.clientService.editClientAddress(this.clientId, address.addressTypeId, addressData).subscribe(() => {
-      address.isActive = address.isActive ? false : true;
-    });
+    this.saveAddress(this.clientService.editClientAddress(this.clientId, address.addressTypeId, addressData));
   }
 
   /**
@@ -336,15 +386,17 @@ export class AddressTabComponent {
    * @param {any} fieldName Field Name
    */
   isFieldEnabled(fieldName: any) {
-    return this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled;
+    return this.clientAddressFieldConfig?.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled === true;
   }
 
   showAddressMap(address: any): void {
     this.expandedAddressMapIds.add(address.addressId);
+    this.changeDetectorRef.markForCheck();
   }
 
   hideAddressMap(address: any): void {
     this.expandedAddressMapIds.delete(address.addressId);
+    this.changeDetectorRef.markForCheck();
   }
 
   isAddressMapVisible(address: any): boolean {
@@ -357,11 +409,14 @@ export class AddressTabComponent {
    * @param {any} fieldId Field Id
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return this.clientAddressTemplate[fieldName].find((fieldObj: any) => fieldObj.id === fieldId);
+    return this.clientAddressTemplate?.[fieldName]?.find((fieldObj: any) => fieldObj.id === fieldId);
   }
 
   private normalizeAddressData(addressData: any) {
-    return normalizeAddressCoordinates(addressData, this.clientAddressLocationEnabled);
+    return normalizeAddressCoordinates(addressData, this.clientAddressLocationEnabled, {
+      latitude: this.isFieldEnabled('latitude'),
+      longitude: this.isFieldEnabled('longitude')
+    });
   }
 
   /**
@@ -371,6 +426,7 @@ export class AddressTabComponent {
    */
   getAddressFormFields(formType?: string, address?: any) {
     let formfields: FormfieldBase[] = [];
+    if (!this.clientAddressTemplate?.addressTypeIdOptions) return formfields;
 
     for (let index = 0; index < this.clientAddressTemplate.addressTypeIdOptions.length; index++) {
       this.clientAddressTemplate.addressTypeIdOptions[index].name = this.translateService.instant(
@@ -508,10 +564,11 @@ export class AddressTabComponent {
             controlName: 'latitude',
             label: this.translateService.instant('labels.inputs.Latitude'),
             value: address && this.hasCoordinateValue(address.latitude, 'latitude') ? address.latitude : '',
-            type: 'number',
+            type: 'text',
+            inputmode: 'decimal',
             min: -90,
             max: 90,
-            step: '0.00000001',
+            validators: [coordinateValidator('latitude')],
             order: 12
           })
         : null
@@ -522,10 +579,11 @@ export class AddressTabComponent {
             controlName: 'longitude',
             label: this.translateService.instant('labels.inputs.Longitude'),
             value: address && this.hasCoordinateValue(address.longitude, 'longitude') ? address.longitude : '',
-            type: 'number',
+            type: 'text',
+            inputmode: 'decimal',
             min: -180,
             max: 180,
-            step: '0.00000001',
+            validators: [coordinateValidator('longitude')],
             order: 13
           })
         : null

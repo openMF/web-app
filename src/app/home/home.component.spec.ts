@@ -9,7 +9,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { HomeComponent } from './home.component';
@@ -125,5 +125,22 @@ describe('HomeComponent search empty state', () => {
     typeIntoSearch('zzz-no-such-activity');
 
     expect(labelSpy).toHaveBeenCalledTimes(component.allActivities.length);
+  });
+
+  it('keeps searching when a translation key resolves to an object', async () => {
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('en', { reports: { pdf: 'PDF' } });
+    translate.use('en');
+
+    const input = searchInput();
+    input.focus();
+    input.dispatchEvent(new Event('focusin', { bubbles: true }));
+    typeIntoSearch('report');
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(emptyState()).toBeNull();
+    const options = Array.from(document.querySelectorAll('mat-option')).map((option) => option.textContent!.trim());
+    expect(options).toContain('reports');
   });
 });

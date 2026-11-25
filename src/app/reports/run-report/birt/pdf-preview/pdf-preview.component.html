@@ -7,20 +7,32 @@
 -->
 
 <div class="pdf-toolbar" role="toolbar" [attr.aria-label]="'reports.pdf.controls' | translate">
-  <button mat-button type="button" (click)="previous()" [disabled]="loading || !documentLoaded || pageNumber <= 1">
+  <button
+    mat-stroked-button
+    type="button"
+    (click)="previous()"
+    [disabled]="loading || !documentLoaded || pageNumber <= 1"
+  >
     {{ 'labels.buttons.Previous page' | translate }}
   </button>
-  <span aria-live="polite">{{ 'reports.pdf.page' | translate: { page: pageNumber, total: totalPages } }}</span>
-  <button mat-button type="button" (click)="next()" [disabled]="loading || !documentLoaded || pageNumber >= totalPages">
+  <span class="pdf-page-counter" aria-live="polite">
+    {{ 'reports.pdf.page' | translate: { page: pageNumber, total: totalPages } }}
+  </span>
+  <button
+    mat-stroked-button
+    type="button"
+    (click)="next()"
+    [disabled]="loading || !documentLoaded || pageNumber >= totalPages"
+  >
     {{ 'labels.buttons.Next page' | translate }}
   </button>
-  <button mat-button type="button" (click)="zoom(-0.2)" [disabled]="loading || !documentLoaded">
+  <button mat-stroked-button type="button" (click)="zoom(-0.2)" [disabled]="loading || !documentLoaded">
     {{ 'reports.pdf.zoomOut' | translate }}
   </button>
-  <button mat-button type="button" (click)="zoom(0.2)" [disabled]="loading || !documentLoaded">
+  <button mat-stroked-button type="button" (click)="zoom(0.2)" [disabled]="loading || !documentLoaded">
     {{ 'reports.pdf.zoomIn' | translate }}
   </button>
-  <button mat-button type="button" (click)="fit()" [disabled]="loading || !documentLoaded">
+  <button mat-stroked-button type="button" (click)="fit()" [disabled]="loading || !documentLoaded">
     {{ 'reports.pdf.fit' | translate }}
   </button>
 </div>

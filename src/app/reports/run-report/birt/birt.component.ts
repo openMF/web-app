@@ -25,6 +25,7 @@ import { finalize, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
@@ -56,6 +57,7 @@ export class BirtComponent implements OnChanges, OnDestroy {
   private sanitizer = inject(DomSanitizer);
   private reportsService = inject(ReportsService);
   private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
   private progressBarService = inject(ProgressBarService);
   private changeDetectorRef = inject(ChangeDetectorRef);
 
@@ -111,7 +113,7 @@ export class BirtComponent implements OnChanges, OnDestroy {
         this.dataObject.report.name,
         this.dataObject.formData,
         this.settingsService.tenantIdentifier,
-        this.settingsService.language.code,
+        this.translateService.currentLang || this.settingsService.language.code,
         this.settingsService.dateFormat
       )
       .pipe(

@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { CheckerInboxCountService } from 'app/tasks/checker-inbox-count.service';
 import { environment } from 'environments/environment';
 /** Angular Imports */
 import {
@@ -19,6 +20,7 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
+import { MatBadge } from '@angular/material/badge';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -65,12 +67,14 @@ import { catchError, finalize, of, take } from 'rxjs';
     MatNavList,
     MatListItem,
     RouterLinkActive,
+    MatBadge,
     MatIcon,
     MatLine
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidenavComponent implements OnInit, AfterViewInit {
+  checkerCount = inject(CheckerInboxCountService);
   readonly cbIldEnabled = environment.cbIldEnabled;
   private router = inject(Router);
   dialog = inject(MatDialog);

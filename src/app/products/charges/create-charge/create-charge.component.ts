@@ -28,6 +28,11 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { ValidateOnFocusDirective } from '../../../directives/validate-on-focus.directive';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  DOWN_PAYMENT_CHARGE_CALCULATION_TYPE_IDS,
+  DOWN_PAYMENT_CHARGE_TIME_TYPE_ID,
+  isDownPaymentPercentageCharge
+} from 'app/products/charges/models/charge.model';
 
 /**
  * Create charge component.
@@ -201,6 +206,12 @@ export class CreateChargeComponent implements OnInit {
       if (this.chargeForm.get('chargeTimeType').value !== 12 && chargeCalculationType.id === 5) {
         return false;
       }
+      if (
+        this.chargeForm.get('chargeTimeType').value === DOWN_PAYMENT_CHARGE_TIME_TYPE_ID &&
+        !DOWN_PAYMENT_CHARGE_CALCULATION_TYPE_IDS.includes(chargeCalculationType.id)
+      ) {
+        return false;
+      }
       if (this.chargeForm.get('chargeAppliesTo').value === 2) {
         if (
           !(
@@ -219,6 +230,13 @@ export class CreateChargeComponent implements OnInit {
       }
       return true;
     });
+  }
+
+  get showDownPaymentPercentageHint(): boolean {
+    return isDownPaymentPercentageCharge(
+      this.chargeForm.controls.chargeTimeType.value,
+      this.chargeForm.controls.chargeCalculationType.value
+    );
   }
 
   showMinMaxCap(): boolean {
@@ -326,6 +344,13 @@ export class CreateChargeComponent implements OnInit {
             ])
           );
           this.repeatEveryLabel = 'Weeks';
+          break;
+        case DOWN_PAYMENT_CHARGE_TIME_TYPE_ID:
+          this.chargeForm.get('penalty').setValue(false);
+          this.chargeForm.get('penalty').disable();
+          if (!DOWN_PAYMENT_CHARGE_CALCULATION_TYPE_IDS.includes(this.chargeForm.get('chargeCalculationType').value)) {
+            this.chargeForm.get('chargeCalculationType').reset();
+          }
           break;
       }
     });

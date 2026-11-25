@@ -10,6 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
+import { CheckerInboxCountService } from './checker-inbox-count.service';
 import { TasksService } from './tasks.service';
 import { serializeMakerCheckerDate } from './checker-inbox-and-tasks-tabs/checker-inbox/maker-checker-date-serializer';
 
@@ -20,6 +21,15 @@ describe('TasksService maker-checker search', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        {
+          provide: CheckerInboxCountService,
+          useValue: {
+            count: (): number | null => null,
+            scope: () => 'test',
+            update: jest.fn(),
+            begin: jest.fn(() => 1)
+          }
+        },
         TasksService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -30,6 +40,27 @@ describe('TasksService maker-checker search', () => {
   });
 
   afterEach(() => httpMock.verify());
+
+  it('finds the exact audit ID within the filtered checker queue', () => {
+    const record = { id: 23, actionName: 'UPDATE', entityName: 'CLIENT', resourceId: 7 };
+    let found: unknown;
+    service.getPendingCheckerRecord(record, true).subscribe((row) => (found = row));
+    const request = httpMock.expectOne((req) => req.url === '/makercheckers');
+    expect(request.request.params.keys().sort()).toEqual([
+      'actionName',
+      'entityName',
+      'includeJson',
+      'resourceId'
+    ]);
+    expect(request.request.params.get('resourceId')).toBe('7');
+    expect(request.request.params.get('includeJson')).toBe('true');
+    request.flush([
+      { ...record, id: 24 },
+      record
+    ]);
+    expect(found).toEqual(record);
+    expect(TestBed.inject(CheckerInboxCountService).update).not.toHaveBeenCalled();
+  });
 
   it('sends locale-independent Maker Checker dates and preserves the remaining filters', () => {
     const from = serializeMakerCheckerDate(new Date(2016, 0, 2));

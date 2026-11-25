@@ -8,7 +8,10 @@
 
 import { describe, expect, it } from '@jest/globals';
 
+import { FormControl } from '@angular/forms';
+
 import {
+  coordinateValidator,
   getCoordinatePair,
   hasCoordinateValue,
   hasValidCoordinatePair,
@@ -93,5 +96,88 @@ describe('address coordinate utilities', () => {
     ).toEqual({
       street: 'MG Road'
     });
+  });
+  it.each([
+    '28.6139123456789',
+    '-77.2090123456789',
+    '0',
+    '0E-8',
+    '2.86139e1',
+    '.5',
+    '-.5',
+    '',
+    '   ',
+    null,
+    undefined
+  ])('accepts optional decimal coordinate input %s without rewriting it', (value) => {
+    const control = new FormControl(value, coordinateValidator('latitude'));
+    expect(control.valid).toBe(true);
+    expect(control.value).toBe(value === undefined ? null : value);
+  });
+
+  it.each([
+    'abc',
+    '12junk',
+    'NaN',
+    'Infinity',
+    '0x10',
+    '1e',
+    '1,5',
+    true,
+    {},
+    91,
+    -91
+  ])('rejects invalid latitude input %s', (value) => {
+    expect(coordinateValidator('latitude')(new FormControl(value))).toEqual({ invalidNumber: true });
+  });
+
+  it('respects independently disabled backend fields without mutating address metadata or decimal strings', () => {
+    const data = {
+      addressId: 11,
+      street: 'Synthetic Street',
+      createdBy: 'fixture',
+      latitude: '28.6139123456789',
+      longitude: '77.2090123456789'
+    };
+    expect(normalizeAddressCoordinates(data, true, { latitude: true, longitude: false })).toEqual({
+      addressId: 11,
+      street: 'Synthetic Street',
+      createdBy: 'fixture',
+      latitude: '28.6139123456789'
+    });
+    expect(data.longitude).toBe('77.2090123456789');
+    expect(normalizeAddressCoordinates(data, true, { latitude: false, longitude: false })).toEqual({
+      addressId: 11,
+      street: 'Synthetic Street',
+      createdBy: 'fixture'
+    });
+  });
+  it.each([
+    'latitude',
+    'longitude'
+  ] as const)('requires nonblank %s only when configured as mandatory', (coordinate) => {
+    for (const blank of [
+      null,
+      undefined,
+      '',
+      '   ',
+      '\t\n',
+      '\u00a0'
+    ]) {
+      const control = new FormControl(blank);
+      expect(coordinateValidator(coordinate, true)(control)).toEqual({ required: true });
+      expect(coordinateValidator(coordinate, false)(control)).toBeNull();
+    }
+    for (const value of [
+      0,
+      '0',
+      '0E-8',
+      '-28.6139123456789',
+      '2.86139e1'
+    ]) {
+      const control = new FormControl(value);
+      expect(coordinateValidator(coordinate, true)(control)).toBeNull();
+      expect(control.value).toBe(value);
+    }
   });
 });

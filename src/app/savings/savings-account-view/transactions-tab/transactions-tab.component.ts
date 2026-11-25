@@ -17,6 +17,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs/operators';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -277,8 +278,22 @@ export class TransactionsTabComponent implements OnInit {
         this.cdr.markForCheck();
         this.savingsService
           .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, transactionData.id)
-          .subscribe(() => {
-            this.reload();
+          .pipe(
+            takeUntilDestroyed(this.destroyRef),
+            finalize(() => {
+              this.isLoading = false;
+              this.cdr.markForCheck();
+            })
+          )
+          .subscribe({
+            next: () => {
+              this.reload();
+            },
+            error: () => {
+              // ErrorHandlerInterceptor already alerts the user about the failed
+              // request. Handle the rejection here so it does not become an unhandled
+              // RxJS error; the finalize operator resets the loading state so retry is possible.
+            }
           });
       }
     });
@@ -295,9 +310,25 @@ export class TransactionsTabComponent implements OnInit {
       if (response?.confirm) {
         this.isLoading = true;
         this.cdr.markForCheck();
-        this.accountTransfersService.undoAccountTransfer(transactionData.transfer.id).subscribe(() => {
-          this.reload();
-        });
+        this.accountTransfersService
+          .undoAccountTransfer(transactionData.transfer.id)
+          .pipe(
+            takeUntilDestroyed(this.destroyRef),
+            finalize(() => {
+              this.isLoading = false;
+              this.cdr.markForCheck();
+            })
+          )
+          .subscribe({
+            next: () => {
+              this.reload();
+            },
+            error: () => {
+              // ErrorHandlerInterceptor already alerts the user about the failed
+              // request. Handle the rejection here so it does not become an unhandled
+              // RxJS error; the finalize operator resets the loading state so retry is possible.
+            }
+          });
       }
     });
   }

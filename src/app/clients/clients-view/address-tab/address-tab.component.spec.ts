@@ -10,8 +10,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import { BehaviorSubject, EMPTY, of, Subject, throwError } from 'rxjs';
+import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import * as L from 'leaflet';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import * as solidIcons from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +24,7 @@ import { ClientsService } from '../../clients.service';
 import { PostalCodeLookupService } from 'app/shared/services/postal-code-lookup.service';
 import { FormGroupService } from 'app/shared/form-dialog/form-group.service';
 import { environment } from 'environments/environment';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 
 const mockMapRemove = jest.fn();
 const mockMapSetView = jest.fn().mockReturnThis();
@@ -58,6 +59,10 @@ describe('AddressTabComponent', () => {
   let dialog: jest.Mocked<MatDialog>;
   let formGroupService: FormGroupService;
   let translateService: TranslateService;
+  let savedAddresses: any[];
+  let permissions: string[];
+  const originalLocationFlag = environment.enableClientAddressLocation;
+  const originalRbacFlag = environment.productionModeEnableRBAC;
 
   const addressTemplate = {
     addressTypeIdOptions: [
@@ -93,6 +98,8 @@ describe('AddressTabComponent', () => {
   beforeEach(async () => {
     jest.clearAllMocks();
     environment.enableClientAddressLocation = true;
+    environment.productionModeEnableRBAC = true;
+    permissions = ['ALL_FUNCTIONS'];
 
     routeData = new BehaviorSubject({
       clientAddressData: [
@@ -119,9 +126,19 @@ describe('AddressTabComponent', () => {
       clientAddressTemplateData: addressTemplate
     });
 
+    savedAddresses = routeData.value.clientAddressData.map((address: any) => ({ ...address }));
     clientsService = {
-      createClientAddress: jest.fn(() => of({ resourceId: 22 })),
-      editClientAddress: jest.fn(() => of({ resourceId: 11 }))
+      createClientAddress: jest.fn((_clientId: string, _type: string, data: any) => {
+        savedAddresses.push({ ...data, addressId: 22, addressTypeId: 1, addressType: 'Home', isActive: false });
+        return of({ resourceId: 22 });
+      }),
+      editClientAddress: jest.fn((_clientId: string, _type: string, data: any) => {
+        savedAddresses = savedAddresses.map((address) =>
+          address.addressId === data.addressId ? { ...address, ...data } : address
+        );
+        return of({ resourceId: 11 });
+      }),
+      getClientAddressData: jest.fn(() => of(savedAddresses.map((address) => ({ ...address }))))
     } as unknown as jest.Mocked<ClientsService>;
 
     dialog = {
@@ -148,6 +165,7 @@ describe('AddressTabComponent', () => {
           }
         },
         { provide: ClientsService, useValue: clientsService },
+        { provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions }) } },
         { provide: MatDialog, useValue: dialog },
         { provide: PostalCodeLookupService, useValue: { enabled: false } },
         provideNoopAnimations()
@@ -182,15 +200,20 @@ describe('AddressTabComponent', () => {
     translateService.use('en');
   });
 
+  afterEach(() => {
+    environment.enableClientAddressLocation = originalLocationFlag;
+    environment.productionModeEnableRBAC = originalRbacFlag;
+  });
+
   function expandFirstAddressPanel() {
     const panel = fixture.debugElement.query(By.directive(MatExpansionPanel)).componentInstance as MatExpansionPanel;
-    panel.afterExpand.emit();
+    panel.open();
     fixture.detectChanges();
   }
 
   function collapseFirstAddressPanel() {
     const panel = fixture.debugElement.query(By.directive(MatExpansionPanel)).componentInstance as MatExpansionPanel;
-    panel.afterCollapse.emit();
+    panel.close();
     fixture.detectChanges();
   }
 
@@ -259,6 +282,7 @@ describe('AddressTabComponent', () => {
 
   it('should include address fields in the add payload', () => {
     dialog.open.mockReturnValue({
+      afterOpened: () => EMPTY,
       afterClosed: () =>
         of({
           data: {
@@ -311,6 +335,7 @@ describe('AddressTabComponent', () => {
   it('should pass the location map preview template to the add dialog', () => {
     fixture.detectChanges();
     dialog.open.mockReturnValue({
+      afterOpened: () => EMPTY,
       afterClosed: () => of({})
     } as any);
 
@@ -322,6 +347,7 @@ describe('AddressTabComponent', () => {
 
   it('should include address fields in the edit payload', () => {
     dialog.open.mockReturnValue({
+      afterOpened: () => EMPTY,
       afterClosed: () =>
         of({
           data: {
@@ -373,6 +399,7 @@ describe('AddressTabComponent', () => {
 
   it('should remove empty numeric coordinates without removing zero values', () => {
     dialog.open.mockReturnValue({
+      afterOpened: () => EMPTY,
       afterClosed: () =>
         of({
           data: {
@@ -397,6 +424,7 @@ describe('AddressTabComponent', () => {
   it('should remove coordinates from the add payload when the location feature is disabled', () => {
     environment.enableClientAddressLocation = false;
     dialog.open.mockReturnValue({
+      afterOpened: () => EMPTY,
       afterClosed: () =>
         of({
           data: {
@@ -420,6 +448,7 @@ describe('AddressTabComponent', () => {
 
   it('should preserve zero coordinate values after edit', () => {
     dialog.open.mockReturnValue({
+      afterOpened: () => EMPTY,
       afterClosed: () =>
         of({
           data: {
@@ -567,5 +596,169 @@ describe('AddressTabComponent', () => {
 
     expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).not.toBeNull();
     expect(L.map).toHaveBeenCalledTimes(1);
+  });
+  function closeDialogWith(value: any, valid = true) {
+    dialog.open.mockReturnValue({ afterOpened: () => EMPTY, afterClosed: () => of({ data: { value, valid } }) } as any);
+  }
+
+  it('waits for the authoritative read and retains backend metadata and unchanged fields', () => {
+    const read = new Subject<any>();
+    const original = component.clientAddressData;
+    clientsService.getClientAddressData.mockReturnValue(read);
+    closeDialogWith({ latitude: '28.6139123456789', longitude: '77.2090123456789' });
+    component.editAddress(original[0], 0);
+    expect(component.clientAddressData).toBe(original);
+    expect(clientsService.getClientAddressData).toHaveBeenCalledWith('7');
+    const saved = [{ ...original[0], latitude: '28.61391234', longitude: '77.20901234', updatedBy: 'server' }];
+    read.next(saved);
+    expect(component.clientAddressData).toBe(saved);
+    expect(component.clientAddressData[0].street).toBe('MG Road');
+    expect(component.clientAddressData[0].updatedBy).toBe('server');
+    expect(clientsService.editClientAddress.mock.calls[0][2].latitude).toBe('28.6139123456789');
+  });
+
+  it.each([
+    'create',
+    'edit',
+    'read'
+  ])('does not invent saved state when %s fails', (kind) => {
+    const original = component.clientAddressData;
+    const failure = throwError(() => ({ status: 403 }));
+    if (kind === 'create') clientsService.createClientAddress.mockReturnValue(failure);
+    else if (kind === 'edit') clientsService.editClientAddress.mockReturnValue(failure);
+    else clientsService.getClientAddressData.mockReturnValue(failure);
+    closeDialogWith({ addressType: 1, latitude: '28.6139', longitude: '77.2090' });
+    if (kind === 'edit') component.editAddress(original[0], 0);
+    else component.addAddress();
+    expect(component.clientAddressData).toBe(original);
+    if (kind !== 'read') expect(clientsService.getClientAddressData).not.toHaveBeenCalled();
+  });
+
+  it('does not treat omitted coordinates as a successful backend clear', () => {
+    closeDialogWith({ latitude: '', longitude: '' });
+    component.editAddress(component.clientAddressData[0], 0);
+    const payload = clientsService.editClientAddress.mock.calls[0][2];
+    expect(payload.latitude).toBeUndefined();
+    expect(payload.longitude).toBeUndefined();
+    expect(component.clientAddressData[0]).toEqual(
+      expect.objectContaining({ latitude: '12.9716', longitude: '77.5946' })
+    );
+  });
+
+  it.each([
+    [
+      true,
+      false
+    ],
+    [
+      false,
+      true
+    ],
+    [
+      false,
+      false
+    ]
+  ])('omits disabled coordinates on add and edit (%s, %s)', (latitude, longitude) => {
+    component.clientAddressFieldConfig = fieldConfiguration(latitude, longitude);
+    closeDialogWith({ addressType: 1, latitude: 0, longitude: 0 });
+    component.addAddress();
+    component.editAddress(component.clientAddressData[0], 0);
+    for (const payload of [
+      clientsService.createClientAddress.mock.calls[0][2],
+      clientsService.editClientAddress.mock.calls[0][2]
+    ]) {
+      expect(payload.latitude).toBe(latitude ? 0 : undefined);
+      expect(payload.longitude).toBe(longitude ? 0 : undefined);
+    }
+  });
+
+  it.each([
+    'abc',
+    '12junk',
+    'Infinity',
+    '1e'
+  ])('blocks malformed coordinate input %s in reactive dialogs', (value) => {
+    const form = formGroupService.createFormGroup(
+      component.getAddressFormFields('edit', component.clientAddressData[0])
+    );
+    form.get('latitude').setValue(value);
+    expect(form.get('latitude').hasError('invalidNumber')).toBe(true);
+    dialog.open.mockReturnValue({ afterOpened: () => EMPTY, afterClosed: () => of({ data: form }) } as any);
+    component.editAddress(component.clientAddressData[0], 0);
+    expect(clientsService.editClientAddress).not.toHaveBeenCalled();
+  });
+
+  it('preserves high precision and optional partial pairs in decimal text controls', () => {
+    const fields = component.getAddressFormFields('add');
+    const form = formGroupService.createFormGroup(fields);
+    form.get('latitude').setValue('28.6139123456789');
+    expect(form.get('latitude').valid).toBe(true);
+    expect(form.get('longitude').valid).toBe(true);
+    expect(fields.find((field) => field.controlName === 'latitude')).toEqual(
+      expect.objectContaining({ type: 'text', inputmode: 'decimal', step: null })
+    );
+  });
+
+  it.each([
+    { grants: [] },
+    { grants: ['READ_ADDRESS'] },
+    { grants: ['ALL_FUNCTIONS_READ'] }
+  ])('keeps addresses and maps read-only for permissions $grants', ({ grants }) => {
+    permissions = grants;
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('button[color="primary"]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('mat-slide-toggle button[role="switch"]').disabled).toBe(true);
+    component.addAddress();
+    component.editAddress(component.clientAddressData[0], 0);
+    component.toggleAddress(component.clientAddressData[0]);
+    expect(dialog.open).not.toHaveBeenCalled();
+    expect(clientsService.editClientAddress).not.toHaveBeenCalled();
+    expandFirstAddressPanel();
+    expect(L.map).toHaveBeenCalledTimes(1);
+  });
+
+  it('checks create and update permissions independently', () => {
+    permissions = ['CREATE_ADDRESS'];
+    expect(component.canManageAddress('CREATE_ADDRESS')).toBe(true);
+    expect(component.canManageAddress('UPDATE_ADDRESS')).toBe(false);
+    permissions = ['UPDATE_ADDRESS'];
+    expect(component.canManageAddress('CREATE_ADDRESS')).toBe(false);
+    expect(component.canManageAddress('UPDATE_ADDRESS')).toBe(true);
+  });
+
+  it('handles missing template and field configuration without opening an unusable dialog', () => {
+    component.clientAddressTemplate = null;
+    component.clientAddressFieldConfig = null;
+    expect(component.getAddressFormFields('add')).toEqual([]);
+    expect(component.isFieldEnabled('latitude')).toBe(false);
+    component.addAddress();
+    expect(dialog.open).not.toHaveBeenCalled();
+    expect(() => fixture.detectChanges()).not.toThrow();
+  });
+
+  it('shows a localized fallback for partial or invalid coordinates without hiding address data', () => {
+    component.clientAddressData[0].longitude = null;
+    fixture.detectChanges();
+    expandFirstAddressPanel();
+    expect(fixture.nativeElement.textContent).toContain('12.9716');
+    expect(fixture.nativeElement.textContent).toContain('MG Road');
+    expect(fixture.nativeElement.textContent).toContain('labels.text.No valid saved coordinates');
+    expect(L.map).not.toHaveBeenCalled();
+  });
+
+  it('releases preview form subscriptions when its dialog closes', () => {
+    const opened = new Subject<void>();
+    const closed = new Subject<any>();
+    const form = formGroupService.createFormGroup(component.getAddressFormFields('add'));
+    dialog.open.mockReturnValue({
+      afterOpened: () => opened,
+      afterClosed: () => closed,
+      componentInstance: { form }
+    } as any);
+    component.addAddress();
+    opened.next();
+    expect((form.valueChanges as Subject<any>).observed).toBe(true);
+    closed.next({});
+    expect((form.valueChanges as Subject<any>).observed).toBe(false);
   });
 });

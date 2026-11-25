@@ -12,19 +12,22 @@
       <h3>{{ 'labels.heading.Address' | translate }}</h3>
     </div>
     <div class="action-button m-b-10 gap-25px">
-      <button mat-raised-button color="primary" (click)="addAddress()">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
+      @if (canManageAddress('CREATE_ADDRESS')) {
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addAddress()"
+          [disabled]="!clientAddressTemplate?.addressTypeIdOptions?.length"
+        >
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </button>
+      }
     </div>
   </div>
 
   <mat-accordion>
     @for (address of clientAddressData; track address.addressId; let i = $index) {
-      <mat-expansion-panel
-        class="address"
-        (afterExpand)="showAddressMap(address)"
-        (afterCollapse)="hideAddressMap(address)"
-      >
+      <mat-expansion-panel class="address" (opened)="showAddressMap(address)" (closed)="hideAddressMap(address)">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ address.addressType }}
@@ -35,10 +38,22 @@
         </mat-expansion-panel-header>
         <mat-divider [inset]="true"></mat-divider>
         <div class="address-actions layout-row align-end align-items-center">
-          <button mat-button color="primary" (click)="editAddress(address, i)">
-            <fa-icon icon="edit"></fa-icon>
-          </button>
-          <mat-slide-toggle [checked]="address.isActive" (change)="toggleAddress(address)"></mat-slide-toggle>
+          @if (canManageAddress('UPDATE_ADDRESS')) {
+            <button
+              mat-button
+              color="primary"
+              (click)="editAddress(address, i)"
+              [attr.aria-label]="'labels.buttons.Edit' | translate"
+            >
+              <fa-icon icon="edit"></fa-icon>
+            </button>
+          }
+          <mat-slide-toggle
+            [checked]="address.isActive"
+            [disabled]="!canManageAddress('UPDATE_ADDRESS')"
+            (change)="toggleAddress(address, $event)"
+            [aria-label]="'labels.inputs.Active Status' | translate"
+          ></mat-slide-toggle>
         </div>
         <p>
           @if (isFieldEnabled('street')) {
@@ -101,10 +116,13 @@
           clientAddressLocationEnabled &&
           isFieldEnabled('latitude') &&
           isFieldEnabled('longitude') &&
-          hasValidCoordinatePair(address.latitude, address.longitude) &&
           isAddressMapVisible(address)
         ) {
-          <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
+          @if (hasValidCoordinatePair(address.latitude, address.longitude)) {
+            <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
+          } @else {
+            <p class="coordinate-state" role="status">{{ 'labels.text.No valid saved coordinates' | translate }}</p>
+          }
         }
       </mat-expansion-panel>
     }

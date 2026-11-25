@@ -6,9 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { OrganizationService } from 'app/organization/organization.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -32,6 +33,7 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
   private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private organizationService = inject(OrganizationService);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Loan Id */
   loanId: string;
@@ -50,6 +52,8 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
   maxDate = new Date();
   /** Repayment Loan Form */
   adjustLoanChargeForm: UntypedFormGroup;
+  /** Whether the adjustment request is in flight. */
+  isSubmitting = false;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -118,6 +122,12 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
 
   /** Submits the repayment form */
   submit() {
+    if (this.adjustLoanChargeForm.invalid || this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+
     const adjustLoanChargeFormData = this.adjustLoanChargeForm.value;
     const locale = this.settingsService.language.code;
     const data = {
@@ -133,11 +143,22 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
         data,
         this.chargeId
       )
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.isSubmitting = false;
+          this.cdr.markForCheck();
+        })
+      )
       .subscribe({
         next: (response: any) => {
           this.gotoLoanChargesView();
         },
-        error: (error) => {}
+        error: () => {
+          // ErrorHandlerInterceptor already alerts the user about the failed request. Handle the
+          // rejection here so it does not become an unhandled RxJS error; finalize resets the
+          // submitting state so the user can retry.
+        }
       });
   }
 

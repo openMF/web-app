@@ -13,7 +13,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { CheckerSearchTemplate, TasksService } from '../tasks.service';
 
 /**
  * Maker Checker Template resolver.
@@ -24,9 +24,9 @@ export class MakerCheckerTemplate {
 
   /**
    * Returns the maker checker template data.
-   * @returns {Observable<any>}
+   * @returns {Observable<CheckerSearchTemplate>}
    */
-  resolve(): Observable<any> {
+  resolve(): Observable<CheckerSearchTemplate> {
     return this.tasksService.getMakerCheckerTemplate();
   }
 }

@@ -10,9 +10,11 @@
 import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 /** Custom Services */
+import { CheckerInboxCountService } from '../checker-inbox-count.service';
+import type { MakerCheckerRecord } from '../checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox-audit';
 import { TasksService } from '../tasks.service';
 
 /**
@@ -20,13 +22,15 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class GetMakerCheckers {
+  private counts = inject(CheckerInboxCountService);
   private tasksService = inject(TasksService);
 
   /**
    * Returns the maker checker data.
-   * @returns {Observable<any>}
+   * @returns {Observable<{scope: string; rows: MakerCheckerRecord[]}>}
    */
-  resolve(): Observable<any> {
-    return this.tasksService.getMakerCheckerData();
+  resolve(): Observable<{ scope: string; rows: MakerCheckerRecord[] }> {
+    const scope = this.counts.scope();
+    return this.tasksService.getMakerCheckerData().pipe(map((rows) => ({ scope, rows })));
   }
 }

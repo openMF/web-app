@@ -8,10 +8,11 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { HANDLE_HTTP_ERROR_LOCALLY } from 'app/core/http/error-handler.interceptor';
 
 import {
   CashHolding,
@@ -66,6 +67,10 @@ export interface DepositClient {
   fullname?: string;
   name?: string;
   externalId?: string;
+  mobileNo?: string;
+  officeName?: string;
+  active?: boolean;
+  status?: { value?: string; code?: string };
 }
 
 export interface DepositSavingsAccount {
@@ -79,7 +84,12 @@ export interface DepositSavingsAccount {
   clientId?: FineractId;
   clientName?: string;
   clientDisplayName?: string;
-  currency?: { code?: string };
+  currency?: { code?: string; decimalPlaces?: number };
+  depositType?: { value?: string };
+  timeline?: { activatedOnDate?: number[] };
+  nominalAnnualInterestRate?: number;
+  minRequiredBalance?: number;
+  transactions?: DepositAccountTransaction[];
   currencyCode?: string;
   status?:
     | {
@@ -93,6 +103,27 @@ export interface DepositSavingsAccount {
     availableBalance?: number | null;
   };
   accountBalance?: number | null;
+}
+
+/** Optional records returned by the existing savings account associations response. */
+export interface DepositAccountTransaction {
+  id: FineractId;
+  date?: number[];
+  amount?: number;
+  currency?: { code?: string; decimalPlaces?: number };
+  entryType?: string;
+  reversed?: boolean;
+  isReversal?: boolean;
+  transactionType?: {
+    value?: string;
+    deposit?: boolean;
+    withdrawal?: boolean;
+    interestPosting?: boolean;
+    dividendPayout?: boolean;
+    feeDeduction?: boolean;
+    overdraftInterest?: boolean;
+    withholdTax?: boolean;
+  };
 }
 
 export interface DepositClientAccounts {
@@ -130,6 +161,8 @@ export interface SavingsDepositCommandPayload {
 }
 
 export interface SavingsDepositCommandResult {
+  /** A maker-checker command ID alone does not identify a posted transaction. */
+  commandId?: FineractId;
   resourceId?: FineractId;
   entityId?: FineractId;
   transactionId?: FineractId;
@@ -139,6 +172,18 @@ export interface SavingsDepositCommandResult {
 
 export interface SavingsDepositReceipt extends SavingsDepositCommandResult {
   id?: FineractId;
+  /** SavingsAccountTransactionData fields from the existing transaction GET. */
+  accountId?: FineractId;
+  date?: number[];
+  transactionTime?: string;
+  currency?: { code?: string; decimalPlaces?: number };
+  entryType?: string;
+  reversed?: boolean;
+  isReversal?: boolean;
+  transfer?: unknown;
+  lienTransaction?: boolean;
+  submittedByUsername?: string;
+  note?: string;
   accountNo?: string;
   accountNumber?: string;
   amount?: number | null;
@@ -152,6 +197,7 @@ export interface SavingsDepositReceipt extends SavingsDepositCommandResult {
     };
   };
   transactionType?: {
+    deposit?: boolean;
     value?: string;
   };
 }
@@ -567,7 +613,7 @@ export interface CashAllocationDenomination {
 
 export interface CashAllocationCurrency {
   code: string;
-  name: string;
+  name: string | null;
   displaySymbol: string;
   decimalPlaces: number;
   denominations: CashAllocationDenomination[];
@@ -587,7 +633,7 @@ export interface CashAllocationContext {
   businessDate: string;
   officeId: FineractId;
   officeName: string;
-  currencyCode?: string;
+  currencyCode?: string | null;
   vaultBalance: CashAllocationAmount;
   currencies: CashAllocationCurrency[];
   cashiers: CashAllocationCashier[];
@@ -994,26 +1040,37 @@ export class BaseTellerService {
     if (currencyCode) {
       params = params.set('currencyCode', currencyCode);
     }
-    return this.http.get<CashAllocationContext>(`${this.cashAllocationsPath}/context`, { params });
+    return this.http.get<CashAllocationContext>(`${this.cashAllocationsPath}/context`, {
+      params,
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Validates an allocation and returns the backend-authoritative transaction preview. */
   previewCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationPreview> {
-    return this.http.post<CashAllocationPreview>(`${this.cashAllocationsPath}/preview`, payload);
+    return this.http.post<CashAllocationPreview>(`${this.cashAllocationsPath}/preview`, payload, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Finalizes an allocation using the request's backend idempotency key. */
   createCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationReceipt> {
-    return this.http.post<CashAllocationReceipt>(this.cashAllocationsPath, payload);
+    return this.http.post<CashAllocationReceipt>(this.cashAllocationsPath, payload, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Retrieves the immutable completed allocation. */
   getCashAllocation(allocationId: FineractId): Observable<CashAllocationReceipt> {
-    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}`);
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}`, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Retrieves the immutable receipt through the separately permissioned reprint endpoint. */
   reprintCashAllocationReceipt(allocationId: FineractId): Observable<CashAllocationReceipt> {
-    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}/receipt`);
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}/receipt`, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 }

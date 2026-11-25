@@ -168,6 +168,8 @@ export class ReportsService {
     ] of Object.entries(formData)) {
       httpParams = httpParams.set(key, value);
     }
+    // Fineract expects underscore-separated locales for BIRT, even when the UI uses language tags.
+    httpParams = httpParams.set('locale', (httpParams.get('locale') ?? locale).replace(/-/g, '_'));
     return this.http.get(`/runreports/${reportName}`, {
       responseType: 'arraybuffer',
       observe: 'response',
