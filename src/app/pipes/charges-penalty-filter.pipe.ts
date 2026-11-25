@@ -10,15 +10,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'chargesPenaltyFilter' })
 export class ChargesPenaltyFilterPipe implements PipeTransform {
-  transform(charges: any, penalty: boolean): any {
-    if (charges) {
-      charges = charges.filter((charge: any) => {
-        if (charge.penalty === penalty) {
-          return true;
-        }
-        return false;
-      });
+  transform(charges: any[], penalty: boolean = false): any[] {
+    if (!Array.isArray(charges)) {
+      return [];
     }
-    return charges;
+    const isPenalty = Boolean(penalty);
+    return charges.filter((charge: any) => charge && Boolean(charge.penalty) === isPenalty);
   }
 }
