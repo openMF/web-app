@@ -272,7 +272,15 @@
       "integerQuantity": "Enter a whole number of items",
       "noReadPermission": "You do not have permission to view cash allocations",
       "preview": "Cash allocation preview could not be calculated",
-      "receipt": "Cash allocation receipt could not be retrieved"
+      "receipt": "Cash allocation receipt could not be retrieved",
+      "configuration": "The currency or denomination configuration is invalid. Ask an authorized administrator to review the catalog and currency precision.",
+      "alreadyOpened": "Opening is already completed for this destination, business date and currency. Use an eligible cash transfer for additional funding.",
+      "drawerClosed": "This drawer has been reconciled. Cash allocation is unavailable.",
+      "insufficientSource": "The allocation exceeds the available source cash balance. Preview is unavailable; review the authoritative balance and amount.",
+      "sourceCashier": "Select an eligible funded head cashier as the source.",
+      "cashier": "No eligible cashier assignment is available for this office and business date.",
+      "businessDate": "The business date has changed. Reload the page to retrieve the current allocation context.",
+      "accounting": "Required accounting mappings are missing. Ask an authorized administrator to review the vault, teller cash and opening balance contra mappings."
     },
     "labels": {
       "businessDate": "Business Date",
@@ -319,6 +327,20 @@
     "status": {
       "loading": "Loading cash allocation configuration...",
       "processing": "Processing..."
+    },
+    "guidance": {
+      "opening": "Use this workflow for initial vault and drawer opening. Additional funding for an open drawer requires a supported cash transfer; opening cannot be repeated for the same business date and currency.",
+      "denominations": "{{currency}} has no active denominations. Ask an authorized administrator to configure the denomination catalog. Preview remains unavailable; arbitrary cash values cannot be entered.",
+      "pending": "The transaction outcome is unresolved. Retry the same transaction to recover its result before starting another operation."
+    },
+    "recovery": {
+      "discard": "Discard and start over",
+      "confirmDiscard": "The earlier request may already have posted. Check transaction history or reconcile with an administrator first. Discarding recovery information does not cancel or reverse a transaction. Discard this tab’s recovery information and start over",
+      "stale": "The saved request belongs to a different business date. Retry to recover its result, or reconcile the earlier attempt before discarding it.",
+      "invalid": "Saved cash allocation recovery information is unreadable. Reconcile any earlier attempt before discarding this tab’s recovery information.",
+      "storage": "Cash allocation recovery information could not be accessed. Check session storage and try again.",
+      "scope": "This allocation belongs to a different server, tenant, user or office. Return to the original sign-in scope to recover it.",
+      "changed": "Recovery information or the signed-in scope changed. Reload to recover the current request."
     }
   },
   "catalogUpdates": {

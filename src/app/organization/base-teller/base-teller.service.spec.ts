@@ -12,6 +12,7 @@ import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 import { describe, expect, it, beforeEach, afterEach } from '@jest/globals';
 
+import { HANDLE_HTTP_ERROR_LOCALLY } from 'app/core/http/error-handler.interceptor';
 import { BaseTellerService, CashAllocationContext } from './base-teller.service';
 import { CashierClosingRequest, CashOperationRequest } from './cash-management/cash-management.models';
 
@@ -480,6 +481,7 @@ describe('BaseTellerService', () => {
     );
     expect(contextRequest.request.params.get('officeId')).toBe('1');
     expect(contextRequest.request.params.get('currencyCode')).toBe('CRC');
+    expect(contextRequest.request.context.get(HANDLE_HTTP_ERROR_LOCALLY)).toBe(true);
     contextRequest.flush({ businessDate: '2026-09-26', currencies: [], cashiers: [] });
     expect((await contextPromise).businessDate).toBe('2026-09-26');
 
@@ -496,6 +498,7 @@ describe('BaseTellerService', () => {
     const previewRequest = httpMock.expectOne('/v2/base-teller/cash-allocations/preview');
     expect(previewRequest.request.method).toBe('POST');
     expect(previewRequest.request.body).toEqual(payload);
+    expect(previewRequest.request.context.get(HANDLE_HTTP_ERROR_LOCALLY)).toBe(true);
     previewRequest.flush({ authoritativeTotal: '100.00' });
     expect((await previewPromise).authoritativeTotal).toBe('100.00');
 
@@ -503,18 +506,21 @@ describe('BaseTellerService', () => {
     const createRequest = httpMock.expectOne('/v2/base-teller/cash-allocations');
     expect(createRequest.request.method).toBe('POST');
     expect(createRequest.request.body.idempotencyKey).toBe('stable-key');
+    expect(createRequest.request.context.get(HANDLE_HTTP_ERROR_LOCALLY)).toBe(true);
     createRequest.flush({ id: 77, reference: 'CA-77' });
     expect((await createPromise).id).toBe(77);
 
     const retrievePromise = firstValueFrom(service.getCashAllocation(77));
     const retrieveRequest = httpMock.expectOne('/v2/base-teller/cash-allocations/77');
     expect(retrieveRequest.request.method).toBe('GET');
+    expect(retrieveRequest.request.context.get(HANDLE_HTTP_ERROR_LOCALLY)).toBe(true);
     retrieveRequest.flush({ id: 77, reference: 'CA-77' });
     expect((await retrievePromise).reference).toBe('CA-77');
 
     const reprintPromise = firstValueFrom(service.reprintCashAllocationReceipt(77));
     const reprintRequest = httpMock.expectOne('/v2/base-teller/cash-allocations/77/receipt');
     expect(reprintRequest.request.method).toBe('GET');
+    expect(reprintRequest.request.context.get(HANDLE_HTTP_ERROR_LOCALLY)).toBe(true);
     reprintRequest.flush({ id: 77, reference: 'CA-77' });
     expect((await reprintPromise).reference).toBe('CA-77');
   });

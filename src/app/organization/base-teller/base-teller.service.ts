@@ -8,10 +8,11 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { HANDLE_HTTP_ERROR_LOCALLY } from 'app/core/http/error-handler.interceptor';
 
 import {
   CashHolding,
@@ -1039,26 +1040,37 @@ export class BaseTellerService {
     if (currencyCode) {
       params = params.set('currencyCode', currencyCode);
     }
-    return this.http.get<CashAllocationContext>(`${this.cashAllocationsPath}/context`, { params });
+    return this.http.get<CashAllocationContext>(`${this.cashAllocationsPath}/context`, {
+      params,
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Validates an allocation and returns the backend-authoritative transaction preview. */
   previewCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationPreview> {
-    return this.http.post<CashAllocationPreview>(`${this.cashAllocationsPath}/preview`, payload);
+    return this.http.post<CashAllocationPreview>(`${this.cashAllocationsPath}/preview`, payload, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Finalizes an allocation using the request's backend idempotency key. */
   createCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationReceipt> {
-    return this.http.post<CashAllocationReceipt>(this.cashAllocationsPath, payload);
+    return this.http.post<CashAllocationReceipt>(this.cashAllocationsPath, payload, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Retrieves the immutable completed allocation. */
   getCashAllocation(allocationId: FineractId): Observable<CashAllocationReceipt> {
-    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}`);
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}`, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /** Retrieves the immutable receipt through the separately permissioned reprint endpoint. */
   reprintCashAllocationReceipt(allocationId: FineractId): Observable<CashAllocationReceipt> {
-    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}/receipt`);
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}/receipt`, {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 }
