@@ -12,9 +12,16 @@ concurrency:
 
 jobs:
   jest:
-    name: Unit Tests (Jest)
+    name: Jest (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 20
+
+    strategy:
+      # Let every shard finish so the full set of results is reported.
+      fail-fast: false
+      matrix:
+        # To change the number of shards, edit this list only.
+        shard: [1, 2, 3]
 
     steps:
       - name: Checkout code
@@ -37,12 +44,55 @@ jobs:
         # ngOnDestroy() directly, which never triggers it. Tracked
         # separately; drop continue-on-error once green so this gate blocks.
         continue-on-error: true
-        run: npm run test:ci
+        run: npm run test:ci -- --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: jest-coverage
+          name: jest-coverage-${{ matrix.shard }}
           path: coverage/
           retention-days: 7
+
+  typecheck:
+    name: Type-check specs
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Use Node.js 26
+        uses: actions/setup-node@v6
+        with:
+          node-version: '26.13.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Jest compiles each file on its own (isolatedModules) for speed and
+      # does not report type errors, so the spec files are type-checked here.
+      - name: Type-check spec files
+        run: npm run test:typecheck
+
+  unit-tests:
+    # Single, stable check name that summarises all shards and the type check.
+    name: Unit Tests (Jest)
+    needs: [jest, typecheck]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check results
+        env:
+          JEST_RESULT: ${{ needs.jest.result }}
+          TYPECHECK_RESULT: ${{ needs.typecheck.result }}
+        run: |
+          echo "Jest shards: $JEST_RESULT"
+          echo "Type check:  $TYPECHECK_RESULT"
+          if [ "$JEST_RESULT" != "success" ] || [ "$TYPECHECK_RESULT" != "success" ]; then
+            exit 1
+          fi

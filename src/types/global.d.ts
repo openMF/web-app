@@ -18,18 +18,26 @@ interface Window {
     displayBackEndInfo?: string;
     reportIssueUrl?: string;
     displayTenantSelector?: string;
+    /** Production mode - when true, shows minimal hero with only branding at bottom */
+    productionMode?: string | boolean;
+    enableGlobalDashboard?: string | boolean;
     waitTimeForNotifications?: number;
     waitTimeForCOBCatchUp?: number;
     sessionIdleTimeout?: number;
     mifosInterbankTransfersApiUrl?: string;
     mifosInterbankTransfersApiProvider?: string;
     mifosInterbankTransfersApiVersion?: string;
-    mifosInterbankTransfersEnabled?: boolean;
+    mifosInterbankTransfersEnabled?: string | boolean;
+    minPasswordLength?: number;
+    enableExternalNationalIdSystem?: string | boolean;
+    externalNationalIdSystemUrl?: string;
+    externalNationalIdSystemApiHeader?: string;
+    externalNationalIdSystemApiKey?: string;
+    externalNationalIdRegex?: string;
     mifosRemittanceApiUrl?: string;
     mifosRemittanceApiProvider?: string;
     mifosRemittanceApiVersion?: string;
-    mifosRemittanceEnabled?: boolean;
+    mifosRemittanceEnabled?: string | boolean;
     mifosRemittanceApiKey?: string;
-    minPasswordLength?: number;
   };
 }
