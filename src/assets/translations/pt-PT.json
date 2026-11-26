@@ -7467,7 +7467,7 @@
       "baseTeller": "Caixa base"
     },
     "views": {
-      "closing": "Fechamento de caixa registradora",
+      "closing": "Fecho de caixa",
       "global": "Contagem de caixa global",
       "deposit-in-transit": "Depósito em Trânsito",
       "bank-deposit": "Depósito Bancário",
@@ -7477,14 +7477,14 @@
     "actions": {
       "addDenomination": "Adicionar Denominação",
       "confirmDeposit": "Confirmar depósito",
-      "finalizeClosing": "Finalizar fechamento",
+      "finalizeClosing": "Finalizar fecho",
       "load": "Carregar",
       "printReceipt": "Imprimir recibo",
       "removeDenomination": "Remover Denominação",
       "reprint": "Reimprimir",
       "retry": "Tentar novamente",
       "search": "Procurar",
-      "confirm": "confirme",
+      "confirm": "Confirmar",
       "cancel": "Cancelar"
     },
     "fields": {
@@ -7516,11 +7516,11 @@
       "outflows": "Saídas",
       "physicalAssets": "Ativos Físicos",
       "physicalCash": "Dinheiro Físico",
-      "previousSettlements": "Acordos anteriores",
+      "previousSettlements": "Liquidações anteriores",
       "quantity": "Quantidade",
       "reference": "Referência",
       "search": "Descrição ou referência",
-      "settlementsDeposits": "Liquidações e Depósitos",
+      "settlementsDeposits": "Liquidações e depósitos",
       "status": "Status",
       "teller": "Caixa",
       "toDate": "A data",
@@ -7563,8 +7563,21 @@
       "BANK_DEPOSIT": "Depósito Bancário"
     },
     "closing": {
-      "confirmTitle": "Confirmar o fechamento final da caixa registradora",
-      "confirmText": "Finalizar {{cashier}} para {{date}} em {{currency}}? Esperado: {{expected}}; dinheiro: {{cash}}; cheques: {{checks}}; visualização da diferença: {{difference}}. A autorização é realizada pelo caixa principal cadastrado."
+      "confirmTitle": "Confirmar fecho definitivo de caixa",
+      "confirmText": "Finalizar {{cashier}} para {{date}} em {{currency}}? Esperado: {{expected}}; dinheiro: {{cash}}; cheques: {{checks}}; visualização da diferença: {{difference}}. A autorização é realizada pelo caixa principal cadastrado.",
+      "registerStatus": {
+        "NOT_OPENED": "Por abrir",
+        "OPEN": "Aberta",
+        "COMPLETED": "Fechada",
+        "UNAVAILABLE": "Estado indisponível"
+      },
+      "notOpened": "Esta caixa não foi aberta. Abra a caixa antes de tentar fechá-la.",
+      "closed": "Esta caixa já foi fechada para a data de negócio selecionada.",
+      "contextChanged": "A caixa ou a posição financeira mudou. Reveja o contexto atualizado antes do fecho.",
+      "unresolved": "O resultado do fecho é incerto. Mantenha este pedido inalterado e verifique o estado antes de tentar outro fecho.",
+      "statusUnavailable": "Não foi possível verificar o estado da caixa. Carregue o contexto novamente.",
+      "refreshFailed": "O recibo confirmado foi preservado, mas a atualização do estado falhou. Verifique o estado novamente.",
+      "checkStatus": "Verificar estado do fecho"
     },
     "operation": {
       "confirmText": "Fazer este depósito final para {{cashier}} em {{date}} em {{currency}}? Dinheiro: {{cash}}; cheques: {{checks}}."

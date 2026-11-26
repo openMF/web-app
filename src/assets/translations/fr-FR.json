@@ -7564,7 +7564,20 @@
     },
     "closing": {
       "confirmTitle": "Confirmer la clôture finale de la caisse enregistreuse",
-      "confirmText": "Finaliser {{cashier}} pour {{date}} en {{currency}} ? Attendu : {{expected}} ; espèces : {{cash}} ; chèques : {{checks}} ; aperçu de la différence : {{difference}}. L'autorisation est effectuée par le caissier en chef inscrit."
+      "confirmText": "Finaliser {{cashier}} pour {{date}} en {{currency}} ? Attendu : {{expected}} ; espèces : {{cash}} ; chèques : {{checks}} ; aperçu de la différence : {{difference}}. L'autorisation est effectuée par le caissier en chef inscrit.",
+      "registerStatus": {
+        "NOT_OPENED": "Non ouverte",
+        "OPEN": "Ouverte",
+        "COMPLETED": "Fermée",
+        "UNAVAILABLE": "État indisponible"
+      },
+      "notOpened": "Cette caisse n’a pas été ouverte. Ouvrez-la avant de tenter sa clôture.",
+      "closed": "Cette caisse a déjà été fermée pour la date comptable sélectionnée.",
+      "contextChanged": "La caisse ou la situation financière a changé. Vérifiez le contexte actualisé avant la clôture.",
+      "unresolved": "Le résultat de la clôture est incertain. Conservez cette demande sans modification et vérifiez son état avant une autre clôture.",
+      "statusUnavailable": "L’état de la caisse n’a pas pu être vérifié. Rechargez le contexte.",
+      "refreshFailed": "Le reçu confirmé est conservé, mais l’actualisation de l’état a échoué. Vérifiez à nouveau l’état.",
+      "checkStatus": "Vérifier la clôture"
     },
     "operation": {
       "confirmText": "Publier ce dépôt final pour {{cashier}} le {{date}} en {{currency}} ? Espèces : {{cash}} ; chèques : {{checks}}."

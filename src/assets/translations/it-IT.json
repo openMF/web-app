@@ -7564,7 +7564,20 @@
     },
     "closing": {
       "confirmTitle": "Conferma chiusura definitiva del registratore di cassa",
-      "confirmText": "Finalizzare {{cashier}} per {{date}} in {{currency}}? Previsto: {{expected}}; contanti: {{cash}}; assegni: {{checks}}; anteprima della differenza: {{difference}}. L'autorizzazione viene eseguita dal capo cassiere registrato."
+      "confirmText": "Finalizzare {{cashier}} per {{date}} in {{currency}}? Previsto: {{expected}}; contanti: {{cash}}; assegni: {{checks}}; anteprima della differenza: {{difference}}. L'autorizzazione viene eseguita dal capo cassiere registrato.",
+      "registerStatus": {
+        "NOT_OPENED": "Non aperta",
+        "OPEN": "Aperta",
+        "COMPLETED": "Chiusa",
+        "UNAVAILABLE": "Stato non disponibile"
+      },
+      "notOpened": "Questa cassa non è stata aperta. Aprire la cassa prima di tentare la chiusura.",
+      "closed": "Questa cassa è già stata chiusa per la data operativa selezionata.",
+      "contextChanged": "La cassa o la situazione finanziaria è cambiata. Verificare il contesto aggiornato prima della chiusura.",
+      "unresolved": "L’esito della chiusura è incerto. Conservare questa richiesta senza modifiche e verificarne lo stato prima di un’altra chiusura.",
+      "statusUnavailable": "Impossibile verificare lo stato della cassa. Ricaricare il contesto.",
+      "refreshFailed": "La ricevuta confermata è conservata, ma l’aggiornamento dello stato non è riuscito. Verificare di nuovo lo stato.",
+      "checkStatus": "Verifica stato chiusura"
     },
     "operation": {
       "confirmText": "Inviare questo deposito finale per {{cashier}} il {{date}} in {{currency}}? Contanti: {{cash}}; assegni: {{checks}}."

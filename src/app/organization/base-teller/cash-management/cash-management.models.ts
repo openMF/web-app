@@ -9,6 +9,7 @@
 import { FineractId } from '../base-teller.service';
 
 export type CashManagementStatus = 'OPEN' | 'COMPLETED';
+export type CashierClosingStatus = 'NOT_OPENED' | 'OPEN' | 'COMPLETED';
 export type CashDifferenceType = 'BALANCED' | 'OVERAGE' | 'SHORTAGE';
 export type CashOperationType = 'DEPOSIT_IN_TRANSIT' | 'BANK_DEPOSIT';
 
@@ -41,6 +42,9 @@ export interface CashierClosingContext {
   expectedAmount: number;
   eligibleChecks: CashierCheck[];
   status: CashManagementStatus;
+  /** Authoritative closing-only eligibility; absent on older servers, which fail closed. */
+  registerStatus?: CashierClosingStatus;
+  closingId?: FineractId | null;
 }
 
 export interface CashierClosingRequest {

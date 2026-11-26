@@ -7493,7 +7493,7 @@
       "amount": "Summa",
       "authorization": "Autorizācija",
       "authorizedBy": "Autorizēja",
-      "authorizedOn": "Autorizēts Ieslēgts",
+      "authorizedOn": "Autorizācijas datums un laiks",
       "businessDate": "Darba datums",
       "cashier": "Kasieris",
       "cashierId": "Kases ID",
@@ -7502,7 +7502,7 @@
       "completedOn": "Pabeigts",
       "currency": "Valūta",
       "currentBalance": "Pašreizējā bilance",
-      "denomination": "Denominācija",
+      "denomination": "Nominālvērtība",
       "description": "Apraksts",
       "difference": "Atšķirība",
       "expectedBalance": "Paredzamais atlikums",
@@ -7564,7 +7564,20 @@
     },
     "closing": {
       "confirmTitle": "Apstipriniet kases aparāta galīgo slēgšanu",
-      "confirmText": "Vai pabeigt {{cashier}} uz {{date}} šādā valūtā: {{currency}}? Paredzētais: {{expected}}; skaidra nauda: {{cash}}; čeki: {{checks}}; atšķirību priekšskatījums: {{difference}}. Autorizāciju veic galvenais kasieris, kas ir pierakstījies."
+      "confirmText": "Vai pabeigt {{cashier}} uz {{date}} šādā valūtā: {{currency}}? Paredzētais: {{expected}}; skaidra nauda: {{cash}}; čeki: {{checks}}; atšķirību priekšskatījums: {{difference}}. Autorizāciju veic galvenais kasieris, kas ir pierakstījies.",
+      "registerStatus": {
+        "NOT_OPENED": "Nav atvērta",
+        "OPEN": "Atvērta",
+        "COMPLETED": "Slēgta",
+        "UNAVAILABLE": "Statuss nav pieejams"
+      },
+      "notOpened": "Šī kase nav atvērta. Pirms slēgšanas atveriet kasi.",
+      "closed": "Šī kase jau ir slēgta izvēlētajā darījumu datumā.",
+      "contextChanged": "Kase vai finanšu stāvoklis ir mainījies. Pirms slēgšanas pārskatiet atjauninātos datus.",
+      "unresolved": "Slēgšanas rezultāts nav apstiprināts. Nemainiet šo pieprasījumu un pirms citas slēgšanas pārbaudiet tā statusu.",
+      "statusUnavailable": "Kases statusu nevarēja pārbaudīt. Ielādējiet datus vēlreiz.",
+      "refreshFailed": "Apstiprinātā kvīts ir saglabāta, bet statusa atjaunināšana neizdevās. Pārbaudiet statusu vēlreiz.",
+      "checkStatus": "Pārbaudīt slēgšanas statusu"
     },
     "operation": {
       "confirmText": "Pārskaitīt šo pēdējo depozītu par {{cashier}} šādā datumā: {{date}} šādā valūtā: {{currency}}? Skaidra nauda: {{cash}}; čeki: {{checks}}."

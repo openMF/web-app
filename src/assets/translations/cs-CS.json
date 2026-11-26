@@ -7499,7 +7499,7 @@
       "businessDate": "Obchodní datum",
       "cashier": "Pokladní",
       "cashierId": "ID pokladníka",
-      "checks": "Kontroly",
+      "checks": "Šeky",
       "closingStatus": "Stav uzavření",
       "completedOn": "Dokončeno dne",
       "currency": "Měna",
@@ -7552,7 +7552,7 @@
       "settlementCompleted": "Vyrovnání dokončeno"
     },
     "status": {
-      "OPEN": "Otevřít",
+      "OPEN": "Otevřeno",
       "COMPLETED": "Dokončeno"
     },
     "differenceType": {
@@ -7566,10 +7566,23 @@
     },
     "closing": {
       "confirmTitle": "Potvrďte konečné uzavření pokladny",
-      "confirmText": "Dokončit {{cashier}} na {{date}} v {{currency}}? Očekávané: {{expected}}; hotovost: {{cash}}; kontroly: {{checks}}; náhled rozdílu: {{difference}}. Autorizaci provádí přihlášený hlavní pokladník."
+      "confirmText": "Dokončit {{cashier}} na {{date}} v {{currency}}? Očekávané: {{expected}}; hotovost: {{cash}}; šeky: {{checks}}; náhled rozdílu: {{difference}}. Autorizaci provádí přihlášený hlavní pokladník.",
+      "registerStatus": {
+        "NOT_OPENED": "Neotevřena",
+        "OPEN": "Otevřena",
+        "COMPLETED": "Uzavřena",
+        "UNAVAILABLE": "Stav není dostupný"
+      },
+      "notOpened": "Tato pokladna nebyla otevřena. Před uzavřením ji otevřete.",
+      "closed": "Tato pokladna již byla pro vybraný obchodní den uzavřena.",
+      "contextChanged": "Pokladna nebo finanční stav se změnily. Před uzavřením zkontrolujte aktualizované údaje.",
+      "unresolved": "Výsledek uzavření není potvrzen. Tento požadavek neměňte a před dalším uzavřením ověřte jeho stav.",
+      "statusUnavailable": "Stav pokladny nelze ověřit. Načtěte údaje znovu.",
+      "refreshFailed": "Potvrzený doklad je zachován, ale aktualizace stavu selhala. Znovu ověřte stav.",
+      "checkStatus": "Ověřit stav uzavření"
     },
     "operation": {
-      "confirmText": "Odeslat tento konečný vklad pro {{cashier}} dne {{date}} v {{currency}}? Hotovost: {{cash}}; kontroly: {{checks}}."
+      "confirmText": "Odeslat tento konečný vklad pro {{cashier}} dne {{date}} v {{currency}}? Hotovost: {{cash}}; šeky: {{checks}}."
     },
     "hints": {
       "backendDenominations": "Zadejte odesílané nominální hodnoty. Plugin Savings je ověří a vypočítá směrodatný součet.",

@@ -7506,7 +7506,20 @@
     },
     "closing": {
       "confirmTitle": "Kassanın yekun bağlanmasını təsdiqlə",
-      "confirmText": "{{cashier}} kassirini {{date}} tarixində {{currency}} valyutası üzrə bağlamaq istəyirsiniz? Gözlənilən: {{expected}}; nağd pul: {{cash}}; çeklər: {{checks}}; fərqə baxış: {{difference}}. Təsdiqləmə daxil olmuş baş kassir tərəfindən həyata keçirilir."
+      "confirmText": "{{cashier}} kassirini {{date}} tarixində {{currency}} valyutası üzrə bağlamaq istəyirsiniz? Gözlənilən: {{expected}}; nağd pul: {{cash}}; çeklər: {{checks}}; fərqə baxış: {{difference}}. Təsdiqləmə daxil olmuş baş kassir tərəfindən həyata keçirilir.",
+      "registerStatus": {
+        "NOT_OPENED": "Açılmayıb",
+        "OPEN": "Açıq",
+        "COMPLETED": "Bağlı",
+        "UNAVAILABLE": "Status əlçatan deyil"
+      },
+      "notOpened": "Bu kassa açılmayıb. Bağlamağa cəhd etməzdən əvvəl kassanın açılışını yerinə yetirin.",
+      "closed": "Bu kassa seçilmiş iş tarixi üçün artıq bağlanıb.",
+      "contextChanged": "Kassa və ya maliyyə vəziyyəti dəyişib. Bağlamazdan əvvəl yenilənmiş məlumatları yoxlayın.",
+      "unresolved": "Bağlanmanın nəticəsi məlum deyil. Bu sorğunu dəyişməyin və başqa bağlanmadan əvvəl statusunu yoxlayın.",
+      "statusUnavailable": "Kassanın statusu yoxlanıla bilmədi. Məlumatları yenidən yükləyin.",
+      "refreshFailed": "Təsdiqlənmiş qəbz saxlanılıb, lakin status yenilənmədi. Statusu yenidən yoxlayın.",
+      "checkStatus": "Bağlanma statusunu yoxla"
     },
     "operation": {
       "confirmText": "{{cashier}} kassiri üçün {{date}} tarixində {{currency}} valyutası üzrə bu yekun depozit yerləşdirilsin? Nağd pul: {{cash}}; çeklər: {{checks}}."
