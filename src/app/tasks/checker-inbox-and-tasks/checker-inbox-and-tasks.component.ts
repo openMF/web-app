@@ -57,6 +57,8 @@ export class CheckerInboxAndTasksComponent {
   checkerInboxActive = false;
   navigationOpen = false;
   creditCount: number | null = null;
+  massRejectionActive = false;
+  massRejectionCount: number | null = null;
   clientApprovalCount: number | null = null;
   clientApprovalActive = false;
   readonly queueGroups = [
@@ -99,11 +101,14 @@ export class CheckerInboxAndTasksComponent {
 
   onActivate(component: {
     checkerInboxWorkspace?: boolean;
+    isMassRejection?: boolean;
     queueCountChange?: OutputRef<number | null>;
     clientApprovalCountChange?: OutputRef<number | null>;
     loanApprovalCountChange?: OutputRef<number | null>;
   }): void {
     this.countSubscription?.unsubscribe();
+    this.massRejectionActive = !!component.isMassRejection;
+    this.massRejectionCount = null;
     this.checkerInboxActive = !!component.checkerInboxWorkspace;
     this.clientApprovalActive = !!component.clientApprovalCountChange;
     this.loanApprovalActive = !!component.loanApprovalCountChange;
@@ -118,6 +123,7 @@ export class CheckerInboxAndTasksComponent {
     )?.subscribe((count) => {
       if (this.loanApprovalActive) this.loanApprovalCount = count;
       else if (this.clientApprovalActive) this.clientApprovalCount = count;
+      else if (this.massRejectionActive) this.massRejectionCount = count;
       else this.creditCount = count;
       this.changeDetectorRef.markForCheck();
     });

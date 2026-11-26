@@ -11,10 +11,44 @@
     <mat-card-content>
       <h1>{{ 'web1232.views.' + view | translate }}</h1>
 
+      @if (view === 'closing') {
+        <div
+          class="register-status"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          [attr.data-status]="registerStatus"
+          [attr.aria-busy]="isLoading || isSubmitting"
+        >
+          <mat-icon aria-hidden="true">{{
+            registerStatus === 'OPEN' || registerStatus === 'COMPLETED' ? 'check_circle' : 'info'
+          }}</mat-icon>
+          <strong>{{ registerStatusLabels[registerStatus] | translate }}</strong>
+        </div>
+        @if (registerStatus === 'NOT_OPENED') {
+          <div class="message warning">{{ 'web1232.closing.notOpened' | translate }}</div>
+        }
+        @if (registerStatus === 'COMPLETED') {
+          <div class="message success" role="status">{{ 'web1232.closing.closed' | translate }}</div>
+        }
+        @if (closingUnresolved) {
+          <div class="message warning" role="alert">
+            {{ 'web1232.closing.unresolved' | translate }}
+            <button mat-stroked-button type="button" (click)="loadContext(true)" [disabled]="isLoading">
+              {{ 'web1232.closing.checkStatus' | translate }}
+            </button>
+          </div>
+        }
+      }
+
       @if (errorMessage) {
         <div class="message error" role="alert">
           {{ errorMessage | translate }}
-          <button mat-button type="button" (click)="retry()">{{ 'web1232.actions.retry' | translate }}</button>
+          @if (hasRetryAction) {
+            <button mat-button type="button" (click)="retry()" [disabled]="isSubmitting || isLoading || isConfirming">
+              {{ 'web1232.actions.retry' | translate }}
+            </button>
+          }
         </div>
       }
 
@@ -114,7 +148,12 @@
               </div>
               <div>
                 <dt>{{ 'web1232.fields.closingStatus' | translate }}</dt>
-                <dd>{{ statusKey(closingContext.status) | translate }}</dd>
+                <dd>
+                  {{
+                    (view === 'closing' ? registerStatusLabels[registerStatus] : statusKey(closingContext.status))
+                      | translate
+                  }}
+                </dd>
               </div>
             </dl>
           </section>
@@ -123,7 +162,7 @@
             <section>
               <div class="section-heading">
                 <h2>{{ 'web1232.sections.denominations' | translate }}</h2>
-                <button mat-stroked-button type="button" (click)="addDenomination()">
+                <button mat-stroked-button type="button" (click)="addDenomination()" [disabled]="closingInputsDisabled">
                   <mat-icon>add</mat-icon>{{ 'web1232.actions.addDenomination' | translate }}
                 </button>
               </div>
@@ -139,17 +178,33 @@
                   <div [formGroupName]="i" class="denomination-row">
                     <mat-form-field>
                       <mat-label>{{ 'web1232.fields.denomination' | translate }}</mat-label>
-                      <input matInput type="number" min="0.000001" formControlName="value" required />
+                      <input
+                        matInput
+                        type="number"
+                        min="0.000001"
+                        formControlName="value"
+                        [readonly]="closingInputsDisabled"
+                        required
+                      />
                     </mat-form-field>
                     <mat-form-field>
                       <mat-label>{{ 'web1232.fields.quantity' | translate }}</mat-label>
-                      <input matInput type="number" min="0" step="1" formControlName="quantity" required />
+                      <input
+                        matInput
+                        type="number"
+                        min="0"
+                        step="1"
+                        formControlName="quantity"
+                        [readonly]="closingInputsDisabled"
+                        required
+                      />
                     </mat-form-field>
                     <strong>{{ lineTotal(denomination) | number }} {{ closingContext.currencyCode }}</strong>
                     <button
                       mat-icon-button
                       type="button"
                       (click)="removeDenomination(i)"
+                      [disabled]="closingInputsDisabled"
                       [attr.aria-label]="'web1232.actions.removeDenomination' | translate"
                     >
                       <mat-icon>delete</mat-icon>
@@ -169,6 +224,7 @@
                   @for (check of closingContext.eligibleChecks; track check.id) {
                     <mat-checkbox
                       [checked]="isCheckSelected(check.id)"
+                      [disabled]="closingInputsDisabled"
                       (change)="toggleCheck(check.id, $event.checked)"
                     >
                       {{ check.checkNumber }} · {{ check.bank }} · {{ check.amount | number }}
@@ -212,7 +268,7 @@
               @if (view === 'closing' && closingContext.status === 'COMPLETED') {
                 <div class="message warning">{{ 'web1232.states.alreadyCompleted' | translate }}</div>
               }
-              @if (view === 'closing' && !canFinalizeClosing) {
+              @if (view === 'closing' && !hasClosingPermission) {
                 <div class="message warning">{{ 'web1232.states.authorizationRequired' | translate }}</div>
               }
               <button
@@ -222,6 +278,8 @@
                 (click)="reviewAndSubmit()"
                 [disabled]="
                   isSubmitting ||
+                  isConfirming ||
+                  assetForm.invalid ||
                   closingContext.status === 'COMPLETED' ||
                   (view === 'closing' && !canFinalizeClosing) ||
                   (isOperation && !canCreateDeposit)
@@ -500,7 +558,12 @@
               <tr mat-row *matRowDef="let row; columns: historyColumns"></tr>
             </table>
           </div>
-          <mat-paginator [length]="historyTotal" [pageSize]="pageSize" (page)="loadHistory($event)"></mat-paginator>
+          <mat-paginator
+            [pageIndex]="historyOffset / pageSize"
+            [length]="historyTotal"
+            [pageSize]="pageSize"
+            (page)="loadHistory($event)"
+          ></mat-paginator>
         } @else if (hasLoaded) {
           <div class="message empty-state">{{ 'web1232.states.noTransactions' | translate }}</div>
         }

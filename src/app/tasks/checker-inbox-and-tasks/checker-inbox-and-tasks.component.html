@@ -26,13 +26,15 @@
   <header class="tasks-heading">
     <p>
       {{
-        (loanApprovalActive
-          ? loanApprovalDescription
-          : clientApprovalActive
-            ? clientApprovalDescription
-            : checkerInboxActive
-              ? 'checkerInbox.review.description'
-              : 'credits.description'
+        (massRejectionActive
+          ? 'massRejection.description'
+          : loanApprovalActive
+            ? loanApprovalDescription
+            : clientApprovalActive
+              ? clientApprovalDescription
+              : checkerInboxActive
+                ? 'checkerInbox.review.description'
+                : 'credits.description'
         ) | translate
       }}
     </p>
@@ -81,6 +83,9 @@
                 }
                 @if (queue.path === 'client-approval' && clientApprovalCount !== null) {
                   <span class="queue-count">{{ clientApprovalCount }}</span>
+                }
+                @if (queue.path === 'mass-rejection' && massRejectionCount !== null) {
+                  <span class="queue-count">{{ massRejectionCount }}</span>
                 }
                 @if (queue.path === 'credit' && creditCount !== null) {
                   <span class="queue-count">{{ creditCount }}</span>
