@@ -39,6 +39,24 @@ describe('LoansService - Working Capital transaction template', () => {
 
   afterEach(() => httpMock.verify());
 
+  it.each([
+    false,
+    true
+  ])('keeps rejection review amounts exact (working capital=%s)', (workingCapital) => {
+    const read = workingCapital
+      ? service.getWorkingCapitalLoanDetails('42', true)
+      : service.getLoanAccountDetails('42', true);
+    let result: any;
+    read.subscribe((data) => (result = data));
+    const req = httpMock.expectOne(
+      (request) => request.url === (workingCapital ? '/working-capital-loans/42' : '/loans/42')
+    );
+    expect(req.request.responseType).toBe('text');
+    req.flush('{"id":42,"principal":1234567890123.45,"proposedPrincipal":90071992547409.91}');
+    expect(result.principal).toBe('1234567890123.45');
+    expect(result.proposedPrincipal).toBe('90071992547409.91');
+  });
+
   it('gets the typed credit origination board from the WEB-1059 endpoint', () => {
     const board: CreditOriginationBoard = {
       creditApplicationId: 87,

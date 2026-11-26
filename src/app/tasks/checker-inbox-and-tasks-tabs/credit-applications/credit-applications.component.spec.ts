@@ -297,62 +297,59 @@ describe('CreditApplicationsComponent', () => {
     expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
   });
 
-  it('renders only WEB-1063 filters and actions on the Mass Rejection route', () => {
+  it('renders streamlined Mass Rejection filters and the persistent panel', () => {
     TestBed.resetTestingModule();
     createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
-    const form = fixture.nativeElement.querySelector('form');
-    const controls = Array.from(form.querySelectorAll('[formControlName]')).map((control: Element) =>
-      control.getAttribute('formControlName')
-    );
-
-    expect(controls).toEqual([
-      'submittedFrom',
-      'submittedTo',
-      'productId',
-      'status'
-    ]);
     expect(Object.keys(component.creditApplicationsForm.controls).sort()).toEqual(
       [
         'submittedFrom',
         'submittedTo',
-        'status',
+        'pageSearch',
+        'clientId',
         'productId'
       ].sort()
     );
-    expect(form.textContent).toContain('labels.buttons.Advanced Search');
-    expect(form.textContent).not.toContain('labels.inputs.Customer Type');
-    expect(form.textContent).not.toContain('labels.inputs.Municipality');
-    expect(form.textContent).not.toContain('labels.inputs.Amount Range From');
-    expect(form.textContent).not.toContain('labels.inputs.Amount Range To');
-    component.toggleSelection(page.pageItems[0], true);
-    fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('labels.buttons.Reject Selected');
-    expect(component.displayedColumns[0]).toBe('select');
+    expect(fixture.nativeElement.querySelector('.rejection-panel')).toBeTruthy();
+    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Advanced Search');
+    expect(component.displayedColumns).toEqual([
+      'select',
+      'clientName',
+      'accountNo',
+      'amount',
+      'submittedOnDate',
+      'status'
+    ]);
+    expect(component.rejectableOnly).toBe(false);
   });
 
-  it('submits only the Mass Rejection filters plus server paging and sorting', () => {
+  it('submits date/product filters with server paging and pending-only filtering when toggled', () => {
     TestBed.resetTestingModule();
     createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
     tasksService.getCreditApplications.mockClear();
     component.creditApplicationsForm.patchValue({
       submittedFrom: new Date(2026, 0, 1),
       submittedTo: new Date(2026, 0, 31),
-      status: 100,
       productId: 10
     });
-
-    component.applyFilters();
-
-    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
-      submittedFrom: '2026-01-01',
-      submittedTo: '2026-01-31',
-      status: 100,
-      productId: 10,
-      offset: 0,
-      limit: 10,
-      orderBy: 'submittedOnDate',
-      sortOrder: 'DESC'
-    });
+    component.toggleRejectableOnly(true);
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith(
+      {
+        submittedFrom: '2026-01-01',
+        submittedTo: '2026-01-31',
+        status: 100,
+        productId: 10,
+        offset: 0,
+        limit: 10,
+        orderBy: 'submittedOnDate',
+        sortOrder: 'DESC'
+      },
+      true
+    );
+    component.toggleRejectableOnly(false);
+    expect(tasksService.getCreditApplications).toHaveBeenLastCalledWith(
+      expect.not.objectContaining({ status: 100 }),
+      true
+    );
   });
 
   it('uses statuses returned by the authoritative application search on Mass Rejection', () => {
@@ -1285,5 +1282,347 @@ describe('CreditApplicationsComponent', () => {
     expect(component.rejectionResultParams).toEqual({});
     response.next({ resourceId: 42 });
     response.complete();
+  });
+  describe('WEB-1476 inline rejection', () => {
+    let current: any[];
+    let savedNotes: Map<string, string>;
+    function mass(rows: any[] = page.pageItems) {
+      TestBed.resetTestingModule();
+      const storage = new Map<string, string>();
+      (localStorage.getItem as jest.Mock).mockImplementation((key) => storage.get(key) ?? null);
+      (localStorage.setItem as jest.Mock).mockImplementation((key, value) => storage.set(key, value));
+      (localStorage.removeItem as jest.Mock).mockImplementation((key) => storage.delete(key));
+      (localStorage.clear as jest.Mock).mockImplementation(() => storage.clear());
+      localStorage.clear();
+      current = rows.map((row) => ({ ...row, amount: String(row.amount) }));
+      savedNotes = new Map();
+      createComponent(
+        (params) => {
+          const filtered = current.filter((row) => !params.status || row.status.id === params.status);
+          return of({
+            totalFilteredRecords: filtered.length,
+            pageItems: filtered.slice(params.offset, params.offset + params.limit)
+          });
+        },
+        ['REJECT_LOAN'],
+        'mass-rejection'
+      );
+      const detail = (id: string) => {
+        const row = current.find((item) => String(item.loanId) === String(id));
+        return of({
+          id: row.loanId,
+          loanProductId: row.productId,
+          proposedPrincipal: row.amount,
+          currency: { code: row.currencyCode, decimalPlaces: row.currencyCode === 'JPY' ? 0 : 2 },
+          accountNo: row.accountNo,
+          status: row.status,
+          timeline: { submittedOnDate: row.submittedOnDate }
+        });
+      };
+      loansService.getLoanAccountDetails = jest.fn(detail);
+      loansService.getWorkingCapitalLoanDetails = jest.fn(detail);
+      loansService.getLoanNotes = jest.fn((id) => of([{ note: savedNotes.get(String(id)) }]));
+      const command = (id: any, _operation: any, payload: any) => {
+        current.find((row) => String(row.loanId) === String(id)).status = { id: 500 };
+        savedNotes.set(String(id), payload.note);
+        return of({ resourceId: id });
+      };
+      loansService.loanActionButtons.mockImplementation(command);
+      loansService.applyWorkingCapitalLoanAccountCommand.mockImplementation(command);
+      component.rejectionForm.patchValue({ reason: 'documentation' });
+    }
+    afterEach(() => localStorage.clear());
+
+    it('excludes all nonpending, unsupported and unknown rows from Select All and explains disabled rows', () => {
+      mass(
+        [
+          100,
+          200,
+          300,
+          500,
+          999
+        ]
+          .map((status, index) => ({ ...page.pageItems[0], loanId: index + 1, status: { id: status } }))
+          .concat([
+            { ...page.pageItems[0], loanId: 6, productType: 'savings' }
+          ])
+      );
+      component.toggleVisibleSelection(true);
+      expect([...component.selectedApplicationIds]).toEqual([1]);
+      expect(current.slice(1, 4).map((row) => component.disabledReason(row))).toEqual([
+        'massRejection.approved',
+        'massRejection.active',
+        'massRejection.rejected'
+      ]);
+      expect(component.rejectableCount).toBe(1);
+    });
+
+    it('filters out unsupported pending products without inventing their eligibility', () => {
+      mass([
+        { ...page.pageItems[0] },
+        { ...page.pageItems[0], loanId: 43, productType: 'unknown' }
+      ]);
+      component.toggleRejectableOnly(true);
+      expect(component.dataSource.data.map((row) => row.loanId)).toEqual([42]);
+      expect(component.totalFilteredRecords).toBe(2);
+      expect(component.rejectableCount).toBe(1);
+      expect(component.scopeTotal).toBe(2);
+    });
+
+    it('keeps an incomplete eligible count unknown and never requests more than 200 records', () => {
+      mass();
+      tasksService.getCreditApplications.mockReturnValue(of({ totalFilteredRecords: 201, pageItems: current }));
+      component.retryLoad();
+      expect(component.rejectableCount).toBeNull();
+      expect(tasksService.getCreditApplications.mock.calls.every(([params]) => params.limit <= 200)).toBe(true);
+    });
+
+    it('updates selection, table state and exact totals immediately on removal, keeping currencies separate', () => {
+      mass([
+        { ...page.pageItems[0], amount: '0.10' },
+        { ...page.pageItems[0], loanId: 43, amount: '0.20' },
+        { ...page.pageItems[0], loanId: 44, currencyCode: 'JPY', amount: '123' }
+      ]);
+      component.currencyOptions.push({ code: 'JPY', name: 'Yen', decimalPlaces: 0 });
+      component.toggleVisibleSelection(true);
+      expect(component.selectedTotals).toEqual([
+        { code: 'USD', digits: 2, amount: '0.30' },
+        { code: 'JPY', digits: 0, amount: '123' }
+      ]);
+      component.removeSelected(current[0]);
+      expect(component.selectedApplicationIds.size).toBe(2);
+      expect(component.isSelected(current[0])).toBe(false);
+      expect(component.selectedTotals![0].amount).toBe('0.20');
+    });
+
+    it('requires a reason, accepts an optional note, validates combined length and never silently truncates', () => {
+      mass();
+      component.toggleVisibleSelection(true);
+      expect(component.canRejectSelection).toBe(true);
+      component.rejectionForm.patchValue({ reason: '' });
+      expect(component.canRejectSelection).toBe(false);
+      component.rejectionForm.patchValue({ reason: 'custom', customReason: '  ' });
+      expect(component.canRejectSelection).toBe(false);
+      component.rejectionForm.patchValue({ customReason: 'Custom decision', note: 'x'.repeat(1000) });
+      expect(component.rejectionNote.length).toBeGreaterThan(1000);
+      expect(component.canRejectSelection).toBe(false);
+      expect(component.rejectionForm.controls.note.value).toHaveLength(1000);
+      component.rejectionForm.patchValue({ note: '' });
+      expect(component.canRejectSelection).toBe(true);
+      component.rejectionForm.patchValue({ customReason: 'x'.repeat(1001) });
+      expect(component.canRejectSelection).toBe(false);
+      component.rejectionForm.patchValue({ reason: 'documentation' });
+      expect(component.canRejectSelection).toBe(true);
+      expect(component.rejectionForm.controls.customReason.value).toHaveLength(1001);
+    });
+
+    it('defaults to business date and rejects invalid, future, missing and pre-submission dates', () => {
+      mass();
+      component.toggleVisibleSelection(true);
+      expect(component.rejectionForm.controls.rejectedOnDate.value).toEqual(new Date(2026, 8, 8));
+      for (const date of [
+        null,
+        new Date('invalid'),
+        new Date(2027, 0, 1),
+        new Date(2025, 0, 1)
+      ]) {
+        component.rejectionForm.patchValue({ rejectedOnDate: date });
+        expect(component.canRejectSelection).toBe(false);
+      }
+      component.rejectionForm.patchValue({ rejectedOnDate: new Date(2026, 8, 8) });
+      expect(component.canRejectSelection).toBe(true);
+    });
+
+    it('sends no commands before confirmation, freezes the reviewed data, and preserves selection on cancel', () => {
+      mass();
+      component.toggleVisibleSelection(true);
+      const confirmation = new Subject<any>();
+      dialog.open.mockReturnValue({ afterClosed: () => confirmation } as any);
+      component.massReject();
+      expect(component.rejectionForm.disabled).toBe(true);
+      expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+      component.removeSelected(current[0]);
+      expect(component.selectedApplicationIds.size).toBe(1);
+      confirmation.next({ confirm: false });
+      expect(component.rejectionForm.enabled).toBe(true);
+      expect(component.selectedApplicationIds.size).toBe(1);
+      expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+    });
+
+    it('persists reason and optional note using only supported fields and verifies them by readback', () => {
+      mass();
+      component.toggleVisibleSelection(true);
+      component.rejectionForm.patchValue({ note: 'Missing signed authorization' });
+      const expectedNote = component.rejectionNote;
+      component.massReject();
+      expect(loansService.loanActionButtons).toHaveBeenCalledWith(42, 'reject', {
+        rejectedOnDate: '2026-09-08',
+        note: expectedNote,
+        dateFormat: 'dd MMMM yyyy',
+        locale: 'en'
+      });
+      expect(savedNotes.get('42')).toBe(expectedNote);
+      expect(loansService.getLoanNotes).toHaveBeenCalledWith('42');
+      expect(component.batchOutcomes[0].outcome).toBe('succeeded');
+      expect(component.selectedApplicationIds.size).toBe(0);
+      expect(component.rejectableCount).toBe(0);
+    });
+
+    it('uses working-capital detail and command paths and reconciles the resulting status', () => {
+      mass([{ ...page.pageItems[0], productType: 'working-capital' }]);
+      component.toggleVisibleSelection(true);
+      component.massReject();
+      expect(loansService.applyWorkingCapitalLoanAccountCommand).toHaveBeenCalledTimes(1);
+      expect(loansService.getWorkingCapitalLoanDetails).toHaveBeenCalledTimes(2);
+      expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+      expect(component.batchOutcomes[0].outcome).toBe('succeeded');
+    });
+
+    it.each([
+      { loanProductId: 999 },
+      { proposedPrincipal: '1200.01' },
+      { currency: { code: 'MXN', decimalPlaces: 2 } }
+    ])('blocks changed financial review data before any write: %s', (patch) => {
+      mass();
+      component.toggleVisibleSelection(true);
+      loansService.getLoanAccountDetails.mockReturnValue(
+        of({
+          id: 42,
+          accountNo: 'LN-42',
+          status: { id: 100 },
+          loanProductId: 10,
+          proposedPrincipal: '1200',
+          currency: { code: 'USD', decimalPlaces: 2 },
+          timeline: { submittedOnDate: page.pageItems[0].submittedOnDate },
+          ...patch
+        })
+      );
+      component.massReject();
+      expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+      expect(component.batchOutcomes[0]).toMatchObject({ outcome: 'failed', reason: 'massRejection.changed' });
+    });
+
+    it('keeps selection and snapshotted command routing fixed when product metadata arrives during confirmation', () => {
+      const row: any = { ...page.pageItems[0] };
+      delete row.productType;
+      mass([row]);
+      component.toggleVisibleSelection(true);
+      const confirmation = new Subject<any>();
+      dialog.open.mockReturnValue({ afterClosed: () => confirmation } as any);
+      component.massReject();
+      const products = new Subject<any>();
+      productsService.getLoanProductsBasicDetails.mockReturnValue(products);
+      (component as any).loadFilterOptions();
+      products.next([{ id: 10, name: 'Term Loan', productType: 'working-capital' }]);
+      products.complete();
+      expect(component.selectedApplicationIds.size).toBe(1);
+      confirmation.next({ confirm: true });
+      expect(loansService.loanActionButtons).toHaveBeenCalledTimes(1);
+      expect(loansService.applyWorkingCapitalLoanAccountCommand).not.toHaveBeenCalled();
+    });
+
+    it('keeps the existing concurrency bound of three rejection requests', () => {
+      mass(Array.from({ length: 5 }, (_, index) => ({ ...page.pageItems[0], loanId: 42 + index })));
+      const responses = Array.from({ length: 5 }, () => new Subject<any>());
+      loansService.loanActionButtons.mockImplementation((id: any) => responses[id - 42]);
+      component.toggleVisibleSelection(true);
+      component.massReject();
+      expect(loansService.loanActionButtons).toHaveBeenCalledTimes(3);
+      responses[0].error({ status: 400 });
+      expect(loansService.loanActionButtons).toHaveBeenCalledTimes(4);
+      responses[1].error({ status: 400 });
+      expect(loansService.loanActionButtons).toHaveBeenCalledTimes(5);
+      responses.slice(2).forEach((response) => response.error({ status: 400 }));
+      expect(component.rejecting).toBe(false);
+      expect(component.batchOutcomes).toHaveLength(5);
+    });
+
+    it('prevents stale status or permission changes from sending rejection commands', () => {
+      mass();
+      component.toggleVisibleSelection(true);
+      loansService.getLoanAccountDetails.mockReturnValue(of({ id: 42, accountNo: 'LN-42', status: { id: 200 } }));
+      component.massReject();
+      expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+      expect(component.batchOutcomes[0].outcome).toBe('failed');
+      component.toggleVisibleSelection(true);
+      authenticationService.getCredentials.mockReturnValue({ permissions: ['APPROVE_LOAN'] } as any);
+      expect(component.canSelect(current[0])).toBe(false);
+      component.massReject();
+      expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+    });
+
+    it('prevents duplicate submissions and navigation-driven selection changes while processing', () => {
+      mass();
+      component.toggleVisibleSelection(true);
+      const response = new Subject<any>();
+      loansService.loanActionButtons.mockReturnValue(response);
+      component.massReject();
+      component.massReject();
+      component.clearFilters();
+      expect(loansService.loanActionButtons).toHaveBeenCalledTimes(1);
+      expect(component.rejecting).toBe(true);
+      expect(component.rejectionForm.disabled).toBe(true);
+      response.error({ status: 0 });
+      expect(component.batchOutcomes[0].outcome).toBe('uncertain');
+      expect(component.canSelect(current[0])).toBe(false);
+    });
+
+    it('distinguishes partial failure, network uncertainty, queued commands and missing note readback', () => {
+      mass(
+        [
+          0,
+          1,
+          2,
+          3,
+          4
+        ].map((index) => ({ ...page.pageItems[0], loanId: 42 + index }))
+      );
+      const realCommand = loansService.loanActionButtons.getMockImplementation()!;
+      loansService.loanActionButtons.mockImplementation((id: any, op: any, payload: any) =>
+        id === 43
+          ? throwError(() => ({ status: 400 }))
+          : id === 44
+            ? throwError(() => ({ status: 503 }))
+            : id === 45
+              ? of({ commandId: 3 })
+              : realCommand(id, op, payload)
+      );
+      loansService.getLoanNotes.mockImplementation((id) =>
+        of([{ note: id === '46' ? 'missing' : savedNotes.get(id) }])
+      );
+      component.toggleVisibleSelection(true);
+      component.massReject();
+      expect(component.batchOutcomes.map((row) => row.outcome)).toEqual([
+        'succeeded',
+        'failed',
+        'uncertain',
+        'queued',
+        'uncertain'
+      ]);
+      expect(component.rejectionResultMessage).toBe('credits.uncertainResult');
+      expect(component.canSelect(current[1])).toBe(true);
+      expect(component.canSelect(current[2])).toBe(false);
+      expect(component.canSelect(current[3])).toBe(false);
+    });
+
+    it('treats readback errors after accepted commands as uncertain, including 403 responses', () => {
+      mass();
+      component.toggleVisibleSelection(true);
+      loansService.getLoanNotes.mockReturnValue(throwError(() => ({ status: 403 })));
+      component.massReject();
+      expect(component.batchOutcomes[0].outcome).toBe('uncertain');
+    });
+
+    it('debounces page search, cancels stale client lookups and clears incompatible selection', fakeAsync(() => {
+      mass();
+      component.toggleVisibleSelection(true);
+      component.creditApplicationsForm.controls.pageSearch.setValue('no match');
+      tick(300);
+      expect(component.dataSource.data).toHaveLength(0);
+      expect(component.selectedApplicationIds.size).toBe(0);
+      component.creditApplicationsForm.controls.pageSearch.setValue('LN-42');
+      tick(300);
+      expect(component.dataSource.data).toHaveLength(1);
+    }));
   });
 });

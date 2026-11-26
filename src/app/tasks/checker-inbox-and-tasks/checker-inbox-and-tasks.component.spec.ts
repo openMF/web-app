@@ -274,4 +274,25 @@ describe('CheckerInboxAndTasksComponent', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.queue-count').textContent.trim()).toBe('0');
   });
+  it('routes verified rejection counts to the Mass Rejection badge independently from Credit', () => {
+    createComponent(['READ_LOAN']);
+    let emit!: (count: number | null) => void;
+    fixture.componentInstance.onActivate({
+      isMassRejection: true,
+      queueCountChange: {
+        subscribe: (callback: (count: number | null) => void) => {
+          emit = callback;
+          return { unsubscribe: jest.fn() };
+        }
+      } as any
+    });
+    emit(9);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.massRejectionCount).toBe(9);
+    expect(fixture.componentInstance.creditCount).toBeNull();
+    expect(fixture.nativeElement.querySelector('.tasks-heading').textContent).toContain('massRejection.description');
+    emit(null);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.queue-count')).toBeNull();
+  });
 });

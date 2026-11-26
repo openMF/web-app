@@ -31,6 +31,7 @@ import {
   WorkingCapitalNearBreachActionRequest,
   WorkingCapitalNearBreachActions
 } from './models/working-capital/working-capital-loan-account.model';
+import { parseExactJson } from 'app/products/saving-products/product-editor/interest-rate.model';
 import { CreditOriginationBoard } from './models/credit-origination-board.model';
 
 /**
@@ -290,7 +291,16 @@ export class LoansService {
    * Get Loan Account Details
    * @param loanId Loan Id
    */
-  getLoanAccountDetails(loanId: string): Observable<any> {
+  getLoanAccountDetails(loanId: string, exactAmounts = false): Observable<any> {
+    if (exactAmounts)
+      return this.http.get(`/loans/${loanId}`, { responseType: 'text' }).pipe(
+        map((text) =>
+          parseExactJson(text, [
+            'principal',
+            'proposedPrincipal'
+          ])
+        )
+      );
     return this.http.get(`/loans/${loanId}`);
   }
 
@@ -331,8 +341,17 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
-  getWorkingCapitalLoanDetails(loanId: string) {
+  getWorkingCapitalLoanDetails(loanId: string, exactAmounts = false): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'all');
+    if (exactAmounts)
+      return this.http.get(`/working-capital-loans/${loanId}`, { params: httpParams, responseType: 'text' }).pipe(
+        map((text) =>
+          parseExactJson(text, [
+            'principal',
+            'proposedPrincipal'
+          ])
+        )
+      );
     return this.http.get(`/working-capital-loans/${loanId}`, { params: httpParams });
   }
 

@@ -149,6 +149,18 @@ describe('TasksService maker-checker search', () => {
     emptyDatesRequest.flush([]);
   });
 
+  it('preserves exact mass-rejection decimal tokens at the HTTP boundary', () => {
+    let response: any;
+    service.getCreditApplications({ limit: 10, offset: 0 }, true).subscribe((data) => (response = data));
+    const request = httpMock.expectOne((req) => req.url === '/v2/credit-applications');
+    expect(request.request.responseType).toBe('text');
+    request.flush(
+      '{"totalFilteredRecords":1,"pageItems":[{"loanId":42,"amount":90071992547409.91,"accountNo":"0000042"}]}'
+    );
+    expect(response.pageItems[0].amount).toBe('90071992547409.91');
+    expect(response.pageItems[0].accountNo).toBe('0000042');
+  });
+
   it('requests credit applications with only populated server-side parameters', () => {
     service
       .getCreditApplications({
