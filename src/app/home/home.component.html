@@ -41,9 +41,13 @@
         </div>
       }
 
-      <mat-autocomplete #activitySearch="matAutocomplete">
+      <mat-autocomplete
+        #activitySearch="matAutocomplete"
+        [displayWith]="displayActivity"
+        (optionSelected)="openActivity($event.option.value)"
+      >
         @for (activity of filteredActivities | async; track activity) {
-          <mat-option [routerLink]="activity.path">
+          <mat-option [value]="activity">
             <span>{{ activityLabel(activity) }}</span>
           </mat-option>
         }
