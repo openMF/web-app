@@ -74,7 +74,7 @@ describe('DashboardComponent', () => {
     environment.productionModeEnableRBAC = rbacEnabled;
   });
 
-  it('shows both tabs even when the user has no onboarding read permissions', () => {
+  it('shows all three tabs even when the user has no onboarding read permissions', () => {
     environment.productionModeEnableRBAC = true;
     const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]')).map((tab: HTMLElement) =>
       tab.textContent?.trim()
@@ -82,7 +82,8 @@ describe('DashboardComponent', () => {
 
     expect(tabLabels).toEqual([
       'labels.heading.Dashboard',
-      'labels.heading.Onboarding Board'
+      'labels.heading.Onboarding Board',
+      'commercialPipeline.tab'
     ]);
   });
 

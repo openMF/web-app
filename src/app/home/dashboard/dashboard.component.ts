@@ -19,6 +19,7 @@ import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboa
 import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
 import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
 import { OnboardingBoardComponent } from './onboarding-board/onboarding-board.component';
+import { CommercialPanelComponent } from './commercial-panel/commercial-panel.component';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -35,7 +36,8 @@ import { TranslateService } from '@ngx-translate/core';
     MatTab,
     MatTabContent,
     MatTabGroup,
-    OnboardingBoardComponent
+    OnboardingBoardComponent,
+    CommercialPanelComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
