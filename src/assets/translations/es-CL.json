@@ -6492,7 +6492,8 @@
       "workingCapitalDiscountUpdated": "El descuento del préstamo de capital de trabajo se actualizó correctamente.",
       "identityDescriptionsUpdated": "Las descripciones de identidad se actualizaron correctamente.",
       "identityDescriptionsUpdateFailed": "Algunas descripciones de identidad no se pudieron actualizar.",
-      "unableToAdjustDiscountFee": "No se pudo ajustar la comisión de descuento."
+      "unableToAdjustDiscountFee": "No se pudo ajustar la comisión de descuento.",
+      "documentDeleted": "Documento eliminado correctamente."
     },
     "selections": {
       "standingInstructions": {

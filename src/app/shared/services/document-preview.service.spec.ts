@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 
 import { DocumentPreviewService } from './document-preview.service';
@@ -40,7 +40,7 @@ describe('DocumentPreviewService', () => {
 
     const preview = await service.resolvePreviewUrl(document, () => of(downloaded));
 
-    expect(preview.type).toBe('pdf');
+    expect(preview!.type).toBe('pdf');
     expect(createdBlobs[0].type).toBe('application/pdf');
   });
 
@@ -49,7 +49,7 @@ describe('DocumentPreviewService', () => {
 
     const preview = await service.resolvePreviewUrl(document, () => of(new Blob(['%PDF-1.4'])));
 
-    expect(preview.type).toBe('pdf');
+    expect(preview!.type).toBe('pdf');
     expect(createdBlobs[0].type).toBe('application/pdf');
   });
 
@@ -68,7 +68,7 @@ describe('DocumentPreviewService', () => {
 
     const preview = await service.resolvePreviewUrl(document, () => of(downloaded));
 
-    expect(preview.type).toBe('image');
+    expect(preview!.type).toBe('image');
     expect(createdBlobs[0]).toBe(downloaded);
   });
 
@@ -78,7 +78,7 @@ describe('DocumentPreviewService', () => {
 
     const preview = await service.resolvePreviewUrl(document, () => of(downloaded));
 
-    expect(preview.type).toBe('pdf');
+    expect(preview!.type).toBe('pdf');
     expect(createdBlobs[0].type).toBe('application/pdf');
   });
 
@@ -88,7 +88,7 @@ describe('DocumentPreviewService', () => {
 
     const preview = await service.resolvePreviewUrl(document, () => of(downloaded));
 
-    expect(preview.type).toBe('pdf');
+    expect(preview!.type).toBe('pdf');
     expect(createdBlobs[0].type).toBe('application/pdf');
   });
 
@@ -109,7 +109,123 @@ describe('DocumentPreviewService', () => {
     const second = await service.resolvePreviewUrl(document, downloadFn as any);
 
     expect(downloadFn).toHaveBeenCalledTimes(1);
-    expect(second.url).toBe(first.url);
+    expect(second!.url).toBe(first!.url);
+  });
+
+  it('releases a preview cached with a numeric id when the deletion flow passes a string id', async () => {
+    const document = { id: 201, fileName: 'statement.pdf' };
+    const downloadFn = jest.fn(() => of(new Blob(['%PDF-1.4'], { type: 'application/pdf' })));
+
+    const preview = await service.resolvePreviewUrl(document, downloadFn);
+    // Resolving with the same numeric id must hit the entry inserted above.
+    await service.resolvePreviewUrl(document, downloadFn);
+    expect(downloadFn).toHaveBeenCalledTimes(1);
+
+    // The component releases the delete target by its string key.
+    service.release('201');
+
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith(preview!.url);
+    await service.resolvePreviewUrl(document, downloadFn);
+    expect(downloadFn).toHaveBeenCalledTimes(2);
+  });
+
+  it('still releases a preview cached with a string id', async () => {
+    const document = { id: '202', fileName: 'statement.pdf' };
+    const downloadFn = jest.fn(() => of(new Blob(['%PDF-1.4'], { type: 'application/pdf' })));
+
+    const preview = await service.resolvePreviewUrl(document, downloadFn);
+
+    service.release(202);
+
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith(preview!.url);
+    await service.resolvePreviewUrl(document, downloadFn);
+    expect(downloadFn).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not create or cache a preview whose document is released while downloading', async () => {
+    const document = { id: 301, fileName: 'statement.pdf' };
+    const download$ = new Subject<Blob>();
+    const pending = service.resolvePreviewUrl(document, () => download$.asObservable());
+
+    service.release(301);
+
+    download$.next(new Blob(['%PDF-1.4'], { type: 'application/pdf' }));
+    download$.complete();
+
+    await expect(pending).resolves.toBeNull();
+    expect(URL.createObjectURL).not.toHaveBeenCalled();
+    expect(URL.revokeObjectURL).not.toHaveBeenCalled();
+  });
+
+  it('caches a preview request started after the previous one was released', async () => {
+    const document = { id: 302, fileName: 'statement.pdf' };
+    const download$ = new Subject<Blob>();
+    const invalidated = service.resolvePreviewUrl(document, () => download$.asObservable());
+    service.release('302');
+
+    const downloadFn = jest.fn(() => of(new Blob(['%PDF-1.4'], { type: 'application/pdf' })));
+    const cached = await service.resolvePreviewUrl(document, downloadFn);
+    expect(cached).not.toBeNull();
+    expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
+
+    // The invalidated download finishing later must not disturb the newer entry.
+    download$.next(new Blob(['%PDF-1.4'], { type: 'application/pdf' }));
+    download$.complete();
+    await expect(invalidated).resolves.toBeNull();
+
+    const fromCache = await service.resolvePreviewUrl(document, downloadFn);
+    expect(downloadFn).toHaveBeenCalledTimes(1);
+    expect(fromCache!.url).toBe(cached!.url);
+    expect(URL.revokeObjectURL).not.toHaveBeenCalled();
+  });
+
+  it('does not let an older invalidated request overwrite or cancel a newer request', async () => {
+    const document = { id: 303, fileName: 'statement.pdf' };
+    const older$ = new Subject<Blob>();
+    const newer$ = new Subject<Blob>();
+    const older = service.resolvePreviewUrl(document, () => older$.asObservable());
+    service.release(303);
+    const newer = service.resolvePreviewUrl(document, () => newer$.asObservable());
+
+    // The invalidated request finishes while the newer one is still downloading.
+    older$.next(new Blob(['%PDF-1.4'], { type: 'application/pdf' }));
+    older$.complete();
+    await expect(older).resolves.toBeNull();
+    expect(URL.createObjectURL).not.toHaveBeenCalled();
+
+    newer$.next(new Blob(['%PDF-1.4'], { type: 'application/pdf' }));
+    newer$.complete();
+    const newerPreview = await newer;
+    expect(newerPreview).not.toBeNull();
+    expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
+
+    // The stale request did not clear the newer request's cache.
+    const fromCache = await service.resolvePreviewUrl(document, () => of(new Blob(['should not download'])));
+    expect(fromCache!.url).toBe(newerPreview!.url);
+  });
+
+  it('shares a single download between concurrent requests for the same document', async () => {
+    const document = { id: 304, fileName: 'statement.pdf' };
+    const download$ = new Subject<Blob>();
+    const downloadFn = jest.fn(() => download$.asObservable());
+
+    const first = service.resolvePreviewUrl(document, downloadFn);
+    const second = service.resolvePreviewUrl(document, downloadFn);
+
+    download$.next(new Blob(['%PDF-1.4'], { type: 'application/pdf' }));
+    download$.complete();
+
+    const [
+      firstPreview,
+      secondPreview
+    ] = await Promise.all([
+      first,
+      second
+    ]);
+    expect(downloadFn).toHaveBeenCalledTimes(1);
+    expect(firstPreview).not.toBeNull();
+    expect(secondPreview!.url).toBe(firstPreview!.url);
+    expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
   });
 
   it('treats PDFs as previewable from the file extension alone', () => {

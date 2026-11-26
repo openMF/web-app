@@ -6442,7 +6442,8 @@
       "workingCapitalDiscountUpdated": "Dövriyyə kapitalı üzrə endirim uğurla yeniləndi.",
       "identityDescriptionsUpdated": "Şəxsiyyət sənədlərinin təsvirləri yeniləndi.",
       "identityDescriptionsUpdateFailed": "Bəzi şəxsiyyət sənədlərinin təsvirlərini yeniləmək mümkün olmadı.",
-      "unableToAdjustDiscountFee": "Endirim haqqını düzəltmək mümkün olmadı."
+      "unableToAdjustDiscountFee": "Endirim haqqını düzəltmək mümkün olmadı.",
+      "documentDeleted": "Sənəd uğurla silindi."
     },
     "cbild": {
       "fields": {

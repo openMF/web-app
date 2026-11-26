@@ -6429,7 +6429,8 @@
       "workingCapitalDiscountUpdated": "Sleva provozního kapitálu byla úspěšně aktualizována.",
       "identityDescriptionsUpdated": "Popisy dokladů totožnosti byly úspěšně aktualizovány.",
       "identityDescriptionsUpdateFailed": "Některé popisy dokladů totožnosti se nepodařilo aktualizovat.",
-      "unableToAdjustDiscountFee": "Poplatek za slevu se nepodařilo upravit."
+      "unableToAdjustDiscountFee": "Poplatek za slevu se nepodařilo upravit.",
+      "documentDeleted": "Dokument byl úspěšně smazán."
     },
     "selections": {
       "standingInstructions": {

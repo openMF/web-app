@@ -6492,7 +6492,8 @@
       "workingCapitalDiscountUpdated": "Apgrozāmo līdzekļu aizdevuma atlaide ir veiksmīgi atjaunināta.",
       "identityDescriptionsUpdated": "Identitātes dokumentu apraksti veiksmīgi atjaunināti.",
       "identityDescriptionsUpdateFailed": "Dažus identitātes dokumentu aprakstus neizdevās atjaunināt.",
-      "unableToAdjustDiscountFee": "Neizdevās koriģēt atlaides maksu."
+      "unableToAdjustDiscountFee": "Neizdevās koriģēt atlaides maksu.",
+      "documentDeleted": "Dokuments veiksmīgi dzēsts."
     },
     "selections": {
       "standingInstructions": {

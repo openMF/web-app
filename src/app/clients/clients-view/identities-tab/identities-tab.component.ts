@@ -464,6 +464,9 @@ export class IdentitiesTabComponent implements OnDestroy {
           const preview = await this.documentPreviewService.resolvePreviewUrl(doc, () =>
             this.clientService.downloadClientIdentificationDocument(doc.parentEntityId || identity.id, doc.id)
           );
+          if (!preview) {
+            continue;
+          }
           if (preview.type === 'image') {
             this.setPreviewThumbnail(doc.id, preview.url);
           }
@@ -609,6 +612,10 @@ export class IdentitiesTabComponent implements OnDestroy {
         this.clientService.downloadClientIdentificationDocument(identifierId, document.id)
       )
       .then((preview) => {
+        if (!preview) {
+          // The document was deleted before this download finished; do not add a thumbnail.
+          return;
+        }
         if (preview.type === 'image') {
           this.setPreviewThumbnail(document.id, preview.url);
         } else if (preview.type === 'pdf') {

@@ -113,6 +113,7 @@
                   mat-icon-button
                   color="warn"
                   (click)="deleteDocument(document.id, document.name)"
+                  [disabled]="isDeleting(document.id)"
                   [title]="'labels.buttons.Delete' | translate"
                   [attr.aria-label]="'labels.buttons.Delete' | translate"
                   *mifosxHasPermission="'DELETE_DOCUMENT'"

@@ -6492,7 +6492,8 @@
       "workingCapitalDiscountUpdated": "कार्यशील पूँजी ऋणको छुट सफलतापूर्वक अपडेट गरिएको छ।",
       "identityDescriptionsUpdated": "पहिचान विवरणहरू सफलतापूर्वक अद्यावधिक भए।",
       "identityDescriptionsUpdateFailed": "केही पहिचान विवरणहरू अद्यावधिक गर्न असफल भए।",
-      "unableToAdjustDiscountFee": "छुट शुल्क समायोजन गर्न सकिएन।"
+      "unableToAdjustDiscountFee": "छुट शुल्क समायोजन गर्न सकिएन।",
+      "documentDeleted": "कागजात सफलतापूर्वक मेटियो।"
     },
     "selections": {
       "standingInstructions": {
