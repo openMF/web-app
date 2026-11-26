@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "../",
+    "isolatedModules": true,
+    "emitDecoratorMetadata": false,
     "paths": {
       "@pipes/*": [
         "src/app/pipes/*"
@@ -20,7 +22,6 @@
     ]
   },
   "files": [
-    "test.ts",
     "polyfills.ts"
   ],
   "include": [

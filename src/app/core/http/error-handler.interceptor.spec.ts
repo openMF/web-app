@@ -701,9 +701,9 @@ describe('ErrorHandlerInterceptor', () => {
     jest.spyOn(translate, 'instant').mockImplementation((key: string) => {
       if (key.startsWith('errors.')) {
         const subKey = key.slice(7);
-        return enTranslations.errors?.[subKey] ?? key;
+        return (enTranslations.errors as unknown as Record<string, string> | undefined)?.[subKey] ?? key;
       }
-      return (enTranslations as Record<string, string>)[key] ?? key;
+      return (enTranslations as unknown as Record<string, string>)[key] ?? key;
     });
 
     let errorReceived: unknown;

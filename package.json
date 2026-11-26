@@ -24,6 +24,7 @@
     "test:watch": "jest --config jest.config.ts --watch",
     "test:coverage": "jest --config jest.config.ts --coverage",
     "test:ci": "jest --config jest.config.ts --ci --coverage --watchAll=false",
+    "test:typecheck": "tsc -p src/tsconfig.spec.json --noEmit --isolatedModules false",
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
     "env": "node version.js",
     "postinstall": "node version.js",
