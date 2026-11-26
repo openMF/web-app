@@ -1161,6 +1161,9 @@
       "Home": "Home"
     },
     "buttons": {
+      "Add sub-office": "Add sub-office",
+      "Expand": "Expand",
+      "Collapse": "Collapse",
       "Accept Transfer": "Accept Transfer",
       "Actions": "Actions",
       "Activate": "Activate",
@@ -2547,6 +2550,10 @@
       "Session": "Session"
     },
     "inputs": {
+      "Search by office name or external ID": "Search by office name or external ID",
+      "Sub-offices": "Sub-offices",
+      "Tree": "Tree",
+      "List": "List",
       "Breach Start Type": "Breach Start Type",
       "Calculated Annual EIR": "Calculated Annual EIR",
       "Daily Effective Rate": "Daily Effective Rate",
@@ -4912,6 +4919,9 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "Manage offices description": "Offices and branches of your organization, and how they report to each other.",
+      "Showing offices of total": "Showing {{shown}} of {{total}} offices",
+      "No offices match the search": "No offices match the search.",
       "Investment": {
         "title": "Investment Products",
         "overview": "Overview & Accounting",

@@ -1159,6 +1159,9 @@
       "Home": "Lar"
     },
     "buttons": {
+      "Add sub-office": "Adicionar subescritório",
+      "Expand": "Expandir",
+      "Collapse": "Recolher",
       "Clone": "Clonar",
       "Finalize": "Finalizar",
       "New Operation": "Nova operação",
@@ -2544,6 +2547,10 @@
       "Session": "Sessão"
     },
     "inputs": {
+      "Search by office name or external ID": "Pesquisar por nome do escritório ou ID externo",
+      "Sub-offices": "Subescritórios",
+      "Tree": "Árvore",
+      "List": "Lista",
       "Breach Start Type": "Tipo de início de violação",
       "Calculated Annual EIR": "EIR anual calculada",
       "Daily Effective Rate": "Taxa efetiva diária",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "Manage offices description": "Escritórios e agências da sua organização e a respetiva hierarquia.",
+      "Showing offices of total": "A mostrar {{shown}} de {{total}} escritórios",
+      "No offices match the search": "Nenhum escritório corresponde à pesquisa.",
       "Investment": {
         "title": "Produtos de investimento",
         "overview": "Visão geral e contabilidade",

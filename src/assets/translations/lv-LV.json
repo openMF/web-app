@@ -1159,6 +1159,9 @@
       "Home": "Mājas"
     },
     "buttons": {
+      "Add sub-office": "Pievienot pakārtotu biroju",
+      "Expand": "Izvērst",
+      "Collapse": "Sakļaut",
       "Clone": "Klonēt",
       "Finalize": "Pabeigt",
       "New Operation": "Jauna operācija",
@@ -2544,6 +2547,10 @@
       "Session": "Sesija"
     },
     "inputs": {
+      "Search by office name or external ID": "Meklēt pēc biroja nosaukuma vai ārējā ID",
+      "Sub-offices": "Pakārtotie biroji",
+      "Tree": "Koks",
+      "List": "Saraksts",
       "Breach Start Type": "Pārkāpuma sākuma tips",
       "Calculated Annual EIR": "Aprēķinātā gada EIR",
       "Daily Effective Rate": "Dienas efektīvā likme",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "Manage offices description": "Jūsu organizācijas biroji un filiāles un to pakļautība.",
+      "Showing offices of total": "Rāda {{shown}} no {{total}} birojiem",
+      "No offices match the search": "Meklēšanai neatbilst neviens birojs.",
       "Investment": {
         "title": "Investment Products",
         "overview": "Pārskats un grāmatvedība",

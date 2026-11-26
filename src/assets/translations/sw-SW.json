@@ -1159,6 +1159,9 @@
       "Home": "Nyumbani"
     },
     "buttons": {
+      "Add sub-office": "Ongeza ofisi ndogo",
+      "Expand": "Panua",
+      "Collapse": "Kunja",
       "Clone": "Nakili",
       "Finalize": "Kamilisha",
       "New Operation": "Operesheni mpya",
@@ -2544,6 +2547,10 @@
       "Session": "Kipindi"
     },
     "inputs": {
+      "Search by office name or external ID": "Tafuta kwa jina la ofisi au kitambulisho cha nje",
+      "Sub-offices": "Ofisi ndogo",
+      "Tree": "Mti",
+      "List": "Orodha",
       "Breach Start Type": "Aina ya kuanza kwa ukiukaji",
       "Calculated Annual EIR": "EIR ya mwaka iliyokokotolewa",
       "Daily Effective Rate": "Kiwango halisi cha kila siku",
@@ -4911,6 +4918,9 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "Manage offices description": "Ofisi na matawi ya shirika lako na ngazi zake.",
+      "Showing offices of total": "Inaonyesha ofisi {{shown}} kati ya {{total}}",
+      "No offices match the search": "Hakuna ofisi inayolingana na utafutaji.",
       "Investment": {
         "title": "Bidhaa za Uwekezaji",
         "overview": "Muhtasari na Uhasibu",

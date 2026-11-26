@@ -1160,6 +1160,9 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Add sub-office": "Přidat podřízenou kancelář",
+      "Expand": "Rozbalit",
+      "Collapse": "Sbalit",
       "Clone": "Klonovat",
       "Finalize": "Dokončit",
       "New Operation": "Nová operace",
@@ -2545,6 +2548,10 @@
       "Session": "Relace"
     },
     "inputs": {
+      "Search by office name or external ID": "Hledat podle názvu kanceláře nebo externího ID",
+      "Sub-offices": "Podřízené kanceláře",
+      "Tree": "Strom",
+      "List": "Seznam",
       "Breach Start Type": "Typ začátku porušení",
       "Calculated Annual EIR": "Vypočtená roční EIR",
       "Daily Effective Rate": "Denní efektivní sazba",
@@ -4912,6 +4919,9 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "Manage offices description": "Kanceláře a pobočky vaší organizace a jejich vzájemná podřízenost.",
+      "Showing offices of total": "Zobrazeno {{shown}} z {{total}} kanceláří",
+      "No offices match the search": "Hledání neodpovídá žádná kancelář.",
       "Investment": {
         "title": "Investiční produkty",
         "overview": "Přehled a účetnictví",
