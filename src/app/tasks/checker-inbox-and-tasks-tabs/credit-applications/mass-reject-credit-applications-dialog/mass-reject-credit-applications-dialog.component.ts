@@ -43,6 +43,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 export interface MassRejectCreditApplicationsDialogData {
   selectedCount: number;
+  confirmation?: { rejectedOnDate: Date; note: string };
   operation?: 'approve' | 'reject';
   accounts?: (number | string)[];
   rejectedOnDate: Date;
@@ -84,7 +85,7 @@ export class MassRejectCreditApplicationsDialogComponent {
     }
     this.dialogRef.close({
       confirm: true,
-      data: this.rejectForm.value
+      data: this.data.confirmation || this.rejectForm.value
     });
   }
 }

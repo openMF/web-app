@@ -674,3 +674,280 @@ button:focus-visible,
   color: var(--ds-text-2);
   font-size: 0.75rem;
 }
+
+.mass-rejection-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, calc(100% - 424px)) minmax(320px, 400px);
+  align-items: start;
+  gap: 24px;
+
+  .results-card {
+    min-width: 0;
+  }
+
+  table {
+    min-width: 704px;
+  }
+
+  .mat-column-select {
+    width: 40px;
+  }
+
+  .mat-column-clientName {
+    width: 26%;
+  }
+
+  .mat-column-accountNo {
+    width: 104px;
+  }
+
+  .mat-column-amount {
+    width: 152px;
+  }
+
+  .mat-column-submittedOnDate {
+    width: 112px;
+  }
+
+  .mat-column-status {
+    width: 136px;
+  }
+
+  mat-checkbox {
+    --mat-checkbox-selected-icon-color: var(--ds-alert);
+    --mat-checkbox-selected-focus-icon-color: var(--ds-alert);
+    --mat-checkbox-selected-hover-icon-color: var(--ds-alert);
+    --mat-checkbox-selected-focus-state-layer-color: var(--ds-alert);
+    --mat-checkbox-selected-hover-state-layer-color: var(--ds-alert);
+    --mat-checkbox-selected-pressed-state-layer-color: var(--ds-alert);
+  }
+
+  .rejection-client small {
+    margin-top: 0;
+    line-height: 1.4;
+  }
+
+  .disabled-reason {
+    font-style: italic;
+  }
+
+  .disabled-rejection-row .client-info strong {
+    color: var(--ds-text-2);
+  }
+
+  .disabled-rejection-row .account-link {
+    color: var(--ds-text-2);
+  }
+
+  .rejectable-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 16px;
+    border-block: 1px solid var(--ds-border);
+    font-size: 0.75rem;
+
+    > span {
+      color: var(--ds-text-2);
+    }
+  }
+
+  .rejection-panel {
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    padding: 24px;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+    background: var(--ds-surface);
+    min-width: 0;
+  }
+
+  .rejection-heading {
+    display: flex;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .rejection-heading h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  .rejection-symbol {
+    padding: 16px;
+    border-radius: var(--ds-radius);
+    color: var(--ds-alert);
+    background: var(--ds-alert-bg);
+  }
+
+  .selected-totals {
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .selected-totals strong {
+    display: block;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .selected-applications {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    max-height: 240px;
+    overflow: auto;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+  }
+
+  .selected-applications li {
+    display: grid;
+    grid-template-columns: 80px minmax(0, calc(100% - 248px)) 112px 32px;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .selected-account {
+    overflow-wrap: anywhere;
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: var(--ds-text-2);
+  }
+
+  .selected-customer {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .selected-amount {
+    text-align: end;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.8125rem;
+  }
+
+  .selected-applications button {
+    grid-column: 4;
+    grid-row: 1;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+  }
+
+  .selection-empty {
+    padding: 16px 0;
+    color: var(--ds-text-2);
+  }
+
+  .rejection-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .rejection-form mat-form-field {
+    width: 100%;
+  }
+
+  .rejection-form textarea {
+    resize: vertical;
+  }
+
+  .validation-error {
+    color: var(--ds-alert);
+    margin: 0;
+    font-size: 0.8125rem;
+  }
+
+  .rejection-warning {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+    border: 1px solid var(--ds-partial);
+    background: var(--ds-partial-bg);
+    color: var(--ds-partial);
+    border-radius: var(--ds-radius);
+    font-size: 0.8125rem;
+    margin: 0;
+  }
+
+  .reject-button:not(:disabled) {
+    background: var(--ds-alert);
+    color: var(--ds-action-on-fill);
+  }
+
+  .reject-button {
+    min-height: 48px;
+  }
+
+  .batch-outcomes small {
+    display: block;
+  }
+}
+
+:host ::ng-deep .mass-rejection-workspace .mat-mdc-row.selected-row {
+  background: color-mix(in srgb, var(--ds-alert) 7%, var(--ds-surface));
+
+  > td:first-child {
+    box-shadow: inset 3px 0 var(--ds-alert);
+  }
+}
+
+@media (width <= 1279px) {
+  .mass-rejection-workspace {
+    grid-template-columns: minmax(0, 100%);
+
+    .rejection-panel {
+      max-height: none;
+      position: static;
+    }
+  }
+}
+
+@media (width <= 600px) {
+  .mass-rejection-workspace {
+    gap: 16px;
+
+    table {
+      min-width: 0;
+    }
+
+    .mat-mdc-cell {
+      width: auto;
+    }
+
+    .rejection-panel {
+      padding: 16px;
+    }
+
+    .rejectable-toolbar {
+      padding: 8px;
+    }
+
+    .mat-column-clientName {
+      grid-row: 1;
+    }
+
+    .mat-column-accountNo {
+      grid-row: 2;
+    }
+
+    .selected-applications li {
+      grid-template-columns: minmax(0, calc(100% - 40px)) 32px;
+    }
+
+    .selected-applications button {
+      grid-column: 2;
+      grid-row: 1 / 4;
+    }
+  }
+}
