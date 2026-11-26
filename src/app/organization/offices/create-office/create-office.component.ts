@@ -31,6 +31,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
+/** Custom Model */
+import { Office } from '../office-node.model';
+
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -94,6 +97,18 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createofficeForm();
+    this.setParentFromQueryParams();
+  }
+
+  /**
+   * Selects the parent office passed in the `parent` query parameter,
+   * so a sub-office can be added from the list of offices.
+   */
+  private setParentFromQueryParams() {
+    const parentId = Number(this.route.snapshot.queryParamMap.get('parent'));
+    if (this.officeData?.some((office: Office) => office.id === parentId)) {
+      this.officeForm.patchValue({ parentId });
+    }
   }
 
   /**

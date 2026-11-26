@@ -23,5 +23,10 @@
         <mifosx-onboarding-board></mifosx-onboarding-board>
       </ng-template>
     </mat-tab>
+    <mat-tab label="{{ 'commercialPipeline.tab' | translate }}">
+      <ng-template matTabContent>
+        <mifosx-commercial-panel [offices]="offices"></mifosx-commercial-panel>
+      </ng-template>
+    </mat-tab>
   </mat-tab-group>
 </div>

@@ -22,7 +22,12 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="tab-container mat-typography" [class.credits-workspace]="isCreditSearch" [attr.aria-busy]="loading || busy">
+<div
+  class="tab-container mat-typography"
+  [class.credits-workspace]="isCreditSearch || isMassRejection"
+  [class.mass-rejection-workspace]="isMassRejection"
+  [attr.aria-busy]="loading || busy"
+>
   @if (isCreditSearch) {
     <section
       [attr.aria-busy]="summaryLoading"
@@ -59,10 +64,10 @@
     <p class="summary-scope">{{ 'credits.summaryScope' | translate }}</p>
   }
   <section class="results-card">
-    @if (isCreditSearch) {
+    @if (isCreditSearch || isMassRejection) {
       <form [formGroup]="creditApplicationsForm" class="compact-filters" (ngSubmit)="applyFilters()">
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="page-search">
-          <mat-label>{{ 'credits.pageSearch' | translate }}</mat-label>
+          <mat-label>{{ (isMassRejection ? 'massRejection.search' : 'credits.pageSearch') | translate }}</mat-label>
           <input
             matInput
             formControlName="pageSearch"
@@ -91,15 +96,17 @@
           <i class="fa fa-calendar" aria-hidden="true"></i> {{ 'labels.inputs.Submitted Date' | translate }}
           <i class="fa fa-angle-down" aria-hidden="true"></i>
         </button>
-        <button
-          mat-stroked-button
-          type="button"
-          [disabled]="busy"
-          [class.active-filter]="filterActive('amount')"
-          (click)="openFilter('amount')"
-        >
-          {{ 'labels.inputs.Amount' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
-        </button>
+        @if (!isMassRejection) {
+          <button
+            mat-stroked-button
+            type="button"
+            [disabled]="busy"
+            [class.active-filter]="filterActive('amount')"
+            (click)="openFilter('amount')"
+          >
+            {{ 'labels.inputs.Amount' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </button>
+        }
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
@@ -114,15 +121,17 @@
             }
           </mat-select>
         </mat-form-field>
-        <button
-          mat-stroked-button
-          type="button"
-          [disabled]="busy"
-          [class.active-filter]="filterActive('location')"
-          (click)="openFilter('location')"
-        >
-          {{ 'labels.inputs.State / Municipality' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
-        </button>
+        @if (!isMassRejection) {
+          <button
+            mat-stroked-button
+            type="button"
+            [disabled]="busy"
+            [class.active-filter]="filterActive('location')"
+            (click)="openFilter('location')"
+          >
+            {{ 'labels.inputs.State / Municipality' | translate }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </button>
+        }
         <button mat-button type="button" [disabled]="busy" (click)="clearFilters()">
           {{ 'labels.buttons.Clear' | translate }}
         </button>
@@ -136,7 +145,9 @@
       @if (clientLookupFailed) {
         <p class="search-scope" role="status">{{ 'credits.clientLookupFailed' | translate }}</p>
       }
-      <p class="search-scope" id="search-scope">{{ 'credits.searchScope' | translate }}</p>
+      <p class="search-scope" id="search-scope">
+        {{ (isMassRejection ? 'massRejection.searchScope' : 'credits.searchScope') | translate }}
+      </p>
     } @else {
       <form
         [formGroup]="creditApplicationsForm"
@@ -235,6 +246,25 @@
         </div>
       </form>
     }
+    @if (isMassRejection) {
+      <div class="rejectable-toolbar">
+        <mat-slide-toggle
+          [checked]="rejectableOnly"
+          [disabled]="busy || loading"
+          (change)="toggleRejectableOnly($event.checked)"
+        >
+          {{ 'massRejection.onlyRejectable' | translate }}
+        </mat-slide-toggle>
+        <span aria-live="polite">{{
+          rejectableCount !== null && scopeTotal !== null
+            ? ('massRejection.eligibleCount' | translate: { count: rejectableCount, total: scopeTotal })
+            : ('massRejection.countUnavailable' | translate)
+        }}</span>
+      </div>
+      @if (rejectableOnly) {
+        <p class="search-scope">{{ 'massRejection.pendingScope' | translate }}</p>
+      }
+    }
     @if (filterError) {
       <div class="alert error" role="alert">
         <div class="message">
@@ -277,12 +307,17 @@
     }
 
     @if (batchOutcomes.length) {
-      <p class="alert" role="status">{{ 'credits.batchCounts' | translate: outcomeCounts }}</p>
+      <p class="alert" role="status">
+        {{ (isMassRejection ? 'massRejection.batchCounts' : 'credits.batchCounts') | translate: outcomeCounts }}
+      </p>
       <ul class="batch-outcomes" aria-live="polite">
         @for (result of batchOutcomes; track result.application.loanId) {
           <li>
             {{ result.application.accountNo ?? result.application.loanId }} —
-            {{ 'credits.' + result.outcome | translate }}
+            {{ (result.outcome === 'queued' ? 'massRejection.queued' : 'credits.' + result.outcome) | translate }}
+            @if (result.reason) {
+              <small>{{ result.reason | translate }}</small>
+            }
           </li>
         }
       </ul>
@@ -293,7 +328,7 @@
     @if (exportError) {
       <p class="alert error" role="alert">{{ 'credits.exportFailed' | translate }}</p>
     }
-    @if ((isCreditSearch || isMassRejection) && selectedApplicationIds.size > 0) {
+    @if (isCreditSearch && selectedApplicationIds.size > 0) {
       <div class="mass-actions" role="region" [attr.aria-label]="'credits.selection' | translate">
         <strong>{{ 'credits.selectedCount' | translate: { count: selectedApplicationIds.size } }}</strong>
         @if (isCreditSearch && hasPermission('APPROVE_LOAN')) {
@@ -355,7 +390,7 @@
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox
-              color="primary"
+              [color]="isMassRejection ? 'warn' : 'primary'"
               [checked]="allVisibleSelected()"
               [indeterminate]="partiallyVisibleSelected()"
               [disabled]="busy || loading || visibleRejectableApplications().length === 0"
@@ -365,7 +400,7 @@
           </th>
           <td mat-cell *matCellDef="let application">
             <mat-checkbox
-              color="primary"
+              [color]="isMassRejection ? 'warn' : 'primary'"
               [checked]="isSelected(application)"
               [disabled]="!canSelect(application) || busy || loading"
               [aria-label]="
@@ -410,6 +445,16 @@
                   >
                 </div>
               </div>
+            } @else if (isMassRejection) {
+              <div class="client-info rejection-client">
+                <strong [matTooltip]="application.clientName">{{ application.clientName }}</strong>
+                <small>{{ application.productName }}</small>
+                @if (disabledReason(application)) {
+                  <small class="disabled-reason"
+                    ><i class="fa fa-ban" aria-hidden="true"></i> {{ disabledReason(application) | translate }}</small
+                  >
+                }
+              </div>
             } @else {
               {{ application.clientName }}
             }
@@ -432,7 +477,14 @@
         <ng-container matColumnDef="amount">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="amount">{{ 'labels.inputs.Amount' | translate }}</th>
           <td mat-cell *matCellDef="let application" [attr.data-label]="'labels.inputs.Amount' | translate">
-            <strong>{{ application.amount | formatNumber: '' : currencyDigits(application.currencyCode) }}</strong>
+            @if (isMassRejection) {
+              <strong>{{
+                amountText(application.amount)
+                  | loanApprovalMoney: application.currencyCode : currencyDigits(application.currencyCode)
+              }}</strong>
+            } @else {
+              <strong>{{ application.amount | formatNumber: '' : currencyDigits(application.currencyCode) }}</strong>
+            }
             @if (isCreditSearch) {
               <small class="currency">{{ application.currencyCode }}</small>
             }
@@ -450,7 +502,7 @@
           </th>
           <td mat-cell *matCellDef="let application" [attr.data-label]="'labels.inputs.Submitted Date' | translate">
             {{ application.submittedOnDate | dateFormat }}
-            @if (isCreditSearch) {
+            @if (isCreditSearch || isMassRejection) {
               <small class="relative-date">{{ relativeDate(application.submittedOnDate) }}</small>
             }
           </td>
@@ -501,6 +553,7 @@
           mat-row
           *matRowDef="let row; columns: displayedColumns"
           [class.selected-row]="isSelected(row)"
+          [class.disabled-rejection-row]="isMassRejection && !canSelect(row)"
           [class.clickable-row]="row.loanId"
           (click)="viewCreditApplication(row)"
         ></tr>
@@ -541,4 +594,115 @@
       ></mat-paginator>
     </footer>
   </section>
+  @if (isMassRejection) {
+    <aside class="rejection-panel" [attr.aria-label]="'massRejection.panel' | translate">
+      <header class="rejection-heading">
+        <span class="rejection-symbol" aria-hidden="true"><i class="fa fa-times"></i></span>
+        <div>
+          <h2 aria-live="polite">
+            {{
+              (selectedApplicationIds.size === 1 ? 'massRejection.rejectOne' : 'massRejection.rejectCount')
+                | translate: { count: selectedApplicationIds.size }
+            }}
+          </h2>
+          <div class="selected-totals" aria-live="polite">
+            <span>{{ 'massRejection.total' | translate }}</span>
+            @for (total of selectedTotals || []; track total.code + ':' + total.digits) {
+              <strong>{{ total.amount | loanApprovalMoney: total.code : total.digits }}</strong>
+            }
+            @if (selectedTotals === null) {
+              <span role="alert">{{ 'loanApproval.amountUnavailable' | translate }}</span>
+            }
+          </div>
+        </div>
+      </header>
+      @if (selectedRows.length) {
+        <ul class="selected-applications">
+          @for (application of selectedRows; track application.loanId) {
+            <li>
+              <span class="selected-account">{{ application.accountNo ?? application.loanId }}</span>
+              <strong class="selected-customer" [matTooltip]="application.clientName">{{
+                application.clientName
+              }}</strong>
+              <span class="selected-amount">{{
+                amountText(application.amount)
+                  | loanApprovalMoney: application.currencyCode : currencyDigits(application.currencyCode)
+              }}</span>
+              <button
+                mat-icon-button
+                type="button"
+                [disabled]="busy"
+                (click)="removeSelected(application)"
+                [attr.aria-label]="
+                  ('massRejection.remove' | translate) + ' ' + (application.accountNo ?? application.loanId)
+                "
+              >
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="selection-empty">{{ 'massRejection.empty' | translate }}</p>
+      }
+      <form [formGroup]="rejectionForm" (ngSubmit)="massReject()" class="rejection-form">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'labels.inputs.Rejection Date' | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="rejectionDatePicker"
+            [max]="businessDate"
+            formControlName="rejectedOnDate"
+            required
+          />
+          <mat-datepicker-toggle matSuffix [for]="rejectionDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #rejectionDatePicker></mat-datepicker>
+          <mat-hint>{{ 'massRejection.businessDate' | translate }}: {{ businessDate | dateFormat }}</mat-hint>
+          @if (rejectionForm.controls.rejectedOnDate.invalid) {
+            <mat-error>{{ 'massRejection.invalidDate' | translate }}</mat-error>
+          }
+        </mat-form-field>
+        @if (rejectionDateError && selectedRows.length) {
+          <p class="validation-error" role="alert">{{ rejectionDateError | translate }}</p>
+        }
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'labels.inputs.Rejection Reason' | translate }}</mat-label>
+          <mat-select formControlName="reason" required>
+            <mat-option value="documentation">{{ 'massRejection.documentation' | translate }}</mat-option>
+            <mat-option value="custom">{{ 'massRejection.custom' | translate }}</mat-option>
+          </mat-select>
+          @if (rejectionForm.controls.reason.hasError('required')) {
+            <mat-error>{{ 'massRejection.reasonRequired' | translate }}</mat-error>
+          }
+        </mat-form-field>
+        @if (rejectionForm.controls.reason.value === 'custom') {
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'massRejection.describeReason' | translate }}</mat-label>
+            <textarea matInput formControlName="customReason" rows="2" required></textarea>
+          </mat-form-field>
+        }
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'massRejection.officerNote' | translate }}</mat-label>
+          <textarea matInput formControlName="note" rows="3"></textarea>
+          <mat-hint>{{ 'massRejection.noteLimit' | translate: { count: rejectionNote.length } }}</mat-hint>
+        </mat-form-field>
+        @if (rejectionNote.length > 1000) {
+          <p class="validation-error" role="alert">{{ 'massRejection.noteTooLong' | translate }}</p>
+        }
+        <p class="rejection-warning">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ 'massRejection.warning' | translate }}
+        </p>
+        <button mat-flat-button color="warn" class="reject-button" type="submit" [disabled]="!canRejectSelection">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{
+            (selectedApplicationIds.size === 1 ? 'massRejection.rejectOne' : 'massRejection.rejectCount')
+              | translate: { count: selectedApplicationIds.size }
+          }}
+        </button>
+        <button mat-button type="button" [disabled]="busy" (click)="cancelRejection()">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+      </form>
+    </aside>
+  }
 </div>

@@ -13,7 +13,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 /** Custom Components */
-import { OfficeNode } from './office-node.model';
+import { Office, OfficeNode } from './office-node.model';
 
 /**
  * Office tree service.
@@ -22,8 +22,6 @@ import { OfficeNode } from './office-node.model';
   providedIn: 'root'
 })
 export class OfficeTreeService {
-  /** Office data. */
-  officesData: any;
   /** Offices tree data behavior subject to represent offices tree nodes. */
   treeDataChange = new BehaviorSubject<OfficeNode[]>([]);
 
@@ -34,63 +32,54 @@ export class OfficeTreeService {
     return this.treeDataChange.value;
   }
 
-  constructor() {}
-
   /**
    * Builds the offices tree and emits the value.
-   * @param {any} officesData Offices data.
+   * @param {Office[]} officesData Offices data.
    */
-  initialize(officesData: any) {
-    const treeData = this.buildOfficeTree(officesData);
-    this.treeDataChange.next(treeData);
+  initialize(officesData: Office[]) {
+    this.treeDataChange.next(this.buildOfficeTree(officesData));
   }
 
   /**
    * Builds and returns the offices tree.
-   * @param {any} officeData Offices data.
-   * @returns {OfficeNode} Offices tree nodes.
+   * An office whose parent is not in the list is placed at the top level,
+   * since the list may not include the head office.
+   * @param {Office[]} officesData Offices data.
+   * @returns {OfficeNode[]} Offices tree nodes.
    */
-  buildOfficeTree(officesData: any): OfficeNode[] {
-    const officeTree: OfficeNode[] = [];
-
-    // Header nodes
-    const mainOffice = officesData.find((office: any) => office.hierarchy === '.');
-    officeTree.push(new OfficeNode(mainOffice.name, mainOffice.id));
-
-    // Sort by parent id (so that child nodes can be added properly)
-    officesData.sort((officeOne: any, officeTwo: any) => {
-      if (!officeOne.parentId) {
-        officeOne.parentId = 0;
-      }
-      return officeOne.parentId - officeTwo.parentId;
-    });
-
-    const offices: OfficeNode[] = [];
-
-    // Add offices to any array where index for each is denoted by its id
-    for (const office of officesData) {
-      offices[office.id] = new OfficeNode(
-        office.name,
+  buildOfficeTree(officesData: Office[]): OfficeNode[] {
+    // Create a node for each office, indexed by its id
+    const offices = new Map<number, OfficeNode>();
+    for (const office of officesData || []) {
+      offices.set(
         office.id,
-        office.parentId,
-        office.hierarchy,
-        office.externalId,
-        office.parentName,
-        office.openingDate
+        new OfficeNode(
+          office.name,
+          office.id,
+          office.parentId,
+          office.hierarchy,
+          office.externalId,
+          office.parentName,
+          office.openingDate
+        )
       );
     }
 
-    // Construct offices tree by adding all nodes belonging to headers (with parent id = 0),
-    // and rest as children to respective parent nodes.
-    for (const office of officesData) {
-      if (office.hierarchy !== '.') {
-        if (office.parentId === 1) {
-          officeTree[0].children.push(offices[office.id]);
-        } else {
-          offices[office.parentId].children.push(offices[office.id]);
-        }
+    // Add each office to its parent, or to the top level if its parent is not in the list
+    const officeTree: OfficeNode[] = [];
+    offices.forEach((office) => {
+      const parent = office.parentId ? offices.get(office.parentId) : undefined;
+      if (parent && parent !== office) {
+        office.parent = parent;
+        parent.children.push(office);
+      } else {
+        officeTree.push(office);
       }
-    }
+    });
+
+    const byName = (officeOne: OfficeNode, officeTwo: OfficeNode) => officeOne.name.localeCompare(officeTwo.name);
+    officeTree.sort(byName);
+    offices.forEach((office) => office.children.sort(byName));
     return officeTree;
   }
 }

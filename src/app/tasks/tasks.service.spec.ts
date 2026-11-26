@@ -149,6 +149,18 @@ describe('TasksService maker-checker search', () => {
     emptyDatesRequest.flush([]);
   });
 
+  it('preserves exact mass-rejection decimal tokens at the HTTP boundary', () => {
+    let response: any;
+    service.getCreditApplications({ limit: 10, offset: 0 }, true).subscribe((data) => (response = data));
+    const request = httpMock.expectOne((req) => req.url === '/v2/credit-applications');
+    expect(request.request.responseType).toBe('text');
+    request.flush(
+      '{"totalFilteredRecords":1,"pageItems":[{"loanId":42,"amount":90071992547409.91,"accountNo":"0000042"}]}'
+    );
+    expect(response.pageItems[0].amount).toBe('90071992547409.91');
+    expect(response.pageItems[0].accountNo).toBe('0000042');
+  });
+
   it('requests credit applications with only populated server-side parameters', () => {
     service
       .getCreditApplications({
@@ -258,6 +270,25 @@ describe('TasksService maker-checker search', () => {
     expect(request.request.params.get('limit')).toBe('10');
     expect(request.request.params.get('orderBy')).toBe('lastUpdatedAt');
     expect(request.request.params.get('sortOrder')).toBe('DESC');
+    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
+
+  it('uses the verified prospect search and office-scope parameters', () => {
+    service
+      .getPendingProspects({
+        q: 'Synthetic folio',
+        officeId: 42,
+        offset: 0,
+        limit: 10,
+        orderBy: 'prospectId',
+        sortOrder: 'ASC'
+      })
+      .subscribe();
+    const request = httpMock.expectOne((req) => req.url === '/v2/prospects');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.params.get('q')).toBe('Synthetic folio');
+    expect(request.request.params.get('officeId')).toBe('42');
+    expect(request.request.params.has('search')).toBe(false);
     request.flush({ totalFilteredRecords: 0, pageItems: [] });
   });
 

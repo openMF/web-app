@@ -9,6 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
   TemplateRef,
@@ -19,6 +20,12 @@ import {
   DestroyRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl } from '@angular/forms';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { MatIconButton } from '@angular/material/button';
+import { MatPrefix } from '@angular/material/form-field';
+import { MatActionList, MatListItem } from '@angular/material/list';
+import { MatMenu, MatMenuContent, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -32,40 +39,40 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatNoDataRow
 } from '@angular/material/table';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
-/** rxjs Imports */
-import { of } from 'rxjs';
+/** Custom Utils */
+import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
 
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { OfficeNode } from './office-node.model';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import {
-  MatTreeNestedDataSource,
-  MatTree,
-  MatTreeNodeDef,
-  MatTreeNode,
-  MatTreeNodeToggle,
-  MatNestedTreeNode,
-  MatTreeNodeOutlet
-} from '@angular/material/tree';
 import { OfficeTreeService } from './office-tree-service.service';
-import { TreeControlService } from 'app/shared/common-logic/tree-control.service';
-import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
-import { MatTooltip } from '@angular/material/tooltip';
-import { DatePipe } from '@angular/common';
-import { MatTabGroup, MatTab } from '@angular/material/tabs';
+
+/** Custom Model */
+import { Office, OfficeNode } from './office-node.model';
+
+/** Custom Components */
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
-import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** A row of the offices tree table. */
+export interface OfficeTreeRow {
+  /** Office shown in the row. */
+  node: OfficeNode;
+  /** Depth of the row in the tree. */
+  level: number;
+  /** One entry per ancestor level, used to draw the guide lines. */
+  guides: number[];
+  /** Whether the row has sub-offices that can be shown. */
+  expandable: boolean;
+  /** Whether the sub-offices of the row are shown. */
+  expanded: boolean;
+}
 
 /**
  * Offices component.
@@ -91,21 +98,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatNoDataRow,
     MatPaginator,
-    MatTree,
-    MatTreeNodeDef,
-    MatTreeNode,
-    MatTreeNodeToggle,
     MatIconButton,
-    MatNestedTreeNode,
-    MatTreeNodeOutlet,
-    MatCardTitle,
-    MatTabGroup,
-    MatTab,
-    ExternalIdentifierComponent,
-    DatePipe,
-    DateFormatPipe,
-    MatTooltip
+    MatPrefix,
+    MatMenu,
+    MatMenuContent,
+    MatMenuItem,
+    MatMenuTrigger,
+    MatActionList,
+    MatListItem,
+    ExternalIdentifierComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -113,35 +116,50 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private officeTreeService = inject(OfficeTreeService);
-  private treeControlService = inject(TreeControlService);
-  private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
+  protected configurationWizardService = inject(ConfigurationWizardService);
 
   /** Button toggle group form control for type of view. (list/tree) */
-  viewGroup = new FormControl('listView');
+  viewGroup = new FormControl('treeView', { nonNullable: true });
+  /** Search by office name or external id. */
+  searchControl = new FormControl('', { nonNullable: true });
 
-  /** Offices data. */
-  officesData: any;
+  /** Offices tree. */
+  treeData: OfficeNode[] = [];
+  /** All offices as a flat list. */
+  officeNodes: OfficeNode[] = [];
+  /** Offices whose sub-offices are shown. */
+  expandedNodes = new Set<OfficeNode>();
+  /** Offices that were expanded before searching, restored once the search is cleared. */
+  private expandedBeforeSearch: Set<OfficeNode> | undefined;
+  /** Rows shown in the offices tree table. */
+  treeRows: OfficeTreeRow[] = [];
+  /** Number of offices that match the search. */
+  shownOffices = 0;
+
+  /** Columns to be displayed in offices tree table. */
+  treeColumns: string[] = [
+    'office',
+    'externalId',
+    'openingDate',
+    'actions'
+  ];
   /** Columns to be displayed in offices table. */
   displayedColumns: string[] = [
     'name',
     'externalId',
     'parentName',
-    'openingDate'
+    'openingDate',
+    'actions'
   ];
   /** Data source for offices table. */
-  dataSource: MatTableDataSource<any>;
-  /** Nested tree control for offices tree. */
-  nestedTreeControl: NestedTreeControl<OfficeNode>;
-  /** Nested tree data source for offices tree. */
-  nestedTreeDataSource: MatTreeNestedDataSource<OfficeNode>;
+  dataSource = new MatTableDataSource<OfficeNode>([]);
   /** Selected Office. */
-  office: OfficeNode;
-  /** Office data tables. */
-  dataTablesData: any;
-  /** Flag to check if tree is expanded or collapsed. */
-  isTreeExpanded = true;
+  office: OfficeNode | undefined;
+  /** Offices above the selected office, starting from the top level. */
+  officePath: OfficeNode[] = [];
 
   /** Paginator for offices table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -159,85 +177,257 @@ export class OfficesComponent implements OnInit, AfterViewInit {
 
   /**
    * Retrieves the offices data from `resolve`.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router.
-   * @param {OfficeTreeService} officeTreeService office tree service.
-   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
-   * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    const officeTreeService = this.officeTreeService;
-
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { offices: any; officeDataTables: any }) => {
-        this.officesData = data.offices;
-        officeTreeService.initialize(this.officesData);
-        this.dataTablesData = data.officeDataTables;
-      });
-    this.nestedTreeControl = new NestedTreeControl<OfficeNode>(this.getChildren);
-    this.nestedTreeDataSource = new MatTreeNestedDataSource<OfficeNode>();
+    this.route.data.pipe(takeUntilDestroyed()).subscribe((data: { offices: Office[] }) => {
+      this.officeTreeService.initialize(data.offices);
+    });
   }
 
   /**
-   * Filters data in offices table based on passed value.
-   * @param {string} filterValue Value to filter data.
-   */
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  /**
-   * Sets the offices table.
+   * Sets the offices tree and table, and searches them as the search text changes.
    */
   ngOnInit() {
-    this.setOffices();
-    this.officeTreeService.treeDataChange
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((officeTreeData: OfficeNode[]) => {
-        this.nestedTreeDataSource.data = officeTreeData;
-        this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
-        this.nestedTreeControl.dataNodes = officeTreeData;
-      });
-  }
-
-  /**
-   * Initializes the data source, paginator and sorter for offices table.
-   */
-  setOffices() {
-    this.dataSource = new MatTableDataSource(this.officesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (office: OfficeNode, property: string) => {
+      if (property === 'openingDate') {
+        return this.getIsoDate(office.openingDate);
+      }
+      return String(office[property as keyof OfficeNode] ?? '').toLowerCase();
+    };
+
+    this.officeTreeService.treeDataChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((treeData: OfficeNode[]) => this.setTreeData(treeData));
+
+    this.searchControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.applySearch());
   }
 
   /**
-   * View selected office.
+   * Sets the offices tree, and shows the first level of sub-offices.
+   * @param {OfficeNode[]} treeData Offices tree.
+   */
+  private setTreeData(treeData: OfficeNode[]) {
+    this.treeData = treeData;
+    this.officeNodes = this.flatten(treeData);
+    this.expandedNodes = new Set(treeData);
+    this.expandedBeforeSearch = undefined;
+    this.closeOffice();
+    this.applySearch();
+  }
+
+  /**
+   * Gets the given offices and all the offices below them.
+   * @param {OfficeNode[]} offices Offices.
+   */
+  private flatten(offices: OfficeNode[]): OfficeNode[] {
+    return offices.flatMap((office) => [
+      office,
+      ...this.flatten(office.children)
+    ]);
+  }
+
+  /** Search text in lower case. */
+  private get searchText(): string {
+    return this.searchControl.value.trim().toLowerCase();
+  }
+
+  /**
+   * Checks if an office matches the search.
+   * @param {OfficeNode} office Office.
+   */
+  private matchesSearch(office: OfficeNode): boolean {
+    const search = this.searchText;
+    return (
+      !search || office.name.toLowerCase().includes(search) || (office.externalId || '').toLowerCase().includes(search)
+    );
+  }
+
+  /**
+   * Gets the offices above the given office, starting from its parent.
+   * @param {OfficeNode} office Office.
+   */
+  private getAncestors(office: OfficeNode): OfficeNode[] {
+    const ancestors: OfficeNode[] = [];
+    for (let parent = office.parent; parent; parent = parent.parent) {
+      ancestors.push(parent);
+    }
+    return ancestors;
+  }
+
+  /**
+   * Applies the search, and opens the offices that contain matching offices so they can be seen.
+   */
+  private applySearch() {
+    const matching = this.officeNodes.filter((office) => this.matchesSearch(office));
+    if (this.searchText) {
+      this.expandedBeforeSearch ??= this.expandedNodes;
+      this.expandedNodes = new Set(matching.flatMap((office) => this.getAncestors(office)));
+    } else if (this.expandedBeforeSearch) {
+      this.expandedNodes = this.expandedBeforeSearch;
+      this.expandedBeforeSearch = undefined;
+    }
+
+    // Close the details of the selected office when the search hides it
+    if (this.office && !matching.includes(this.office)) {
+      this.closeOffice();
+    }
+
+    this.shownOffices = matching.length;
+    this.dataSource.data = matching;
+    this.updateRows();
+  }
+
+  /**
+   * Updates the rows of the offices tree table.
+   */
+  private updateRows() {
+    // An office is shown in the tree if it matches the search or leads to an office that does
+    const visible = new Set<OfficeNode>();
+    for (const office of this.dataSource.data) {
+      visible.add(office);
+      this.getAncestors(office).forEach((ancestor) => visible.add(ancestor));
+    }
+
+    const rows: OfficeTreeRow[] = [];
+    const addRows = (node: OfficeNode, level: number) => {
+      if (!visible.has(node)) {
+        return;
+      }
+      const expandable = node.children.some((child) => visible.has(child));
+      const expanded = expandable && this.expandedNodes.has(node);
+      rows.push({
+        node,
+        level,
+        guides: Array.from({ length: level }, (_, index) => index),
+        expandable,
+        expanded
+      });
+      if (expanded) {
+        node.children.forEach((child) => addRows(child, level + 1));
+      }
+    };
+    this.treeData.forEach((office) => addRows(office, 0));
+
+    this.treeRows = rows;
+    this.changeDetectorRef.markForCheck();
+  }
+
+  /**
+   * Tracks the rows of the tree by their office, so toggling an office does not re-render every row.
+   */
+  trackRow = (_: number, row: OfficeTreeRow) => row.node;
+
+  /**
+   * Shows or hides the sub-offices of a row of the tree.
+   * @param {OfficeTreeRow} row Row of the tree.
+   * @param {Event} event Event that triggered the toggle.
+   */
+  toggleRow(row: OfficeTreeRow, event: Event) {
+    event.stopPropagation();
+    if (this.expandedNodes.has(row.node)) {
+      this.expandedNodes.delete(row.node);
+    } else {
+      this.expandedNodes.add(row.node);
+    }
+    this.updateRows();
+  }
+
+  /**
+   * Checks if a keyboard event was triggered on the row itself, and not on a button inside the row.
+   * @param {Event} event Keyboard event of the row.
+   */
+  isRowTarget(event: Event): boolean {
+    return event.target === event.currentTarget;
+  }
+
+  /**
+   * Expands the whole tree.
+   */
+  expandAll() {
+    this.expandedNodes = new Set(this.officeNodes);
+    this.updateRows();
+  }
+
+  /**
+   * Collapses the whole tree.
+   */
+  collapseAll() {
+    this.expandedNodes = new Set();
+    this.updateRows();
+  }
+
+  /**
+   * View selected office, and open the offices above it so its row can be seen.
    * @param {OfficeNode} office Office to be viewed.
    */
   viewOfficeNode(office: OfficeNode) {
-    if (office.id) {
-      this.office = office;
-    } else {
-      delete this.office;
-    }
+    const ancestors = this.getAncestors(office);
+    this.office = office;
+    this.officePath = [...ancestors].reverse();
+    ancestors.forEach((ancestor) => this.expandedNodes.add(ancestor));
+    this.updateRows();
   }
 
   /**
    * Closes the current view for office
    */
   closeOffice() {
-    delete this.office;
+    this.office = undefined;
+    this.officePath = [];
   }
 
   /**
-   * Checks if selected node in tree has children.
+   * Gets a date of the server in ISO format.
+   * @param {number[] | string | undefined} date Date as [year, month, day] or as a string.
    */
-  hasNestedChild = (_: number, node: OfficeNode) => node.children.length;
+  private getIsoDate(date: number[] | string | undefined): string {
+    return Array.isArray(date) ? date.map((part) => String(part).padStart(2, '0')).join('-') : date || '';
+  }
 
   /**
-   * Gets the children of selected node in tree.
+   * Downloads the offices that match the search as a CSV file.
    */
-  private getChildren = (node: OfficeNode) => of(node.children);
+  exportOffices() {
+    const header = [
+      'Office Name',
+      'External ID',
+      'Parent Office',
+      'Opened On'
+    ];
+    const rows = this.dataSource.data.map((office) =>
+      [
+        office.name,
+        office.externalId,
+        office.parentName,
+        this.getIsoDate(office.openingDate)
+      ]
+        .map((value) => `"${sanitizeCsvValue(value).replace(/"/g, '""')}"`)
+        .join()
+    );
+    const csv = [
+      header.join(),
+      ...rows
+    ].join('\r\n');
+    // The byte order mark lets spreadsheets read accented office names
+    const url = URL.createObjectURL(
+      new Blob(
+        [
+          '﻿',
+          csv
+        ],
+        { type: 'text/csv;charset=utf-8' }
+      )
+    );
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'Offices.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
 
   /**
    * Popover function
@@ -289,12 +479,5 @@ export class OfficesComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showOfficeTable = false;
     this.configurationWizardService.showCreateOffice = true;
     this.router.navigate(['/organization']);
-  }
-
-  /**
-   * Expand and Collapse the tree
-   */
-  toggleExpandCollapse() {
-    this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(this.nestedTreeControl, this.isTreeExpanded);
   }
 }

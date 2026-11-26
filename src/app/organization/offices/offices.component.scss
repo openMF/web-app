@@ -6,36 +6,370 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-table {
+.offices {
+  --offices-accent: var(--brand-primary-500, #1074b9);
+
+  padding-bottom: 24px;
+}
+
+// The dark theme reuses the light brand hue, which is too dim on the dark surface,
+// so lighten it toward the text colour.
+:host-context(.dark-theme) .offices {
+  --offices-accent: color-mix(in srgb, var(--brand-primary-100, #5ba2ec) 60%, var(--mat-app-text-color, #fff));
+}
+
+// ===== Page heading =====
+.offices-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.offices-subtitle {
+  margin: 0;
+  color: var(--ds-text-2);
+}
+
+.offices-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+// ===== Layout =====
+.offices-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.offices-card {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg, 12px);
+  background-color: var(--ds-surface);
+  overflow: hidden;
+}
+
+// ===== Search and view switch =====
+.offices-toolbar {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+  --mat-button-toggle-height: 40px;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 16px;
+  border-bottom: 1px solid var(--ds-border);
+}
+
+.offices-search {
+  flex: 1 1 240px;
+  max-width: 400px;
+
+  .mat-mdc-form-field {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.offices-search-icon {
+  padding: 0 8px 0 16px;
+  color: var(--ds-text-3);
+}
+
+.offices-expand-actions {
+  display: flex;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+
+// ===== Tree and list tables =====
+.offices-table-wrapper {
+  overflow-x: auto;
+}
+
+.offices-table {
+  --mat-table-row-item-container-height: 56px;
+  --mat-table-header-container-height: 48px;
+
   width: 100%;
+  background-color: transparent;
 
-  .select-row:hover {
-    cursor: pointer;
+  .mat-mdc-header-cell {
+    color: var(--ds-text-2);
+    font-weight: 500;
+    white-space: nowrap;
   }
 }
 
-.content {
-  div {
-    margin: 1rem 0;
-    overflow-wrap: break-word;
+// Hover gives a light tint and a faint left bar; the selected row below uses a stronger
+// tint and a solid bar, so the two stay distinguishable.
+.offices-row {
+  --offices-row-background: transparent;
+
+  background-color: var(--offices-row-background);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover,
+  &:focus-visible {
+    --offices-row-background: color-mix(in srgb, var(--offices-accent) 6%, transparent);
+
+    box-shadow: inset 4px 0 0 color-mix(in srgb, var(--offices-accent) 40%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--offices-accent);
+    outline-offset: -2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
-.office-tree {
-  ul,
-  li {
-    margin-top: 0;
-    margin-bottom: 0;
-    list-style-type: none;
+// The dark theme stripes the rows of every table with !important, which would hide the tints.
+:host-context(.dark-theme) .offices .offices-table .offices-row {
+  background-color: var(--offices-row-background) !important;
+}
+
+.offices-row.offices-row-selected {
+  --offices-row-background: color-mix(in srgb, var(--offices-accent) 12%, transparent);
+
+  box-shadow: inset 4px 0 0 var(--offices-accent);
+}
+
+.offices-name-cell {
+  position: relative;
+}
+
+// A guide line runs down from each expanded office, so it is clear which offices are under it.
+.offices-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--offices-accent);
+}
+
+.offices-office {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 240px;
+}
+
+.offices-toggle {
+  --mat-icon-button-state-layer-size: 32px;
+  --mdc-icon-button-state-layer-size: 32px;
+
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--ds-text-2);
+}
+
+.offices-toggle-spacer {
+  flex: none;
+  width: 32px;
+}
+
+.offices-icon {
+  flex: none;
+  color: var(--ds-text-3);
+}
+
+.offices-icon-parent {
+  color: var(--offices-accent);
+}
+
+.offices-name-parent {
+  font-weight: 500;
+}
+
+.offices-count {
+  flex: none;
+  padding: 0 8px;
+  border-radius: 12px;
+  background-color: color-mix(in srgb, currentcolor 10%, transparent);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.offices-chip {
+  flex: none;
+  padding: 0 8px;
+  border-radius: 12px;
+  background-color: color-mix(in srgb, var(--offices-accent) 14%, transparent);
+  color: var(--offices-accent);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.offices-code {
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.offices-date {
+  white-space: nowrap;
+}
+
+.offices-actions-cell {
+  width: 48px;
+  text-align: end;
+}
+
+.offices-empty {
+  padding: 32px 16px;
+  color: var(--ds-text-2);
+  text-align: center;
+}
+
+.offices-footer {
+  padding: 16px;
+  border-top: 1px solid var(--ds-border);
+  color: var(--ds-text-2);
+  font-size: 12px;
+}
+
+// ===== Details of the selected office =====
+.offices-details {
+  position: sticky;
+  top: 16px;
+  flex: none;
+  width: 352px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg, 12px);
+  background-color: var(--ds-surface);
+}
+
+.offices-details-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.offices-details-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ds-text-2);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.offices-details-title {
+  margin: 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+
+.offices-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--ds-text-2);
+  font-size: 12px;
+
+  strong {
+    color: var(--ds-text-1);
+  }
+}
+
+.offices-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+  margin: 0 0 16px;
+
+  > div {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ds-border);
   }
 
-  li {
-    span {
-      cursor: pointer;
-    }
+  dt {
+    color: var(--ds-text-2);
+    font-size: 12px;
   }
 
-  .office-tree-invisible {
-    display: none;
+  dd {
+    margin: 0;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+}
+
+.offices-attributes > .offices-attribute-wide {
+  flex-basis: 100%;
+}
+
+.offices-children-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.offices-children {
+  max-height: 240px;
+  margin-bottom: 16px;
+  padding: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius, 8px);
+  overflow-y: auto;
+
+  .mat-mdc-list-item + .mat-mdc-list-item {
+    border-top: 1px solid var(--ds-border);
+  }
+}
+
+.offices-details-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+// ===== Small screens =====
+@media (width <= 960px) {
+  .offices-body {
+    flex-direction: column;
+  }
+
+  .offices-card,
+  .offices-details {
+    width: 100%;
+  }
+
+  .offices-details {
+    position: static;
+  }
+
+  .offices-expand-actions {
+    margin-inline-start: 0;
   }
 }

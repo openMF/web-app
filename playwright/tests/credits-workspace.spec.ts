@@ -143,11 +143,15 @@ test.beforeEach(async ({ page, creditsPermissions }) => {
           { code: 'JPY', name: 'Yen', decimalPlaces: 0 }
         ]
       };
-    } else if (path.includes('/configurations')) data = { value: 0, enabled: false };
+    } else if (path.includes('/configurations')) data = { value: 0, enabled: path.includes('enable-business-date') };
     else if (path.includes('/actuator/')) data = { status: 'UP' };
     else if (path.endsWith('/loans') || path.endsWith('/clients') || path.endsWith('/v2/prospects'))
       data = { totalFilteredRecords: 0, pageItems: [] };
-    else if (path.endsWith('/businessdate')) data = { businessDate: '2026-11-22' };
+    else if (path.includes('/businessdate')) data = { type: 'BUSINESS_DATE', date: [
+          2026,
+          11,
+          22
+        ] };
     // All other writes fail closed, so a changed financial endpoint cannot hit a live server.
     else if (request.method() !== 'GET') {
       await route.fulfill({ status: 403, json: { errors: [] } });
