@@ -45,9 +45,13 @@ export class PostalCodeLookupService {
    * @returns Observable of the API response, or null if not found/disabled
    */
   lookup(countryCode: string, postalCode: string): Observable<PostalCodeLookupResponse | null> {
-    if (!this.enabled) return of(null);
+    const trimmedCountry = countryCode?.trim();
+    const trimmedPostal = postalCode?.trim();
+    if (!this.enabled || !trimmedCountry || !trimmedPostal) return of(null);
     return this.externalHttp
-      .get<PostalCodeLookupResponse>(`${this.API_BASE}/${countryCode}/${postalCode}`)
+      .get<PostalCodeLookupResponse>(
+        `${this.API_BASE}/${encodeURIComponent(trimmedCountry)}/${encodeURIComponent(trimmedPostal)}`
+      )
       .pipe(catchError(() => of(null)));
   }
 
@@ -61,12 +65,19 @@ export class PostalCodeLookupService {
     postalCode: string,
     countryCodes: string[] = DEFAULT_LOOKUP_COUNTRY_CODES
   ): Observable<PostalCodeLookupResponse | null> {
-    if (!this.enabled || !countryCodes.length) return of(null);
+    const trimmedPostal = postalCode?.trim();
+    if (!this.enabled || !trimmedPostal || !Array.isArray(countryCodes) || !countryCodes.length) return of(null);
 
-    const lookups$ = countryCodes.map((code) => this.lookup(code, postalCode));
+    const validCodes = countryCodes.filter((code) => Boolean(code?.trim()));
+    if (!validCodes.length) return of(null);
+
+    const lookups$ = validCodes.map((code) => this.lookup(code, trimmedPostal));
 
     return concat(...lookups$).pipe(
-      filter((result): result is PostalCodeLookupResponse => result !== null && result.places?.length > 0),
+      filter(
+        (result): result is PostalCodeLookupResponse =>
+          result !== null && Array.isArray(result.places) && result.places.length > 0
+      ),
       first(undefined, null)
     );
   }
@@ -76,7 +87,9 @@ export class PostalCodeLookupService {
    * Performs case-insensitive matching.
    */
   resolveCountryCode(countryName: string): string | null {
-    const lower = countryName.toLowerCase();
+    if (!countryName || typeof countryName !== 'string') return null;
+    const lower = countryName.trim().toLowerCase();
+    if (!lower) return null;
     const direct = COUNTRY_NAME_TO_ISO_CODE[lower];
     if (direct) return direct;
 
@@ -96,7 +109,7 @@ export class PostalCodeLookupService {
    * Extracts a clean ResolvedAddress from the raw API response.
    */
   toResolvedAddress(response: PostalCodeLookupResponse): ResolvedAddress | null {
-    if (!response?.places?.length) return null;
+    if (!response || !Array.isArray(response.places) || !response.places.length || !response.places[0]) return null;
     const place = response.places[0];
     return {
       city: place['place name'],
@@ -122,19 +135,21 @@ export class PostalCodeLookupService {
    * @param names     One or more names to try (e.g. full name + abbreviation)
    */
   findBestMatch<T extends { id: number; name: string }>(options: T[], ...names: string[]): T | null {
-    if (!options?.length || !names.length) return null;
+    if (!Array.isArray(options) || !options.length || !names.length) return null;
 
     const candidates = this.expandWithAliases(names);
+    if (!candidates.length) return null;
 
     // 1. Exact match (case-insensitive)
     for (const candidate of candidates) {
-      const exact = options.find((o) => o.name.toLowerCase() === candidate);
+      const exact = options.find((o) => o?.name && typeof o.name === 'string' && o.name.toLowerCase() === candidate);
       if (exact) return exact;
     }
 
     // 2. Starts-with match (safe for short strings)
     for (const candidate of candidates) {
       const startsWith = options.find((o) => {
+        if (!o?.name || typeof o.name !== 'string') return false;
         const optName = o.name.toLowerCase();
         return optName.startsWith(candidate) || candidate.startsWith(optName);
       });
@@ -145,6 +160,7 @@ export class PostalCodeLookupService {
     for (const candidate of candidates) {
       if (candidate.length < this.MIN_PARTIAL_MATCH_LENGTH) continue;
       const contains = options.find((o) => {
+        if (!o?.name || typeof o.name !== 'string') return false;
         const optName = o.name.toLowerCase();
         return optName.includes(candidate) || candidate.includes(optName);
       });
@@ -160,8 +176,9 @@ export class PostalCodeLookupService {
   private expandWithAliases(names: string[]): string[] {
     const result = new Set<string>();
     for (const name of names) {
-      if (!name) continue;
-      const lower = name.toLowerCase();
+      if (!name || typeof name !== 'string') continue;
+      const lower = name.trim().toLowerCase();
+      if (!lower) continue;
       result.add(lower);
       const aliases = COUNTRY_NAME_ALIASES[lower];
       if (aliases) {
