@@ -11,7 +11,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSidenav } from '@angular/material/sidenav';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { describe, it, expect, beforeEach } from '@jest/globals';
 
 import { ShellComponent } from './shell.component';
@@ -134,5 +134,130 @@ describe('ShellComponent — progress bar visibility', () => {
     fixture.detectChanges();
 
     expect(loadingBar()).toBeNull();
+  });
+});
+
+describe('ShellComponent — Skip to content accessibility', () => {
+  let component: ShellComponent;
+  let fixture: ComponentFixture<ShellComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        ShellComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        ProgressBarService,
+        provideAnimationsAsync(),
+        provideRouter([])
+      ]
+    })
+      .overrideComponent(ShellComponent, {
+        remove: {
+          imports: [
+            SidenavComponent,
+            ToolbarComponent,
+            BreadcrumbComponent,
+            ContentComponent,
+            FooterComponent
+          ]
+        },
+        add: {
+          imports: [
+            StubSidenavComponent,
+            StubToolbarComponent,
+            StubBreadcrumbComponent,
+            StubContentComponent,
+            StubFooterComponent
+          ]
+        }
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(ShellComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('renders a skip to content anchor as the first focusable element in the shell', () => {
+    const rootEl = fixture.nativeElement as HTMLElement;
+    const skipLink = rootEl.querySelector<HTMLAnchorElement>('a.skip-link');
+    expect(skipLink).not.toBeNull();
+    expect(skipLink?.getAttribute('href')).toBe('#main-content');
+  });
+
+  it('positions the skip link before the sidebar and toolbar in DOM order', () => {
+    const rootEl = fixture.nativeElement as HTMLElement;
+    const skipLink = rootEl.querySelector('a.skip-link');
+    const sidenav = rootEl.querySelector('mat-sidenav');
+    const toolbar = rootEl.querySelector('mifosx-toolbar');
+
+    expect(skipLink).not.toBeNull();
+    expect(sidenav).not.toBeNull();
+    expect(toolbar).not.toBeNull();
+
+    const skipBeforeSidenav = (skipLink!.compareDocumentPosition(sidenav!) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+    const skipBeforeToolbar = (skipLink!.compareDocumentPosition(toolbar!) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+
+    expect(skipBeforeSidenav).toBe(true);
+    expect(skipBeforeToolbar).toBe(true);
+  });
+
+  it('uses the translation infrastructure for the skip link label', () => {
+    const translateService = TestBed.inject(TranslateService);
+    const translatedText = 'Saltar al contenido principal';
+    translateService.setTranslation('es-MX', {
+      labels: {
+        text: {
+          'Skip to main content': translatedText
+        }
+      }
+    });
+    translateService.use('es-MX');
+    fixture.detectChanges();
+
+    const rootEl = fixture.nativeElement as HTMLElement;
+    const skipLink = rootEl.querySelector('a.skip-link');
+    expect(skipLink).not.toBeNull();
+    expect(skipLink?.textContent?.trim()).toBe(translatedText);
+    expect(skipLink?.textContent?.trim()).not.toBe('labels.text.Skip to main content');
+  });
+
+  it('focuses the #main-content landmark when the skip link is activated', () => {
+    const mainEl = document.createElement('main');
+    mainEl.id = 'main-content';
+    mainEl.tabIndex = -1;
+    document.body.appendChild(mainEl);
+
+    try {
+      const skipLink = fixture.nativeElement.querySelector('a.skip-link') as HTMLAnchorElement;
+      expect(skipLink).not.toBeNull();
+
+      const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+      skipLink.dispatchEvent(event);
+
+      expect(event.defaultPrevented).toBe(true);
+      expect(document.activeElement).toBe(mainEl);
+    } finally {
+      document.body.removeChild(mainEl);
+    }
+  });
+
+  it('prevents default anchor navigation when the skip link is activated', () => {
+    const skipLink = fixture.nativeElement.querySelector('a.skip-link') as HTMLAnchorElement;
+    expect(skipLink).not.toBeNull();
+
+    const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true });
+    const notCancelled = skipLink.dispatchEvent(clickEvent);
+
+    expect(clickEvent.defaultPrevented).toBe(true);
+    expect(notCancelled).toBe(false);
+  });
+
+  it('preserves existing shell navigation functionality', () => {
+    expect(component.sidenavCollapsed).toBe(true);
+    component.toggleCollapse(false);
+    expect(component.sidenavCollapsed).toBe(false);
   });
 });

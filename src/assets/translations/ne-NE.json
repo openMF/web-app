@@ -4932,6 +4932,7 @@
       "No configured hours": "कार्य समय कन्फिगर गरिएको छैन",
       "Enabled days need valid opening and closing times": "सक्रिय दिनहरूमा मान्य खुल्ने र बन्द हुने समय आवश्यक छ।",
       "Saving changes": "परिवर्तनहरू सुरक्षित गर्दै…",
+      "Skip to main content": "मुख्य सामग्रीमा जानुहोस्",
       "No valid saved coordinates": "सुरक्षित गरिएका निर्देशाङ्कहरू नभएका वा अमान्य भएकाले नक्सा उपलब्ध छैन।",
       "The transaction receipt could not be loaded. This may be due to:": "कारोबार रसिद लोड गर्न सकिएन। यो निम्न कारणहरूले गर्दा हुन सक्छ:",
       "Missing or incomplete report configuration": "प्रतिवेदन कन्फिगरेसन छुटेको वा अपूर्ण छ",

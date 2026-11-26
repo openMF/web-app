@@ -4934,6 +4934,7 @@
       "No configured hours": "Keine Öffnungszeiten konfiguriert",
       "Enabled days need valid opening and closing times": "Für aktivierte Tage sind gültige Öffnungs- und Schließzeiten erforderlich.",
       "Saving changes": "Änderungen werden gespeichert…",
+      "Skip to main content": "Zum Hauptinhalt springen",
       "No valid saved coordinates": "Die Karte ist nicht verfügbar, da die gespeicherten Koordinaten fehlen oder ungültig sind.",
       "The transaction receipt could not be loaded. This may be due to:": "Der Transaktionsbeleg konnte nicht geladen werden. Mögliche Ursachen:",
       "Missing or incomplete report configuration": "Fehlende oder unvollständige Berichtskonfiguration",
