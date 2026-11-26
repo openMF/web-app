@@ -61,14 +61,6 @@ export class SharesService {
   }
 
   /**
-   * @param {string} accountId shares account Id
-   * @returns {Observable<any>}
-   */
-  deleteSharesAccount(accountId: string): Observable<any> {
-    return this.http.delete(`/accounts/share/${accountId}`);
-  }
-
-  /**
    * @param {string} accountId Shares Account Id
    * @param {string} command Command
    * @param {any} data Data

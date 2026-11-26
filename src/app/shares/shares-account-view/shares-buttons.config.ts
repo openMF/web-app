@@ -106,10 +106,6 @@ export class SharesButtonsConfiguration {
           {
             name: 'Reject',
             taskPermissionName: 'REJECT_SHAREACCOUNT'
-          },
-          {
-            name: 'Delete',
-            taskPermissionName: 'DELETE_SHAREACCOUNT'
           }
         ];
         break;
