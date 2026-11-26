@@ -7475,12 +7475,12 @@
       "holdings": "Pesa-Mkononi"
     },
     "actions": {
-      "addDenomination": "Ongeza Dhehebu",
+      "addDenomination": "Ongeza thamani ya noti au sarafu",
       "confirmDeposit": "Thibitisha Amana",
       "finalizeClosing": "Maliza Kufunga",
       "load": "Mzigo",
       "printReceipt": "Chapisha risiti",
-      "removeDenomination": "Ondoa Dhehebu",
+      "removeDenomination": "Ondoa thamani ya noti au sarafu",
       "reprint": "Chapisha upya",
       "retry": "Jaribu tena",
       "search": "Tafuta",
@@ -7493,7 +7493,7 @@
       "amount": "Kiasi",
       "authorization": "Uidhinishaji",
       "authorizedBy": "Imeidhinishwa Na",
-      "authorizedOn": "Imeidhinishwa Imewashwa",
+      "authorizedOn": "Tarehe na saa ya idhini",
       "businessDate": "Tarehe ya Biashara",
       "cashier": "Keshia",
       "cashierId": "Kitambulisho cha Cashier",
@@ -7502,7 +7502,7 @@
       "completedOn": "Imekamilika Kwa",
       "currency": "Sarafu",
       "currentBalance": "Salio la Sasa",
-      "denomination": "Dhehebu",
+      "denomination": "Thamani ya noti au sarafu",
       "description": "Maelezo",
       "difference": "Tofauti",
       "expectedBalance": "Salio linalotarajiwa",
@@ -7516,7 +7516,7 @@
       "outflows": "Inatoka nje",
       "physicalAssets": "Mali za Kimwili",
       "physicalCash": "Fedha ya kimwili",
-      "previousSettlements": "Makazi yaliyotangulia",
+      "previousSettlements": "Makabidhiano ya fedha yaliyotangulia",
       "quantity": "Kiasi",
       "reference": "Rejeleo",
       "search": "Maelezo au kumbukumbu",
@@ -7564,7 +7564,20 @@
     },
     "closing": {
       "confirmTitle": "Thibitisha Kufungwa kwa Sajili ya Mwisho ya Pesa",
-      "confirmText": "Je, ungependa kukamilisha {{cashier}} kwa {{date}} kwa {{currency}}? Inatarajiwa: {{expected}}; pesa taslimu: {{cash}}; hundi: {{checks}}; onyesho la kukagua tofauti: {{difference}}. Uidhinishaji unafanywa na keshia mkuu aliyeingia."
+      "confirmText": "Je, ungependa kukamilisha {{cashier}} kwa {{date}} kwa {{currency}}? Inatarajiwa: {{expected}}; pesa taslimu: {{cash}}; hundi: {{checks}}; onyesho la kukagua tofauti: {{difference}}. Uidhinishaji unafanywa na keshia mkuu aliyeingia.",
+      "registerStatus": {
+        "NOT_OPENED": "Haijafunguliwa",
+        "OPEN": "Imefunguliwa",
+        "COMPLETED": "Imefungwa",
+        "UNAVAILABLE": "Hali haipatikani"
+      },
+      "notOpened": "Sajili hii ya fedha haijafunguliwa. Ifungue kabla ya kujaribu kuifunga.",
+      "closed": "Sajili hii ya fedha tayari imefungwa kwa tarehe ya biashara iliyochaguliwa.",
+      "contextChanged": "Sajili au hali ya fedha imebadilika. Kagua taarifa zilizosasishwa kabla ya kufunga.",
+      "unresolved": "Matokeo ya kufunga hayajathibitishwa. Usibadilishe ombi hili na ukague hali yake kabla ya kujaribu kufunga tena.",
+      "statusUnavailable": "Hali ya sajili haikuweza kuthibitishwa. Pakia taarifa tena.",
+      "refreshFailed": "Risiti iliyothibitishwa imehifadhiwa, lakini hali haikusasishwa. Kagua hali tena.",
+      "checkStatus": "Kagua hali ya kufunga"
     },
     "operation": {
       "confirmText": "Ungependa kutuma amana hii ya mwisho ya {{cashier}} tarehe {{date}} kwa {{currency}}? Fedha: {{cash}}; hundi: {{checks}}."

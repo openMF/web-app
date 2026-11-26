@@ -7469,7 +7469,7 @@
       "baseTeller": "Basiskasse"
     },
     "views": {
-      "closing": "Schließung der Registrierkasse",
+      "closing": "Kassenschluss",
       "global": "Globale Bargeldzählung",
       "deposit-in-transit": "Bankeinzahlung im Transit",
       "bank-deposit": "Bankeinzahlung",
@@ -7479,7 +7479,7 @@
     "actions": {
       "addDenomination": "Stückelung hinzufügen",
       "confirmDeposit": "Bestätigen Sie die Einzahlung",
-      "finalizeClosing": "Abschluss abschließen",
+      "finalizeClosing": "Kassenschluss bestätigen",
       "load": "Laden",
       "printReceipt": "Beleg drucken",
       "removeDenomination": "Stückelung entfernen",
@@ -7518,11 +7518,11 @@
       "outflows": "Abflüsse",
       "physicalAssets": "Physische Vermögenswerte",
       "physicalCash": "Physisches Bargeld",
-      "previousSettlements": "Frühere Abrechnungen",
+      "previousSettlements": "Frühere Kassenabrechnungen",
       "quantity": "Menge",
       "reference": "Referenz",
       "search": "Beschreibung oder Referenz",
-      "settlementsDeposits": "Abrechnungen und Einlagen",
+      "settlementsDeposits": "Kassenabrechnungen und Einzahlungen",
       "status": "Status",
       "teller": "Kassierer",
       "toDate": "Bis Datum",
@@ -7565,8 +7565,21 @@
       "BANK_DEPOSIT": "Bankeinzahlung"
     },
     "closing": {
-      "confirmTitle": "Bestätigen Sie den endgültigen Abschluss der Registrierkasse",
-      "confirmText": "{{cashier}} für {{date}} in {{currency}} abschließen? Erwartet: {{expected}}; Bargeld: {{cash}}; prüft: {{checks}}; Differenzvorschau: {{difference}}. Die Autorisierung erfolgt durch den angemeldeten Hauptkassierer."
+      "confirmTitle": "Endgültigen Kassenschluss bestätigen",
+      "confirmText": "{{cashier}} für {{date}} in {{currency}} abschließen? Erwartet: {{expected}}; Bargeld: {{cash}}; Schecks: {{checks}}; Differenzvorschau: {{difference}}. Die Autorisierung erfolgt durch den angemeldeten Hauptkassierer.",
+      "registerStatus": {
+        "NOT_OPENED": "Nicht geöffnet",
+        "OPEN": "Geöffnet",
+        "COMPLETED": "Geschlossen",
+        "UNAVAILABLE": "Status nicht verfügbar"
+      },
+      "notOpened": "Diese Kasse wurde nicht geöffnet. Öffnen Sie die Kasse vor dem Abschluss.",
+      "closed": "Diese Kasse wurde für das gewählte Geschäftsdatum bereits geschlossen.",
+      "contextChanged": "Die Kasse oder Finanzlage hat sich geändert. Prüfen Sie den aktualisierten Kontext vor dem Abschluss.",
+      "unresolved": "Das Abschlussergebnis ist ungeklärt. Lassen Sie diese Anfrage unverändert und prüfen Sie ihren Status vor einem weiteren Abschluss.",
+      "statusUnavailable": "Der Kassenstatus konnte nicht geprüft werden. Laden Sie den Kontext erneut.",
+      "refreshFailed": "Der bestätigte Beleg bleibt erhalten, aber die Statusaktualisierung ist fehlgeschlagen. Prüfen Sie den Status erneut.",
+      "checkStatus": "Abschlussstatus prüfen"
     },
     "operation": {
       "confirmText": "Diese letzte Einzahlung für {{cashier}} am {{date}} in {{currency}} buchen? Bargeld: {{cash}}; Schecks: {{checks}}."

@@ -7467,7 +7467,7 @@
       "baseTeller": "기본 창구"
     },
     "views": {
-      "closing": "금전 등록기 폐쇄",
+      "closing": "출납 마감",
       "global": "글로벌 현금 수",
       "deposit-in-transit": "운송중 예금",
       "bank-deposit": "은행 예금",
@@ -7501,7 +7501,7 @@
       "closingStatus": "마감 상태",
       "completedOn": "완료 날짜",
       "currency": "통화",
-      "currentBalance": "현재의 균형",
+      "currentBalance": "현재 잔액",
       "denomination": "권종",
       "description": "설명",
       "difference": "차이",
@@ -7516,7 +7516,7 @@
       "outflows": "유출",
       "physicalAssets": "물리적 자산",
       "physicalCash": "실물 현금",
-      "previousSettlements": "이전 정착지",
+      "previousSettlements": "이전 정산",
       "quantity": "수량",
       "reference": "참조",
       "search": "설명 또는 참조",
@@ -7550,8 +7550,8 @@
       "settlementCompleted": "정산 완료"
     },
     "status": {
-      "OPEN": "열기",
-      "COMPLETED": "완전한"
+      "OPEN": "열림",
+      "COMPLETED": "완료"
     },
     "differenceType": {
       "BALANCED": "균형",
@@ -7563,8 +7563,21 @@
       "BANK_DEPOSIT": "은행 예금"
     },
     "closing": {
-      "confirmTitle": "최종 금전 등록기 폐쇄 확인",
-      "confirmText": "{{cashier}}의 {{date}}을(를) {{currency}}로 확정하시겠습니까? 예상됨: {{expected}}; 현금: {{cash}}; 수표: {{checks}}; 차이 미리보기: {{difference}}. 승인은 서명된 수석 계산원이 수행합니다."
+      "confirmTitle": "최종 출납 마감 확인",
+      "confirmText": "{{cashier}}의 {{date}}을(를) {{currency}}로 확정하시겠습니까? 예상됨: {{expected}}; 현금: {{cash}}; 수표: {{checks}}; 차이 미리보기: {{difference}}. 승인은 서명된 수석 계산원이 수행합니다.",
+      "registerStatus": {
+        "NOT_OPENED": "미개설",
+        "OPEN": "열림",
+        "COMPLETED": "마감됨",
+        "UNAVAILABLE": "상태 확인 불가"
+      },
+      "notOpened": "이 금전등록기는 개설되지 않았습니다. 마감하기 전에 먼저 개설하세요.",
+      "closed": "이 금전등록기는 선택한 영업일에 이미 마감되었습니다.",
+      "contextChanged": "금전등록기 또는 재무 상태가 변경되었습니다. 마감 전에 최신 정보를 검토하세요.",
+      "unresolved": "마감 결과가 확인되지 않았습니다. 이 요청을 변경하지 말고 다시 마감하기 전에 상태를 확인하세요.",
+      "statusUnavailable": "금전등록기 상태를 확인할 수 없습니다. 정보를 다시 불러오세요.",
+      "refreshFailed": "확인된 영수증은 보존되었지만 상태 갱신에 실패했습니다. 상태를 다시 확인하세요.",
+      "checkStatus": "마감 상태 확인"
     },
     "operation": {
       "confirmText": "{{cashier}}에 {{date}}에 대한 최종 입금액을 {{currency}}로 게시하시겠습니까? 현금: {{cash}}; 수표: {{checks}}."

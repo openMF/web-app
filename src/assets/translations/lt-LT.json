@@ -7467,9 +7467,9 @@
       "baseTeller": "Pagrindinė kasa"
     },
     "views": {
-      "closing": "Kasos aparato uždarymas",
+      "closing": "Kasos uždarymas",
       "global": "Pasaulinis grynųjų pinigų skaičius",
-      "deposit-in-transit": "Užstatas tranzitu",
+      "deposit-in-transit": "Grynųjų pinigų įmoka kelyje",
       "bank-deposit": "Banko indėlis",
       "history": "Sandorių istorija",
       "holdings": "Pinigai į rankas"
@@ -7493,7 +7493,7 @@
       "amount": "Suma",
       "authorization": "Autorizacija",
       "authorizedBy": "Įgaliojo",
-      "authorizedOn": "Įgaliota Įjungta",
+      "authorizedOn": "Patvirtinimo data ir laikas",
       "businessDate": "Darbo data",
       "cashier": "Kasininkė",
       "cashierId": "Kasininko ID",
@@ -7502,7 +7502,7 @@
       "completedOn": "Užbaigta",
       "currency": "Valiuta",
       "currentBalance": "Dabartinis balansas",
-      "denomination": "Denominacija",
+      "denomination": "Nominalas",
       "description": "apibūdinimas",
       "difference": "Skirtumas",
       "expectedBalance": "Numatomas likutis",
@@ -7516,13 +7516,13 @@
       "outflows": "Ištekėjimai",
       "physicalAssets": "Fizinis turtas",
       "physicalCash": "Fiziniai pinigai",
-      "previousSettlements": "Ankstesnės gyvenvietės",
+      "previousSettlements": "Ankstesni atsiskaitymai",
       "quantity": "Kiekis",
       "reference": "Nuoroda",
       "search": "Aprašymas arba nuoroda",
       "settlementsDeposits": "Atsiskaitymai ir indėliai",
       "status": "Būsena",
-      "teller": "Teikėjas",
+      "teller": "Kasininkas",
       "toDate": "Iki datos",
       "total": "Iš viso",
       "transactionType": "Operacijos tipas"
@@ -7550,7 +7550,7 @@
       "settlementCompleted": "Atsiskaitymas baigtas"
     },
     "status": {
-      "OPEN": "Atidaryti",
+      "OPEN": "Atidaryta",
       "COMPLETED": "Užbaigta"
     },
     "differenceType": {
@@ -7559,12 +7559,25 @@
       "SHORTAGE": "Trūkumas"
     },
     "operationType": {
-      "DEPOSIT_IN_TRANSIT": "Užstatas tranzitu",
+      "DEPOSIT_IN_TRANSIT": "Grynųjų pinigų įmoka kelyje",
       "BANK_DEPOSIT": "Banko indėlis"
     },
     "closing": {
-      "confirmTitle": "Patvirtinkite galutinį kasos aparato uždarymą",
-      "confirmText": "Užbaigti {{cashier}} {{date}} {{currency}}? Numatoma: {{expected}}; grynieji pinigai: {{cash}}; čekiai: {{checks}}; skirtumo peržiūra: {{difference}}. Autorizavimą atlieka prisiregistravusi vyriausioji kasininkė."
+      "confirmTitle": "Patvirtinti galutinį kasos uždarymą",
+      "confirmText": "Užbaigti {{cashier}} {{date}} {{currency}}? Numatoma: {{expected}}; grynieji pinigai: {{cash}}; čekiai: {{checks}}; skirtumo peržiūra: {{difference}}. Autorizavimą atlieka prisiregistravusi vyriausioji kasininkė.",
+      "registerStatus": {
+        "NOT_OPENED": "Neatidaryta",
+        "OPEN": "Atidaryta",
+        "COMPLETED": "Uždaryta",
+        "UNAVAILABLE": "Būsena neprieinama"
+      },
+      "notOpened": "Ši kasa neatidaryta. Prieš bandydami uždaryti, atidarykite kasą.",
+      "closed": "Ši kasa jau uždaryta pasirinktai darbo datai.",
+      "contextChanged": "Kasa arba finansinė būklė pasikeitė. Prieš uždarydami peržiūrėkite atnaujintus duomenis.",
+      "unresolved": "Uždarymo rezultatas nepatvirtintas. Nekeiskite šios užklausos ir prieš kitą uždarymą patikrinkite jos būseną.",
+      "statusUnavailable": "Kasos būsenos patikrinti nepavyko. Įkelkite duomenis iš naujo.",
+      "refreshFailed": "Patvirtintas kvitas išsaugotas, bet būsenos atnaujinti nepavyko. Patikrinkite būseną dar kartą.",
+      "checkStatus": "Tikrinti uždarymo būseną"
     },
     "operation": {
       "confirmText": "Paskelbti šį paskutinį indėlį už {{cashier}} {{date}} {{currency}}? Grynieji pinigai: {{cash}}; čekiai: {{checks}}."

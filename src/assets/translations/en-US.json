@@ -7557,7 +7557,20 @@
     },
     "closing": {
       "confirmTitle": "Confirm Final Cash Register Closing",
-      "confirmText": "Finalize {{cashier}} for {{date}} in {{currency}}? Expected: {{expected}}; cash: {{cash}}; checks: {{checks}}; difference preview: {{difference}}. Authorization is performed by the signed-in head cashier."
+      "confirmText": "Finalize {{cashier}} for {{date}} in {{currency}}? Expected: {{expected}}; cash: {{cash}}; checks: {{checks}}; difference preview: {{difference}}. Authorization is performed by the signed-in head cashier.",
+      "registerStatus": {
+        "NOT_OPENED": "Not Opened",
+        "OPEN": "Open",
+        "COMPLETED": "Closed",
+        "UNAVAILABLE": "Status Unavailable"
+      },
+      "notOpened": "This cash register has not been opened. Open the cash register before attempting to close it.",
+      "closed": "This cash register has already been closed for the selected business date.",
+      "contextChanged": "The register or financial position changed. Review the updated context before closing.",
+      "unresolved": "The closing outcome is unresolved. Keep this request unchanged and check its status before attempting another closing.",
+      "statusUnavailable": "The register status could not be verified. Load the context again.",
+      "refreshFailed": "The completed receipt is preserved, but the status refresh failed. Check the status again.",
+      "checkStatus": "Check Closing Status"
     },
     "operation": {
       "confirmText": "Post this final deposit for {{cashier}} on {{date}} in {{currency}}? Cash: {{cash}}; checks: {{checks}}."
