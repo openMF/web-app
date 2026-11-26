@@ -39,7 +39,7 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
 
   ngOnInit() {
     this.supportedInterestRefundTypesOptions = this.loanProductsTemplate.supportedInterestRefundTypesOptions;
-    const values: StringEnumOptionData[] = this.loanProductsTemplate.supportedInterestRefundTypes;
+    const values: StringEnumOptionData[] = this.loanProductsTemplate.supportedInterestRefundTypes ?? [];
     const supportedInterestRefundTypes: string[] = this.mapStringEnumOptionToIdList(values);
     this.loanProductInterestRefundForm.patchValue({
       supportedInterestRefundTypes: supportedInterestRefundTypes
