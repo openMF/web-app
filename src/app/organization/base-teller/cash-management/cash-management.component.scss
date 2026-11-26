@@ -96,6 +96,28 @@
     background: var(--mat-sys-error-container);
   }
 
+  .register-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--mat-sys-surface-container);
+    color: var(--mat-sys-on-surface);
+    border-inline-start: 4px solid var(--mat-sys-outline, currentcolor);
+  }
+
+  .register-status[data-status='OPEN'],
+  .success {
+    color: var(--mdc-theme-success, #2e7d32);
+    border-inline-start: 4px solid currentcolor;
+  }
+
+  .register-status[data-status='NOT_OPENED'],
+  .register-status[data-status='UNAVAILABLE'] {
+    border-inline-start-color: var(--mdc-theme-warning, #b26a00);
+  }
+
   .warning,
   .empty-state,
   .hint {
@@ -144,5 +166,12 @@
   h1,
   .message {
     display: none !important;
+  }
+}
+
+:host-context(.dark-theme) .cash-management {
+  .register-status[data-status='OPEN'],
+  .success {
+    color: var(--mdc-theme-success, #81c784);
   }
 }

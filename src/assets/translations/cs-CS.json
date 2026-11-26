@@ -7499,7 +7499,7 @@
       "businessDate": "Obchodní datum",
       "cashier": "Pokladní",
       "cashierId": "ID pokladníka",
-      "checks": "Kontroly",
+      "checks": "Šeky",
       "closingStatus": "Stav uzavření",
       "completedOn": "Dokončeno dne",
       "currency": "Měna",
@@ -7552,7 +7552,7 @@
       "settlementCompleted": "Vyrovnání dokončeno"
     },
     "status": {
-      "OPEN": "Otevřít",
+      "OPEN": "Otevřeno",
       "COMPLETED": "Dokončeno"
     },
     "differenceType": {
@@ -7566,10 +7566,23 @@
     },
     "closing": {
       "confirmTitle": "Potvrďte konečné uzavření pokladny",
-      "confirmText": "Dokončit {{cashier}} na {{date}} v {{currency}}? Očekávané: {{expected}}; hotovost: {{cash}}; kontroly: {{checks}}; náhled rozdílu: {{difference}}. Autorizaci provádí přihlášený hlavní pokladník."
+      "confirmText": "Dokončit {{cashier}} na {{date}} v {{currency}}? Očekávané: {{expected}}; hotovost: {{cash}}; šeky: {{checks}}; náhled rozdílu: {{difference}}. Autorizaci provádí přihlášený hlavní pokladník.",
+      "registerStatus": {
+        "NOT_OPENED": "Neotevřena",
+        "OPEN": "Otevřena",
+        "COMPLETED": "Uzavřena",
+        "UNAVAILABLE": "Stav není dostupný"
+      },
+      "notOpened": "Tato pokladna nebyla otevřena. Před uzavřením ji otevřete.",
+      "closed": "Tato pokladna již byla pro vybraný obchodní den uzavřena.",
+      "contextChanged": "Pokladna nebo finanční stav se změnily. Před uzavřením zkontrolujte aktualizované údaje.",
+      "unresolved": "Výsledek uzavření není potvrzen. Tento požadavek neměňte a před dalším uzavřením ověřte jeho stav.",
+      "statusUnavailable": "Stav pokladny nelze ověřit. Načtěte údaje znovu.",
+      "refreshFailed": "Potvrzený doklad je zachován, ale aktualizace stavu selhala. Znovu ověřte stav.",
+      "checkStatus": "Ověřit stav uzavření"
     },
     "operation": {
-      "confirmText": "Odeslat tento konečný vklad pro {{cashier}} dne {{date}} v {{currency}}? Hotovost: {{cash}}; kontroly: {{checks}}."
+      "confirmText": "Odeslat tento konečný vklad pro {{cashier}} dne {{date}} v {{currency}}? Hotovost: {{cash}}; šeky: {{checks}}."
     },
     "hints": {
       "backendDenominations": "Zadejte odesílané nominální hodnoty. Plugin Savings je ověří a vypočítá směrodatný součet.",
@@ -9597,5 +9610,70 @@
     "rejectOne": "Zamítnout 1 žádost",
     "searchScope": "Text hledá pouze na této stránce. Vyberte navrženého klienta pro všechny jeho žádosti; filtry data a produktu platí pro všechny výsledky.",
     "pendingScope": "Stránkování počítá čekající žádosti. Způsobilost produktu se ověřuje na každé stránce."
+  },
+  "commercialPipeline": {
+    "tab": "Obchodní panel",
+    "title": "Sledování průběhu",
+    "description": "Sledujte zájemce od registrace po vyplacení.",
+    "refresh": "Obnovit",
+    "forbidden": "Nemáte oprávnění číst zájemce.",
+    "inProgress": "Zájemci ve zpracování",
+    "onTime": "Včas · 1–5 dní",
+    "atRisk": "Riziko · 6–10 dní",
+    "overdue": "Po lhůtě · více než 10 dní",
+    "average": "Průměrná doba do vyplacení",
+    "unavailable": "Nedostupné",
+    "rule": "Porušuje pravidlo 10 dní",
+    "metricGap": "Počty, čekací doby a průměry dokončených cyklů vyžadují ověřené vazby na žádosti, stavy a data zahájení.",
+    "search": "Hledat podle reference nebo zájemce",
+    "executive": "Obchodní zástupce",
+    "branch": "Pobočka",
+    "all": "Vše",
+    "aging": "Doba ve fázi",
+    "filterGap": "Filtry zástupce a doby nejsou dostupné: chybí přiřazení a data zahájení fází.",
+    "scope": "Načteno: {{loaded}} · Odpovídá: {{total}}",
+    "sortGap": "Řazení podle ID zájemce. Řazení podle čekání není dostupné.",
+    "loading": "Načítání zájemců…",
+    "error": "Zájemce se nepodařilo načíst. Zkuste to znovu.",
+    "retry": "Zkusit znovu",
+    "empty": "Hledání neodpovídají žádní zájemci.",
+    "matrix": "Obchodní proces s osmi fázemi",
+    "prospect": "Zájemce",
+    "reportedStage": "Hlášená fáze",
+    "durationUnknown": "Doba není dostupná",
+    "legend": "Prahové hodnoty v kalendářních dnech",
+    "stageGap": "? = Neznámý stav. Události zájemců nelze přiřadit k úvěrovým fázím bez ověřené vazby na žádost.",
+    "traceability": "Sledovatelnost",
+    "viewFile": "Zobrazit spis",
+    "snapshotGap": "Souhrn posledních fází zájemce. Úplná historie událostí není dostupná.",
+    "registration": "Stav registrace",
+    "lastCompleted": "Poslední fáze hlášená jako dokončená",
+    "stopped": "Hlášená zastavená fáze",
+    "notes": "Otevřít poznámky klienta",
+    "selectProspect": "Vyberte zájemce a zobrazte souhrn fází.",
+    "actionGap": "Oznámení, žádosti o dokumenty a eskalace nejsou dostupné. Poznámky se otevřou ve stávajícím autorizovaném postupu.",
+    "attention": "Vyžaduje pozornost",
+    "attentionScope": "Pouze zastavené fáze hlášené na této stránce. Závažnost, chybějící požadavky a čekací doby nejsou dostupné.",
+    "view": "Zobrazit",
+    "noAttention": "Na této stránce nejsou hlášeny zastavené fáze. Dobu čekání nelze posoudit.",
+    "unknown": "Neznámé",
+    "departments": {
+      "commercial": "Obchod",
+      "compliance": "Soulad",
+      "credit": "Úvěry",
+      "executive": "Zástupce",
+      "committee": "Výbor",
+      "legal": "Právní"
+    },
+    "stages": {
+      "ONBOARDING": "Obchodní registrace",
+      "COMPLIANCE": "Dokumentace",
+      "PARAMETRIC_SCORE": "Parametrické hodnocení",
+      "FILE_INTEGRATION": "Dokončení spisu",
+      "CREDIT_ANALYSIS": "Úvěrová analýza",
+      "APPROVAL": "Schválení",
+      "LEGAL_INSTRUMENTATION": "Právní dokumenty a ověření",
+      "DISBURSEMENT": "Vyplacení / financování"
+    }
   }
 }

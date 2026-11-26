@@ -390,8 +390,8 @@ describe('BaseTellerService', () => {
     expect(req.request.params.get('cashierId')).toBe('9');
     expect(req.request.params.get('currencyCode')).toBe('USD');
     expect(req.request.params.get('businessDate')).toBe('2026-09-23');
-    req.flush({ cashierId: 9, currencyCode: 'USD', eligibleChecks: [], status: 'OPEN' });
-    expect((await resultPromise).status).toBe('OPEN');
+    req.flush({ cashierId: 9, currencyCode: 'USD', eligibleChecks: [], status: 'OPEN', registerStatus: 'NOT_OPENED' });
+    expect((await resultPromise).registerStatus).toBe('NOT_OPENED');
   });
 
   it('serializes the exact WEB-1232 closing DTO to the closing URL', async () => {

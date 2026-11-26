@@ -7467,7 +7467,7 @@
       "baseTeller": "기본 창구"
     },
     "views": {
-      "closing": "금전 등록기 폐쇄",
+      "closing": "출납 마감",
       "global": "글로벌 현금 수",
       "deposit-in-transit": "운송중 예금",
       "bank-deposit": "은행 예금",
@@ -7501,7 +7501,7 @@
       "closingStatus": "마감 상태",
       "completedOn": "완료 날짜",
       "currency": "통화",
-      "currentBalance": "현재의 균형",
+      "currentBalance": "현재 잔액",
       "denomination": "권종",
       "description": "설명",
       "difference": "차이",
@@ -7516,7 +7516,7 @@
       "outflows": "유출",
       "physicalAssets": "물리적 자산",
       "physicalCash": "실물 현금",
-      "previousSettlements": "이전 정착지",
+      "previousSettlements": "이전 정산",
       "quantity": "수량",
       "reference": "참조",
       "search": "설명 또는 참조",
@@ -7550,8 +7550,8 @@
       "settlementCompleted": "정산 완료"
     },
     "status": {
-      "OPEN": "열기",
-      "COMPLETED": "완전한"
+      "OPEN": "열림",
+      "COMPLETED": "완료"
     },
     "differenceType": {
       "BALANCED": "균형",
@@ -7563,8 +7563,21 @@
       "BANK_DEPOSIT": "은행 예금"
     },
     "closing": {
-      "confirmTitle": "최종 금전 등록기 폐쇄 확인",
-      "confirmText": "{{cashier}}의 {{date}}을(를) {{currency}}로 확정하시겠습니까? 예상됨: {{expected}}; 현금: {{cash}}; 수표: {{checks}}; 차이 미리보기: {{difference}}. 승인은 서명된 수석 계산원이 수행합니다."
+      "confirmTitle": "최종 출납 마감 확인",
+      "confirmText": "{{cashier}}의 {{date}}을(를) {{currency}}로 확정하시겠습니까? 예상됨: {{expected}}; 현금: {{cash}}; 수표: {{checks}}; 차이 미리보기: {{difference}}. 승인은 서명된 수석 계산원이 수행합니다.",
+      "registerStatus": {
+        "NOT_OPENED": "미개설",
+        "OPEN": "열림",
+        "COMPLETED": "마감됨",
+        "UNAVAILABLE": "상태 확인 불가"
+      },
+      "notOpened": "이 금전등록기는 개설되지 않았습니다. 마감하기 전에 먼저 개설하세요.",
+      "closed": "이 금전등록기는 선택한 영업일에 이미 마감되었습니다.",
+      "contextChanged": "금전등록기 또는 재무 상태가 변경되었습니다. 마감 전에 최신 정보를 검토하세요.",
+      "unresolved": "마감 결과가 확인되지 않았습니다. 이 요청을 변경하지 말고 다시 마감하기 전에 상태를 확인하세요.",
+      "statusUnavailable": "금전등록기 상태를 확인할 수 없습니다. 정보를 다시 불러오세요.",
+      "refreshFailed": "확인된 영수증은 보존되었지만 상태 갱신에 실패했습니다. 상태를 다시 확인하세요.",
+      "checkStatus": "마감 상태 확인"
     },
     "operation": {
       "confirmText": "{{cashier}}에 {{date}}에 대한 최종 입금액을 {{currency}}로 게시하시겠습니까? 현금: {{cash}}; 수표: {{checks}}."
@@ -9595,5 +9608,70 @@
     "rejectOne": "신청 1건 거절",
     "searchScope": "텍스트 검색은 현재 페이지만 포함합니다. 추천 고객을 선택하면 해당 고객의 모든 신청을 검색합니다. 날짜 및 상품 필터는 모든 결과에 적용됩니다.",
     "pendingScope": "페이지 수는 대기 중인 신청을 기준으로 합니다. 상품 적격성은 각 페이지에서 확인합니다."
+  },
+  "commercialPipeline": {
+    "tab": "영업 패널",
+    "title": "진행 단계 추적",
+    "description": "등록부터 대출금 지급까지 잠재 고객을 추적합니다.",
+    "refresh": "새로 고침",
+    "forbidden": "잠재 고객을 조회할 권한이 없습니다.",
+    "inProgress": "진행 중인 잠재 고객",
+    "onTime": "정상 · 1–5일",
+    "atRisk": "주의 · 6–10일",
+    "overdue": "지연 · 10일 초과",
+    "average": "지급까지 평균 소요 시간",
+    "unavailable": "사용 불가",
+    "rule": "10일 업무 규칙 위반",
+    "metricGap": "건수, 대기 시간 및 완료 주기 평균에는 검증된 신청 연결, 상태 및 단계 시작일이 필요합니다.",
+    "search": "참조 번호 또는 잠재 고객 검색",
+    "executive": "영업 담당자",
+    "branch": "지점",
+    "all": "전체",
+    "aging": "단계 대기 시간",
+    "filterGap": "담당자 배정 및 단계 시작일이 제공되지 않아 담당자 및 대기 시간 필터를 사용할 수 없습니다.",
+    "scope": "불러온 고객: {{loaded}} · 검색 결과: {{total}}",
+    "sortGap": "잠재 고객 ID 순서입니다. 대기 시간 정렬은 사용할 수 없습니다.",
+    "loading": "잠재 고객 불러오는 중…",
+    "error": "잠재 고객을 불러오지 못했습니다. 다시 시도하세요.",
+    "retry": "다시 시도",
+    "empty": "검색에 일치하는 잠재 고객이 없습니다.",
+    "matrix": "8단계 영업 파이프라인",
+    "prospect": "잠재 고객",
+    "reportedStage": "보고된 단계",
+    "durationUnknown": "기간 확인 불가",
+    "legend": "달력일 기준 임계값",
+    "stageGap": "? = 알 수 없는 상태. 검증된 신청 연결 없이 잠재 고객 이벤트를 대출 단계에 매핑할 수 없습니다.",
+    "traceability": "추적 정보",
+    "viewFile": "파일 보기",
+    "snapshotGap": "최근 잠재 고객 단계 요약입니다. 전체 이벤트 이력은 제공되지 않습니다.",
+    "registration": "등록 상태",
+    "lastCompleted": "마지막으로 완료 보고된 단계",
+    "stopped": "보고된 중단 단계",
+    "notes": "고객 메모 열기",
+    "selectProspect": "단계 요약을 보려면 잠재 고객을 선택하세요.",
+    "actionGap": "알림, 서류 요청 및 상위 보고는 사용할 수 없습니다. 메모는 기존의 승인된 절차에서 열립니다.",
+    "attention": "주의 필요",
+    "attentionScope": "이 페이지에서 보고된 중단 단계만 표시합니다. 심각도, 누락 요건 및 대기 시간은 확인할 수 없습니다.",
+    "view": "보기",
+    "noAttention": "이 페이지에서 보고된 중단 단계가 없습니다. 대기 시간은 평가할 수 없습니다.",
+    "unknown": "알 수 없음",
+    "departments": {
+      "commercial": "영업",
+      "compliance": "준법",
+      "credit": "신용",
+      "executive": "담당자",
+      "committee": "위원회",
+      "legal": "법무"
+    },
+    "stages": {
+      "ONBOARDING": "영업 온보딩",
+      "COMPLIANCE": "서류 파일",
+      "PARAMETRIC_SCORE": "매개변수 평가",
+      "FILE_INTEGRATION": "파일 완성",
+      "CREDIT_ANALYSIS": "신용 분석",
+      "APPROVAL": "승인",
+      "LEGAL_INSTRUMENTATION": "법률 서류 및 검증",
+      "DISBURSEMENT": "지급 / 자금 조달"
+    }
   }
 }

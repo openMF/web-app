@@ -7506,7 +7506,20 @@
     },
     "closing": {
       "confirmTitle": "Kassanın yekun bağlanmasını təsdiqlə",
-      "confirmText": "{{cashier}} kassirini {{date}} tarixində {{currency}} valyutası üzrə bağlamaq istəyirsiniz? Gözlənilən: {{expected}}; nağd pul: {{cash}}; çeklər: {{checks}}; fərqə baxış: {{difference}}. Təsdiqləmə daxil olmuş baş kassir tərəfindən həyata keçirilir."
+      "confirmText": "{{cashier}} kassirini {{date}} tarixində {{currency}} valyutası üzrə bağlamaq istəyirsiniz? Gözlənilən: {{expected}}; nağd pul: {{cash}}; çeklər: {{checks}}; fərqə baxış: {{difference}}. Təsdiqləmə daxil olmuş baş kassir tərəfindən həyata keçirilir.",
+      "registerStatus": {
+        "NOT_OPENED": "Açılmayıb",
+        "OPEN": "Açıq",
+        "COMPLETED": "Bağlı",
+        "UNAVAILABLE": "Status əlçatan deyil"
+      },
+      "notOpened": "Bu kassa açılmayıb. Bağlamağa cəhd etməzdən əvvəl kassanın açılışını yerinə yetirin.",
+      "closed": "Bu kassa seçilmiş iş tarixi üçün artıq bağlanıb.",
+      "contextChanged": "Kassa və ya maliyyə vəziyyəti dəyişib. Bağlamazdan əvvəl yenilənmiş məlumatları yoxlayın.",
+      "unresolved": "Bağlanmanın nəticəsi məlum deyil. Bu sorğunu dəyişməyin və başqa bağlanmadan əvvəl statusunu yoxlayın.",
+      "statusUnavailable": "Kassanın statusu yoxlanıla bilmədi. Məlumatları yenidən yükləyin.",
+      "refreshFailed": "Təsdiqlənmiş qəbz saxlanılıb, lakin status yenilənmədi. Statusu yenidən yoxlayın.",
+      "checkStatus": "Bağlanma statusunu yoxla"
     },
     "operation": {
       "confirmText": "{{cashier}} kassiri üçün {{date}} tarixində {{currency}} valyutası üzrə bu yekun depozit yerləşdirilsin? Nağd pul: {{cash}}; çeklər: {{checks}}."
@@ -9583,5 +9596,70 @@
     "rejectOne": "1 müraciəti rədd et",
     "searchScope": "Mətn axtarışı yalnız bu səhifəni əhatə edir. Bütün müraciətləri üçün təklif olunan müştərini seçin; tarix və məhsul filtrləri bütün nəticələrə tətbiq olunur.",
     "pendingScope": "Səhifələmə gözləyən müraciətləri sayır. Məhsul uyğunluğu hər səhifədə yoxlanılır."
+  },
+  "commercialPipeline": {
+    "tab": "Kommersiya paneli",
+    "title": "Prosesin izlənməsi",
+    "description": "Potensial müştəriləri qeydiyyatdan ödənişədək izləyin.",
+    "refresh": "Yenilə",
+    "forbidden": "Potensial müştəriləri oxumaq icazəniz yoxdur.",
+    "inProgress": "Prosesdə olan potensial müştərilər",
+    "onTime": "Vaxtında · 1–5 gün",
+    "atRisk": "Risk altında · 6–10 gün",
+    "overdue": "Gecikmiş · 10 gündən çox",
+    "average": "Ödənişədək orta müddət",
+    "unavailable": "Əlçatan deyil",
+    "rule": "10 günlük biznes qaydasını pozur",
+    "metricGap": "Saylar, gözləmə vaxtları və tamamlanmış dövr ortalamaları üçün təsdiqlənmiş ərizə əlaqələri, statuslar və başlanğıc tarixləri tələb olunur.",
+    "search": "İstinad və ya potensial müştəri ilə axtar",
+    "executive": "Kommersiya mütəxəssisi",
+    "branch": "Filial",
+    "all": "Hamısı",
+    "aging": "Mərhələdə gözləmə",
+    "filterGap": "Mütəxəssis və müddət filtrləri əlçatan deyil: təyinat və mərhələ başlanğıc tarixləri təqdim edilməyib.",
+    "scope": "Yüklənmiş: {{loaded}} · Uyğun: {{total}}",
+    "sortGap": "Potensial müştəri ID-si üzrə sıralama. Gözləmə vaxtına görə sıralama əlçatan deyil.",
+    "loading": "Potensial müştərilər yüklənir…",
+    "error": "Potensial müştərilər yüklənmədi. Yenidən cəhd edin.",
+    "retry": "Yenidən cəhd et",
+    "empty": "Axtarışa uyğun potensial müştəri yoxdur.",
+    "matrix": "Səkkiz mərhələli kommersiya prosesi",
+    "prospect": "Potensial müştəri",
+    "reportedStage": "Bildirilmiş mərhələ",
+    "durationUnknown": "Müddət əlçatan deyil",
+    "legend": "Təqvim günləri üzrə hədlər",
+    "stageGap": "? = Naməlum status. Təsdiqlənmiş ərizə əlaqəsi olmadan hadisələr kredit mərhələlərinə uyğunlaşdırıla bilməz.",
+    "traceability": "İzlənəbilənlik",
+    "viewFile": "Fayla bax",
+    "snapshotGap": "Son mərhələlərin xülasəsi. Tam hadisə tarixçəsi əlçatan deyil.",
+    "registration": "Qeydiyyat statusu",
+    "lastCompleted": "Tamamlanmış kimi bildirilən son mərhələ",
+    "stopped": "Bildirilmiş dayanma mərhələsi",
+    "notes": "Müştəri qeydlərini aç",
+    "selectProspect": "Mərhələ xülasəsi üçün potensial müştəri seçin.",
+    "actionGap": "Bildirişlər, sənəd sorğuları və eskalasiya əlçatan deyil. Qeydlər mövcud icazəli iş prosesində açılır.",
+    "attention": "Diqqət tələb edir",
+    "attentionScope": "Yalnız bu səhifədə bildirilmiş dayanma mərhələləri. Ciddilik, çatışmayan tələblər və gözləmə müddətləri əlçatan deyil.",
+    "view": "Bax",
+    "noAttention": "Bu səhifədə dayanmış mərhələ bildirilməyib. Gözləmə müddəti qiymətləndirilə bilmədi.",
+    "unknown": "Naməlum",
+    "departments": {
+      "commercial": "Kommersiya",
+      "compliance": "Uyğunluq",
+      "credit": "Kredit",
+      "executive": "Mütəxəssis",
+      "committee": "Komitə",
+      "legal": "Hüquq"
+    },
+    "stages": {
+      "ONBOARDING": "Kommersiya qeydiyyatı",
+      "COMPLIANCE": "Sənədlər qovluğu",
+      "PARAMETRIC_SCORE": "Parametrik qiymətləndirmə",
+      "FILE_INTEGRATION": "Faylın tamamlanması",
+      "CREDIT_ANALYSIS": "Kredit təhlili",
+      "APPROVAL": "Təsdiq",
+      "LEGAL_INSTRUMENTATION": "Hüquqi sənədlər və yoxlama",
+      "DISBURSEMENT": "Ödəniş / maliyyələşdirmə"
+    }
   }
 }

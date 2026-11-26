@@ -7564,7 +7564,20 @@
     },
     "closing": {
       "confirmTitle": "Conferma chiusura definitiva del registratore di cassa",
-      "confirmText": "Finalizzare {{cashier}} per {{date}} in {{currency}}? Previsto: {{expected}}; contanti: {{cash}}; assegni: {{checks}}; anteprima della differenza: {{difference}}. L'autorizzazione viene eseguita dal capo cassiere registrato."
+      "confirmText": "Finalizzare {{cashier}} per {{date}} in {{currency}}? Previsto: {{expected}}; contanti: {{cash}}; assegni: {{checks}}; anteprima della differenza: {{difference}}. L'autorizzazione viene eseguita dal capo cassiere registrato.",
+      "registerStatus": {
+        "NOT_OPENED": "Non aperta",
+        "OPEN": "Aperta",
+        "COMPLETED": "Chiusa",
+        "UNAVAILABLE": "Stato non disponibile"
+      },
+      "notOpened": "Questa cassa non è stata aperta. Aprire la cassa prima di tentare la chiusura.",
+      "closed": "Questa cassa è già stata chiusa per la data operativa selezionata.",
+      "contextChanged": "La cassa o la situazione finanziaria è cambiata. Verificare il contesto aggiornato prima della chiusura.",
+      "unresolved": "L’esito della chiusura è incerto. Conservare questa richiesta senza modifiche e verificarne lo stato prima di un’altra chiusura.",
+      "statusUnavailable": "Impossibile verificare lo stato della cassa. Ricaricare il contesto.",
+      "refreshFailed": "La ricevuta confermata è conservata, ma l’aggiornamento dello stato non è riuscito. Verificare di nuovo lo stato.",
+      "checkStatus": "Verifica stato chiusura"
     },
     "operation": {
       "confirmText": "Inviare questo deposito finale per {{cashier}} il {{date}} in {{currency}}? Contanti: {{cash}}; assegni: {{checks}}."
@@ -9595,5 +9608,70 @@
     "rejectOne": "Rifiuta 1 domanda",
     "searchScope": "La ricerca testuale copre solo questa pagina. Scegli un cliente suggerito per tutte le sue domande; i filtri di data e prodotto coprono tutti i risultati.",
     "pendingScope": "La paginazione conta le domande in attesa. L’idoneità del prodotto viene verificata su ogni pagina."
+  },
+  "commercialPipeline": {
+    "tab": "Pannello commerciale",
+    "title": "Monitoraggio del processo",
+    "description": "Segui i potenziali clienti dalla registrazione all’erogazione.",
+    "refresh": "Aggiorna",
+    "forbidden": "Non hai il permesso di consultare i potenziali clienti.",
+    "inProgress": "Potenziali clienti in corso",
+    "onTime": "Nei tempi · 1–5 giorni",
+    "atRisk": "A rischio · 6–10 giorni",
+    "overdue": "In ritardo · oltre 10 giorni",
+    "average": "Tempo medio all’erogazione",
+    "unavailable": "Non disponibile",
+    "rule": "Viola la regola dei 10 giorni",
+    "metricGap": "Conteggi, tempi e medie dei cicli conclusi richiedono collegamenti alle domande, stati e date di ingresso verificati.",
+    "search": "Cerca per riferimento o potenziale cliente",
+    "executive": "Responsabile commerciale",
+    "branch": "Filiale",
+    "all": "Tutti",
+    "aging": "Tempo nella fase",
+    "filterGap": "Filtri per responsabile e tempo non disponibili: assegnazione e date di ingresso non fornite.",
+    "scope": "Caricati: {{loaded}} · Corrispondenze: {{total}}",
+    "sortGap": "Ordine per ID. Ordinamento per attesa non disponibile.",
+    "loading": "Caricamento dei potenziali clienti…",
+    "error": "Impossibile caricare i potenziali clienti. Riprova.",
+    "retry": "Riprova",
+    "empty": "Nessun potenziale cliente corrisponde alla ricerca.",
+    "matrix": "Processo commerciale in otto fasi",
+    "prospect": "Potenziale cliente",
+    "reportedStage": "Fase segnalata",
+    "durationUnknown": "Durata non disponibile",
+    "legend": "Soglie in giorni di calendario",
+    "stageGap": "? = Stato sconosciuto. Gli eventi non possono essere associati alle fasi del credito senza un collegamento verificato alla domanda.",
+    "traceability": "Tracciabilità",
+    "viewFile": "Visualizza pratica",
+    "snapshotGap": "Riepilogo delle ultime fasi. Cronologia completa degli eventi non disponibile.",
+    "registration": "Stato di registrazione",
+    "lastCompleted": "Ultima fase segnalata come completata",
+    "stopped": "Fase di arresto segnalata",
+    "notes": "Apri note del cliente",
+    "selectProspect": "Seleziona un potenziale cliente per vedere le fasi.",
+    "actionGap": "Notifiche, richieste di documenti ed escalation non disponibili. Le note si aprono nel flusso autorizzato esistente.",
+    "attention": "Richiede attenzione",
+    "attentionScope": "Solo fasi di arresto segnalate in questa pagina. Gravità, requisiti mancanti e attese non disponibili.",
+    "view": "Visualizza",
+    "noAttention": "Nessuna fase di arresto segnalata in questa pagina. Impossibile valutare l’attesa.",
+    "unknown": "Sconosciuto",
+    "departments": {
+      "commercial": "Commerciale",
+      "compliance": "Conformità",
+      "credit": "Credito",
+      "executive": "Responsabile",
+      "committee": "Comitato",
+      "legal": "Legale"
+    },
+    "stages": {
+      "ONBOARDING": "Acquisizione commerciale",
+      "COMPLIANCE": "Fascicolo documentale",
+      "PARAMETRIC_SCORE": "Valutazione parametrica",
+      "FILE_INTEGRATION": "Completamento pratica",
+      "CREDIT_ANALYSIS": "Analisi del credito",
+      "APPROVAL": "Approvazione",
+      "LEGAL_INSTRUMENTATION": "Documenti legali e convalida",
+      "DISBURSEMENT": "Erogazione / finanziamento"
+    }
   }
 }
