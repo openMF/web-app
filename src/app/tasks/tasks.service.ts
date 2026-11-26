@@ -94,6 +94,7 @@ export interface KycEvidence {
 }
 
 export interface PendingProspectsSearchParams {
+  officeId?: number | string;
   q?: string;
   registrationStatus?: string;
   createdFrom?: string;

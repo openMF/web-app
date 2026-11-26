@@ -273,6 +273,25 @@ describe('TasksService maker-checker search', () => {
     request.flush({ totalFilteredRecords: 0, pageItems: [] });
   });
 
+  it('uses the verified prospect search and office-scope parameters', () => {
+    service
+      .getPendingProspects({
+        q: 'Synthetic folio',
+        officeId: 42,
+        offset: 0,
+        limit: 10,
+        orderBy: 'prospectId',
+        sortOrder: 'ASC'
+      })
+      .subscribe();
+    const request = httpMock.expectOne((req) => req.url === '/v2/prospects');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.params.get('q')).toBe('Synthetic folio');
+    expect(request.request.params.get('officeId')).toBe('42');
+    expect(request.request.params.has('search')).toBe(false);
+    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
+
   it('omits empty pending prospect filters', () => {
     service
       .getPendingProspects({
