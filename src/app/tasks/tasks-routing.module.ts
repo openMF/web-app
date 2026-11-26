@@ -17,22 +17,30 @@ import { Route } from '../core/route/route.service';
 import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks/checker-inbox-and-tasks.component';
 import { CheckerInboxComponent } from './checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox.component';
 import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-approval/client-approval.component';
+import {
+  loanApprovalReadGuard,
+  loanApprovalBatchGuard
+} from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.guard';
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { CreditApplicationsComponent } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
 import {
   CREDIT_APPLICATIONS_PERMISSION,
-  creditApplicationsGuard
+  creditApplicationsGuard,
+  creditApplicationBatchGuard
 } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.guard';
 import { pendingProspectsGuard } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.guard';
 import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
 import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
-import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inbox.component';
 
 /** Custom Resolvers */
 import { GetMakerCheckers } from './common-resolvers/getmakercheckers.resolver';
 import { GetGroupedClientsData } from './common-resolvers/getGroupedClientsData.resolver';
+import {
+  clientApprovalBatchGuard,
+  clientApprovalReadGuard
+} from './checker-inbox-and-tasks-tabs/client-approval/client-approval.guard';
 import { GetOffices } from './common-resolvers/getOffices.resolver';
 import { GetLoansToBeApproved } from './common-resolvers/getLoansToBeApproved.resolver';
 import { GetLoansToBeDisbursed } from './common-resolvers/getLoansToBeDisbursed.resolver';
@@ -44,6 +52,10 @@ import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInbo
 export const routes: Routes = [
   Route.withShell([
     {
+      path: 'checker-inbox/:id/view',
+      redirectTo: ({ params }) => '/checker-inbox-and-tasks/checker-inbox?request=' + encodeURIComponent(params['id'])
+    },
+    {
       path: '',
       component: CheckerInboxAndTasksComponent,
       data: { title: 'Checker Inbox & Tasks', breadcrumb: 'Checker Inbox & Tasks' },
@@ -51,6 +63,7 @@ export const routes: Routes = [
         {
           path: 'checker-inbox',
           component: CheckerInboxComponent,
+          canDeactivate: [(component: CheckerInboxComponent) => component.canLeave],
           data: { title: 'Checker Inbox' },
           resolve: {
             makerCheckerResource: GetMakerCheckers,
@@ -61,35 +74,35 @@ export const routes: Routes = [
           path: 'client-approval',
           component: ClientApprovalComponent,
           data: { title: 'Client Approval' },
-          resolve: {
-            groupedClientData: GetGroupedClientsData
-          }
+          canActivate: [clientApprovalReadGuard],
+          canDeactivate: [clientApprovalBatchGuard]
         },
         {
           path: 'loan-approval',
           component: LoanApprovalComponent,
           data: { title: 'Loan Approval' },
-          resolve: {
-            officesData: GetOffices,
-            loansData: GetLoansToBeApproved
-          }
+          canActivate: [loanApprovalReadGuard],
+          canDeactivate: [loanApprovalBatchGuard]
         },
         {
           path: 'requests',
           component: CreditApplicationsComponent,
           canActivate: [creditApplicationsGuard],
+          canDeactivate: [creditApplicationBatchGuard],
           data: { title: 'Requests', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'credit',
           component: CreditApplicationsComponent,
           canActivate: [creditApplicationsGuard],
+          canDeactivate: [creditApplicationBatchGuard],
           data: { title: 'Credit', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'mass-rejection',
           component: CreditApplicationsComponent,
           canActivate: [creditApplicationsGuard],
+          canDeactivate: [creditApplicationBatchGuard],
           data: { title: 'Mass Rejection', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
@@ -130,11 +143,8 @@ export const routes: Routes = [
       children: [
         {
           path: ':id/view',
-          component: ViewCheckerInboxComponent,
-          data: { title: 'View Checker Inbox Component', routeParamBreadcrumb: 'clientId' },
-          resolve: {
-            checkerInboxDetail: GetCheckerInboxDetailResolver
-          }
+          redirectTo: ({ params }) =>
+            '/checker-inbox-and-tasks/checker-inbox?request=' + encodeURIComponent(params['id'])
         }
       ]
     }

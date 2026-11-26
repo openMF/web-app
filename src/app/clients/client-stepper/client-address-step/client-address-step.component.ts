@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Models */
@@ -31,7 +31,11 @@ import { MatDivider } from '@angular/material/divider';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { hasCoordinateValue, normalizeAddressCoordinates } from 'app/clients/utils/address-coordinate.util';
+import {
+  coordinateValidator,
+  hasCoordinateValue,
+  normalizeAddressCoordinates
+} from 'app/clients/utils/address-coordinate.util';
 import { environment } from 'environments/environment';
 
 /**
@@ -65,6 +69,7 @@ export class ClientAddressStepComponent {
 
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Client Address Field Config */
   @Input() clientAddressFieldConfig: any;
@@ -97,7 +102,7 @@ export class ClientAddressStepComponent {
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response?.data) {
+      if (response?.data && response.data.valid !== false) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.isActive = false;
         for (const key in normalizedAddressData) {
@@ -106,6 +111,7 @@ export class ClientAddressStepComponent {
           }
         }
         this.clientAddressData.push(normalizedAddressData);
+        this.changeDetectorRef.markForCheck();
       }
     });
   }
@@ -128,8 +134,8 @@ export class ClientAddressStepComponent {
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response?.data) {
-        const normalizedAddressData = this.normalizeAddressData(response.data.value);
+      if (response?.data && response.data.valid !== false) {
+        const normalizedAddressData = this.normalizeAddressData({ ...address, ...response.data.value });
         normalizedAddressData.isActive = address.isActive;
         for (const key in normalizedAddressData) {
           if (normalizedAddressData[key] === '' || normalizedAddressData[key] === undefined) {
@@ -137,6 +143,7 @@ export class ClientAddressStepComponent {
           }
         }
         this.clientAddressData[index] = normalizedAddressData;
+        this.changeDetectorRef.markForCheck();
       }
     });
   }
@@ -154,6 +161,7 @@ export class ClientAddressStepComponent {
     deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response?.delete) {
         this.clientAddressData.splice(index, 1);
+        this.changeDetectorRef.markForCheck();
       }
     });
   }
@@ -171,7 +179,7 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   isFieldEnabled(fieldName: any) {
-    return this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled;
+    return this.clientAddressFieldConfig?.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled === true;
   }
 
   /**
@@ -184,7 +192,10 @@ export class ClientAddressStepComponent {
   }
 
   private normalizeAddressData(addressData: any) {
-    return normalizeAddressCoordinates(addressData, this.clientAddressLocationEnabled);
+    return normalizeAddressCoordinates(addressData, this.clientAddressLocationEnabled, {
+      latitude: this.isFieldEnabled('latitude'),
+      longitude: this.isFieldEnabled('longitude')
+    });
   }
 
   /**
@@ -198,6 +209,10 @@ export class ClientAddressStepComponent {
     if (!addressTemplate) {
       return formfields;
     }
+    const latitudeRequired =
+      this.clientAddressFieldConfig?.find((field: any) => field.field === 'latitude')?.isMandatory === true;
+    const longitudeRequired =
+      this.clientAddressFieldConfig?.find((field: any) => field.field === 'longitude')?.isMandatory === true;
 
     for (let index = 0; index < (addressTemplate.addressTypeIdOptions?.length ?? 0); index++) {
       addressTemplate.addressTypeIdOptions[index].name = this.translateService.instant(
@@ -334,10 +349,12 @@ export class ClientAddressStepComponent {
             controlName: 'latitude',
             label: this.translateService.instant('labels.inputs.Latitude'),
             value: address && this.hasCoordinateValue(address.latitude, 'latitude') ? address.latitude : '',
-            type: 'number',
+            type: 'text',
+            inputmode: 'decimal',
             min: -90,
             max: 90,
-            step: '0.00000001',
+            required: latitudeRequired,
+            validators: [coordinateValidator('latitude', latitudeRequired)],
             order: 12
           })
         : null
@@ -348,10 +365,12 @@ export class ClientAddressStepComponent {
             controlName: 'longitude',
             label: this.translateService.instant('labels.inputs.Longitude'),
             value: address && this.hasCoordinateValue(address.longitude, 'longitude') ? address.longitude : '',
-            type: 'number',
+            type: 'text',
+            inputmode: 'decimal',
             min: -180,
             max: 180,
-            step: '0.00000001',
+            required: longitudeRequired,
+            validators: [coordinateValidator('longitude', longitudeRequired)],
             order: 13
           })
         : null

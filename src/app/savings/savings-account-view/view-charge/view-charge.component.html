@@ -10,7 +10,7 @@
   <div class="layout-row align-end gap-2percent layout-xs-column container m-b-20">
     <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
       <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
-      Pay
+      {{ 'labels.buttons.Pay' | translate }}
     </button>
     <button
       mat-raised-button
@@ -19,7 +19,7 @@
       (click)="waiveCharge()"
     >
       <fa-icon icon="flag" class="m-r-10"></fa-icon>
-      Waive
+      {{ 'labels.buttons.Waive' | translate }}
     </button>
     @if (isRecurringCharge()) {
       <span>
@@ -30,7 +30,7 @@
           (click)="inactivateCharge()"
         >
           <fa-icon icon="trash" class="m-r-10"></fa-icon>
-          Inactivate
+          {{ 'labels.buttons.Inactivate' | translate }}
         </button>
       </span>
     }

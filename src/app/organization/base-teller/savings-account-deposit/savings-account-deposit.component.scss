@@ -7,9 +7,22 @@
  */
 
 .base-teller-deposit {
+  width: 100%;
+  max-width: none;
+  padding: 24px;
+  box-sizing: border-box;
+  color: var(--ds-text-1);
+
   .workflow-card {
-    max-width: 1120px;
-    margin: 0 auto;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .workflow-card > mat-card-content {
+    padding: 0;
   }
 
   h2 {
@@ -107,27 +120,1728 @@
 
   .receipt {
     margin-top: 24px;
+
+    .section-heading {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+:host {
+  display: block;
+  min-width: 0;
+
+  --deposit-accent: var(--ds-blue-700);
+  --deposit-deep-blue: var(--ds-blue-900);
+}
+
+.selection-layout {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Fractional tracks keep the grid fluid. */
+  grid-template-columns: minmax(0, 2.5fr) minmax(280px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.selection-card,
+.account-details {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: none;
+  min-width: 0;
+}
+
+.selection-section {
+  padding: 24px 32px;
+
+  + .selection-section {
+    border-top: 1px solid var(--ds-border);
+  }
+}
+
+.selection-heading {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ds-text-2);
+  }
+}
+
+.section-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  height: 32px;
+  border-radius: var(--ds-radius);
+  background: var(--deposit-deep-blue);
+  color: #fff;
+  font-weight: 600;
+}
+
+.section-body {
+  margin-left: 48px;
+  min-width: 0;
+}
+
+.customer-search {
+  --mat-form-field-outlined-container-shape: var(--ds-radius-lg);
+}
+
+.customer-search,
+.account-options {
+  width: 100%;
+}
+
+.customer-card {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  margin-top: 16px;
+  border: 1px solid color-mix(in srgb, var(--deposit-accent) 24%, var(--ds-border));
+  border-radius: var(--ds-radius-lg);
+  background: color-mix(in srgb, var(--deposit-accent) 4%, var(--ds-surface));
+}
+
+.customer-avatar {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--deposit-deep-blue);
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.customer-information {
+  flex: 1;
+  min-width: 0;
+}
+
+.customer-title,
+.account-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  > strong {
+    font-size: 18px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+}
+
+.customer-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 8px;
+  color: var(--ds-text-2);
+  overflow-wrap: anywhere;
+
+  strong {
+    color: var(--ds-text-1);
+    font-weight: 500;
+  }
+}
+
+.change-customer {
+  color: var(--deposit-accent) !important;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 24px;
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+  font-size: 14px;
+  padding: 0 8px;
+  line-height: 28px;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentcolor;
+  }
+
+  &.active {
+    color: var(--deposit-accent);
+    background: var(--ds-blue-50);
+  }
+}
+
+.account-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.account-card {
+  display: block;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  padding: 16px;
+  color: var(--ds-text-1);
+  min-width: 0;
+
+  &.selected {
+    border-color: var(--deposit-accent);
+    box-shadow: inset 0 0 0 1px var(--deposit-accent);
+    background: color-mix(in srgb, var(--deposit-accent) 2%, var(--ds-surface));
+  }
+
+  &.ineligible {
+    background: var(--ds-surface-alt);
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--deposit-accent);
+    outline-offset: 4px;
+  }
+}
+
+.account-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.account-information,
+.account-balance {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+  overflow-wrap: anywhere;
+}
+
+.account-number {
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.account-balance {
+  margin-left: auto;
+  text-align: right;
+
+  strong {
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
+
+.secondary-text,
+.empty-state {
+  color: var(--ds-text-2);
+}
+
+.ineligible-reason {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ds-alert);
+  font-size: 14px;
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  color: var(--ds-text-2);
+}
+
+.selection-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 32px;
+  border-top: 1px solid var(--ds-border);
+  background: color-mix(in srgb, var(--ds-surface-alt) 48%, var(--ds-surface));
+  border-radius: 0 0 var(--ds-radius-lg) var(--ds-radius-lg);
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+
+  a,
+  button {
+    min-height: 48px;
+    border-radius: var(--ds-radius);
+  }
+
+  .selection-next:not(:disabled) {
+    background: var(--deposit-accent);
+    color: var(--deposit-button-text, #fff);
+  }
+}
+
+.destination-summary {
+  flex: 1;
+  margin: 0;
+  text-align: right;
+  color: var(--ds-text-2);
+  overflow-wrap: anywhere;
+
+  strong {
+    color: var(--ds-text-1);
+  }
+}
+
+.account-details mat-card-content {
+  padding: 24px;
+
+  h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+
+  h4 {
+    color: var(--ds-text-2);
+    font-weight: 500;
+    margin: 16px 0 8px;
+  }
+}
+
+.balance-panel {
+  border-radius: var(--ds-radius-lg);
+  background: var(--deposit-deep-blue);
+  color: var(--ds-action-on-fill);
+  padding: 16px;
+  overflow-wrap: anywhere;
+
+  strong {
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.4;
+  }
+}
+
+.account-details-grid {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Fractional tracks keep the grid fluid. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+  margin: 16px 0;
+
+  div {
+    border-bottom: 1px solid var(--ds-border);
+    padding: 8px 0;
+    overflow-wrap: anywhere;
+  }
+
+  dt {
+    color: var(--ds-text-2);
+    font-size: 14px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+.recent-transaction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+
+  + .recent-transaction {
+    border-top: 1px solid var(--ds-border);
+  }
+}
+
+.movement-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  height: 32px;
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.credit {
+  color: var(--deposit-accent);
+}
+
+.debit {
+  color: var(--ds-alert);
+}
+
+.movement-description {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.movement-amount {
+  font-size: 14px;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.safety-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  margin-top: 48px;
+  border-radius: var(--ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--deposit-accent) 24%, var(--ds-border));
+  background: color-mix(in srgb, var(--deposit-accent) 4%, var(--ds-surface));
+  color: var(--ds-text-2);
+
+  p {
+    margin: 0;
+  }
+
+  mat-icon {
+    flex-shrink: 0;
+    color: var(--deposit-accent);
+  }
+}
+
+// Material internals remain scoped to this workflow; no shared component styles change.
+:host ::ng-deep {
+  .account-card.mat-mdc-radio-button {
+    --mat-radio-selected-icon-color: var(--deposit-accent);
+    --mat-radio-selected-focus-icon-color: var(--deposit-accent);
+    --mat-radio-selected-hover-icon-color: var(--deposit-accent);
+    --mat-radio-selected-pressed-icon-color: var(--deposit-accent);
+    --mat-radio-checked-ripple-color: var(--deposit-accent);
+  }
+
+  .mat-horizontal-stepper-wrapper,
+  .mat-horizontal-content-container,
+  .mat-stepper-horizontal {
+    background: transparent;
+  }
+
+  .mat-horizontal-content-container {
+    padding: 0;
+    // Let the selection footer use the application's page scroll container.
+    overflow: visible;
+  }
+
+  .mat-horizontal-stepper-header-container {
+    margin: 0 0 24px auto;
+    max-width: 720px;
+    border: 1px solid var(--ds-border);
+    border-radius: 32px;
+    background: var(--ds-surface);
+  }
+
+  .mat-horizontal-stepper-header {
+    height: 48px;
+    padding: 0 16px;
+    min-width: 0;
+  }
+
+  .mat-step-label {
+    min-width: 0;
+    white-space: normal;
+    text-overflow: clip;
+    overflow: visible;
+  }
+
+  .mat-step-header .mat-step-icon-selected,
+  .mat-step-header .mat-step-icon-state-edit,
+  .mat-step-header .mat-step-icon-state-done {
+    background: var(--deposit-accent);
+    color: var(--deposit-button-text, #fff);
+  }
+
+  .account-card .mat-internal-form-field {
+    width: 100%;
+    align-items: center;
+  }
+
+  .account-card .mdc-label {
+    flex: 1;
+    min-width: 0;
+    padding-left: 8px;
+    color: var(--ds-text-1);
+  }
+
+  .account-card .mdc-radio {
+    flex-shrink: 0;
+  }
+
+  .account-card .mdc-radio__native-control:enabled:checked ~ .mdc-radio__background .mdc-radio__outer-circle,
+  .account-card .mdc-radio__native-control:enabled:checked ~ .mdc-radio__background .mdc-radio__inner-circle {
+    border-color: var(--deposit-accent);
+  }
+}
+
+:host-context(.dark-theme) {
+  --deposit-button-text: var(--ds-blue-900);
+}
+
+@media (width <= 1100px) {
+  .selection-section {
+    padding: 24px;
+  }
+
+  .section-body {
+    margin-left: 0;
+  }
+}
+
+@media (width <= 900px) {
+  .selection-layout {
+    /* stylelint-disable-next-line unit-allowed-list -- Fractional tracks keep the grid fluid. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .safety-notice {
+    margin-top: 24px;
+  }
+}
+
+@media (width <= 600px) {
+  .base-teller-deposit {
+    padding: 16px 8px;
+  }
+
+  .selection-section,
+  .selection-footer,
+  .account-details mat-card-content {
+    padding: 16px;
+  }
+
+  .customer-title > strong,
+  .account-title > strong {
+    font-size: 16px;
+  }
+
+  .customer-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .customer-card {
+    align-items: flex-start;
+  }
+
+  .customer-information {
+    flex-basis: calc(100% - 56px);
+  }
+
+  .change-customer {
+    margin-left: auto;
+  }
+
+  .account-card {
+    padding: 8px;
+  }
+
+  .account-balance {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .selection-footer {
+    position: static;
+
+    .destination-summary {
+      order: -1;
+      flex-basis: 100%;
+      text-align: left;
+    }
+
+    .selection-next {
+      margin-left: auto;
+    }
+  }
+
+  :host ::ng-deep {
+    .mat-horizontal-stepper-header {
+      padding: 8px;
+      height: auto;
+      min-height: 48px;
+      flex: 1 1 0;
+      flex-direction: column;
+      gap: 8px;
+      overflow: visible;
+    }
+
+    .mat-step-label {
+      font-size: 12px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .mat-step-text-label {
+      white-space: normal;
+      text-overflow: clip;
+      overflow: visible;
+    }
+
+    .mat-stepper-horizontal-line {
+      min-width: 8px;
+      flex: 0 0 8px;
+      align-self: flex-start;
+      margin: 24px 0 0;
+    }
+
+    .mat-step-header .mat-step-icon {
+      margin: 0;
+    }
+  }
+}
+
+.deposit-context {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+
+  .customer-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .context-product {
+    color: var(--ds-text-2);
+  }
+
+  button {
+    margin-left: auto;
+  }
+}
+
+.details-layout {
+  --deposit-accent: var(--md-sys-color-primary);
+
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Fluid form/sidebar proportions. */
+  grid-template-columns: minmax(0, 2.5fr) minmax(264px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.details-card,
+.deposit-summary {
+  min-width: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+  box-shadow: none;
+}
+
+.details-entry,
+.cash-count,
+.deposit-notes {
+  padding: 24px 32px;
+}
+
+.cash-count,
+.deposit-notes {
+  border-top: 1px solid var(--ds-border);
+}
+
+.amount-type-grid,
+.deposit-metadata,
+.cash-columns,
+.summary-details {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Equal fluid columns. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.amount-type-grid {
+  align-items: start;
+  margin: 8px 0 24px;
+}
+
+.deposit-metadata {
+  /* stylelint-disable-next-line unit-allowed-list -- Three equal metadata fields. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.details-card mat-form-field {
+  width: 100%;
+  min-width: 0;
+}
+
+.deposit-amount {
+  .currency-prefix {
+    font-size: 24px;
+    padding-left: 16px;
+    color: var(--ds-text-2);
+  }
+
+  input {
+    appearance: textfield;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  .currency-code {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-2);
+  }
+}
+
+.deposit-type-field {
+  display: grid;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.deposit-type-toggle {
+  display: flex;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+
+  mat-button-toggle {
+    flex: 1;
+    min-width: 0;
+    color: var(--ds-text-2);
+    background: transparent;
+  }
+
+  .mat-button-toggle-checked {
+    background: var(--ds-blue-50);
+    color: var(--deposit-accent);
+  }
+
+  mat-icon {
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
+.cash-count {
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  p {
+    color: var(--ds-text-2);
+    margin-top: 8px;
+  }
+
+  .section-heading {
+    margin-bottom: 16px;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+}
+
+.cash-group {
+  min-width: 0;
+
+  h3 {
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ds-text-2);
+  }
+}
+
+.cash-row {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Keep controls stable and distribute labels/subtotals. */
+  grid-template-columns: minmax(56px, 1fr) auto minmax(64px, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 56px;
+  border-bottom: 1px solid var(--ds-border);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.denomination-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ds-text-2);
+  padding: 8px;
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-surface-alt);
+  text-align: center;
+  justify-self: start;
+}
+
+.quantity-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--ds-border-strong);
+  border-radius: var(--ds-radius);
+  height: 48px;
+
+  button {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    color: var(--deposit-accent);
+  }
+
+  input {
+    width: 40px;
+    height: 32px;
+    text-align: center;
+    color: var(--ds-text-1);
+    background: transparent;
+    border: 0;
+    border-inline: 1px solid var(--ds-border);
+    appearance: textfield;
+    font: inherit;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.has-quantity .quantity-stepper {
+  border-color: var(--deposit-accent);
+}
+
+.cash-subtotal {
+  justify-self: end;
+  text-align: end;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.quantity-error {
+  grid-column: 1 / -1;
+  color: var(--ds-alert);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.cash-group.manual-count {
+  grid-column: 1 / -1;
+}
+
+.manual-count {
+  /* stylelint-disable-next-line unit-allowed-list -- Manual rows use the full width. */
+  grid-template-columns: minmax(0, 1fr);
+
+  .cash-row {
+    /* stylelint-disable-next-line unit-allowed-list -- Custom amount, quantity, total, remove action. */
+    grid-template-columns: minmax(80px, 1fr) auto minmax(64px, 1fr) auto;
+    padding: 8px 0;
+  }
+}
+
+.reconciliation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid var(--ds-border-strong);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+
+  > mat-icon {
+    flex-shrink: 0;
+  }
+
+  &.matched {
+    color: var(--ds-paid);
+    background: var(--ds-paid-bg);
+    border-color: var(--ds-paid);
+  }
+
+  &.mismatch {
+    color: var(--ds-partial);
+    background: var(--ds-partial-bg);
+    border-color: var(--ds-partial);
+  }
+}
+
+.reconciliation-message {
+  flex: 1;
+  min-width: 160px;
+
+  span {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+  }
+}
+
+.reconciliation-totals {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+
+  strong {
+    display: block;
+    color: var(--ds-text-1);
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
+.details-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--ds-border);
+  border-radius: 0 0 var(--ds-radius-lg) var(--ds-radius-lg);
+  background: var(--ds-surface-alt);
+  padding: 16px 32px;
+
+  p {
+    flex: 1;
+    margin: 0;
+    text-align: end;
+    font-size: 14px;
+    color: var(--ds-text-2);
+  }
+}
+
+.deposit-summary {
+  mat-card-content {
+    padding: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+}
+
+.summary-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--ds-text-2);
+
+  strong {
+    color: var(--ds-text-1);
+  }
+}
+
+.estimated-balance {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0;
+  border-block: 1px solid var(--ds-border);
+  color: var(--ds-text-2);
+
+  strong {
+    font-size: 28px;
+    color: var(--deposit-accent);
+    overflow-wrap: anywhere;
+  }
+}
+
+.summary-details {
+  margin: 16px 0 0;
+  gap: 24px 16px;
+
+  div {
+    min-width: 0;
+  }
+
+  dt {
+    font-size: 12px;
+    color: var(--ds-text-2);
+  }
+
+  dd {
+    margin: 8px 0 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.quantity-stepper input:focus-visible,
+.details-layout button:focus-visible {
+  outline: 2px solid var(--deposit-accent);
+  outline-offset: 2px;
+}
+
+@media (width <= 1400px) {
+  .details-entry,
+  .cash-count,
+  .deposit-notes,
+  .details-footer {
+    padding: 24px;
+  }
+
+  .cash-columns,
+  .deposit-metadata {
+    /* stylelint-disable-next-line unit-allowed-list -- Stack within a narrower form column. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width <= 1000px) {
+  .details-layout {
+    /* stylelint-disable-next-line unit-allowed-list -- Tablet sidebar follows the form. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width <= 600px) {
+  .details-entry,
+  .cash-count,
+  .deposit-notes,
+  .details-footer,
+  .deposit-summary mat-card-content {
+    padding: 16px;
+  }
+
+  .amount-type-grid {
+    /* stylelint-disable-next-line unit-allowed-list -- Full-width mobile amount and type. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .details-footer {
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    p {
+      flex: 1 1 100%;
+      order: -1;
+      text-align: start;
+    }
+  }
+
+  .manual-count .cash-row {
+    /* stylelint-disable-next-line unit-allowed-list -- Custom amount and remove action wrap on mobile. */
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .deposit-context {
+    gap: 8px 16px;
+  }
+}
+
+:host-context(.dark-theme) .details-layout {
+  --deposit-accent: var(--brand-primary-100, var(--ds-blue-700));
+}
+
+// Final-stage layout. All primary colours follow the configured application brand.
+.confirmation-root {
+  --receipt-primary: var(--brand-primary-700, var(--ds-blue-700));
+
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px;
+  }
+
+  h2 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 4px;
+  }
+}
+
+.confirmation-layout {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list */
+  grid-template-columns: minmax(0, 2.2fr) minmax(304px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.confirmation-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.confirmation-banner,
+.preview-notice {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: var(--ds-radius-lg);
+  padding: 24px;
+  overflow-wrap: anywhere;
+
+  h2 {
+    margin: 8px 0;
+    font-size: 20px;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.confirmation-banner {
+  background: var(--brand-primary-700, var(--ds-blue-900));
+  color: var(--ds-action-on-fill);
+}
+
+.confirmation-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--ds-paid-bg);
+  color: var(--ds-paid);
+
+  mat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+  }
+}
+
+.confirmation-message {
+  flex: 1;
+}
+
+.confirmation-status {
+  font-size: 12px;
+  border: 1px solid currentcolor;
+  border-radius: 16px;
+  padding: 0 8px;
+  display: inline-block;
+}
+
+.confirmation-amount {
+  text-align: right;
+
+  > span,
+  div > span {
+    font-size: 12px;
+  }
+
+  strong {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+}
+
+.preview-notice {
+  color: var(--ds-text-1);
+  background: color-mix(in srgb, var(--md-sys-color-primary) 8%, var(--ds-surface));
+  border: 1px solid var(--ds-border);
+  align-items: flex-start;
+
+  > mat-icon {
+    color: var(--receipt-primary);
+    flex-shrink: 0;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  p {
+    color: var(--ds-text-2);
+  }
+
+  &.uncertain {
+    border-color: var(--ds-partial);
+    background: var(--ds-partial-bg);
+
+    > mat-icon {
+      color: var(--ds-partial);
+    }
+  }
+
+  .request-reference {
+    margin-top: 16px;
+  }
+}
+
+.confirmation-card {
+  min-width: 0;
+  margin: 0;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: none;
+
+  > mat-card-content {
+    padding: 24px;
+  }
+}
+
+.confirmation-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.confirmed-account {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  > div {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-wrap: anywhere;
+  }
+
+  span {
+    color: var(--ds-text-2);
+    font-size: 12px;
+  }
+
+  strong {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .confirmed-avatar {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--receipt-primary);
+    background: var(--ds-surface-head);
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.receipt-identifier {
+  font-family: monospace;
+}
+
+.balance-reconciliation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  margin-top: 24px;
+  background: var(--ds-surface-alt);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  span {
+    font-size: 12px;
+    color: var(--ds-text-2);
+  }
+
+  strong {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .balance-operator {
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--ds-border);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background: var(--ds-surface);
+    font-size: 16px;
+  }
+
+  .confirmed-balance {
+    margin-left: auto;
+    text-align: right;
+
+    strong {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--receipt-primary);
+    }
+  }
+}
+
+.balance-explanation,
+.receipt-data-notice {
+  font-size: 12px;
+  color: var(--ds-text-2);
+  margin: 8px 0 0;
+}
+
+.confirmation-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0;
+
+  div {
+    flex: 1 1 120px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  dt {
+    font-size: 12px;
+    color: var(--ds-text-2);
+    margin-bottom: 8px;
+  }
+
+  dd {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+}
+
+.base-teller-deposit .confirmation-card.receipt {
+  margin: 0;
+  box-shadow: var(--ds-shadow-md);
+}
+
+.receipt-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  strong {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.receipt-total {
+  text-align: center;
+  padding: 24px 0 16px;
+
+  h2 {
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ds-text-2);
+    margin: 0 0 8px;
+  }
+
+  strong {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  > span {
+    font-size: 12px;
+    color: var(--ds-text-2);
+    margin-left: 8px;
+  }
+}
+
+.receipt-fields {
+  margin: 16px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed var(--ds-border-strong);
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 24px;
+    break-inside: avoid;
+  }
+
+  dt {
+    flex: 1;
+    min-width: 0;
+    color: var(--ds-text-2);
+  }
+
+  dd {
+    flex: 1;
+    min-width: 0;
+    text-align: right;
+    margin: 0;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  > div:last-child {
+    border-top: 1px dashed var(--ds-border-strong);
+    margin-top: 16px;
+    padding-top: 16px;
+
+    dd {
+      color: var(--receipt-primary);
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}
+
+.receipt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+
+  button {
+    flex: 1;
+    min-height: 40px;
+    border-radius: var(--ds-radius);
+  }
+}
+
+.receipt-recovery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+  font-size: 12px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.receipt-export-error {
+  color: var(--ds-alert);
+  margin: 16px 0 0;
+}
+
+.preview-total {
+  text-align: center;
+
+  mat-icon {
+    color: var(--receipt-primary);
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    margin: 8px 0 24px;
+  }
+
+  strong {
+    display: block;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--receipt-primary);
+    overflow-wrap: anywhere;
+  }
+
+  p,
+  span {
+    color: var(--ds-text-2);
+  }
+
+  .preview-reference {
+    border-top: 1px solid var(--ds-border);
+    padding-top: 16px;
+    margin-top: 24px;
+    font-size: 12px;
+
+    strong {
+      font-size: 12px;
+      font-weight: 400;
+      margin-top: 8px;
+    }
+  }
+}
+
+.confirmation-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  padding: 16px;
+  margin-top: 24px;
+  background: var(--ds-surface);
+
+  > p {
+    flex: 1;
+    color: var(--ds-text-2);
+    font-size: 12px;
+    margin: 0 8px;
+  }
+
+  button {
+    min-height: 40px;
+    border-radius: var(--ds-radius);
+  }
+}
+
+.reversal-guidance {
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 280px;
+  gap: 8px;
+  color: var(--ds-text-2);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  a {
+    color: var(--receipt-primary);
+  }
+}
+
+@media (width <= 1100px) {
+  .confirmation-layout {
+    grid-template-columns: minmax(0, 100%);
+  }
+}
+
+@media (width <= 599px) {
+  .confirmation-banner {
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+
+  .confirmation-message {
+    flex-basis: calc(100% - 80px);
+  }
+
+  .confirmation-amount {
+    flex-basis: 100%;
+    text-align: left;
+    padding-top: 8px;
+  }
+
+  .confirmation-card > mat-card-content {
+    padding: 16px;
+  }
+
+  .balance-reconciliation {
+    flex-direction: column;
+    align-items: stretch;
+
+    .confirmed-balance {
+      margin-left: 0;
+      text-align: left;
+    }
+  }
+
+  .confirmation-footer > p,
+  .reversal-guidance {
+    flex-basis: 100%;
+    margin: 0 0 8px;
+  }
+
+  .confirmation-footer button {
+    flex: 1;
   }
 }
 
 @media print {
-  .base-teller-deposit {
-    h2,
-    mat-step-header,
-    .step-actions,
-    .error-message,
-    .preview-summary {
-      display: none !important;
-    }
-
-    .workflow-card {
-      box-shadow: none;
-      margin: 0;
-      max-width: none;
-    }
-
-    .receipt {
-      margin-top: 0;
-    }
+  :host {
+    --ds-surface: #fff;
+    --ds-text-1: #111;
+    --ds-text-2: #444;
+    --ds-border-strong: #888;
+    --receipt-primary: #111;
   }
+
+  .base-teller-deposit {
+    padding: 0;
+  }
+
+  .confirmation-root {
+    --receipt-primary: #111;
+  }
+
+  .confirmation-root > h1,
+  .confirmation-main,
+  .confirmation-footer,
+  .receipt-actions,
+  .receipt-recovery,
+  .receipt-export-error,
+  .selection-layout,
+  .details-layout,
+  .error-message {
+    display: none !important;
+  }
+
+  .confirmation-layout {
+    display: block;
+  }
+
+  .base-teller-deposit .confirmation-card.receipt {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    box-shadow: none;
+    border: none;
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  .receipt-fields > div {
+    font-size: 14px;
+  }
+
+  :host ::ng-deep .mat-horizontal-stepper-header-container {
+    display: none !important;
+  }
+}
+
+.deposit-recovery-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+
+  p {
+    flex-basis: 100%;
+  }
+
+  mat-form-field {
+    flex: 1 1 160px;
+    min-width: 0;
+  }
+}
+
+.non-posting-reconciliation {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ds-border);
+
+  h3 {
+    margin: 0 0 8px;
+  }
+
+  > button {
+    margin-top: 16px;
+  }
+}
+
+.non-posting-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 16px 0;
+
+  mat-form-field {
+    flex: 1 1 240px;
+    min-width: 0;
+  }
+}
+
+.preview-notice > div {
+  min-width: 0;
+  flex: 1;
 }

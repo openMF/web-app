@@ -39,4 +39,36 @@
       </div>
     }
   </div>
+
+  <mat-divider [inset]="true"></mat-divider>
+
+  <div class="shortcuts-notes">
+    <h3 class="shortcuts-notes-heading">{{ 'labels.heading.Notes' | translate }}</h3>
+    <ul class="shortcuts-notes-list">
+      <li>
+        {{
+          'labels.text.Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.'
+            | translate
+        }}
+      </li>
+      <li>
+        {{
+          'labels.text.In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.'
+            | translate
+        }}
+      </li>
+      <li>
+        {{
+          'labels.text.On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.'
+            | translate
+        }}
+      </li>
+      <li>
+        {{
+          'labels.text.Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.'
+            | translate
+        }}
+      </li>
+    </ul>
+  </div>
 </div>

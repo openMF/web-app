@@ -138,7 +138,7 @@
           <span class="charge-sub"
             >{{ charge.chargeCalculationType.value }}
             @if (isPercentageCharge(charge)) {
-              ({{ charge.percentage | formatNumber: 2 }}%)
+              ({{ charge.percentage | formatNumber }}%)
             }
           </span>
         </td>

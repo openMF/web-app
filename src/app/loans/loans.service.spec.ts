@@ -7,7 +7,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
@@ -38,6 +38,24 @@ describe('LoansService - Working Capital transaction template', () => {
   });
 
   afterEach(() => httpMock.verify());
+
+  it.each([
+    false,
+    true
+  ])('keeps rejection review amounts exact (working capital=%s)', (workingCapital) => {
+    const read = workingCapital
+      ? service.getWorkingCapitalLoanDetails('42', true)
+      : service.getLoanAccountDetails('42', true);
+    let result: any;
+    read.subscribe((data) => (result = data));
+    const req = httpMock.expectOne(
+      (request) => request.url === (workingCapital ? '/working-capital-loans/42' : '/loans/42')
+    );
+    expect(req.request.responseType).toBe('text');
+    req.flush('{"id":42,"principal":1234567890123.45,"proposedPrincipal":90071992547409.91}');
+    expect(result.principal).toBe('1234567890123.45');
+    expect(result.proposedPrincipal).toBe('90071992547409.91');
+  });
 
   it('gets the typed credit origination board from the WEB-1059 endpoint', () => {
     const board: CreditOriginationBoard = {
@@ -214,5 +232,56 @@ describe('LoansService - buildLoanRequestPayload with the semi-monthly frequency
     expect(payload).not.toHaveProperty('calendarId');
     expect(payload).not.toHaveProperty('syncRepaymentsWithMeeting');
     expect(payload.firstRepaymentDayOfMonth).toBe(10);
+  });
+});
+
+describe('LoansService.isDownPaymentEnabled', () => {
+  let service: LoansService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        LoansService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: SettingsService, useValue: {} },
+        { provide: Dates, useValue: {} }
+      ]
+    });
+    service = TestBed.inject(LoansService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => httpMock.verify());
+
+  function resolve(loan: Parameters<TestRequest['flush']>[0]): boolean | undefined {
+    let result: boolean | undefined;
+    service.isDownPaymentEnabled('7').subscribe((value) => (result = value));
+    httpMock.expectOne((r) => r.url === '/loans/7').flush(loan);
+    return result;
+  }
+
+  it('is true when down payment is enabled on the loan', () => {
+    expect(resolve({ enableDownPayment: true })).toBe(true);
+  });
+
+  // After skipDownPaymentFee the previous fees are inactive and GET /charges omits them, but the next
+  // disbursement still creates a fee from those inactive charge definitions.
+  it('is true even when there is no active down payment fee left', () => {
+    expect(resolve({ enableDownPayment: true, charges: [] })).toBe(true);
+  });
+
+  it('is false when down payment is not enabled on the loan', () => {
+    expect(resolve({ enableDownPayment: false })).toBe(false);
+  });
+
+  it('reports a failed lookup as an error, not as "disabled"', () => {
+    let result: boolean | undefined;
+    let failed = false;
+    service.isDownPaymentEnabled('7').subscribe({ next: (value) => (result = value), error: () => (failed = true) });
+    httpMock.expectOne((r) => r.url === '/loans/7').flush(null, { status: 500, statusText: 'Server Error' });
+    expect(failed).toBe(true);
+    expect(result).toBeUndefined();
   });
 });

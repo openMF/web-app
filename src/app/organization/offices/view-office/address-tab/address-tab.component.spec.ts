@@ -441,10 +441,10 @@ describe('Office AddressTabComponent', () => {
 
     expect(formFields.find((field: any) => field.controlName === 'addressTypeId')?.required).toBe(true);
     expect(formFields.find((field: any) => field.controlName === 'latitude')).toEqual(
-      expect.objectContaining({ min: -90, max: 90 })
+      expect.objectContaining({ min: -90, max: 90, type: 'text', inputmode: 'decimal', step: null })
     );
     expect(formFields.find((field: any) => field.controlName === 'longitude')).toEqual(
-      expect.objectContaining({ min: -180, max: 180 })
+      expect.objectContaining({ min: -180, max: 180, type: 'text', inputmode: 'decimal', step: null })
     );
   });
 
@@ -724,6 +724,53 @@ describe('Office AddressTabComponent', () => {
     expect(organizationService.updateOfficeAddress).not.toHaveBeenCalled();
   });
 
+  it.each([
+    [
+      'latitude',
+      '90.0000000000001'
+    ],
+    [
+      'latitude',
+      '-90.0000000000001'
+    ],
+    [
+      'longitude',
+      '180.0000000000001'
+    ],
+    [
+      'longitude',
+      '-180.0000000000001'
+    ],
+    ...[
+      'latitude',
+      'longitude'
+    ].flatMap((axis) =>
+      [
+        'NaN',
+        'Infinity',
+        'not a number',
+        '.',
+        '1e',
+        '0x10',
+        '1e999999999'
+      ].map((value) => [
+        axis,
+        value
+      ])
+    )
+  ])('rejects invalid %s string %s before saving', (axis, value) => {
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    form.patchValue({ latitude: '0', longitude: '0', [axis]: value });
+    form.get(axis).updateValueAndValidity();
+    expect(form.invalid).toBe(true);
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(dialogRefWithValue(form.value));
+    component.editAddress(officeAddress);
+    expect(organizationService.updateOfficeAddress).not.toHaveBeenCalled();
+  });
+
   it('revalidates both controls as a pair is entered, cleared, and the dialog closes', () => {
     const form = TestBed.inject(FormGroupService).createFormGroup(
       (component as any).getAddressFormFields(officeAddress)
@@ -804,8 +851,8 @@ describe('Office AddressTabComponent', () => {
   it('preserves coordinates and all address fields when only the postal code changes', () => {
     const saved = {
       ...officeAddress,
-      latitude: 19.43260812,
-      longitude: -99.13320912,
+      latitude: '19.3673440111718',
+      longitude: '-99.0589796500000',
       addressLine2: 'Second line',
       addressLine3: 'Third line',
       townVillage: 'Town',
@@ -821,6 +868,69 @@ describe('Office AddressTabComponent', () => {
       ...form.value,
       locale: 'en'
     });
+  });
+
+  it('saves the screenshot coordinates exactly and refreshes the map only after backend confirmation', () => {
+    fixture.detectChanges();
+    const latitude = '19.3673440111718';
+    const longitude = '-99.05897965';
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    form.patchValue({ latitude, longitude });
+    form.markAsDirty();
+    form.get('latitude').updateValueAndValidity();
+    form.get('longitude').updateValueAndValidity();
+    expect(form.valid && form.dirty).toBe(true);
+    expect(form.get('latitude').hasError('maxDecimals')).toBe(false);
+    expect(form.get('longitude').hasError('maxDecimals')).toBe(false);
+    const write = new Subject<any>();
+    const reload = new Subject<any>();
+    organizationService.updateOfficeAddress.mockReturnValue(write);
+    organizationService.getOfficeAddresses.mockReturnValue(reload);
+    dialog.open.mockReturnValue(dialogRefWithValue(form.value));
+
+    component.editAddress(officeAddress);
+
+    expect(organizationService.updateOfficeAddress).toHaveBeenCalledWith(
+      '1',
+      '7',
+      expect.objectContaining({ latitude, longitude, locale: 'en' })
+    );
+    expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(1);
+    expect(component.officeAddresses).toEqual([officeAddress]);
+    write.next({ entityId: 7 });
+    write.complete();
+    expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(2);
+    const saved = { ...officeAddress, latitude, longitude };
+    reload.next([saved]);
+    reload.complete();
+    fixture.detectChanges();
+    expect(component.selectedAddress).toEqual(saved);
+    expect(fixture.nativeElement.querySelector('.coordinate-strip').textContent).toContain(latitude);
+    expect(fixture.nativeElement.querySelector('.coordinate-strip').textContent).toContain(longitude);
+    expect(L.marker).toHaveBeenCalledWith(
+      [
+        Number(latitude),
+        Number(longitude)
+      ],
+      expect.anything()
+    );
+    expect(component.getOfficeAddressId(component.selectedAddress)).toBe('7');
+  });
+
+  it('creates an address with the exact thirteen-decimal coordinate strings', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(of([]));
+    fixture.detectChanges();
+    const latitude = '19.3673440111718';
+    const longitude = '-99.0589796500000';
+    dialog.open.mockReturnValue(dialogRefWithValue({ ...officeAddress, latitude, longitude }));
+    component.addAddress();
+    expect(organizationService.createOfficeAddress).toHaveBeenCalledWith(
+      '1',
+      expect.objectContaining({ latitude, longitude, locale: 'en' })
+    );
+    expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(2);
   });
 
   it('distinguishes omitted coordinates from deliberately clearing both coordinates', () => {
@@ -891,6 +1001,18 @@ describe('Office AddressTabComponent', () => {
     expect((dialog.open.mock.calls[1][1] as any).data.layout.addButtonText).toBe('labels.buttons.Submit');
   });
   it.each([
+    [
+      '1e-13',
+      '0.0000000000001'
+    ],
+    [
+      '-1e-13',
+      '-0.0000000000001'
+    ],
+    [
+      '1.93673440111718e1',
+      '19.3673440111718'
+    ],
     [
       '5e-8',
       '0.00000005'
@@ -997,6 +1119,16 @@ describe('Office AddressTabComponent', () => {
   });
   it.each([
     '0.12345678',
+    '0.123456789',
+    '0.1234567891',
+    '0.12345678912',
+    '0.123456789123',
+    '0.1234567891234',
+    '19.3673440111718000',
+    '-0.0000000000001',
+    '1e-13',
+    '-1e-13',
+    '1.93673440111718e1',
     '-0.1234567800',
     '1e-8',
     '-5e-8',
@@ -1006,7 +1138,7 @@ describe('Office AddressTabComponent', () => {
     '0.000000000',
     '0e-999999999',
     0.12345678
-  ])('accepts coordinate %s when its expanded value fits eight decimal places', (value) => {
+  ])('accepts coordinate %s when its expanded value fits thirteen decimal places', (value) => {
     const form = TestBed.inject(FormGroupService).createFormGroup(
       (component as any).getAddressFormFields(officeAddress)
     );
@@ -1017,15 +1149,16 @@ describe('Office AddressTabComponent', () => {
   });
 
   it.each([
-    '0.123456789',
-    '-0.123456789',
-    '1e-9',
-    '-5e-9',
-    '1.23456789e-2',
-    '1000e-12',
+    '19.36734401117181',
+    '-0.12345678912345',
+    '0.00000000000001',
+    '1e-14',
+    '-5e-14',
+    '1.2345678912345e-2',
+    '1000e-17',
     '1e-999999999',
-    0.123456789,
-    5e-9
+    0.12345678912345,
+    5e-14
   ])('rejects over-precision coordinate %s for either axis and prevents update requests', (value) => {
     const form = TestBed.inject(FormGroupService).createFormGroup(
       (component as any).getAddressFormFields(officeAddress)
@@ -1038,7 +1171,7 @@ describe('Office AddressTabComponent', () => {
       form.patchValue({ latitude: 0, longitude: 0, [axis]: value });
       form.get('latitude').updateValueAndValidity();
       form.get('longitude').updateValueAndValidity();
-      expect(form.get(axis).getError('maxDecimals')).toEqual({ decimals: 8 });
+      expect(form.get(axis).getError('maxDecimals')).toEqual({ decimals: 13 });
       expect(form.invalid).toBe(true);
       dialog.open.mockReturnValue(dialogRefWithValue(form.value));
       component.editAddress(officeAddress);
@@ -1049,11 +1182,11 @@ describe('Office AddressTabComponent', () => {
   it('prevents creation with over-precision coordinates without changing the supplied values', () => {
     organizationService.getOfficeAddresses.mockReturnValue(of([]));
     fixture.detectChanges();
-    const values = { ...officeAddress, latitude: '1e-9', longitude: '-0.123456789' };
+    const values = { ...officeAddress, latitude: '1e-14', longitude: '-0.12345678912345' };
     dialog.open.mockReturnValue(dialogRefWithValue(values));
     component.addAddress();
     expect(organizationService.createOfficeAddress).not.toHaveBeenCalled();
-    expect(values).toMatchObject({ latitude: '1e-9', longitude: '-0.123456789' });
+    expect(values).toMatchObject({ latitude: '1e-14', longitude: '-0.12345678912345' });
   });
   describe('master-detail address management', () => {
     const secondAddress = {

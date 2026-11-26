@@ -183,7 +183,7 @@ export class AddressTabComponent implements OnInit {
   optionsLoadFailed = false;
 
   private autoFilledFields = new Set<string>();
-  private readonly coordinateDecimals = 8;
+  private readonly coordinateDecimals = 13;
 
   get hasOfficeAddress(): boolean {
     return this.officeAddresses.length > 0;
@@ -675,22 +675,22 @@ export class AddressTabComponent implements OnInit {
       new InputBase({
         controlName: 'latitude',
         label: this.translateService.instant('labels.inputs.Latitude'),
-        value: address?.latitude ?? '',
-        type: 'number',
+        value: address?.latitude == null ? '' : String(address.latitude),
+        type: 'text',
+        inputmode: 'decimal',
         min: -90,
         max: 90,
-        step: '0.00000001',
         validators: [this.coordinateValidator('latitude')],
         order: 12
       }),
       new InputBase({
         controlName: 'longitude',
         label: this.translateService.instant('labels.inputs.Longitude'),
-        value: address?.longitude ?? '',
-        type: 'number',
+        value: address?.longitude == null ? '' : String(address.longitude),
+        type: 'text',
+        inputmode: 'decimal',
         min: -180,
         max: 180,
-        step: '0.00000001',
         validators: [this.coordinateValidator('longitude')],
         order: 13
       }),

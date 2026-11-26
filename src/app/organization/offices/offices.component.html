@@ -6,185 +6,355 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container m-b-20 layout-row align-end gap-20px">
-  <mat-button-toggle-group #buttonTreeView [formControl]="viewGroup">
-    <mat-button-toggle value="listView">
-      <fa-icon icon="list"></fa-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="treeView">
-      <fa-icon icon="sitemap"></fa-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-
-  <div #buttonCreateOffice class="in-block">
-    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_OFFICE'">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Create Office' | translate }}
-    </button>
+<div class="container offices">
+  <!-- Page heading and main actions -->
+  <div class="offices-header">
+    <p class="offices-subtitle">{{ 'labels.text.Manage offices description' | translate }}</p>
+    <div class="offices-header-actions">
+      <div #buttonImportOffices>
+        <button
+          mat-stroked-button
+          type="button"
+          [routerLink]="['/organization', 'bulk-import', 'Offices']"
+          *mifosxHasPermission="'CREATE_OFFICE'"
+        >
+          <fa-icon icon="upload" class="m-r-8"></fa-icon>
+          {{ 'labels.buttons.Import' | translate }}
+        </button>
+      </div>
+      <button mat-stroked-button type="button" (click)="exportOffices()">
+        <fa-icon icon="download" class="m-r-8"></fa-icon>
+        {{ 'labels.buttons.Export' | translate }}
+      </button>
+      <div #buttonCreateOffice>
+        <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_OFFICE'">
+          <fa-icon icon="plus" class="m-r-8"></fa-icon>
+          {{ 'labels.buttons.Create Office' | translate }}
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div #buttonImportOffices class="in-block">
-    <button
-      mat-raised-button
-      color="primary"
-      *mifosxHasPermission="'CREATE_OFFICE'"
-      [routerLink]="['/organization', 'bulk-import', 'Offices']"
-    >
-      <fa-icon icon="upload" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Import Offices' | translate }}
-    </button>
-  </div>
-</div>
+  <div class="offices-body">
+    <div #tableOffices class="offices-card mat-elevation-z2">
+      <!-- Search and view switch -->
+      <div class="offices-toolbar">
+        <div #filter class="offices-search">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <fa-icon matPrefix icon="search" class="offices-search-icon"></fa-icon>
+            <input
+              matInput
+              type="search"
+              [formControl]="searchControl"
+              [placeholder]="'labels.inputs.Search by office name or external ID' | translate"
+              [attr.aria-label]="'labels.inputs.Search by office name or external ID' | translate"
+            />
+          </mat-form-field>
+        </div>
 
-<div class="container" [hidden]="viewGroup.value !== 'listView'">
-  <div #filter class="layout-row gap-20px">
-    <mat-form-field class="flex-fill">
-      <mat-label>{{ 'Filter' | translate }}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)" />
-    </mat-form-field>
-  </div>
+        <div #buttonTreeView>
+          <mat-button-toggle-group [formControl]="viewGroup" hideSingleSelectionIndicator>
+            <mat-button-toggle value="treeView">
+              <fa-icon icon="sitemap" class="m-r-8"></fa-icon>
+              {{ 'labels.inputs.Tree' | translate }}
+            </mat-button-toggle>
+            <mat-button-toggle value="listView">
+              <fa-icon icon="list" class="m-r-8"></fa-icon>
+              {{ 'labels.inputs.List' | translate }}
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
 
-  <!-- List View -->
-  <div #tableOffices class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Office Name ' | translate }}</th>
-        <td mat-cell *matCellDef="let offices">{{ offices.name }}</td>
-      </ng-container>
+        @if (viewGroup.value === 'treeView') {
+          <div class="offices-expand-actions">
+            <button mat-button color="primary" type="button" (click)="expandAll()">
+              {{ 'labels.buttons.Expand All' | translate }}
+            </button>
+            <button mat-button color="primary" type="button" (click)="collapseAll()">
+              {{ 'labels.buttons.Collapse All' | translate }}
+            </button>
+          </div>
+        }
+      </div>
 
-      <ng-container matColumnDef="externalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' External ID ' | translate }}</th>
-        <td mat-cell *matCellDef="let offices">{{ offices.externalId }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="parentName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Parent Office ' | translate }}</th>
-        <td mat-cell *matCellDef="let offices">{{ offices.parentName }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="openingDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Opened On ' | translate }}</th>
-        <td mat-cell *matCellDef="let offices">{{ offices.openingDate | dateFormat }}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        class="select-row"
-        [routerLink]="[row.id, 'general']"
-      ></tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-  </div>
-</div>
-
-<!-- Tree View -->
-<div class="container" [hidden]="viewGroup.value !== 'treeView'">
-  <div class="m-b-20 layout-row align-start gap-20px">
-    <button mat-raised-button (click)="toggleExpandCollapse()">
-      {{ (isTreeExpanded ? 'labels.buttons.Collapse All' : 'labels.buttons.Expand All') | translate }}
-    </button>
-  </div>
-
-  <div class="layout-row gap-4percent responsive-column">
-    <div class="flex-fill">
-      <mat-card>
-        <mat-card-content>
-          <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="office-tree">
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-              <li class="mat-tree-node">
-                <button mat-icon-button disabled></button>
-                <span (click)="viewOfficeNode(node)" class="m-r-10">
-                  {{ node.name }}
-                </span>
-              </li>
-            </mat-tree-node>
-
-            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-              <li>
-                <div class="mat-tree-node">
-                  <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+      <!-- Tree View -->
+      <div class="offices-table-wrapper" [hidden]="viewGroup.value !== 'treeView'">
+        <table mat-table [dataSource]="treeRows" [trackBy]="trackRow" class="offices-table">
+          <ng-container matColumnDef="office">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Office' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="offices-name-cell">
+              @for (guide of row.guides; track guide) {
+                <span class="offices-guide" [style.inset-inline-start.px]="32 + guide * 32"></span>
+              }
+              <div class="offices-office" [style.padding-inline-start.px]="row.level * 32">
+                @if (row.expandable) {
+                  <button
+                    mat-icon-button
+                    type="button"
+                    class="offices-toggle"
+                    [attr.aria-expanded]="row.expanded"
+                    [attr.aria-label]="
+                      ((row.expanded ? 'labels.buttons.Collapse' : 'labels.buttons.Expand') | translate) +
+                      ' ' +
+                      row.node.name
+                    "
+                    (click)="toggleRow(row, $event)"
+                  >
                     <fa-icon
                       class="mat-icon-rtl-mirror"
-                      icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"
+                      [icon]="row.expanded ? 'chevron-down' : 'chevron-right'"
+                      size="xs"
                     ></fa-icon>
                   </button>
-                  <span (click)="viewOfficeNode(node)" class="m-r-10">
-                    {{ node.name }}
-                  </span>
-                </div>
-                <ul [class.office-tree-invisible]="!nestedTreeControl.isExpanded(node)">
-                  <ng-container matTreeNodeOutlet></ng-container>
-                </ul>
-              </li>
-            </mat-nested-tree-node>
-          </mat-tree>
-        </mat-card-content>
-      </mat-card>
+                } @else {
+                  <span class="offices-toggle-spacer"></span>
+                }
+                <fa-icon
+                  icon="building"
+                  class="offices-icon"
+                  [class.offices-icon-parent]="row.node.children.length"
+                ></fa-icon>
+                <span [class.offices-name-parent]="row.node.children.length">{{ row.node.name }}</span>
+                @if (row.node.children.length) {
+                  <span class="offices-count">{{ row.node.children.length }}</span>
+                }
+                @if (row.node.hierarchy === '.') {
+                  <span class="offices-chip">{{ 'labels.inputs.Head Office' | translate }}</span>
+                }
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="externalId">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External ID' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="offices-code">{{ row.node.externalId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="openingDate">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Opened On' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="offices-date">{{ row.node.openingDate | dateFormat }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row" class="offices-actions-cell">
+              <ng-container *ngTemplateOutlet="actionsCell; context: { $implicit: row.node }"></ng-container>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="treeColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: treeColumns"
+            class="offices-row"
+            tabindex="0"
+            [class.offices-row-selected]="office === row.node"
+            (click)="viewOfficeNode(row.node)"
+            (keydown.enter)="isRowTarget($event) && viewOfficeNode(row.node)"
+          ></tr>
+          <tr class="mat-mdc-row" *matNoDataRow>
+            <td class="mat-mdc-cell offices-empty" [attr.colspan]="treeColumns.length">
+              {{ 'labels.text.No offices match the search' | translate }}
+            </td>
+          </tr>
+        </table>
+
+        <div class="offices-footer">
+          {{ 'labels.text.Showing offices of total' | translate: { shown: shownOffices, total: officeNodes.length } }}
+        </div>
+      </div>
+
+      <!-- List View -->
+      <div class="offices-table-wrapper" [hidden]="viewGroup.value !== 'listView'">
+        <table mat-table [dataSource]="dataSource" matSort class="offices-table">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
+            <td mat-cell *matCellDef="let node">
+              <div class="offices-office">
+                <fa-icon icon="building" class="offices-icon"></fa-icon>
+                <span>{{ node.name }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="externalId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.External ID' | translate }}</th>
+            <td mat-cell *matCellDef="let node" class="offices-code">{{ node.externalId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="parentName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Parent Office' | translate }}</th>
+            <td mat-cell *matCellDef="let node">{{ node.parentName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="openingDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Opened On' | translate }}</th>
+            <td mat-cell *matCellDef="let node" class="offices-date">{{ node.openingDate | dateFormat }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let node" class="offices-actions-cell">
+              <ng-container *ngTemplateOutlet="actionsCell; context: { $implicit: node }"></ng-container>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            class="offices-row"
+            tabindex="0"
+            [class.offices-row-selected]="office === row"
+            (click)="viewOfficeNode(row)"
+            (keydown.enter)="isRowTarget($event) && viewOfficeNode(row)"
+          ></tr>
+          <tr class="mat-mdc-row" *matNoDataRow>
+            <td class="mat-mdc-cell offices-empty" [attr.colspan]="displayedColumns.length">
+              {{ 'labels.text.No offices match the search' | translate }}
+            </td>
+          </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+      </div>
     </div>
 
+    <!-- Details of the selected office -->
     @if (office) {
-      <div class="flex-48">
-        <mat-card>
-          <mat-card-content>
-            <div class="layout-row">
-              <mat-card-title>
-                {{ office.name }}
-              </mat-card-title>
-              <div class="flex align-end">
-                <button
-                  mat-icon-button
-                  [attr.aria-label]="'labels.buttons.Close' | translate"
-                  [matTooltip]="'labels.buttons.Close' | translate"
-                  (click)="closeOffice()"
-                >
-                  <fa-icon icon="times"></fa-icon>
-                </button>
-              </div>
-            </div>
-            <mat-tab-group>
-              <mat-tab label="General">
-                <div class="layout-row-wrap">
-                  @if (office.parentId) {
-                    <div class="flex-50 mat-body-strong">
-                      {{ 'Parent Office' | translate }}
-                    </div>
-                  }
-                  @if (office.parentId) {
-                    <div class="flex-50">
-                      {{ office.parentName }}
-                    </div>
-                  }
-                  <div class="flex-50 mat-body-strong">
-                    {{ ' Opened On' | translate }}
-                  </div>
-                  <div class="flex-50">
-                    {{ office.openingDate | date }}
-                  </div>
-                  @if (office.externalId) {
-                    <div class="flex-50 mat-body-strong">
-                      {{ 'External Id' | translate }}
-                    </div>
-                  }
-                  @if (office.externalId) {
-                    <div class="flex-50">
-                      <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
-                    </div>
-                  }
-                </div>
-              </mat-tab>
-              @for (dataTable of dataTablesData; track dataTable) {
-                <mat-tab label="{{ dataTable.registeredTableName }}"></mat-tab>
+      <mat-card class="offices-details">
+        <mat-card-content>
+          <div class="offices-details-top">
+            <span class="offices-details-kind">
+              <fa-icon icon="building"></fa-icon>
+              {{ (office.hierarchy === '.' ? 'labels.inputs.Head Office' : 'labels.inputs.Office') | translate }}
+            </span>
+            <button
+              mat-icon-button
+              type="button"
+              [attr.aria-label]="'labels.buttons.Close' | translate"
+              (click)="closeOffice()"
+            >
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+
+          <h3 class="offices-details-title">{{ office.name }}</h3>
+
+          @if (officePath.length) {
+            <div class="offices-path">
+              @for (ancestor of officePath; track ancestor) {
+                <span>{{ ancestor.name }}</span>
+                <fa-icon icon="chevron-right" size="xs" class="mat-icon-rtl-mirror"></fa-icon>
               }
-            </mat-tab-group>
-          </mat-card-content>
-        </mat-card>
-      </div>
+              <strong>{{ office.name }}</strong>
+            </div>
+          }
+
+          <dl class="offices-attributes">
+            <div>
+              <dt>{{ 'labels.inputs.Parent Office' | translate }}</dt>
+              <dd>{{ office.parentName || '—' }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'labels.inputs.Opened On' | translate }}</dt>
+              <dd>{{ office.openingDate | dateFormat }}</dd>
+            </div>
+            <div class="offices-attribute-wide">
+              <dt>{{ 'labels.inputs.External ID' | translate }}</dt>
+              <dd>
+                @if (office.externalId) {
+                  <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
+                } @else {
+                  —
+                }
+              </dd>
+            </div>
+          </dl>
+
+          @if (office.children.length) {
+            <h4 class="offices-children-title">
+              {{ 'labels.inputs.Sub-offices' | translate }}
+              <span class="offices-count">{{ office.children.length }}</span>
+            </h4>
+            <mat-action-list class="offices-children">
+              @for (child of office.children; track child) {
+                <button mat-list-item type="button" (click)="viewOfficeNode(child)">{{ child.name }}</button>
+              }
+            </mat-action-list>
+          }
+
+          <div class="offices-details-actions">
+            <button
+              mat-raised-button
+              type="button"
+              color="primary"
+              [routerLink]="['/organization/offices', office.id, 'general']"
+            >
+              {{ 'labels.buttons.View' | translate }}
+            </button>
+            <button
+              mat-stroked-button
+              type="button"
+              [routerLink]="['/organization/offices', office.id, 'edit']"
+              *mifosxHasPermission="'UPDATE_OFFICE'"
+            >
+              {{ 'labels.buttons.Edit' | translate }}
+            </button>
+            <button
+              mat-stroked-button
+              type="button"
+              [routerLink]="['/organization/offices/create']"
+              [queryParams]="{ parent: office.id }"
+              *mifosxHasPermission="'CREATE_OFFICE'"
+            >
+              {{ 'labels.buttons.Add sub-office' | translate }}
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
     }
   </div>
 </div>
+
+<!-- Cell shared by the tree and the list -->
+<ng-template #actionsCell let-node>
+  <button
+    mat-icon-button
+    type="button"
+    [matMenuTriggerFor]="officeMenu"
+    [matMenuTriggerData]="{ node: node }"
+    [attr.aria-label]="('labels.buttons.Actions' | translate) + ' ' + node.name"
+    (click)="$event.stopPropagation()"
+  >
+    <fa-icon icon="ellipsis-h"></fa-icon>
+  </button>
+</ng-template>
+
+<mat-menu #officeMenu="matMenu">
+  <ng-template matMenuContent let-node="node">
+    <button mat-menu-item type="button" [routerLink]="['/organization/offices', node.id, 'general']">
+      {{ 'labels.buttons.View' | translate }}
+    </button>
+    <button
+      mat-menu-item
+      type="button"
+      [routerLink]="['/organization/offices', node.id, 'edit']"
+      *mifosxHasPermission="'UPDATE_OFFICE'"
+    >
+      {{ 'labels.buttons.Edit' | translate }}
+    </button>
+    <button
+      mat-menu-item
+      type="button"
+      [routerLink]="['/organization/offices/create']"
+      [queryParams]="{ parent: node.id }"
+      *mifosxHasPermission="'CREATE_OFFICE'"
+    >
+      {{ 'labels.buttons.Add sub-office' | translate }}
+    </button>
+  </ng-template>
+</mat-menu>
 
 <ng-template #templateButtonTreeView let-popover="popover">
   <h2>{{ 'labels.heading.Tree View' | translate }}</h2>

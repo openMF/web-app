@@ -10,6 +10,7 @@ import { FormfieldBase } from './formfield-base';
 
 interface InputBaseOptions extends FormfieldBaseOptions {
   type?: string;
+  inputmode?: string;
   [key: string]: any;
 }
 
@@ -29,5 +30,6 @@ export class InputBase extends FormfieldBase {
   constructor(options: InputBaseOptions = {}) {
     super(options);
     this.type = options.type || 'text';
+    this.inputmode = options.inputmode;
   }
 }

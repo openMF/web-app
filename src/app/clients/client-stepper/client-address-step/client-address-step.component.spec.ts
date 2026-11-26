@@ -10,7 +10,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import * as solidIcons from '@fortawesome/free-solid-svg-icons';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -25,6 +25,7 @@ describe('ClientAddressStepComponent', () => {
   let fixture: ComponentFixture<ClientAddressStepComponent>;
   let dialog: jest.Mocked<MatDialog>;
   let formGroupService: FormGroupService;
+  const originalLocationFlag = environment.enableClientAddressLocation;
 
   const addressTemplate = {
     addressTypeIdOptions: [
@@ -99,6 +100,10 @@ describe('ClientAddressStepComponent', () => {
       }
     });
     translateService.use('en');
+  });
+
+  afterEach(() => {
+    environment.enableClientAddressLocation = originalLocationFlag;
   });
 
   it('should accept latitude and longitude fields in the address form', () => {
@@ -298,5 +303,117 @@ describe('ClientAddressStepComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('MG Road');
     expect(fixture.nativeElement.textContent).toContain('Indiranagar');
     expect(fixture.nativeElement.textContent).toContain('Bangalore Urban');
+  });
+  it('honors mandatory coordinate configuration only when the field is enabled', () => {
+    component.clientAddressFieldConfig.find((field: any) => field.field === 'latitude').isMandatory = true;
+    const form = formGroupService.createFormGroup(component.getAddressFormFields());
+    expect(form.get('latitude').hasError('required')).toBe(true);
+    expect(form.get('longitude').valid).toBe(true);
+    form.get('latitude').setValue('0');
+    expect(form.get('latitude').valid).toBe(true);
+  });
+
+  it.each([
+    'abc',
+    '12junk',
+    'NaN',
+    '1e',
+    91
+  ])('rejects invalid latitude %s before adding a wizard address', (value) => {
+    const form = formGroupService.createFormGroup(component.getAddressFormFields());
+    form.patchValue({ addressTypeId: 1, street: 'Synthetic Street', latitude: value });
+    expect(form.get('latitude').invalid).toBe(true);
+    dialog.open.mockReturnValue({ afterClosed: () => of({ data: form }) } as any);
+    component.addAddress();
+    expect(component.address.address).toEqual([]);
+  });
+
+  it('retains decimal strings through address editing and the final creation address getter', () => {
+    component.clientAddressData = [
+      { addressTypeId: 1, street: 'Synthetic Street', city: 'Synthetic City', isActive: true }
+    ];
+    const value = { latitude: '28.6139123456789', longitude: '-77.2090123456789' };
+    const form = formGroupService.createFormGroup(component.getAddressFormFields(component.clientAddressData[0]));
+    form.patchValue(value);
+    expect(form.get('latitude').valid).toBe(true);
+    expect(form.get('longitude').valid).toBe(true);
+    dialog.open.mockReturnValue({ afterClosed: () => of({ data: { value, valid: true } }) } as any);
+    component.editAddress(component.clientAddressData[0], 0);
+    expect(component.address.address[0]).toEqual(
+      expect.objectContaining({ ...value, street: 'Synthetic Street', city: 'Synthetic City', isActive: true })
+    );
+  });
+
+  it.each([
+    [
+      true,
+      false
+    ],
+    [
+      false,
+      true
+    ],
+    [
+      false,
+      false
+    ]
+  ])('filters disabled fields from wizard payloads (%s, %s)', (latitude, longitude) => {
+    component.clientAddressFieldConfig = fieldConfiguration(latitude, longitude);
+    dialog.open.mockReturnValue({ afterClosed: () => of({ data: { value: { latitude: 0, longitude: 0 } } }) } as any);
+    component.addAddress();
+    expect(component.address.address[0].latitude).toBe(latitude ? 0 : undefined);
+    expect(component.address.address[0].longitude).toBe(longitude ? 0 : undefined);
+  });
+  it.each([
+    { coordinate: 'latitude', operation: 'add' },
+    { coordinate: 'longitude', operation: 'add' },
+    { coordinate: 'latitude', operation: 'edit' },
+    { coordinate: 'longitude', operation: 'edit' }
+  ])(
+    'rejects whitespace in mandatory $coordinate during $operation while allowing zero',
+    ({ coordinate, operation }) => {
+      component.clientAddressFieldConfig.find((field: any) => field.field === coordinate).isMandatory = true;
+      const address = {
+        addressTypeId: 1,
+        street: 'Synthetic Street',
+        latitude: '28.6139',
+        longitude: '77.2090',
+        isActive: true
+      };
+      if (operation === 'edit') component.clientAddressData = [address];
+      const form = formGroupService.createFormGroup(
+        component.getAddressFormFields(operation === 'edit' ? address : undefined)
+      );
+      form.patchValue({ addressTypeId: 1, street: 'Synthetic Street', [coordinate]: ' \t\u00a0 ' });
+      expect(form.get(coordinate).hasError('required')).toBe(true);
+      expect(form.invalid).toBe(true);
+      dialog.open.mockReturnValue({ afterClosed: () => of({ data: form }) } as any);
+      if (operation === 'add') {
+        component.addAddress();
+        expect(component.address.address).toEqual([]);
+      } else {
+        component.editAddress(address, 0);
+        expect(component.address.address[0]).toBe(address);
+      }
+      for (const zero of [
+        '0',
+        0
+      ]) {
+        form.get(coordinate).setValue(zero);
+        expect(form.valid).toBe(true);
+      }
+    }
+  );
+
+  it.each([
+    'latitude',
+    'longitude'
+  ])('keeps optional whitespace-only %s valid and omits it from the wizard payload', (coordinate) => {
+    const form = formGroupService.createFormGroup(component.getAddressFormFields());
+    form.patchValue({ addressTypeId: 1, street: 'Synthetic Street', [coordinate]: ' \t ' });
+    expect(form.valid).toBe(true);
+    dialog.open.mockReturnValue({ afterClosed: () => of({ data: form }) } as any);
+    component.addAddress();
+    expect(component.address.address[0][coordinate]).toBeUndefined();
   });
 });

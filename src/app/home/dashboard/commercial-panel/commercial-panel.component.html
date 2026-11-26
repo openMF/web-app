@@ -1,0 +1,292 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="commercial-panel" [attr.aria-label]="'commercialPipeline.title' | translate" [attr.aria-busy]="loading">
+  <header class="panel-header">
+    <div>
+      <h2>{{ 'commercialPipeline.title' | translate }}</h2>
+      <p>{{ 'commercialPipeline.description' | translate }}</p>
+    </div>
+    @if (canRead) {
+      <button mat-stroked-button color="primary" type="button" (click)="refresh()" [disabled]="loading">
+        <mat-icon>refresh</mat-icon>{{ 'commercialPipeline.refresh' | translate }}
+      </button>
+    }
+  </header>
+
+  @if (!canRead) {
+    <mat-card
+      ><mat-card-content role="status">{{ 'commercialPipeline.forbidden' | translate }}</mat-card-content></mat-card
+    >
+  } @else {
+    <div class="summary-grid">
+      @for (metric of metrics; track metric.key) {
+        <mat-card class="summary-card" [class.warning-card]="metric.css === 'red'">
+          <mat-card-content>
+            <div class="metric-label">
+              <span class="dot" [ngClass]="metric.css" [class.invisible]="!metric.css" aria-hidden="true"></span
+              >{{ metric.key | translate }}
+            </div>
+            <strong aria-hidden="true">—</strong>
+            <span class="metric-note">{{ 'commercialPipeline.unavailable' | translate }}</span>
+            @if (metric.css === 'red') {
+              <span class="rule-note">{{ 'commercialPipeline.rule' | translate }}</span>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+    <p class="scope-note">
+      <mat-icon aria-hidden="true">info_outline</mat-icon>{{ 'commercialPipeline.metricGap' | translate }}
+    </p>
+
+    <mat-card class="matrix-card">
+      <mat-card-content>
+        <div class="toolbar">
+          <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+            <mat-label>{{ 'commercialPipeline.search' | translate }}</mat-label>
+            <input matInput [formControl]="search" maxlength="100" />
+            <mat-icon matSuffix aria-hidden="true">search</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'commercialPipeline.executive' | translate }}</mat-label>
+            <mat-select disabled aria-describedby="pipeline-filter-gap"
+              ><mat-option>{{ 'commercialPipeline.unavailable' | translate }}</mat-option></mat-select
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'commercialPipeline.branch' | translate }}</mat-label>
+            <mat-select [formControl]="office">
+              <mat-option value="">{{ 'commercialPipeline.all' | translate }}</mat-option>
+              @for (branch of offices; track branch.id) {
+                <mat-option [value]="branch.id">{{ branch.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <div
+            class="aging-filters"
+            role="group"
+            [attr.aria-label]="'commercialPipeline.aging' | translate"
+            aria-describedby="pipeline-filter-gap"
+          >
+            <button mat-button type="button" disabled>{{ 'commercialPipeline.all' | translate }}</button>
+            <button mat-button type="button" disabled>
+              <span class="dot yellow" aria-hidden="true"></span>{{ 'commercialPipeline.onTime' | translate }}
+            </button>
+            <button mat-button type="button" disabled>
+              <span class="dot orange" aria-hidden="true"></span>{{ 'commercialPipeline.atRisk' | translate }}
+            </button>
+            <button mat-button type="button" disabled>
+              <span class="dot red" aria-hidden="true"></span>{{ 'commercialPipeline.overdue' | translate }}
+            </button>
+          </div>
+        </div>
+        <p id="pipeline-filter-gap" class="toolbar-note">{{ 'commercialPipeline.filterGap' | translate }}</p>
+        <div class="scope-bar" role="status">
+          <span>{{
+            'commercialPipeline.scope' | translate: { loaded: rows.length, total: total === null ? '—' : total }
+          }}</span>
+          <span>{{ 'commercialPipeline.sortGap' | translate }}</span>
+        </div>
+        @if (loading) {
+          <div class="state" role="status">
+            <mat-spinner diameter="32"></mat-spinner>{{ 'commercialPipeline.loading' | translate }}
+          </div>
+        } @else if (error) {
+          <div class="state" role="alert">
+            <mat-icon>error_outline</mat-icon>
+            <p>{{ 'commercialPipeline.error' | translate }}</p>
+            <button mat-stroked-button color="primary" type="button" (click)="refresh()">
+              {{ 'commercialPipeline.retry' | translate }}
+            </button>
+          </div>
+        } @else if (!rows.length) {
+          <div class="state" role="status">
+            <mat-icon>search_off</mat-icon>{{ 'commercialPipeline.empty' | translate }}
+          </div>
+        } @else {
+          <div
+            class="table-scroll"
+            tabindex="0"
+            role="region"
+            [attr.aria-label]="'commercialPipeline.matrix' | translate"
+          >
+            <table mat-table [dataSource]="rows" class="pipeline-table">
+              <ng-container matColumnDef="prospect">
+                <th mat-header-cell *matHeaderCellDef scope="col">{{ 'commercialPipeline.prospect' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  <button
+                    mat-button
+                    type="button"
+                    class="prospect-button"
+                    (click)="select(row)"
+                    [attr.aria-pressed]="selected === row"
+                  >
+                    {{ row.prospect.displayName || ('commercialPipeline.unknown' | translate) }}
+                  </button>
+                  <span class="reference">{{
+                    row.prospect.externalRef || ('commercialPipeline.unknown' | translate)
+                  }}</span>
+                </td>
+              </ng-container>
+              @for (stage of stages; track stage.code; let index = $index) {
+                <ng-container [matColumnDef]="stage.code">
+                  <th mat-header-cell *matHeaderCellDef scope="col">
+                    <span class="stage-number">{{ index + 1 }}</span
+                    ><span>{{ stageLabel(stage.code) | translate }}</span
+                    ><small>{{ 'commercialPipeline.departments.' + stage.department | translate }}</small>
+                  </th>
+                  <td mat-cell *matCellDef="let row" class="stage-cell">
+                    <span
+                      class="stage-marker"
+                      role="img"
+                      [attr.aria-label]="
+                        (stageLabel(stage.code) | translate) + ': ' + ('commercialPipeline.unknown' | translate)
+                      "
+                      >?</span
+                    >
+                  </td>
+                </ng-container>
+              }
+              <ng-container matColumnDef="reportedStage">
+                <th mat-header-cell *matHeaderCellDef scope="col">
+                  {{ 'commercialPipeline.reportedStage' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <span class="stage-tag">{{ stageLabel(row.currentStage) | translate }}</span
+                  ><small>{{ 'commercialPipeline.durationUnknown' | translate }}</small>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="columns"></tr>
+              <tr mat-row *matRowDef="let row; columns: columns" [class.selected-row]="selected === row"></tr>
+            </table>
+          </div>
+          <div class="mobile-prospects">
+            @for (row of rows; track row.prospect.prospectId) {
+              <article class="mobile-prospect" [class.selected-row]="selected === row">
+                <button
+                  mat-button
+                  color="primary"
+                  type="button"
+                  (click)="select(row)"
+                  [attr.aria-pressed]="selected === row"
+                >
+                  {{ row.prospect.displayName || ('commercialPipeline.unknown' | translate) }}
+                </button>
+                <p>{{ row.prospect.externalRef }} · {{ stageLabel(row.currentStage) | translate }}</p>
+                <ol>
+                  @for (stage of stages; track stage.code) {
+                    <li>
+                      <span
+                        >{{ stageLabel(stage.code) | translate
+                        }}<small>{{ 'commercialPipeline.departments.' + stage.department | translate }}</small></span
+                      ><span>{{ 'commercialPipeline.unknown' | translate }}</span>
+                    </li>
+                  }
+                </ol>
+              </article>
+            }
+          </div>
+        }
+        <div class="legend" [attr.aria-label]="'commercialPipeline.legend' | translate">
+          <span><span class="dot yellow" aria-hidden="true"></span>{{ 'commercialPipeline.onTime' | translate }}</span>
+          <span><span class="dot orange" aria-hidden="true"></span>{{ 'commercialPipeline.atRisk' | translate }}</span>
+          <span><span class="dot red" aria-hidden="true"></span>{{ 'commercialPipeline.overdue' | translate }}</span>
+          <span>{{ 'commercialPipeline.durationUnknown' | translate }}</span>
+        </div>
+        <p class="toolbar-note">{{ 'commercialPipeline.stageGap' | translate }}</p>
+        @if (total !== null) {
+          <mat-paginator
+            [length]="total"
+            [pageSize]="pageSize"
+            [pageIndex]="pageIndex"
+            [pageSizeOptions]="[10, 25, 50]"
+            [disabled]="loading"
+            (page)="changePage($event)"
+            [attr.aria-label]="'commercialPipeline.prospect' | translate"
+          ></mat-paginator>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <div class="detail-grid">
+      <mat-card class="traceability">
+        <mat-card-content>
+          <header class="detail-header">
+            <h3 aria-live="polite">
+              {{ 'commercialPipeline.traceability' | translate }}
+              @if (selected) {
+                · {{ selected.prospect.displayName }}
+              }
+            </h3>
+            @if (selected && clientRoute(selected); as route) {
+              <a mat-button color="primary" [routerLink]="route">{{ 'commercialPipeline.viewFile' | translate }}</a>
+            }
+          </header>
+          <p class="muted">{{ 'commercialPipeline.snapshotGap' | translate }}</p>
+          @if (selected) {
+            <dl class="stage-summary">
+              <div>
+                <dt>{{ 'commercialPipeline.registration' | translate }}</dt>
+                <dd>{{ selected.prospect.registrationStatus || ('commercialPipeline.unknown' | translate) }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'commercialPipeline.reportedStage' | translate }}</dt>
+                <dd>{{ stageLabel(selected.currentStage) | translate }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'commercialPipeline.lastCompleted' | translate }}</dt>
+                <dd>{{ stageLabel(selected.lastCompletedStage) | translate }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'commercialPipeline.stopped' | translate }}</dt>
+                <dd>{{ stageLabel(selected.stoppedAtStage) | translate }}</dd>
+              </div>
+            </dl>
+            <div class="follow-up-actions">
+              @if (clientRoute(selected, true); as route) {
+                <a mat-stroked-button color="primary" [routerLink]="route">{{
+                  'commercialPipeline.notes' | translate
+                }}</a>
+              }
+            </div>
+          } @else {
+            <p>{{ 'commercialPipeline.selectProspect' | translate }}</p>
+          }
+          <p class="muted">{{ 'commercialPipeline.actionGap' | translate }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <header class="detail-header">
+            <h3>{{ 'commercialPipeline.attention' | translate }}</h3>
+            <span>{{ attention.length }}</span>
+          </header>
+          <p class="muted">{{ 'commercialPipeline.attentionScope' | translate }}</p>
+          @for (row of attention; track row.prospect.prospectId) {
+            <div class="attention-row">
+              <mat-icon aria-hidden="true">flag</mat-icon>
+              <div>
+                <strong>{{ row.prospect.displayName }}</strong
+                ><small
+                  >{{ 'commercialPipeline.stopped' | translate }} ·
+                  {{ stageLabel(row.stoppedAtStage) | translate }}</small
+                >
+              </div>
+              <button mat-button color="primary" type="button" (click)="select(row)">
+                {{ 'commercialPipeline.view' | translate }}
+              </button>
+            </div>
+          } @empty {
+            <p>{{ 'commercialPipeline.noAttention' | translate }}</p>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+</section>

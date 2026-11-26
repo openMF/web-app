@@ -9,13 +9,6 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-
-/** Custom Dialogs */
-import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-
-/** Custom Services */
-import { SharesService } from '../shares.service';
 
 /** Custom Buttons Configuration */
 import { SharesButtonsConfiguration } from './shares-buttons.config';
@@ -76,8 +69,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class SharesAccountViewComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private sharesService = inject(SharesService);
-  dialog = inject(MatDialog);
 
   /** Shares Account Data */
   sharesAccountData: any;
@@ -90,8 +81,6 @@ export class SharesAccountViewComponent implements OnInit {
    * Fetches shares account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {SharesService} sharesService Shares Service
-   * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
     this.route.data.subscribe((data: { sharesAccountData: any }) => {
@@ -165,25 +154,6 @@ export class SharesAccountViewComponent implements OnInit {
       case 'Modify Application':
         this.router.navigate(['edit'], { relativeTo: this.route });
         break;
-      case 'Delete':
-        this.deleteSharesAccount();
-        break;
     }
-  }
-
-  /**
-   * Deletes Shares Account.
-   */
-  private deleteSharesAccount() {
-    const deleteSharesAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `shares account with id: ${this.sharesAccountData.id}` }
-    });
-    deleteSharesAccountDialogRef.afterClosed().subscribe((response: any) => {
-      if (response?.delete) {
-        this.sharesService.deleteSharesAccount(this.sharesAccountData.id).subscribe(() => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        });
-      }
-    });
   }
 }

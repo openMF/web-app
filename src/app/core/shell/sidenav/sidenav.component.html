@@ -120,10 +120,26 @@
           [routerLinkActiveOptions]="{ exact: false }"
           *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         >
-          <mat-icon matListIcon>
+          <mat-icon
+            matListIcon
+            aria-hidden="false"
+            [matBadge]="checkerCount.count()"
+            [matBadgeHidden]="!sidenavCollapsed || checkerCount.count() === null"
+            matBadgeSize="small"
+            [matBadgeDescription]="'checkerInbox.review.pending' | translate: { count: checkerCount.count() }"
+          >
             <i class="fa fa-check"></i>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
+          <a matLine class="checker-menu-label"
+            ><span class="checker-menu-text">{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</span>
+            @if (checkerCount.count() !== null) {
+              <span
+                class="checker-pending-count"
+                [attr.aria-label]="'checkerInbox.review.pending' | translate: { count: checkerCount.count() }"
+                >{{ checkerCount.count() }}</span
+              >
+            }
+          </a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/collections/collection-sheet']"

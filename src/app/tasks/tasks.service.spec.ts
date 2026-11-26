@@ -10,6 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
+import { CheckerInboxCountService } from './checker-inbox-count.service';
 import { TasksService } from './tasks.service';
 import { serializeMakerCheckerDate } from './checker-inbox-and-tasks-tabs/checker-inbox/maker-checker-date-serializer';
 
@@ -20,6 +21,15 @@ describe('TasksService maker-checker search', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        {
+          provide: CheckerInboxCountService,
+          useValue: {
+            count: (): number | null => null,
+            scope: () => 'test',
+            update: jest.fn(),
+            begin: jest.fn(() => 1)
+          }
+        },
         TasksService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -30,6 +40,27 @@ describe('TasksService maker-checker search', () => {
   });
 
   afterEach(() => httpMock.verify());
+
+  it('finds the exact audit ID within the filtered checker queue', () => {
+    const record = { id: 23, actionName: 'UPDATE', entityName: 'CLIENT', resourceId: 7 };
+    let found: unknown;
+    service.getPendingCheckerRecord(record, true).subscribe((row) => (found = row));
+    const request = httpMock.expectOne((req) => req.url === '/makercheckers');
+    expect(request.request.params.keys().sort()).toEqual([
+      'actionName',
+      'entityName',
+      'includeJson',
+      'resourceId'
+    ]);
+    expect(request.request.params.get('resourceId')).toBe('7');
+    expect(request.request.params.get('includeJson')).toBe('true');
+    request.flush([
+      { ...record, id: 24 },
+      record
+    ]);
+    expect(found).toEqual(record);
+    expect(TestBed.inject(CheckerInboxCountService).update).not.toHaveBeenCalled();
+  });
 
   it('sends locale-independent Maker Checker dates and preserves the remaining filters', () => {
     const from = serializeMakerCheckerDate(new Date(2016, 0, 2));
@@ -116,6 +147,18 @@ describe('TasksService maker-checker search', () => {
     expect(emptyDatesRequest.request.params.has('makerDateTimeTo')).toBe(false);
     expect(emptyDatesRequest.request.urlWithParams).not.toContain('Invalid%20Date');
     emptyDatesRequest.flush([]);
+  });
+
+  it('preserves exact mass-rejection decimal tokens at the HTTP boundary', () => {
+    let response: any;
+    service.getCreditApplications({ limit: 10, offset: 0 }, true).subscribe((data) => (response = data));
+    const request = httpMock.expectOne((req) => req.url === '/v2/credit-applications');
+    expect(request.request.responseType).toBe('text');
+    request.flush(
+      '{"totalFilteredRecords":1,"pageItems":[{"loanId":42,"amount":90071992547409.91,"accountNo":"0000042"}]}'
+    );
+    expect(response.pageItems[0].amount).toBe('90071992547409.91');
+    expect(response.pageItems[0].accountNo).toBe('0000042');
   });
 
   it('requests credit applications with only populated server-side parameters', () => {
@@ -227,6 +270,25 @@ describe('TasksService maker-checker search', () => {
     expect(request.request.params.get('limit')).toBe('10');
     expect(request.request.params.get('orderBy')).toBe('lastUpdatedAt');
     expect(request.request.params.get('sortOrder')).toBe('DESC');
+    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
+
+  it('uses the verified prospect search and office-scope parameters', () => {
+    service
+      .getPendingProspects({
+        q: 'Synthetic folio',
+        officeId: 42,
+        offset: 0,
+        limit: 10,
+        orderBy: 'prospectId',
+        sortOrder: 'ASC'
+      })
+      .subscribe();
+    const request = httpMock.expectOne((req) => req.url === '/v2/prospects');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.params.get('q')).toBe('Synthetic folio');
+    expect(request.request.params.get('officeId')).toBe('42');
+    expect(request.request.params.has('search')).toBe(false);
     request.flush({ totalFilteredRecords: 0, pageItems: [] });
   });
 

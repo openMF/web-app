@@ -6,12 +6,26 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use '@angular/material' as mat;
+
 .pdf-toolbar {
+  @include mat.button-overrides(
+    (
+      outlined-label-text-color: var(--rr-blue-700),
+      outlined-outline-color: var(--rr-blue-700),
+      outlined-state-layer-color: var(--rr-blue-700)
+    )
+  );
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
+}
+
+.pdf-page-counter {
+  color: var(--rr-blue-700);
 }
 
 .pdf-pages {

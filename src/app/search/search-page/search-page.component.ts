@@ -7,7 +7,17 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  Injector,
+  ViewChild,
+  afterNextRender,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -143,6 +153,9 @@ export class SearchPageComponent {
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
   private translateService = inject(TranslateService);
+  private injector = inject(Injector);
+
+  @ViewChild('resultsHeading') resultsHeading?: ElementRef<HTMLHeadingElement>;
 
   /** Scope segments, in display order. */
   readonly domains: { key: DomainKey; labelKey: string }[] = [
@@ -169,6 +182,10 @@ export class SearchPageComponent {
   private rows: SearchRow[] = [];
 
   constructor() {
+    afterNextRender(() => {
+      this.focusHeading();
+    });
+
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { searchResults: SearchResultsBundle }) => {
@@ -183,7 +200,23 @@ export class SearchPageComponent {
         this.selectedSub = 'any';
         this.refresh();
         this.cdr.markForCheck();
+        if (this.resultsHeading) {
+          afterNextRender(
+            () => {
+              this.focusHeading();
+            },
+            { injector: this.injector }
+          );
+        }
       });
+  }
+
+  /** Moves keyboard focus to the search results heading. */
+  focusHeading(): void {
+    if (document.querySelector('.spotlight-wrap, mat-dialog-container, .cdk-overlay-pane [role="dialog"]')) {
+      return;
+    }
+    this.resultsHeading?.nativeElement.focus();
   }
 
   get subFilters(): SubFilterDef[] {

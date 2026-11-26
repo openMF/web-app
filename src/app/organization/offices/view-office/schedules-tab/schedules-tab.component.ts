@@ -41,7 +41,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /** Custom Services */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
-import { normalizeOfficeTime, officeTimeSeconds } from './office-schedule-time';
+import { formatOfficeTimeForDisplay, normalizeOfficeTime, officeTimeSeconds } from './office-schedule-time';
+import { OfficeScheduleTimeInputDirective } from './office-schedule-time-input.directive';
 import { upcomingOfficeHolidays, OfficeHoliday } from './office-schedule-holidays';
 import { OrganizationService } from 'app/organization/organization.service';
 
@@ -68,7 +69,8 @@ interface OfficeScheduleWeekday extends OfficeScheduleDay {
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatProgressSpinner,
-    MatTableModule
+    MatTableModule,
+    OfficeScheduleTimeInputDirective
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -97,7 +99,7 @@ export class SchedulesTabComponent implements OnInit {
     const opening = normalizeOfficeTime(day.get('openingTime')?.value);
     const closing = normalizeOfficeTime(day.get('closingTime')?.value);
     return opening && closing && officeTimeSeconds(opening) < officeTimeSeconds(closing)
-      ? `${opening} – ${closing}`
+      ? `${formatOfficeTimeForDisplay(opening)} – ${formatOfficeTimeForDisplay(closing)}`
       : '';
   }
 

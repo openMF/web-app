@@ -15,13 +15,13 @@
 }
 
 .map-container {
-  border: 1px solid #d8d8d8;
+  border: 1px solid var(--ds-border);
   min-height: 240px;
   width: 100%;
 }
 
 .map-error {
-  color: #666;
+  color: var(--ds-text-2);
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }

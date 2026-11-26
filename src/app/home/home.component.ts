@@ -156,7 +156,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   activityLabel(activity: any): string {
-    return this.translateService.instant(activity.activity);
+    const label = this.translateService.instant(activity.activity);
+    return typeof label === 'string' ? label : activity.activity;
   }
 
   private getPermittedActivities(): any[] {

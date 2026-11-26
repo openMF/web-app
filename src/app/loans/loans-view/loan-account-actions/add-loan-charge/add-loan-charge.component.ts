@@ -7,14 +7,24 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  inject,
+  signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Observable, catchError, map, of, shareReplay } from 'rxjs';
 
 /** Custom Services */
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { isDownPaymentCharge } from 'app/products/charges/models/charge.model';
 
 /**
  * Create Add Loan Charge component.
@@ -32,6 +42,7 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
   private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private dateUtils = inject(Dates);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -56,6 +67,15 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       value: any;
     };
   }[];
+  /** Fineract accepts a down payment fee only on the due date of a down payment installment. */
+  private downPaymentDates: Date[] = [];
+  private downPaymentDates$?: Observable<Date[]>;
+
+  /** Datepicker filter: only down payment installment dates for a down payment fee, any date otherwise. */
+  readonly dueDateFilter = (date: Date | null): boolean =>
+    this.downPaymentDates.length === 0 ||
+    (date != null &&
+      this.downPaymentDates.some((downPaymentDate) => downPaymentDate.toDateString() === date.toDateString()));
 
   /**
    * Retrieves the loan charge template data from `resolve`.
@@ -85,10 +105,16 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       .subscribe((chargeId) => {
         const chargeDetails = this.loanChargeOptions.find((option) => option.id === chargeId);
         if (chargeDetails) {
-          if (chargeDetails.chargeTimeType.id === 2) {
+          this.downPaymentDates = [];
+          if (chargeDetails.chargeTimeType.id === 2 || isDownPaymentCharge(chargeDetails)) {
             this.loanChargeForm.addControl('dueDate', new FormControl('', Validators.required));
           } else {
             this.loanChargeForm.removeControl('dueDate');
+          }
+          // The datepicker filter keeps its reference, so Material re-runs its validator only on request.
+          this.loanChargeForm.get('dueDate')?.updateValueAndValidity();
+          if (isDownPaymentCharge(chargeDetails)) {
+            this.applyDownPaymentDates();
           }
           this.loanChargeForm.patchValue({
             amount: chargeDetails.amount,
@@ -97,6 +123,37 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
           });
         }
       });
+  }
+
+  /** Restricts the due date to the down payment installments and defaults it to the latest one. */
+  private applyDownPaymentDates() {
+    this.downPaymentDates$ ??= this.loanService.getLoanAccountAssociationDetails(this.loanId).pipe(
+      map((loan: any) =>
+        (loan?.repaymentSchedule?.periods ?? [])
+          .filter((period: any) => period.downPaymentPeriod && period.dueDate)
+          .map((period: any) => this.dateUtils.parseDate(period.dueDate))
+      ),
+      catchError(() => of([])),
+      shareReplay(1)
+    );
+    this.downPaymentDates$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((dates) => {
+      const dueDate = this.loanChargeForm.get('dueDate');
+      if (!dueDate || !isDownPaymentCharge(this.selectedCharge)) {
+        return;
+      }
+      this.downPaymentDates = dates;
+      // A date kept from a previously selected charge may not be a down payment installment date.
+      if (dates.length > 0 && !(dueDate.value instanceof Date && this.dueDateFilter(dueDate.value))) {
+        dueDate.setValue(dates[dates.length - 1]);
+      } else {
+        dueDate.updateValueAndValidity();
+      }
+      this.cdr.markForCheck();
+    });
+  }
+
+  private get selectedCharge() {
+    return this.loanChargeOptions.find((option) => option.id === this.loanChargeForm.controls['chargeId'].value);
   }
 
   /**

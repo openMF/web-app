@@ -94,7 +94,11 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="prematureCloseRecurringDepositsAccountForm.invalid">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="prematureCloseRecurringDepositsAccountForm.invalid || isSubmitting"
+        >
           {{ 'labels.buttons.Confirm' | translate }}
         </button>
       </mat-card-actions>

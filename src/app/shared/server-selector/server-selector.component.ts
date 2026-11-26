@@ -64,7 +64,7 @@ export class ServerSelectorComponent implements OnInit {
   ngOnInit(): void {
     this.servers = this.settingsService.servers;
     this.existMoreThanOneServer = this.servers && this.servers.length > 1;
-    if (!this.existMoreThanOneServer) {
+    if (!this.existMoreThanOneServer && this.servers?.[0]) {
       this.settingsService.setServer(this.servers[0]);
     } else {
       this.existMoreThanOneServer = true;

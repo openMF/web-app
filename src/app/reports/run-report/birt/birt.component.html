@@ -17,7 +17,7 @@
       height="750px"
     ></iframe>
   } @else if (pdfData) {
-    <a mat-button [href]="downloadUrl" [attr.download]="downloadName">
+    <a mat-flat-button [href]="downloadUrl" [attr.download]="downloadName">
       {{ 'labels.buttons.Download PDF' | translate }}
     </a>
     <mifosx-birt-pdf-preview [data]="pdfData"></mifosx-birt-pdf-preview>

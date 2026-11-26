@@ -7,11 +7,14 @@
  */
 
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import type { MakerCheckerRecord } from './checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox-audit';
+import { parseExactJson } from 'app/products/saving-products/product-editor/interest-rate.model';
+import { CheckerInboxCountService } from './checker-inbox-count.service';
 
 /**
  * `/makercheckers` and `/audits/{id}` return the `AuditData` DTO straight from the
@@ -29,6 +32,12 @@ function madeOnDateToMillis(record: any): any {
     return record;
   }
   return { ...record, madeOnDate: Math.round(record.madeOnDate * 1000) };
+}
+
+export interface CheckerSearchTemplate {
+  appUsers?: { id: number; username: string }[];
+  actionNames?: string[];
+  entityNames?: string[];
 }
 
 export interface EnrollmentCasesSearchParams {
@@ -85,6 +94,7 @@ export interface KycEvidence {
 }
 
 export interface PendingProspectsSearchParams {
+  officeId?: number | string;
   q?: string;
   registrationStatus?: string;
   createdFrom?: string;
@@ -124,6 +134,12 @@ export interface PendingProspect {
 })
 export class TasksService {
   private http = inject(HttpClient);
+  private injector = inject(Injector);
+
+  // Other task queues do not depend on authenticated maker-checker state.
+  private get checkerCount(): CheckerInboxCountService {
+    return this.injector.get(CheckerInboxCountService);
+  }
 
   private buildHttpParams(paramsData?: any): HttpParams {
     let httpParams = new HttpParams();
@@ -144,17 +160,50 @@ export class TasksService {
    * @param {searchData} SearchData search the maker checker data.
    */
   getMakerCheckerData(searchData?: any): Observable<any> {
-    return this.http
-      .get('/makercheckers', { params: this.buildHttpParams(searchData) })
-      .pipe(map((records: any[]) => (records || []).map(madeOnDateToMillis)));
+    const scope = this.checkerCount.scope();
+    const params = this.buildHttpParams(searchData);
+    const unfiltered = params.keys().length === 0;
+    const version = unfiltered ? this.checkerCount.begin(scope) : undefined;
+    return this.http.get('/makercheckers', { params }).pipe(
+      map((records: any[]) => {
+        if (!Array.isArray(records)) throw new Error('Invalid maker-checker response');
+        return records.map(madeOnDateToMillis);
+      }),
+      tap({
+        next: (records) => {
+          if (unfiltered) this.checkerCount.update(records.length, scope, version);
+        },
+        error: () => {
+          if (unfiltered) this.checkerCount.update(null, scope, version);
+        }
+      })
+    );
+  }
+
+  /** Fineract scopes this pending list by the record's checker permission.
+   * The endpoint has no audit-ID parameter, so match the exact ID locally.
+   */
+  getPendingCheckerRecord(record: MakerCheckerRecord, includeJson = false): Observable<MakerCheckerRecord | undefined> {
+    return this.getMakerCheckerData({
+      actionName: record.actionName,
+      entityName: record.entityName,
+      resourceId: record.resourceId,
+      includeJson: includeJson || undefined
+    }).pipe(map((records: MakerCheckerRecord[]) => records.find((row) => row.id === record.id)));
   }
 
   /**
    * Get Credit Applications Data.
    * @param {any} searchData Credit applications search and paging parameters.
    */
-  getCreditApplications(searchData?: any): Observable<any> {
-    return this.http.get('/v2/credit-applications', { params: this.buildHttpParams(searchData) });
+  getCreditApplications(searchData?: any, exactAmounts = false): Observable<any> {
+    const params = this.buildHttpParams(searchData);
+    if (exactAmounts) {
+      return this.http
+        .get('/v2/credit-applications', { params, responseType: 'text' })
+        .pipe(map((text) => parseExactJson(text, ['amount'])));
+    }
+    return this.http.get('/v2/credit-applications', { params });
   }
 
   /**
@@ -179,16 +228,28 @@ export class TasksService {
   /**
    * Get Maker Checker Template
    */
-  getMakerCheckerTemplate(): Observable<any> {
-    return this.http.get('/makercheckers/searchtemplate');
+  getMakerCheckerTemplate(): Observable<CheckerSearchTemplate> {
+    return this.http.get<CheckerSearchTemplate>('/makercheckers/searchtemplate');
   }
 
   /**
    * Get Grouped Clients Data
    */
   getGroupedClientsData(): Observable<any> {
-    const httpParams = new HttpParams().set('limit', '1000').set('status', 'pending');
-    return this.http.get('/clients', { params: httpParams });
+    return this.getPendingClients({ limit: 1000, offset: 0 });
+  }
+
+  /** Bounded pending-client listing; retain the server's authoritative total. */
+  getPendingClients(params: {
+    limit: number;
+    offset: number;
+    officeId?: number;
+    staffId?: number;
+    displayName?: string;
+  }): Observable<any> {
+    return this.http.get('/clients', {
+      params: this.buildHttpParams({ ...params, status: 'pending', orderBy: 'id', sortOrder: 'ASC' })
+    });
   }
 
   /**

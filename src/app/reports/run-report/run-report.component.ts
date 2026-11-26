@@ -34,7 +34,7 @@ import { ChartComponent } from './chart/chart.component';
 import { PentahoComponent } from './pentaho/pentaho.component';
 import { BirtComponent } from './birt/birt.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { CLIENT_REPORT_ERROR_KEYS, isClientPdfReport } from './client-pdf-reports';
+import { CLIENT_REPORT_ERROR_KEYS } from './client-pdf-reports';
 
 /**
  * Run report component.
@@ -189,11 +189,11 @@ export class RunReportComponent implements OnInit {
   }
 
   isClientReport(): boolean {
-    return isClientPdfReport(this.report);
+    return this.paramData.some((parameter) => this.isClientIdParameter(parameter));
   }
 
   isClientIdParameter(parameter: ReportParameter): boolean {
-    return this.isClientReport() && (parameter.name === 'DefaultClient' || parameter.variable === 'clientId');
+    return this.isBirtReport() && parameter.name === 'DefaultClient' && parameter.variable === 'clientId';
   }
 
   /**
@@ -562,8 +562,8 @@ export class RunReportComponent implements OnInit {
         dateFormat = Dates.DEFAULT_DATEFORMAT;
       }
       formData = {
-        ...userResponseValues,
-        locale: this.settingsService.language.code,
+        ...formData,
+        ...(!this.isBirtReport() && { locale: this.settingsService.language.code }),
         dateFormat: dateFormat
       };
     }
