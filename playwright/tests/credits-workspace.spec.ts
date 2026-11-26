@@ -538,7 +538,7 @@ test('Enter in page search does not submit server filters', async ({ page }) => 
 });
 
 test('an open Amount dialog receives currencies after a delayed load', async ({ page }) => {
-  let release: () => void;
+  let release!: () => void;
   currencyDelay = new Promise<void>((resolve) => (release = resolve));
   await open(page);
   await page.locator('form').getByRole('button', { name: 'Amount', exact: true }).click();
@@ -594,7 +594,7 @@ for (const action of [
   'reject'
 ]) {
   test(`blocks navigation until every confirmed ${action} command completes`, async ({ page }) => {
-    let release: () => void;
+    let release!: () => void;
     commandDelay = new Promise<void>((resolve) => (release = resolve));
     // Establish a real history entry for the attempted navigation.
     await page.goto('/#/checker-inbox-and-tasks/requests');

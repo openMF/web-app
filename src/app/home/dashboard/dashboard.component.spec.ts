@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { TasksService } from 'app/tasks/tasks.service';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboard-engine.component';
@@ -45,6 +46,7 @@ describe('DashboardComponent', () => {
       ],
       providers: [
         provideNoopAnimations(),
+        { provide: SettingsService, useValue: { server: 'synthetic', tenantIdentifier: 'default' } },
         { provide: ActivatedRoute, useValue: { data: of({ offices: [], products: [], clientGroups: [] }) } },
         {
           provide: AuthenticationService,
@@ -53,6 +55,7 @@ describe('DashboardComponent', () => {
         {
           provide: TasksService,
           useValue: {
+            getEnrollmentCases: () => of({ totalFilteredRecords: 0, pageItems: [] }),
             getGroupedClientsData: () => of({ pageItems: [] }),
             getAllLoansToBeApproved: () => of({ pageItems: [] }),
             getAllSavingsToBeApproved: () => of({ pageItems: [] })

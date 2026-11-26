@@ -6,10 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
+import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerInterceptor, HANDLE_HTTP_ERROR_LOCALLY } from 'app/core/http/error-handler.interceptor';
 import { CheckerInboxCountService } from './checker-inbox-count.service';
 import { TasksService } from './tasks.service';
 import { serializeMakerCheckerDate } from './checker-inbox-and-tasks-tabs/checker-inbox/maker-checker-date-serializer';
@@ -240,6 +243,7 @@ describe('TasksService maker-checker search', () => {
       .subscribe();
 
     const request = httpMock.expectOne((req) => req.url === '/v2/onboarding/cases');
+    expect(request.request.context.get(HANDLE_HTTP_ERROR_LOCALLY)).toBe(true);
     expect(request.request.params.get('view')).toBe('enrollment');
     expect(request.request.params.get('clientId')).toBe('123');
     expect(request.request.params.get('offset')).toBe('20');
@@ -312,5 +316,40 @@ describe('TasksService maker-checker search', () => {
     expect(request.request.params.get('offset')).toBe('0');
     expect(request.request.params.get('limit')).toBe('10');
     request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
+});
+
+describe('TasksService enrollment errors with the application interceptor', () => {
+  let httpMock: HttpTestingController;
+  let service: TasksService;
+  const alert = jest.fn();
+  beforeEach(() => {
+    alert.mockClear();
+    TestBed.configureTestingModule({ providers: [
+        TasksService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true },
+        { provide: AlertService, useValue: { alert } },
+        { provide: TranslateService, useValue: { instant: (key: string) => key } }
+      ] });
+    service = TestBed.inject(TasksService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+  afterEach(() => httpMock.verify());
+  it.each([
+    401,
+    403,
+    404,
+    500
+  ])('passes HTTP %s to the consultation without a global alert', (status) => {
+    let errorStatus: number | null = null;
+    service.getEnrollmentCases({ view: 'enrollment', limit: 10, offset: 0 }).subscribe({
+      error: (error) => (errorStatus = error.status)
+    });
+    const request = httpMock.expectOne((req) => req.url === '/v2/onboarding/cases');
+    request.flush({ defaultUserMessage: 'Resource not found' }, { status, statusText: 'Synthetic error' });
+    expect(errorStatus).toBe(status);
+    expect(alert).not.toHaveBeenCalled();
   });
 });

@@ -36,6 +36,8 @@ const receipt = () => ({
 });
 
 test.beforeEach(async ({ page }) => {
+  // App startup derives its business date from the browser clock; keep it aligned with the synthetic context.
+  await page.clock.setFixedTime(new Date('2026-11-26T12:00:00Z'));
   posts = [];
   failRefresh = false;
   failPost = false;
