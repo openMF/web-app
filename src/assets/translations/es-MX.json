@@ -1159,6 +1159,7 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Add sub-account": "Agregar subcuenta",
       "Add sub-office": "Agregar subsucursal",
       "Expand": "Expandir",
       "Collapse": "Contraer",
@@ -2547,6 +2548,15 @@
       "Session": "Sesión"
     },
     "inputs": {
+      "Search by name or GL code": "Buscar por nombre o código contable",
+      "Usage": "Uso",
+      "Header": "Encabezado",
+      "Detail": "Detalle",
+      "Header account": "Cuenta de encabezado",
+      "Detail account": "Cuenta de detalle",
+      "Not applicable": "No aplica",
+      "Parent account": "Cuenta principal",
+      "Sub-accounts": "Subcuentas",
       "Search by office name or external ID": "Buscar por nombre de sucursal o ID externo",
       "Sub-offices": "Subsucursales",
       "Tree": "Árbol",
@@ -4927,6 +4937,12 @@
       "No configured hours": "No hay horarios configurados",
       "Enabled days need valid opening and closing times": "Los días habilitados requieren horas de apertura y cierre válidas.",
       "Saving changes": "Guardando cambios…",
+      "Chart of accounts description": "Estructura del libro mayor utilizada para asientos contables, productos e informes financieros.",
+      "Count account": "{{count}} cuenta",
+      "Count accounts": "{{count}} cuentas",
+      "Showing accounts of total": "Mostrando {{shown}} de {{total}} cuentas",
+      "Sub-account codes outside parent range": "Los códigos de subcuenta {{codes}} quedan fuera del rango {{parentCode}} de la cuenta principal. Los códigos coherentes facilitan la lectura de los informes.",
+      "No accounts match the filters": "Ninguna cuenta coincide con la búsqueda y los filtros actuales.",
       "No valid saved coordinates": "El mapa no está disponible porque faltan las coordenadas guardadas o no son válidas.",
       "The transaction receipt could not be loaded. This may be due to:": "No se pudo cargar el recibo de la transacción. Esto puede deberse a:",
       "Missing or incomplete report configuration": "Configuración de informe faltante o incompleta",

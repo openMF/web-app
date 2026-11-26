@@ -1159,6 +1159,7 @@
       "Home": "Casa"
     },
     "buttons": {
+      "Add sub-account": "Aggiungi sottoconto",
       "Add sub-office": "Aggiungi sottoufficio",
       "Expand": "Espandi",
       "Collapse": "Comprimi",
@@ -2547,6 +2548,15 @@
       "Session": "Sessione"
     },
     "inputs": {
+      "Search by name or GL code": "Cerca per nome o codice contabile",
+      "Usage": "Utilizzo",
+      "Header": "Intestazione",
+      "Detail": "Dettaglio",
+      "Header account": "Conto di intestazione",
+      "Detail account": "Conto di dettaglio",
+      "Not applicable": "Non applicabile",
+      "Parent account": "Conto principale",
+      "Sub-accounts": "Sottoconti",
       "Search by office name or external ID": "Cerca per nome ufficio o ID esterno",
       "Sub-offices": "Sottouffici",
       "Tree": "Albero",
@@ -4932,6 +4942,12 @@
       "No configured hours": "Nessun orario configurato",
       "Enabled days need valid opening and closing times": "I giorni abilitati richiedono orari di apertura e chiusura validi.",
       "Saving changes": "Salvataggio delle modifiche…",
+      "Chart of accounts description": "Struttura del libro mastro utilizzata per le registrazioni contabili, i prodotti e i report finanziari.",
+      "Count account": "{{count}} conto",
+      "Count accounts": "{{count}} conti",
+      "Showing accounts of total": "Visualizzati {{shown}} di {{total}} conti",
+      "Sub-account codes outside parent range": "I codici dei sottoconti {{codes}} non rientrano nell'intervallo {{parentCode}} del conto principale. Codici coerenti rendono i report più facili da leggere.",
+      "No accounts match the filters": "Nessun conto corrisponde alla ricerca e ai filtri correnti.",
       "No valid saved coordinates": "La mappa non è disponibile perché le coordinate salvate sono mancanti o non valide.",
       "The transaction receipt could not be loaded. This may be due to:": "Impossibile caricare la ricevuta della transazione. Ciò potrebbe essere dovuto a:",
       "Missing or incomplete report configuration": "Configurazione del report mancante o incompleta",

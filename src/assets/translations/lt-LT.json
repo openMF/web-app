@@ -1159,6 +1159,7 @@
       "Home": "Namai"
     },
     "buttons": {
+      "Add sub-account": "Pridėti subsąskaitą",
       "Add sub-office": "Pridėti pavaldų skyrių",
       "Expand": "Išplėsti",
       "Collapse": "Sutraukti",
@@ -2547,6 +2548,15 @@
       "Session": "Sesija"
     },
     "inputs": {
+      "Search by name or GL code": "Ieškoti pagal pavadinimą arba DK kodą",
+      "Usage": "Naudojimas",
+      "Header": "Suvestinė",
+      "Detail": "Detalioji",
+      "Header account": "Suvestinė sąskaita",
+      "Detail account": "Detalioji sąskaita",
+      "Not applicable": "Netaikoma",
+      "Parent account": "Pagrindinė sąskaita",
+      "Sub-accounts": "Subsąskaitos",
       "Search by office name or external ID": "Ieškoti pagal skyriaus pavadinimą arba išorinį ID",
       "Sub-offices": "Pavaldūs skyriai",
       "Tree": "Medis",
@@ -4932,6 +4942,12 @@
       "No configured hours": "Darbo laikas nenustatytas",
       "Enabled days need valid opening and closing times": "Įjungtoms dienoms reikia tinkamo atidarymo ir uždarymo laiko.",
       "Saving changes": "Išsaugomi pakeitimai…",
+      "Chart of accounts description": "Didžiosios knygos struktūra, naudojama žurnalo įrašams, produktams ir finansinėms ataskaitoms.",
+      "Count account": "Sąskaitų: {{count}}",
+      "Count accounts": "Sąskaitų: {{count}}",
+      "Showing accounts of total": "Rodoma sąskaitų: {{shown}} iš {{total}}",
+      "Sub-account codes outside parent range": "Subsąskaitų kodai {{codes}} nepatenka į pagrindinės sąskaitos {{parentCode}} intervalą. Nuoseklūs kodai palengvina ataskaitų skaitymą.",
+      "No accounts match the filters": "Dabartinės paieškos ir filtrų neatitinka jokia sąskaita.",
       "No valid saved coordinates": "Žemėlapis nepasiekiamas, nes trūksta išsaugotų koordinačių arba jos netinkamos.",
       "The transaction receipt could not be loaded. This may be due to:": "Nepavyko įkelti operacijos kvito. Taip gali būti dėl:",
       "Missing or incomplete report configuration": "Trūksta ataskaitos konfigūracijos arba ji neišsami",

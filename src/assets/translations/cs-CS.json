@@ -1160,6 +1160,7 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Add sub-account": "Přidat podúčet",
       "Add sub-office": "Přidat podřízenou kancelář",
       "Expand": "Rozbalit",
       "Collapse": "Sbalit",
@@ -2548,6 +2549,15 @@
       "Session": "Relace"
     },
     "inputs": {
+      "Search by name or GL code": "Hledat podle názvu nebo kódu hlavní knihy",
+      "Usage": "Použití",
+      "Header": "Souhrnný",
+      "Detail": "Detailní",
+      "Header account": "Souhrnný účet",
+      "Detail account": "Detailní účet",
+      "Not applicable": "Nepoužije se",
+      "Parent account": "Nadřazený účet",
+      "Sub-accounts": "Podúčty",
       "Search by office name or external ID": "Hledat podle názvu kanceláře nebo externího ID",
       "Sub-offices": "Podřízené kanceláře",
       "Tree": "Strom",
@@ -4933,6 +4943,12 @@
       "No configured hours": "Provozní doba není nastavena",
       "Enabled days need valid opening and closing times": "Povolené dny vyžadují platný čas otevření a zavření.",
       "Saving changes": "Ukládání změn…",
+      "Chart of accounts description": "Struktura hlavní knihy používaná pro účetní zápisy, produkty a finanční výkazy.",
+      "Count account": "Počet účtů: {{count}}",
+      "Count accounts": "Počet účtů: {{count}}",
+      "Showing accounts of total": "Zobrazeno {{shown}} z {{total}} účtů",
+      "Sub-account codes outside parent range": "Kódy podúčtů {{codes}} leží mimo rozsah {{parentCode}} nadřazeného účtu. Jednotné kódy usnadňují čtení výkazů.",
+      "No accounts match the filters": "Aktuálnímu hledání a filtrům neodpovídají žádné účty.",
       "No valid saved coordinates": "Mapa není k dispozici, protože uložené souřadnice chybí nebo jsou neplatné.",
       "The transaction receipt could not be loaded. This may be due to:": "Účtenku transakce se nepodařilo načíst. Důvodem může být:",
       "Missing or incomplete report configuration": "Chybějící nebo neúplná konfigurace sestavy",

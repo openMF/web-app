@@ -1159,6 +1159,7 @@
       "Home": "Maison"
     },
     "buttons": {
+      "Add sub-account": "Ajouter un sous-compte",
       "Add sub-office": "Ajouter un sous-bureau",
       "Expand": "Développer",
       "Collapse": "Réduire",
@@ -2547,6 +2548,15 @@
       "Session": "Session"
     },
     "inputs": {
+      "Search by name or GL code": "Rechercher par nom ou code du grand livre",
+      "Usage": "Utilisation",
+      "Header": "En-tête",
+      "Detail": "Détail",
+      "Header account": "Compte d'en-tête",
+      "Detail account": "Compte de détail",
+      "Not applicable": "Sans objet",
+      "Parent account": "Compte parent",
+      "Sub-accounts": "Sous-comptes",
       "Search by office name or external ID": "Rechercher par nom de bureau ou ID externe",
       "Sub-offices": "Sous-bureaux",
       "Tree": "Arborescence",
@@ -4932,6 +4942,12 @@
       "No configured hours": "Aucun horaire configuré",
       "Enabled days need valid opening and closing times": "Les jours activés nécessitent des heures d’ouverture et de fermeture valides.",
       "Saving changes": "Enregistrement des modifications…",
+      "Chart of accounts description": "Structure du grand livre utilisée pour les écritures comptables, les produits et les rapports financiers.",
+      "Count account": "{{count}} compte",
+      "Count accounts": "{{count}} comptes",
+      "Showing accounts of total": "Affichage de {{shown}} comptes sur {{total}}",
+      "Sub-account codes outside parent range": "Les codes de sous-compte {{codes}} sont en dehors de la plage {{parentCode}} du compte parent. Des codes cohérents facilitent la lecture des rapports.",
+      "No accounts match the filters": "Aucun compte ne correspond à la recherche et aux filtres actuels.",
       "No valid saved coordinates": "La carte est indisponible, car les coordonnées enregistrées sont manquantes ou non valides.",
       "The transaction receipt could not be loaded. This may be due to:": "Le reçu de la transaction n'a pas pu être chargé. Cela peut être dû à :",
       "Missing or incomplete report configuration": "Configuration de rapport manquante ou incomplète",

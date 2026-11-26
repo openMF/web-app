@@ -1115,6 +1115,7 @@
       "Home": "Əsas səhifə"
     },
     "buttons": {
+      "Add sub-account": "Alt hesab əlavə et",
       "Add sub-office": "Alt filial əlavə et",
       "Expand": "Genişləndir",
       "Collapse": "Yığ",
@@ -2503,6 +2504,15 @@
       "Session": "Sessiya"
     },
     "inputs": {
+      "Search by name or GL code": "Ad və ya BK kodu ilə axtarın",
+      "Usage": "İstifadə",
+      "Header": "Başlıq",
+      "Detail": "Təfərrüat",
+      "Header account": "Başlıq hesabı",
+      "Detail account": "Təfərrüat hesabı",
+      "Not applicable": "Tətbiq edilmir",
+      "Parent account": "Əsas hesab",
+      "Sub-accounts": "Alt hesablar",
       "Search by office name or external ID": "Filialın adı və ya xarici ID üzrə axtarın",
       "Sub-offices": "Alt filiallar",
       "Tree": "Ağac",
@@ -4882,6 +4892,12 @@
       "No configured hours": "İş saatları təyin edilməyib",
       "Enabled days need valid opening and closing times": "Aktiv günlər üçün düzgün açılış və bağlanış saatları tələb olunur.",
       "Saving changes": "Dəyişikliklər yadda saxlanılır…",
+      "Chart of accounts description": "Jurnal yazılışları, məhsullar və maliyyə hesabatları üçün istifadə olunan baş kitab strukturu.",
+      "Count account": "{{count}} hesab",
+      "Count accounts": "{{count}} hesab",
+      "Showing accounts of total": "{{total}} hesabdan {{shown}} hesab göstərilir",
+      "Sub-account codes outside parent range": "Alt hesab kodları {{codes}} əsas hesabın {{parentCode}} diapazonundan kənardadır. Ardıcıl kodlar hesabatların oxunmasını asanlaşdırır.",
+      "No accounts match the filters": "Cari axtarışa və filtrlərə uyğun hesab yoxdur.",
       "No valid saved coordinates": "Saxlanılmış koordinatlar çatışmadığı və ya etibarsız olduğu üçün xəritə mövcud deyil.",
       "The transaction receipt could not be loaded. This may be due to:": "Əməliyyat qəbzini yükləmək mümkün olmadı. Bunun səbəbi ola bilər:",
       "Missing or incomplete report configuration": "Hesabat konfiqurasiyası çatışmır və ya natamamdır",

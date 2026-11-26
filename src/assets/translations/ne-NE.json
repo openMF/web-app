@@ -1159,6 +1159,7 @@
       "Home": "घर"
     },
     "buttons": {
+      "Add sub-account": "उप-खाता थप्नुहोस्",
       "Add sub-office": "उप-कार्यालय थप्नुहोस्",
       "Expand": "विस्तार गर्नुहोस्",
       "Collapse": "संक्षिप्त गर्नुहोस्",
@@ -2547,6 +2548,15 @@
       "Session": "सत्र"
     },
     "inputs": {
+      "Search by name or GL code": "नाम वा GL कोडबाट खोज्नुहोस्",
+      "Usage": "प्रयोग",
+      "Header": "हेडर",
+      "Detail": "विवरण",
+      "Header account": "हेडर खाता",
+      "Detail account": "विवरण खाता",
+      "Not applicable": "लागू हुँदैन",
+      "Parent account": "मूल खाता",
+      "Sub-accounts": "उप-खाताहरू",
       "Search by office name or external ID": "कार्यालयको नाम वा बाह्य आईडीद्वारा खोज्नुहोस्",
       "Sub-offices": "उप-कार्यालयहरू",
       "Tree": "ट्री",
@@ -4932,6 +4942,12 @@
       "No configured hours": "कार्य समय कन्फिगर गरिएको छैन",
       "Enabled days need valid opening and closing times": "सक्रिय दिनहरूमा मान्य खुल्ने र बन्द हुने समय आवश्यक छ।",
       "Saving changes": "परिवर्तनहरू सुरक्षित गर्दै…",
+      "Chart of accounts description": "जर्नल प्रविष्टि, उत्पादन र वित्तीय प्रतिवेदनका लागि प्रयोग हुने सामान्य खाताबहीको संरचना।",
+      "Count account": "{{count}} खाता",
+      "Count accounts": "{{count}} खाताहरू",
+      "Showing accounts of total": "{{total}} मध्ये {{shown}} खाताहरू देखाइँदै",
+      "Sub-account codes outside parent range": "उप-खाता कोडहरू {{codes}} मूल खाताको {{parentCode}} दायराभन्दा बाहिर छन्। एकरूप कोडले प्रतिवेदन पढ्न सजिलो बनाउँछ।",
+      "No accounts match the filters": "हालको खोज र फिल्टरसँग कुनै खाता मेल खाँदैन।",
       "No valid saved coordinates": "सुरक्षित गरिएका निर्देशाङ्कहरू नभएका वा अमान्य भएकाले नक्सा उपलब्ध छैन।",
       "The transaction receipt could not be loaded. This may be due to:": "कारोबार रसिद लोड गर्न सकिएन। यो निम्न कारणहरूले गर्दा हुन सक्छ:",
       "Missing or incomplete report configuration": "प्रतिवेदन कन्फिगरेसन छुटेको वा अपूर्ण छ",
