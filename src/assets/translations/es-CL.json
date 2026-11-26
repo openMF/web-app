@@ -7564,7 +7564,20 @@
     },
     "closing": {
       "confirmTitle": "Confirmar cierre final de caja registradora",
-      "confirmText": "¿Finalizar {{cashier}} para {{date}} en {{currency}}? Esperado: {{expected}}; efectivo: {{cash}}; cheques: {{checks}}; vista previa de la diferencia: {{difference}}. La autorización la realiza el cajero jefe registrado."
+      "confirmText": "¿Finalizar {{cashier}} para {{date}} en {{currency}}? Esperado: {{expected}}; efectivo: {{cash}}; cheques: {{checks}}; vista previa de la diferencia: {{difference}}. La autorización la realiza el cajero jefe registrado.",
+      "registerStatus": {
+        "NOT_OPENED": "Sin abrir",
+        "OPEN": "Abierta",
+        "COMPLETED": "Cerrada",
+        "UNAVAILABLE": "Estado no disponible"
+      },
+      "notOpened": "Esta caja no se ha abierto. Abra la caja antes de intentar cerrarla.",
+      "closed": "Esta caja ya se ha cerrado para la fecha de negocio seleccionada.",
+      "contextChanged": "La caja o la posición financiera cambió. Revise el contexto actualizado antes del cierre.",
+      "unresolved": "El resultado del cierre está pendiente de confirmar. Conserve esta solicitud sin cambios y consulte su estado antes de intentar otro cierre.",
+      "statusUnavailable": "No se pudo verificar el estado de la caja. Cargue el contexto nuevamente.",
+      "refreshFailed": "Se conserva el comprobante completado, pero falló la actualización del estado. Consulte el estado nuevamente.",
+      "checkStatus": "Consultar estado del cierre"
     },
     "operation": {
       "confirmText": "¿Publicar este depósito final para {{cashier}} el {{date}} en {{currency}}? Efectivo: {{cash}}; cheques: {{checks}}."
