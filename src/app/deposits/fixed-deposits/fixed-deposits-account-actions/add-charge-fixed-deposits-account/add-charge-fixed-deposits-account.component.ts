@@ -96,7 +96,6 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.chargeDetails = data;
-        const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
           this.chargeDetails.dueDateNotRequired = true;
         }
@@ -113,8 +112,8 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
         } else {
           this.fixedDepositsChargeForm.removeControl('feeOnMonthDay');
         }
-        if (chargeTimeType.value === 'Monthly Fee') {
-          this.fixedDepositsChargeForm.addControl(
+        if (data.chargeTimeType.value === 'Monthly Fee') {
+          this.fixedDepositsChargeForm.setControl(
             'feeInterval',
             new UntypedFormControl(data.feeInterval, Validators.required)
           );
