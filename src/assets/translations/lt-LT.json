@@ -1507,7 +1507,8 @@
       "Retry now": "Bandyti dabar",
       "Details": "Detalės",
       "Copy diagnostics": "Kopijuoti diagnostiką",
-      "Report issue": "Pranešti apie problemą"
+      "Report issue": "Pranešti apie problemą",
+      "Create Fee Refund": "Sukurti mokesčio grąžinimą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1801,7 +1802,8 @@
       "Deposit Type": "Indėlio tipas",
       "Share Building Contribution": "Įnašas akcijoms kaupti",
       "Share Solidarity Fund": "Akcijų solidarumo fondas",
-      "account_transfer": "Pervedimas tarp sąskaitų"
+      "account_transfer": "Pervedimas tarp sąskaitų",
+      "Fee Refund": "Mokesčio grąžinimas"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -4662,7 +4664,11 @@
       "Head Office": "Pagrindinis padalinys",
       "Filter addresses": "Filtruoti adresus",
       "Last updated": "Paskutinį kartą atnaujinta",
-      "Updated by": "Atnaujino"
+      "Updated by": "Atnaujino",
+      "Supported Fee Refund Types": "Palaikomi mokesčio grąžinimo tipai",
+      "Skip Fee Refund Transaction Posting": "Praleisti mokesčio grąžinimo įrašą",
+      "Total Interest Refund": "Bendras palūkanų grąžinimas",
+      "Total Fee Refund": "Bendras mokesčio grąžinimas"
     },
     "links": {
       "Community": "bendruomenė",
@@ -7103,7 +7109,9 @@
     "Make Payment": "Atlikti mokėjimą",
     "Delinquency bucket classification override also unlocks": "Taip pat leidžia paskolos sąskaitoje keisti vėlavimo atidėjimo dienas ir pradžios tipą.",
     "Breach override also unlocks": "Taip pat leidžia paskolos sąskaitoje keisti near breach, breach atidėjimo dienas ir pradžios tipą.",
-    "Reporting Dashboard": "CB-ILD ataskaitų skydelis"
+    "Reporting Dashboard": "CB-ILD ataskaitų skydelis",
+    "Create Fee Refund": "Sukurti mokesčio grąžinimą",
+    "Refund transactions where fee refund will automatically be calculated": "Grąžinimo operacijos, kurioms mokesčio grąžinimas bus apskaičiuotas automatiškai"
   },
   "countries": {
     "AF": "Afganistanas",

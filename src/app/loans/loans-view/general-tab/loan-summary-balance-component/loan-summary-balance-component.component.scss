@@ -111,3 +111,28 @@ table.matrix {
 .matrix tbody tr:hover td {
   background: var(--ch-blue-20);
 }
+
+.refund-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin-top: 14px;
+}
+
+.refund-total {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 13px;
+}
+
+.refund-label {
+  color: var(--ch-text-2);
+  font-weight: 600;
+}
+
+.refund-value {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 12.5px;
+  color: var(--ch-text-1);
+}

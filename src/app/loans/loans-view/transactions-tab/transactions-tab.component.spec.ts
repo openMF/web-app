@@ -136,16 +136,49 @@ describe('TransactionsTabComponent', () => {
     it('offers no action on types the adjust command rejects', () => {
       const component = createComponent();
 
-      // Charge payment, income posting and interest refund used to be offered
-      // by the previous blacklist and failed on submit.
+      // Charge payment, income posting, interest refund and fee refund used to
+      // be offered by the previous blacklist and failed on submit.
       [
         17,
         19,
-        33
+        33,
+        49
       ].forEach((typeId) => {
         expect(component.allowUndoTransaction(transaction(typeId))).toBe(false);
         expect(component.allowAdjustTransaction(transaction(typeId))).toBe(false);
       });
+    });
+
+    it('offers Create Fee Refund on MIR without a linked fee refund', () => {
+      const component = createComponent();
+      component.transactionsData = [
+        transaction(21, { id: 10, type: { id: 21, code: 'loanTransactionType.merchantIssuedRefund' } })
+      ];
+
+      expect(
+        component.canCreateFeeRefund(
+          transaction(21, { id: 10, type: { id: 21, code: 'loanTransactionType.merchantIssuedRefund' } })
+        )
+      ).toBe(true);
+    });
+
+    it('hides Create Fee Refund when a non-reversed fee refund already links to the MIR', () => {
+      const component = createComponent();
+      const mir = transaction(21, {
+        id: 10,
+        type: { id: 21, code: 'loanTransactionType.merchantIssuedRefund' }
+      });
+      const feeRefund = transaction(49, {
+        id: 11,
+        type: { id: 49, code: 'loanTransactionType.feeRefund', feeRefund: true },
+        transactionRelations: [{ relationType: 'RELATED', toLoanTransaction: 10 }]
+      });
+      component.transactionsData = [
+        mir,
+        feeRefund
+      ];
+
+      expect(component.canCreateFeeRefund(mir)).toBe(false);
     });
 
     it('offers only the reversal on a chargeback of a progressive loan', () => {

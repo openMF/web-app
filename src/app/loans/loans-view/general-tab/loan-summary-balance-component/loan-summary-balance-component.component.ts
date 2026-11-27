@@ -125,6 +125,26 @@ export class LoanSummaryBalanceComponentComponent extends LoanProductBaseCompone
     ];
   }
 
+  get totalInterestRefund(): number {
+    return Number(this.summary?.totalInterestRefund ?? 0);
+  }
+
+  get totalFeeRefund(): number {
+    return Number(this.summary?.totalFeeRefund ?? 0);
+  }
+
+  get hasTotalInterestRefund(): boolean {
+    return this.totalInterestRefund > 0;
+  }
+
+  get hasTotalFeeRefund(): boolean {
+    return this.totalFeeRefund > 0;
+  }
+
+  get showRefundTotals(): boolean {
+    return this.loanProductService.isLoanProduct && (this.hasTotalInterestRefund || this.hasTotalFeeRefund);
+  }
+
   setWorkingCapitalSummaryTableData(): void {
     this.columns = [
       { key: 'original', label: 'Original' },

@@ -1507,7 +1507,8 @@
       "Retry now": "Reintentar ahora",
       "Details": "Detalles",
       "Copy diagnostics": "Copiar diagnóstico",
-      "Report issue": "Reportar problema"
+      "Report issue": "Reportar problema",
+      "Create Fee Refund": "Crear reembolso de comisión"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1801,7 +1802,8 @@
       "Deposit Type": "Tipo de depósito",
       "Share Building Contribution": "Aporte para la formación de acciones",
       "Share Solidarity Fund": "Fondo de solidaridad de acciones",
-      "SemiWeeks": "SemiWeeks"
+      "SemiWeeks": "SemiWeeks",
+      "Fee Refund": "Reembolso de comisión"
     },
     "commons": {
       "50 characters long": "50 caracteres de largo",
@@ -4662,7 +4664,11 @@
       "Head Office": "Sucursal matriz",
       "Filter addresses": "Filtrar domicilios",
       "Last updated": "Última actualización",
-      "Updated by": "Actualizado por"
+      "Updated by": "Actualizado por",
+      "Supported Fee Refund Types": "Tipos de reembolso de comisión admitidos",
+      "Skip Fee Refund Transaction Posting": "Omitir el registro del reembolso de comisión",
+      "Total Interest Refund": "Reembolso total de intereses",
+      "Total Fee Refund": "Reembolso total de comisión"
     },
     "links": {
       "Community": "Comunidad",
@@ -7103,7 +7109,9 @@
     "Make Payment": "Realizar pago",
     "Delinquency bucket classification override also unlocks": "También permite modificar los días de gracia y el tipo de inicio de la morosidad en la cuenta de préstamo.",
     "Breach override also unlocks": "También permite modificar el near breach, los días de gracia y el tipo de inicio del breach en la cuenta de préstamo.",
-    "Reporting Dashboard": "Panel de reportes CB-ILD"
+    "Reporting Dashboard": "Panel de reportes CB-ILD",
+    "Create Fee Refund": "Crear reembolso de comisión",
+    "Refund transactions where fee refund will automatically be calculated": "Transacciones de reembolso donde el reembolso de comisión se calculará automáticamente"
   },
   "countries": {
     "AF": "Afganistán",

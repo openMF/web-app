@@ -1509,7 +1509,8 @@
       "Retry now": "Jetzt erneut versuchen",
       "Details": "Details",
       "Copy diagnostics": "Diagnose kopieren",
-      "Report issue": "Problem melden"
+      "Report issue": "Problem melden",
+      "Create Fee Refund": "Gebührenerstattung erstellen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1803,7 +1804,8 @@
       "other": "andere",
       "Deposit Type": "Einzahlungsart",
       "Share Building Contribution": "Beitrag zum Anteilsaufbau",
-      "Share Solidarity Fund": "Solidaritätsfonds für Anteile"
+      "Share Solidarity Fund": "Solidaritätsfonds für Anteile",
+      "Fee Refund": "Gebührenerstattung"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",
@@ -4664,7 +4666,11 @@
       "Head Office": "Hauptgeschäftsstelle",
       "Filter addresses": "Adressen filtern",
       "Last updated": "Zuletzt aktualisiert",
-      "Updated by": "Aktualisiert von"
+      "Updated by": "Aktualisiert von",
+      "Supported Fee Refund Types": "Unterstützte Gebührenerstattungstypen",
+      "Skip Fee Refund Transaction Posting": "Buchung der Gebührenerstattung überspringen",
+      "Total Interest Refund": "Zinsrückerstattung gesamt",
+      "Total Fee Refund": "Gebührenerstattung gesamt"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -7105,7 +7111,9 @@
     "Make Payment": "Zahlung vornehmen",
     "Delinquency bucket classification override also unlocks": "Erlaubt auch, Kulanztage und Starttyp des Zahlungsverzugs im Darlehenskonto zu überschreiben.",
     "Breach override also unlocks": "Erlaubt auch, Near Breach, Breach-Kulanztage und Breach-Starttyp im Darlehenskonto zu überschreiben.",
-    "Reporting Dashboard": "CB-ILD-Berichts-Dashboard"
+    "Reporting Dashboard": "CB-ILD-Berichts-Dashboard",
+    "Create Fee Refund": "Gebührenerstattung erstellen",
+    "Refund transactions where fee refund will automatically be calculated": "Erstattungstransaktionen, für die die Gebührenerstattung automatisch berechnet wird"
   },
   "countries": {
     "AF": "Afghanistan",

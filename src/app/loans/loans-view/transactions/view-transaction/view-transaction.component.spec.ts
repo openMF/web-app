@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { ChangeDetectorRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -85,12 +86,19 @@ describe('ViewTransactionComponent', () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
+        { provide: ChangeDetectorRef, useValue: { markForCheck: jest.fn() } },
         {
           provide: ActivatedRoute,
           useValue: {
             data: of({ loansAccountTransaction: transactionData }),
-            parent: { data: of({ loanDetailsAssociationData }) },
-            snapshot: { params: { loanId: '1', clientId: '5' } }
+            parent: { data: of({ loanDetailsAssociationData }), snapshot: { params: { loanId: '1' } } },
+            pathFromRoot: [
+              { snapshot: { paramMap: { get: (key: string) => (key === 'clientId' ? '5' : null) } } }
+            ],
+            snapshot: {
+              params: { loanId: '1', clientId: '5' },
+              paramMap: { get: (key: string) => ({ loanId: '1', clientId: '5' })[key] ?? null }
+            }
           }
         },
         { provide: Router, useValue: routerStub },

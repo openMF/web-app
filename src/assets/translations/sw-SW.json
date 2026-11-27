@@ -1507,7 +1507,8 @@
       "Retry now": "Jaribu tena sasa",
       "Details": "Maelezo",
       "Copy diagnostics": "Nakili uchunguzi",
-      "Report issue": "Ripoti tatizo"
+      "Report issue": "Ripoti tatizo",
+      "Create Fee Refund": "Unda Marejesho ya Ada"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1801,7 +1802,8 @@
       "Share Building Contribution": "Mchango wa Kujenga Hisa",
       "Share Solidarity Fund": "Mfuko wa Mshikamano wa Hisa",
       "equals": "sawa na",
-      "greater than": "kubwa kuliko"
+      "greater than": "kubwa kuliko",
+      "Fee Refund": "Marejesho ya Ada"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -4662,7 +4664,11 @@
       "Head Office": "Ofisi kuu",
       "Filter addresses": "Chuja anwani",
       "Last updated": "Ilisasishwa mwisho",
-      "Updated by": "Ilisasishwa na"
+      "Updated by": "Ilisasishwa na",
+      "Supported Fee Refund Types": "Aina za Urejeshaji wa Ada Zinazotumika",
+      "Skip Fee Refund Transaction Posting": "Ruka uchapishaji wa muamala wa kurejesha ada",
+      "Total Interest Refund": "Jumla ya Marejesho ya Riba",
+      "Total Fee Refund": "Jumla ya Marejesho ya Ada"
     },
     "links": {
       "Community": "Jumuiya",
@@ -7103,7 +7109,9 @@
     "Make Payment": "Fanya Malipo",
     "Delinquency bucket classification override also unlocks": "Pia inaruhusu kubadilisha siku za msamaha na aina ya mwanzo wa ucheleweshaji kwenye akaunti ya mkopo.",
     "Breach override also unlocks": "Pia inaruhusu kubadilisha near breach, siku za msamaha na aina ya mwanzo wa breach kwenye akaunti ya mkopo.",
-    "Reporting Dashboard": "Dashibodi ya Ripoti ya CB-ILD"
+    "Reporting Dashboard": "Dashibodi ya Ripoti ya CB-ILD",
+    "Create Fee Refund": "Unda Marejesho ya Ada",
+    "Refund transactions where fee refund will automatically be calculated": "Miamala ya marejesho ambapo urejeshaji wa ada utahesabiwa kiotomatiki"
   },
   "countries": {
     "AF": "Afghanistani",

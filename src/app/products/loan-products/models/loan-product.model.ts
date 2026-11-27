@@ -189,6 +189,7 @@ export interface LoanProduct {
   chargeOffReasonToExpenseAccountMappings?: ChargeOffReasonToExpenseAccountMapping[];
   enableAccrualActivityPosting?: boolean;
   supportedInterestRefundTypes?: StringEnumOptionData[];
+  supportedFeeRefundTypes?: StringEnumOptionData[];
   chargeOffBehaviour?: StringEnumOptionData;
   buydownfeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
   buydownFeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];

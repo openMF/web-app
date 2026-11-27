@@ -337,6 +337,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * DISCOUNT_FEE_AMORTIZATION:45
    * DISCOUNT_FEE_ADJUSTMENT:46
    * DISCOUNT_FEE_AMORTIZATION_ADJUSTMENT:47
+   * FEE REFUND:49
    */
   showTransaction(transactionsData: LoanTransaction): boolean {
     return [
@@ -366,7 +367,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       44,
       45,
       46,
-      47
+      47,
+      49
     ].includes(transactionsData.type.id);
   }
 
@@ -851,22 +853,79 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   }
 
   canCreateInterestRefund(transaction: LoanTransaction): boolean {
-    const type = transaction?.type?.code?.toLowerCase() || '';
-    const isRefundType = type.includes('payoutrefund') || type.includes('merchantissuedrefund');
-    if (!isRefundType) return false;
-    if (transaction.manuallyReversed) return false;
-    if (
-      transaction.transactionRelations &&
-      transaction.transactionRelations.some((r) => r.relationType === 'INTEREST_REFUND')
-    )
-      return false;
-    return true;
+    return this.canCreateManualRefund(transaction, (t) => this.isInterestRefund(t.type));
+  }
+
+  canCreateFeeRefund(transaction: LoanTransaction): boolean {
+    // Fee refund is a Personal Loan feature only; Working Capital must stay unchanged.
+    return (
+      this.loanProductService.isLoanProduct && this.canCreateManualRefund(transaction, (t) => this.isFeeRefund(t.type))
+    );
   }
 
   openInterestRefundDialog(transaction: LoanTransaction) {
+    this.openManualRefundDialog(transaction, 'interest-refund', 'labels.buttons.Create Interest Refund');
+  }
+
+  openFeeRefundDialog(transaction: LoanTransaction) {
+    this.openManualRefundDialog(transaction, 'fee-refund', 'labels.buttons.Create Fee Refund');
+  }
+
+  private canCreateManualRefund(
+    transaction: LoanTransaction,
+    isLinkedRefund: (t: LoanTransaction) => boolean
+  ): boolean {
+    const type = transaction?.type?.code?.toLowerCase() || '';
+    const isRefundType = type.includes('payoutrefund') || type.includes('merchantissuedrefund');
+    if (!isRefundType) {
+      return false;
+    }
+    if (transaction.manuallyReversed || transaction.reversed) {
+      return false;
+    }
+    return !this.hasLinkedDerivedRefund(transaction, isLinkedRefund);
+  }
+
+  private hasLinkedDerivedRefund(
+    transaction: LoanTransaction,
+    isLinkedRefund: (t: LoanTransaction) => boolean
+  ): boolean {
+    return this.transactionsData.some(
+      (candidate) =>
+        isLinkedRefund(candidate) &&
+        !(candidate.manuallyReversed || candidate.reversed) &&
+        candidate.transactionRelations?.some(
+          (relation) =>
+            relation.relationType === 'RELATED' && Number(relation.toLoanTransaction) === Number(transaction.id)
+        )
+    );
+  }
+
+  private isInterestRefund(transactionType: LoanTransactionType): boolean {
+    return (
+      transactionType?.interestRefund ||
+      transactionType?.code === 'loanTransactionType.interestRefund' ||
+      transactionType?.id === 33
+    );
+  }
+
+  private isFeeRefund(transactionType: LoanTransactionType): boolean {
+    return (
+      transactionType?.feeRefund ||
+      transactionType?.code === 'loanTransactionType.feeRefund' ||
+      transactionType?.id === 49
+    );
+  }
+
+  private openManualRefundDialog(
+    transaction: LoanTransaction,
+    command: 'interest-refund' | 'fee-refund',
+    titleKey: string
+  ) {
     const loanId = this.loanId;
+    const title = this.translateService.instant(titleKey);
     this.loansService
-      .getLoanTransactionActionTemplate(String(loanId), 'interest-refund', String(transaction.id))
+      .getLoanTransactionActionTemplate(String(loanId), command, String(transaction.id))
       .subscribe((template: any) => {
         const paymentTypeField = new FormfieldBase({
           controlType: 'select',
@@ -910,8 +969,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           })
         ];
         const data = {
-          title: this.translateService.instant('labels.buttons.Create Interest Refund'),
-          layout: { addButtonText: this.translateService.instant('labels.buttons.Create Interest Refund') },
+          title,
+          layout: { addButtonText: title },
           formfields: formfields
         };
         const dialogRef = this.dialog.open(FormDialogComponent, { data });
@@ -925,12 +984,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
               dateFormat: this.settingsService.dateFormat
             };
             this.loansService
-              .executeLoansAccountTransactionsCommand(
-                String(loanId),
-                'interest-refund',
-                payload,
-                String(transaction.id)
-              )
+              .executeLoansAccountTransactionsCommand(String(loanId), command, payload, String(transaction.id))
               .subscribe(() => {
                 this.reload();
               });

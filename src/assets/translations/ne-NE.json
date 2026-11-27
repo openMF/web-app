@@ -1507,7 +1507,8 @@
       "Retry now": "अहिले पुनः प्रयास गर्नुहोस्",
       "Details": "विवरणहरू",
       "Copy diagnostics": "निदान प्रतिलिपि गर्नुहोस्",
-      "Report issue": "समस्या रिपोर्ट गर्नुहोस्"
+      "Report issue": "समस्या रिपोर्ट गर्नुहोस्",
+      "Create Fee Refund": "शुल्क फिर्ता सिर्जना गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1801,7 +1802,8 @@
       "Deposit Type": "निक्षेप प्रकार",
       "Share Building Contribution": "सेयर निर्माण योगदान",
       "Share Solidarity Fund": "सेयर ऐक्यबद्धता कोष",
-      "Accounting": "लेखा"
+      "Accounting": "लेखा",
+      "Fee Refund": "शुल्क फिर्ता"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -4662,7 +4664,11 @@
       "Head Office": "प्रधान कार्यालय",
       "Filter addresses": "ठेगानाहरू फिल्टर गर्नुहोस्",
       "Last updated": "अन्तिम अद्यावधिक",
-      "Updated by": "अद्यावधिक गर्ने"
+      "Updated by": "अद्यावधिक गर्ने",
+      "Supported Fee Refund Types": "समर्थित शुल्क फिर्ता प्रकारहरू",
+      "Skip Fee Refund Transaction Posting": "शुल्क फिर्ता पोस्टिङ्ग छोड्नुहोस्",
+      "Total Interest Refund": "कुल ब्याज फिर्ता",
+      "Total Fee Refund": "कुल शुल्क फिर्ता"
     },
     "links": {
       "Community": "समुदाय",
@@ -7103,7 +7109,9 @@
     "Make Payment": "भुक्तानी गर्नुहोस्",
     "Delinquency bucket classification override also unlocks": "ऋण खातामा बक्यौता छुट दिन र सुरु प्रकार पनि परिवर्तन गर्न अनुमति दिन्छ।",
     "Breach override also unlocks": "ऋण खातामा near breach, breach छुट दिन र सुरु प्रकार पनि परिवर्तन गर्न अनुमति दिन्छ।",
-    "Reporting Dashboard": "CB-ILD प्रतिवेदन ड्यासबोर्ड"
+    "Reporting Dashboard": "CB-ILD प्रतिवेदन ड्यासबोर्ड",
+    "Create Fee Refund": "शुल्क फिर्ता सिर्जना गर्नुहोस्",
+    "Refund transactions where fee refund will automatically be calculated": "फिर्ता लेनदेन जहाँ शुल्क फिर्ता स्वचालित रूपमा गणना गरिनेछ"
   },
   "countries": {
     "AF": "अफगानिस्तान",

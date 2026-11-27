@@ -1507,7 +1507,8 @@
       "Retry now": "지금 재시도",
       "Details": "세부 정보",
       "Copy diagnostics": "진단 정보 복사",
-      "Report issue": "문제 신고"
+      "Report issue": "문제 신고",
+      "Create Fee Refund": "수수료 환불 생성"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1801,7 +1802,8 @@
       "other": "기타",
       "Deposit Type": "입금 유형",
       "Share Building Contribution": "출자금 적립 기여금",
-      "Share Solidarity Fund": "출자 연대 기금"
+      "Share Solidarity Fund": "출자 연대 기금",
+      "Fee Refund": "수수료 환불"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -4662,7 +4664,11 @@
       "Head Office": "본점",
       "Filter addresses": "주소 필터",
       "Last updated": "마지막 업데이트",
-      "Updated by": "업데이트한 사용자"
+      "Updated by": "업데이트한 사용자",
+      "Supported Fee Refund Types": "지원되는 수수료 환불 유형",
+      "Skip Fee Refund Transaction Posting": "수수료 환불 거래 게시 건너뛰기",
+      "Total Interest Refund": "총 이자 환불",
+      "Total Fee Refund": "총 수수료 환불"
     },
     "links": {
       "Community": "지역 사회",
@@ -7103,7 +7109,9 @@
     "Make Payment": "결제하기",
     "Delinquency bucket classification override also unlocks": "대출 계좌에서 연체 유예 일수와 연체 시작 유형도 변경할 수 있습니다.",
     "Breach override also unlocks": "대출 계좌에서 near breach, breach 유예 일수와 breach 시작 유형도 변경할 수 있습니다.",
-    "Reporting Dashboard": "CB-ILD 보고 대시보드"
+    "Reporting Dashboard": "CB-ILD 보고 대시보드",
+    "Create Fee Refund": "수수료 환불 생성",
+    "Refund transactions where fee refund will automatically be calculated": "수수료 환불이 자동으로 계산되는 환불 거래"
   },
   "countries": {
     "AF": "아프가니스탄",

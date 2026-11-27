@@ -147,6 +147,10 @@ describe('LoanTransactionAdjustHelper', () => {
       33
     ],
     [
+      'FEE_REFUND',
+      49
+    ],
+    [
       'CAPITALIZED_INCOME_AMORTIZATION',
       36
     ],

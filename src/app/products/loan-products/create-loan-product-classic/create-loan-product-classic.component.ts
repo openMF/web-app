@@ -106,6 +106,7 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
   paymentAllocation: PaymentAllocation[] = [];
   creditAllocation: PaymentAllocation[] = [];
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
+  supportedFeeRefundTypes: StringEnumOptionData[] = [];
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
 
@@ -220,6 +221,10 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
     this.supportedInterestRefundTypes = supportedInterestRefundTypes;
   }
 
+  setSupportedFeeRefundTypes(supportedFeeRefundTypes: StringEnumOptionData[]): void {
+    this.supportedFeeRefundTypes = supportedFeeRefundTypes;
+  }
+
   setDeferredIncomeRecognition(deferredIncomeRecognition: DeferredIncomeRecognition): void {
     if (this.isAdvancedPaymentStrategy) {
       this.deferredIncomeRecognition = deferredIncomeRecognition;
@@ -306,6 +311,7 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
         loanProduct['paymentAllocation'] = this.paymentAllocation;
         loanProduct['creditAllocation'] = this.creditAllocation;
         loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+        loanProduct['supportedFeeRefundTypes'] = this.supportedFeeRefundTypes;
         if (this.deferredIncomeRecognition.capitalizedIncome != null) {
           loanProduct['enableIncomeCapitalization'] =
             this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization;
@@ -357,8 +363,10 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
       loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(
         loanProduct['supportedInterestRefundTypes']
       );
+      loanProduct['supportedFeeRefundTypes'] = this.mapStringEnumOptionToIdList(loanProduct['supportedFeeRefundTypes']);
     } else {
       delete loanProduct['supportedInterestRefundTypes'];
+      delete loanProduct['supportedFeeRefundTypes'];
       delete loanProduct['daysInYearCustomStrategy'];
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];

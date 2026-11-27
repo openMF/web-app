@@ -1507,7 +1507,8 @@
       "Retry now": "Riprova ora",
       "Details": "Dettagli",
       "Copy diagnostics": "Copia diagnostica",
-      "Report issue": "Segnala un problema"
+      "Report issue": "Segnala un problema",
+      "Create Fee Refund": "Crea rimborso commissione"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1801,7 +1802,8 @@
       "other": "altro",
       "Deposit Type": "Tipo di deposito",
       "Share Building Contribution": "Contributo alla costituzione di quote",
-      "Share Solidarity Fund": "Fondo di solidarietà delle quote"
+      "Share Solidarity Fund": "Fondo di solidarietà delle quote",
+      "Fee Refund": "Rimborso commissione"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -4662,7 +4664,11 @@
       "Head Office": "Sede principale",
       "Filter addresses": "Filtra indirizzi",
       "Last updated": "Ultimo aggiornamento",
-      "Updated by": "Aggiornato da"
+      "Updated by": "Aggiornato da",
+      "Supported Fee Refund Types": "Tipi di rimborso commissione supportati",
+      "Skip Fee Refund Transaction Posting": "Salta la registrazione del rimborso commissione",
+      "Total Interest Refund": "Rimborso interessi totale",
+      "Total Fee Refund": "Rimborso commissione totale"
     },
     "links": {
       "Community": "Comunità",
@@ -7103,7 +7109,9 @@
     "Make Payment": "Effettua pagamento",
     "Delinquency bucket classification override also unlocks": "Consente anche di modificare i giorni di tolleranza e il tipo di inizio della morosità sul conto di prestito.",
     "Breach override also unlocks": "Consente anche di modificare il near breach, i giorni di tolleranza e il tipo di inizio del breach sul conto di prestito.",
-    "Reporting Dashboard": "Cruscotto dei report CB-ILD"
+    "Reporting Dashboard": "Cruscotto dei report CB-ILD",
+    "Create Fee Refund": "Crea rimborso commissione",
+    "Refund transactions where fee refund will automatically be calculated": "Transazioni di rimborso per cui il rimborso commissione sarà calcolato automaticamente"
   },
   "countries": {
     "AF": "Afghanistan",

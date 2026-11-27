@@ -108,6 +108,7 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
   @Input() paymentAllocations: PaymentAllocation | null;
   @Input() creditAllocations: CreditAllocation | null;
   @Input() supportedInterestRefundTypes: StringEnumOptionData[] | null;
+  @Input() supportedFeeRefundTypes: StringEnumOptionData[] | null;
 
   variationsDisplayedColumns: string[] = [
     'valueConditionType',

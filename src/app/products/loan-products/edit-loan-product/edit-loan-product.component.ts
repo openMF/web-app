@@ -114,6 +114,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
+  supportedFeeRefundTypes: StringEnumOptionData[] = [];
 
   deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
   loanIncomeCapitalizationForm: UntypedFormGroup | null = null;
@@ -155,6 +156,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         this.paymentAllocation = this.loanProductAndTemplate.paymentAllocation;
         this.creditAllocation = this.loanProductAndTemplate.creditAllocation;
         this.supportedInterestRefundTypes = this.loanProductAndTemplate.supportedInterestRefundTypes;
+        this.supportedFeeRefundTypes = this.loanProductAndTemplate.supportedFeeRefundTypes ?? [];
         if (this.loanProductAndTemplate.enableIncomeCapitalization) {
           this.deferredIncomeRecognition.capitalizedIncome = {
             enableIncomeCapitalization: true,
@@ -266,6 +268,10 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
     this.supportedInterestRefundTypes = supportedInterestRefundTypes;
   }
 
+  setSupportedFeeRefundTypes(supportedFeeRefundTypes: StringEnumOptionData[]): void {
+    this.supportedFeeRefundTypes = supportedFeeRefundTypes;
+  }
+
   paymentAllocationChanged(value: boolean): void {
     this.wasPaymentAllocationChanged = value;
   }
@@ -367,10 +373,12 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
       loanProduct['paymentAllocation'] = [];
       loanProduct['creditAllocation'] = [];
       loanProduct['supportedInterestRefundTypes'] = [];
+      loanProduct['supportedFeeRefundTypes'] = [];
       if (this.isAdvancedPaymentStrategy) {
         loanProduct['paymentAllocation'] = this.paymentAllocation;
         loanProduct['creditAllocation'] = this.creditAllocation;
         loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+        loanProduct['supportedFeeRefundTypes'] = this.supportedFeeRefundTypes;
         if (this.deferredIncomeRecognition != null) {
           if (this.deferredIncomeRecognition.capitalizedIncome != null) {
             loanProduct['enableIncomeCapitalization'] =
@@ -422,8 +430,12 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(
           loanProduct['supportedInterestRefundTypes']
         );
+        loanProduct['supportedFeeRefundTypes'] = this.mapStringEnumOptionToIdList(
+          loanProduct['supportedFeeRefundTypes']
+        );
       } else {
         delete loanProduct['supportedInterestRefundTypes'];
+        delete loanProduct['supportedFeeRefundTypes'];
         delete loanProduct['daysInYearCustomStrategy'];
       }
       delete loanProduct['useDueForRepaymentsConfigurations'];

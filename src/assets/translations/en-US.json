@@ -1509,7 +1509,8 @@
       "Retry now": "Retry now",
       "Details": "Details",
       "Copy diagnostics": "Copy diagnostics",
-      "Report issue": "Report issue"
+      "Report issue": "Report issue",
+      "Create Fee Refund": "Create Fee Refund"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1803,7 +1804,8 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "SUSPENDED": "Suspended",
-      "other": "other"
+      "other": "other",
+      "Fee Refund": "Fee Refund"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -4663,7 +4665,11 @@
       "Client number": "# client",
       "Filter addresses": "Filter addresses",
       "Last updated": "Last updated",
-      "Updated by": "Updated by"
+      "Updated by": "Updated by",
+      "Supported Fee Refund Types": "Supported Fee Refund Types",
+      "Skip Fee Refund Transaction Posting": "Skip Fee Refund Transaction Posting",
+      "Total Interest Refund": "Total Interest Refund",
+      "Total Fee Refund": "Total Fee Refund"
     },
     "links": {
       "Community": "Community",
@@ -7104,7 +7110,9 @@
     "Frequency must be greater than zero": "Frequency must be greater than zero",
     "Make Payment": "Make Payment",
     "Delinquency bucket classification override also unlocks": "Also allows overriding the delinquency grace days and delinquency start type on the loan account.",
-    "Breach override also unlocks": "Also allows overriding the near breach, breach grace days and breach start type on the loan account."
+    "Breach override also unlocks": "Also allows overriding the near breach, breach grace days and breach start type on the loan account.",
+    "Create Fee Refund": "Create Fee Refund",
+    "Refund transactions where fee refund will automatically be calculated": "Refund transactions where fee refund will automatically be calculated"
   },
   "countries": {
     "AF": "Afghanistan",
