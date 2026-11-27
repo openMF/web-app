@@ -31,7 +31,12 @@ const receipt = () => ({
   checks: []
 });
 
+// Keep the fixed instant on the mocked business date in every host timezone.
+test.use({ timezoneId: 'UTC' });
+
 test.beforeEach(async ({ page }) => {
+  // The app sets its business date from the browser clock at startup, so pin it to the mocked business date.
+  await page.clock.setFixedTime(new Date('2026-11-26T12:00:00Z'));
   posts = [];
   failRefresh = false;
   failPost = false;
