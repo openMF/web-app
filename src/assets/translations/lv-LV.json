@@ -1507,7 +1507,8 @@
       "Retry now": "Mēģināt tagad",
       "Details": "Detaļas",
       "Copy diagnostics": "Kopēt diagnostiku",
-      "Report issue": "Ziņot par problēmu"
+      "Report issue": "Ziņot par problēmu",
+      "Create Fee Refund": "Izveidot maksas atmaksu"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1801,7 +1802,8 @@
       "other": "cits",
       "Deposit Type": "Noguldījuma veids",
       "Share Building Contribution": "Iemaksa daļu veidošanai",
-      "Share Solidarity Fund": "Daļu solidaritātes fonds"
+      "Share Solidarity Fund": "Daļu solidaritātes fonds",
+      "Fee Refund": "Maksas atmaksa"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -4662,7 +4664,11 @@
       "Head Office": "Galvenais birojs",
       "Filter addresses": "Filtrēt adreses",
       "Last updated": "Pēdējoreiz atjaunināts",
-      "Updated by": "Atjaunināja"
+      "Updated by": "Atjaunināja",
+      "Supported Fee Refund Types": "Atbalstītie maksas atmaksas veidi",
+      "Skip Fee Refund Transaction Posting": "Izlaist maksas atmaksas ierakstu",
+      "Total Interest Refund": "Kopējā procentu atmaksa",
+      "Total Fee Refund": "Kopējā maksas atmaksa"
     },
     "links": {
       "Community": "kopiena",
@@ -7103,7 +7109,9 @@
     "Make Payment": "Veikt maksājumu",
     "Delinquency bucket classification override also unlocks": "Ļauj aizdevuma kontā mainīt arī kavējuma labvēlības dienas un sākuma veidu.",
     "Breach override also unlocks": "Ļauj aizdevuma kontā mainīt arī near breach, breach labvēlības dienas un sākuma veidu.",
-    "Reporting Dashboard": "CB-ILD pārskatu panelis"
+    "Reporting Dashboard": "CB-ILD pārskatu panelis",
+    "Create Fee Refund": "Izveidot maksas atmaksu",
+    "Refund transactions where fee refund will automatically be calculated": "Atmaksas darījumi, kuros maksas atmaksa tiks aprēķināta automātiski"
   },
   "countries": {
     "AF": "Afganistāna",

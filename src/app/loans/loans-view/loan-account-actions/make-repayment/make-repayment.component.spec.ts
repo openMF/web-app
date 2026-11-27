@@ -187,4 +187,50 @@ describe('MakeRepaymentComponent', () => {
       '5 January 2026'
     );
   });
+
+  it('sends feeRefundCalculation false only when Skip Fee Refund is checked on MIR', () => {
+    loansServiceStub.submitLoanActionButton = jest.fn().mockReturnValue(of({ resourceId: 1 }));
+    const component = createComponent(false, {
+      ...template,
+      actionName: 'Merchant Issued Refund',
+      type: { code: 'loanTransactionType.merchantIssuedRefund' }
+    });
+    component.command = 'merchantIssuedRefund';
+    component.repaymentLoanForm.patchValue({
+      transactionAmount: 100,
+      skipFeeRefund: true,
+      skipInterestRefund: false
+    });
+
+    component.submit();
+
+    expect(loansServiceStub.submitLoanActionButton).toHaveBeenCalledWith(
+      '1',
+      expect.objectContaining({ feeRefundCalculation: false }),
+      'merchantIssuedRefund'
+    );
+    const payload = loansServiceStub.submitLoanActionButton.mock.calls[0][1];
+    expect(payload).not.toHaveProperty('skipFeeRefund');
+    expect(payload).not.toHaveProperty('interestRefundCalculation');
+  });
+
+  it('omits feeRefundCalculation when Skip Fee Refund is unchecked', () => {
+    loansServiceStub.submitLoanActionButton = jest.fn().mockReturnValue(of({ resourceId: 1 }));
+    const component = createComponent(false, {
+      ...template,
+      actionName: 'Payout Refund',
+      type: { code: 'loanTransactionType.payoutRefund' }
+    });
+    component.command = 'payoutRefund';
+    component.repaymentLoanForm.patchValue({
+      transactionAmount: 100,
+      skipFeeRefund: false
+    });
+
+    component.submit();
+
+    const payload = loansServiceStub.submitLoanActionButton.mock.calls[0][1];
+    expect(payload).not.toHaveProperty('feeRefundCalculation');
+    expect(payload).not.toHaveProperty('skipFeeRefund');
+  });
 });

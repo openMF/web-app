@@ -17,12 +17,15 @@ describe('LoanProductInterestRefundStepComponent', () => {
     { id: 'PAYOUT_REFUND', code: 'PAYOUT_REFUND', value: 'Payout refund' }
   ] as StringEnumOptionData[];
 
-  function lastEmitted(loanProductsTemplate: any): StringEnumOptionData[] {
+  function lastEmitted(
+    loanProductsTemplate: any,
+    channel: 'supportedInterestRefundTypes' | 'supportedFeeRefundTypes' = 'supportedInterestRefundTypes'
+  ): StringEnumOptionData[] {
     TestBed.resetTestingModule();
     const emitted: StringEnumOptionData[][] = [];
     TestBed.runInInjectionContext(() => {
       const component = new LoanProductInterestRefundStepComponent();
-      component.supportedInterestRefundTypes.subscribe((value) => emitted.push(value));
+      component[channel].subscribe((value) => emitted.push(value));
       component.loanProductsTemplate = loanProductsTemplate;
       component.ngOnInit();
     });
@@ -33,12 +36,28 @@ describe('LoanProductInterestRefundStepComponent', () => {
     expect(lastEmitted({ supportedInterestRefundTypesOptions: refundOptions })).toEqual([]);
   });
 
-  it('emits the refund types saved on the product', () => {
+  it('emits the interest refund types saved on the product', () => {
     const emitted = lastEmitted({
       supportedInterestRefundTypesOptions: refundOptions,
       supportedInterestRefundTypes: [refundOptions[1]]
     });
 
     expect(emitted).toEqual([refundOptions[1]]);
+  });
+
+  it('emits an empty fee refund list for a new product', () => {
+    expect(lastEmitted({ supportedFeeRefundTypesOptions: refundOptions }, 'supportedFeeRefundTypes')).toEqual([]);
+  });
+
+  it('emits the fee refund types saved on the product', () => {
+    expect(
+      lastEmitted(
+        {
+          supportedFeeRefundTypesOptions: refundOptions,
+          supportedFeeRefundTypes: [refundOptions[0]]
+        },
+        'supportedFeeRefundTypes'
+      )
+    ).toEqual([refundOptions[0]]);
   });
 });

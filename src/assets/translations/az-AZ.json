@@ -1463,7 +1463,8 @@
       "Retry now": "İndi yenidən cəhd et",
       "Details": "Təfərrüatlar",
       "Copy diagnostics": "Diaqnostikanı kopyala",
-      "Report issue": "Problemi bildir"
+      "Report issue": "Problemi bildir",
+      "Create Fee Refund": "Komissiya qaytarılmasını yarat"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -1757,7 +1758,8 @@
       "ACTIVE": "Aktiv",
       "INACTIVE": "Qeyri-aktiv",
       "SUSPENDED": "Dayandırılıb",
-      "other": "Digər"
+      "other": "Digər",
+      "Fee Refund": "Komissiya qaytarılması"
     },
     "commons": {
       "50 characters long": "50 simvol uzunluğunda",
@@ -4612,7 +4614,11 @@
       "Head Office": "Baş ofis",
       "Filter addresses": "Ünvanları filtrlə",
       "Last updated": "Son yenilənmə",
-      "Updated by": "Yeniləyən"
+      "Updated by": "Yeniləyən",
+      "Supported Fee Refund Types": "Dəstəklənən komissiya qaytarma növləri",
+      "Skip Fee Refund Transaction Posting": "Komissiya qaytarma əməliyyatının uçota alınmasını ötür",
+      "Total Interest Refund": "Ümumi faiz qaytarılması",
+      "Total Fee Refund": "Ümumi komissiya qaytarılması"
     },
     "links": {
       "Community": "İcma",
@@ -7053,7 +7059,9 @@
     "Frequency must be greater than zero": "Tezlik sıfırdan böyük olmalıdır",
     "Make Payment": "Ödəniş et",
     "Delinquency bucket classification override also unlocks": "Kredit hesabında gecikmə üzrə güzəşt günlərini və başlanğıc növünü də dəyişməyə imkan verir.",
-    "Breach override also unlocks": "Kredit hesabında near breach, breach güzəşt günlərini və başlanğıc növünü də dəyişməyə imkan verir."
+    "Breach override also unlocks": "Kredit hesabında near breach, breach güzəşt günlərini və başlanğıc növünü də dəyişməyə imkan verir.",
+    "Create Fee Refund": "Komissiya qaytarılmasını yarat",
+    "Refund transactions where fee refund will automatically be calculated": "Komissiya qaytarılmasının avtomatik hesablandığı geri qaytarma əməliyyatları"
   },
   "countries": {
     "AF": "Əfqanıstan",

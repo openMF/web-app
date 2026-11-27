@@ -1508,7 +1508,8 @@
       "Retry now": "Zkusit znovu",
       "Details": "Podrobnosti",
       "Copy diagnostics": "Kopírovat diagnostiku",
-      "Report issue": "Nahlásit problém"
+      "Report issue": "Nahlásit problém",
+      "Create Fee Refund": "Vytvořit vrácení poplatku"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -1802,7 +1803,8 @@
       "other": "jiné",
       "Deposit Type": "Typ vkladu",
       "Share Building Contribution": "Příspěvek na tvorbu podílů",
-      "Share Solidarity Fund": "Solidární fond podílů"
+      "Share Solidarity Fund": "Solidární fond podílů",
+      "Fee Refund": "Vrácení poplatku"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -4663,7 +4665,11 @@
       "Head Office": "Hlavní pobočka",
       "Filter addresses": "Filtrovat adresy",
       "Last updated": "Poslední aktualizace",
-      "Updated by": "Aktualizoval(a)"
+      "Updated by": "Aktualizoval(a)",
+      "Supported Fee Refund Types": "Podporované typy vrácení poplatku",
+      "Skip Fee Refund Transaction Posting": "Přeskočit zaúčtování vrácení poplatku",
+      "Total Interest Refund": "Celkové vrácení úroků",
+      "Total Fee Refund": "Celkové vrácení poplatku"
     },
     "links": {
       "Community": "Společenství",
@@ -7105,7 +7111,9 @@
     "Make Payment": "Provést platbu",
     "Delinquency bucket classification override also unlocks": "Umožňuje také přepsat dny odkladu a typ začátku prodlení na úvěrovém účtu.",
     "Breach override also unlocks": "Umožňuje také přepsat near breach, dny odkladu a typ začátku breach na úvěrovém účtu.",
-    "Reporting Dashboard": "Přehled hlášení CB-ILD"
+    "Reporting Dashboard": "Přehled hlášení CB-ILD",
+    "Create Fee Refund": "Vytvořit vrácení poplatku",
+    "Refund transactions where fee refund will automatically be calculated": "Transakce vrácení, u kterých se vrácení poplatku vypočítá automaticky"
   },
   "countries": {
     "AF": "Afghánistán",

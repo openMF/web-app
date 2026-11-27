@@ -549,6 +549,14 @@
           </span>
         </div>
       }
+      @if (isAdvancedPaymentAllocation && supportedFeeRefundTypes?.length > 0) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Supported Fee Refund Types' | translate }}:</span>
+          <span class="flex-60">
+            {{ mapHumanReadableValueStringEnumOptionDataList(supportedFeeRefundTypes) }}
+          </span>
+        </div>
+      }
       @if (showDownPaymentsSection) {
         <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Down Payments' | translate }}</h3>
         <mat-divider [inset]="true"></mat-divider>

@@ -112,11 +112,12 @@ const WORKING_CAPITAL_DELTA_ADJUSTABLE_TRANSACTION_TYPE_IDS: ReadonlySet<number>
 export const WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION = 'ADJUSTBYDELTA_WORKINGCAPITALLOANTRANSACTION';
 
 /**
- * Interest refund is repayment like, so it clears gate 1, but the backend
- * rejects it before reaching that check: it can be neither reversed nor
- * adjusted directly.
+ * Interest refund and Fee refund are repayment like, so they clear gate 1, but
+ * the backend rejects them before reaching that check: they can be neither
+ * reversed nor adjusted directly.
  */
 const INTEREST_REFUND_TYPE_ID = 33;
+const FEE_REFUND_TYPE_ID = 49;
 
 /** Chargeback clears both gates, but the backend reverses it on progressive loans only. */
 const CHARGEBACK_TYPE_ID = 25;
@@ -141,6 +142,7 @@ export function canReverseLoanTransaction(transactionType: LoanTransactionType, 
   return (
     !alreadyReversed &&
     transactionType.id !== INTEREST_REFUND_TYPE_ID &&
+    transactionType.id !== FEE_REFUND_TYPE_ID &&
     REVERSIBLE_TRANSACTION_TYPE_IDS.has(transactionType.id)
   );
 }

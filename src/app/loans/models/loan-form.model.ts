@@ -14,6 +14,7 @@ export interface RepaymentForm {
   paymentTypeId: FormControl<string | null>;
   note: FormControl<string | null>;
   skipInterestRefund: FormControl<boolean | null>;
+  skipFeeRefund: FormControl<boolean | null>;
   transactionAmount: FormControl<number | null>;
   classificationId?: FormControl<string | null>;
   accountNumber?: FormControl<string | null>;

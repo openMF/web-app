@@ -1507,7 +1507,8 @@
       "Retry now": "Réessayer maintenant",
       "Details": "Détails",
       "Copy diagnostics": "Copier le diagnostic",
-      "Report issue": "Signaler un problème"
+      "Report issue": "Signaler un problème",
+      "Create Fee Refund": "Créer un remboursement de frais"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1801,7 +1802,8 @@
       "other": "autre",
       "Deposit Type": "Type de dépôt",
       "Share Building Contribution": "Contribution à la constitution de parts",
-      "Share Solidarity Fund": "Fonds de solidarité des parts"
+      "Share Solidarity Fund": "Fonds de solidarité des parts",
+      "Fee Refund": "Remboursement de frais"
     },
     "commons": {
       "50 characters long": "50 caractères",
@@ -4662,7 +4664,11 @@
       "Head Office": "Siège social",
       "Filter addresses": "Filtrer les adresses",
       "Last updated": "Dernière mise à jour",
-      "Updated by": "Mis à jour par"
+      "Updated by": "Mis à jour par",
+      "Supported Fee Refund Types": "Types de remboursement de frais pris en charge",
+      "Skip Fee Refund Transaction Posting": "Ignorer la comptabilisation du remboursement de frais",
+      "Total Interest Refund": "Remboursement d’intérêts total",
+      "Total Fee Refund": "Remboursement de frais total"
     },
     "links": {
       "Community": "Communauté",
@@ -7103,7 +7109,9 @@
     "Make Payment": "Effectuer un paiement",
     "Delinquency bucket classification override also unlocks": "Permet aussi de modifier les jours de grâce et le type de début de l'impayé sur le compte de prêt.",
     "Breach override also unlocks": "Permet aussi de modifier le near breach, les jours de grâce et le type de début du breach sur le compte de prêt.",
-    "Reporting Dashboard": "Tableau de bord des rapports CB-ILD"
+    "Reporting Dashboard": "Tableau de bord des rapports CB-ILD",
+    "Create Fee Refund": "Créer un remboursement de frais",
+    "Refund transactions where fee refund will automatically be calculated": "Transactions de remboursement pour lesquelles le remboursement de frais sera automatiquement calculé"
   },
   "countries": {
     "AF": "Afghanistan",

@@ -24,5 +24,20 @@
         }
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Supported Fee Refund Types' | translate }}</mat-label>
+      <mat-select
+        multiple
+        formControlName="supportedFeeRefundTypes"
+        matTooltip="{{ 'tooltips.Refund transactions where fee refund will automatically be calculated' | translate }}"
+      >
+        @for (supportedTransaction of supportedFeeRefundTypesOptions; track supportedTransaction) {
+          <mat-option [value]="supportedTransaction.id">
+            {{ supportedTransaction.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
 </form>

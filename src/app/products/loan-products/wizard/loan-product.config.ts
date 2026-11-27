@@ -70,6 +70,7 @@ export const HIDDEN_DEFAULTS: Record<string, unknown> = {
   dueDaysForRepaymentEvent: 1,
   overDueDaysForRepaymentEvent: 1,
   supportedInterestRefundTypes: null,
+  supportedFeeRefundTypes: null,
   enableIncomeCapitalization: false,
   enableBuydownFees: false,
   allowPartialPeriodInterestCalculation: true,
@@ -1483,6 +1484,7 @@ const BNPL_VISIBLE_KEYS: readonly string[] = [
   // Owned by the reused Classic Interest Refund / Deferred Income Recognition steps for BNPL (the
   // highlighted sheet groups), so the step's emitted value — not a pinned default — drives the payload.
   'supportedInterestRefundTypes',
+  'supportedFeeRefundTypes',
   'enableIncomeCapitalization',
   'enableBuydownFees'
 ];
@@ -1700,7 +1702,8 @@ const CREDIT_CARD_EMI_VISIBLE_KEYS: readonly string[] = [
   'enableInstallmentLevelDelinquency',
   // Owned by the reused Classic Interest Refund step (row 76), so the step's emitted value — not a
   // pinned default — drives the payload.
-  'supportedInterestRefundTypes'
+  'supportedInterestRefundTypes',
+  'supportedFeeRefundTypes'
 ];
 
 /**
@@ -2820,10 +2823,15 @@ function sanitizeCreateLoanProductPayload(merged: Record<string, unknown>, profi
     delete merged.daysInYearCustomStrategy;
   }
 
-  // 5. `supportedInterestRefundTypes` is only meaningful as a non-empty list of refund type ids.
+  // 5. `supportedInterestRefundTypes` / `supportedFeeRefundTypes` are only meaningful as non-empty
+  //    lists of refund type ids, and only on the advanced payment allocation strategy.
   const refundTypes = merged.supportedInterestRefundTypes;
   if (!usesAdvancedPaymentAllocation || !Array.isArray(refundTypes) || refundTypes.length === 0) {
     delete merged.supportedInterestRefundTypes;
+  }
+  const feeRefundTypes = merged.supportedFeeRefundTypes;
+  if (!usesAdvancedPaymentAllocation || !Array.isArray(feeRefundTypes) || feeRefundTypes.length === 0) {
+    delete merged.supportedFeeRefundTypes;
   }
 
   // 6. Strip the fields the create endpoint never accepts.
@@ -2931,8 +2939,26 @@ export function buildPayload(
       } else {
         delete merged.supportedInterestRefundTypes;
       }
+
+      const selectedFeeRefundTypes = merged.supportedFeeRefundTypes;
+      const templateSupportedFeeRefundTypes = getTemplateFieldValue(
+        template as Record<string, unknown>,
+        'supportedFeeRefundTypes'
+      );
+      if (Array.isArray(selectedFeeRefundTypes) && selectedFeeRefundTypes.length > 0) {
+        merged.supportedFeeRefundTypes = selectedFeeRefundTypes;
+      } else if (
+        Array.isArray(templateSupportedFeeRefundTypes) &&
+        templateSupportedFeeRefundTypes.length > 0 &&
+        !rendersInterestRefundStep(profileMode)
+      ) {
+        merged.supportedFeeRefundTypes = templateSupportedFeeRefundTypes;
+      } else {
+        delete merged.supportedFeeRefundTypes;
+      }
     } else {
       delete merged.supportedInterestRefundTypes;
+      delete merged.supportedFeeRefundTypes;
     }
 
     if (supportsProgressiveLoanFeatures && 'loanChargeOffBehaviour' in merged) {
@@ -3032,6 +3058,13 @@ export function buildPayload(
       );
       if (Array.isArray(templateSupportedInterestRefundTypes) && templateSupportedInterestRefundTypes.length > 0) {
         merged.supportedInterestRefundTypes = templateSupportedInterestRefundTypes;
+      }
+      const templateSupportedFeeRefundTypes = getTemplateFieldValue(
+        template as Record<string, unknown>,
+        'supportedFeeRefundTypes'
+      );
+      if (Array.isArray(templateSupportedFeeRefundTypes) && templateSupportedFeeRefundTypes.length > 0) {
+        merged.supportedFeeRefundTypes = templateSupportedFeeRefundTypes;
       }
     }
 

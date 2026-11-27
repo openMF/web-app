@@ -27,10 +27,12 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
   @Output() supportedInterestRefundTypes = new EventEmitter<StringEnumOptionData[]>();
+  @Output() supportedFeeRefundTypes = new EventEmitter<StringEnumOptionData[]>();
 
   loanProductInterestRefundForm: UntypedFormGroup;
 
   supportedInterestRefundTypesOptions: StringEnumOptionData[];
+  supportedFeeRefundTypesOptions: StringEnumOptionData[];
 
   constructor() {
     this.createLoanProductInterestRefundForm();
@@ -39,17 +41,21 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
 
   ngOnInit() {
     this.supportedInterestRefundTypesOptions = this.loanProductsTemplate.supportedInterestRefundTypesOptions;
-    const values: StringEnumOptionData[] = this.loanProductsTemplate.supportedInterestRefundTypes ?? [];
-    const supportedInterestRefundTypes: string[] = this.mapStringEnumOptionToIdList(values);
+    this.supportedFeeRefundTypesOptions = this.loanProductsTemplate.supportedFeeRefundTypesOptions ?? [];
+    const interestValues: StringEnumOptionData[] = this.loanProductsTemplate.supportedInterestRefundTypes ?? [];
+    const feeValues: StringEnumOptionData[] = this.loanProductsTemplate.supportedFeeRefundTypes ?? [];
     this.loanProductInterestRefundForm.patchValue({
-      supportedInterestRefundTypes: supportedInterestRefundTypes
+      supportedInterestRefundTypes: this.mapStringEnumOptionToIdList(interestValues),
+      supportedFeeRefundTypes: this.mapStringEnumOptionToIdList(feeValues)
     });
-    this.supportedInterestRefundTypes.emit(values);
+    this.supportedInterestRefundTypes.emit(interestValues);
+    this.supportedFeeRefundTypes.emit(feeValues);
   }
 
   createLoanProductInterestRefundForm() {
     this.loanProductInterestRefundForm = this.formBuilder.group({
-      supportedInterestRefundTypes: ''
+      supportedInterestRefundTypes: '',
+      supportedFeeRefundTypes: ''
     });
   }
 
@@ -57,6 +63,11 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
     this.loanProductInterestRefundForm.get('supportedInterestRefundTypes').valueChanges.subscribe((value) => {
       this.supportedInterestRefundTypes.emit(
         this.mapIdToStringEnumOptionList(value, this.loanProductsTemplate.supportedInterestRefundTypesOptions)
+      );
+    });
+    this.loanProductInterestRefundForm.get('supportedFeeRefundTypes').valueChanges.subscribe((value) => {
+      this.supportedFeeRefundTypes.emit(
+        this.mapIdToStringEnumOptionList(value, this.loanProductsTemplate.supportedFeeRefundTypesOptions ?? [])
       );
     });
   }

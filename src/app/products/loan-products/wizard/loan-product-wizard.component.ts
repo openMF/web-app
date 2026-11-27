@@ -397,6 +397,8 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
 
   /** Selected refund types, mirroring Classic's `supportedInterestRefundTypes` field. */
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
+  /** Selected fee refund types, mirroring Classic's `supportedFeeRefundTypes` field. */
+  supportedFeeRefundTypes: StringEnumOptionData[] = [];
   /** Deferred income state the reused step binds to, mirroring Classic's field of the same name. */
   deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
 
@@ -1557,6 +1559,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
       // Raw option objects here, exactly as Classic holds them; `buildClassicPayload` maps them to the
       // id list the create contract wants, mirroring Classic's `mapStringEnumOptionToIdList`.
       loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+      loanProduct['supportedFeeRefundTypes'] = this.supportedFeeRefundTypes;
 
       const capitalizedIncome = this.deferredIncomeRecognition?.capitalizedIncome;
       if (capitalizedIncome) {
@@ -1602,8 +1605,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     // strategy, and travel as an id list rather than the option objects the preview renders.
     if (this.isAdvancedPaymentStrategy) {
       payload['supportedInterestRefundTypes'] = (this.supportedInterestRefundTypes ?? []).map((type) => type.id);
+      payload['supportedFeeRefundTypes'] = (this.supportedFeeRefundTypes ?? []).map((type) => type.id);
     } else {
       delete payload['supportedInterestRefundTypes'];
+      delete payload['supportedFeeRefundTypes'];
       delete payload['daysInYearCustomStrategy'];
     }
 
@@ -1623,6 +1628,9 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     // set this; for the rest the key stays absent and buildPayload keeps its template-driven default.
     if (rendersInterestRefundStep(this.profileMode) && this.supportedInterestRefundTypes.length > 0) {
       formValue.supportedInterestRefundTypes = this.supportedInterestRefundTypes.map((type) => type.id);
+    }
+    if (rendersInterestRefundStep(this.profileMode) && this.supportedFeeRefundTypes.length > 0) {
+      formValue.supportedFeeRefundTypes = this.supportedFeeRefundTypes.map((type) => type.id);
     }
     const merged = buildPayload(formValue, this.profileMode, this.loanProductsTemplate);
     this.applyAdvancedPaymentAllocation(merged);
@@ -1788,6 +1796,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   /** Mirrors Classic's handler of the same name (create-loan-product-classic.component.ts). */
   setSupportedInterestRefundTypes(supportedInterestRefundTypes: StringEnumOptionData[]): void {
     this.supportedInterestRefundTypes = supportedInterestRefundTypes;
+  }
+
+  setSupportedFeeRefundTypes(supportedFeeRefundTypes: StringEnumOptionData[]): void {
+    this.supportedFeeRefundTypes = supportedFeeRefundTypes;
   }
 
   /**
@@ -2142,15 +2154,20 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   }
 
   private interestRefundReviewRows(): ReviewRow[] {
-    if (this.supportedInterestRefundTypes.length === 0) {
-      return [];
-    }
-    return [
-      {
+    const rows: ReviewRow[] = [];
+    if (this.supportedInterestRefundTypes.length > 0) {
+      rows.push({
         label: this.reviewLabel('labels.inputs.Supported Interest Refund Types'),
         display: this.supportedInterestRefundTypes.map((refundType) => this.enumDisplay(refundType)).join(', ')
-      }
-    ];
+      });
+    }
+    if (this.supportedFeeRefundTypes.length > 0) {
+      rows.push({
+        label: this.reviewLabel('labels.inputs.Supported Fee Refund Types'),
+        display: this.supportedFeeRefundTypes.map((refundType) => this.enumDisplay(refundType)).join(', ')
+      });
+    }
+    return rows;
   }
 
   /**

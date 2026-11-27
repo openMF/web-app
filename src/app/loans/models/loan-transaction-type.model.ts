@@ -22,6 +22,7 @@ export interface LoanTransactionType {
   goodwillCredit: boolean;
   interestPaymentWaiver: boolean;
   interestRefund: boolean;
+  feeRefund: boolean;
   chargeRefund: boolean;
   contra: boolean;
   waiveInterest: boolean;

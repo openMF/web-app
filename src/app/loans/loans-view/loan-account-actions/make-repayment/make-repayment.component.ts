@@ -212,7 +212,8 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
       externalId: null,
       paymentTypeId: null,
       note: '',
-      skipInterestRefund: [false]
+      skipInterestRefund: [false],
+      skipFeeRefund: [false]
     });
 
     this.repaymentLoanForm.addControl('transactionAmount', new FormControl(0, []));
@@ -279,6 +280,15 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   }
 
   showInterestRefundCheckbox(): boolean {
+    return this.isMerchantIssuedOrPayoutRefund();
+  }
+
+  showFeeRefundCheckbox(): boolean {
+    // Fee refund is a Progressive Loan (advanced allocation) feature only; WC must stay unchanged.
+    return this.loanProductService.isLoanProduct && this.isMerchantIssuedOrPayoutRefund();
+  }
+
+  private isMerchantIssuedOrPayoutRefund(): boolean {
     const code = this.dataObject?.type?.code?.toLowerCase() || '';
     return code.includes('merchantissuedrefund') || code.includes('payoutrefund');
   }
@@ -443,6 +453,10 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
       payload.interestRefundCalculation = false;
     }
     delete payload.skipInterestRefund;
+    if (repaymentLoanFormData.skipFeeRefund) {
+      payload.feeRefundCalculation = false;
+    }
+    delete payload.skipFeeRefund;
 
     if (this.loanProductService.isWorkingCapital) {
       if (payload['classificationId'] == null) {

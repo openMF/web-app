@@ -41,4 +41,24 @@
       </tbody>
     </table>
   </div>
+  @if (showRefundTotals) {
+    <div class="refund-totals">
+      @if (hasTotalInterestRefund) {
+        <div class="refund-total">
+          <span class="refund-label">{{ 'labels.inputs.Total Interest Refund' | translate }}:</span>
+          <span class="refund-value">
+            {{ totalInterestRefund | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </div>
+      }
+      @if (hasTotalFeeRefund) {
+        <div class="refund-total">
+          <span class="refund-label">{{ 'labels.inputs.Total Fee Refund' | translate }}:</span>
+          <span class="refund-value">
+            {{ totalFeeRefund | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </div>
+      }
+    </div>
+  }
 }

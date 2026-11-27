@@ -197,6 +197,12 @@
                 <span>{{ 'tooltips.Create Interest Refund' | translate }}</span>
               </button>
             }
+            @if (canCreateFeeRefund(transaction)) {
+              <button mat-menu-item (click)="openFeeRefundDialog(transaction)">
+                <mat-icon><fa-icon icon="plus" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'tooltips.Create Fee Refund' | translate }}</span>
+              </button>
+            }
             @if (allowAdjustTransaction(transaction)) {
               <button
                 mat-menu-item

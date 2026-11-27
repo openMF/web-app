@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -111,6 +111,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   private organizationService = inject(OrganizationService);
   private alertService = inject(AlertService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Transaction data. */
   transactionData: any;
@@ -165,8 +166,6 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   isFullRelated = false;
   amountRelationsAllowed = 0;
 
-  clientId: number;
-
   /**
    * Retrieves the Transaction data from `resolve`.
    * @param {LoansService} loansService Loans Service
@@ -190,6 +189,12 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       });
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
+      // Reset linked-transaction state before applying the next transaction: navigating
+      // between :id values reuses this OnPush component, so stale RELATED rows otherwise linger.
+      this.transactionRelations.data = [];
+      this.existTransactionRelations = false;
+      this.isFullRelated = false;
+      this.amountRelationsAllowed = 0;
       if (this.loanProductService.isWorkingCapital) {
         this.transactionData.date = this.transactionData.transactionDate;
       }
@@ -200,6 +205,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         this.allowUndo = false;
         this.allowChargeback = false;
         this.allowDiscountFeeAdjustment = false;
+        this.cdr.markForCheck();
         return;
       }
       const alreadyReversed = this.transactionData.manuallyReversed || this.transactionData.reversed;
@@ -259,9 +265,9 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         this.allowChargeback = false;
       }
       this.refreshDiscountFeeAdjustment();
+      this.cdr.markForCheck();
     });
-    this.clientId = this.route.snapshot.params['clientId'];
-    this.loanId = this.route.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId'] || this.route.parent?.snapshot.params['loanId'] || this.loanId;
   }
 
   ngOnInit(): void {
@@ -321,7 +327,9 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     }
     return !(
       transactionType.interestRefund ||
+      transactionType.feeRefund ||
       transactionType.id === 44 ||
+      transactionType.id === 49 ||
       (isWorkingCapital && transactionType.disbursement)
     );
   }
@@ -591,8 +599,31 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     });
   }
 
-  loanTransactionRelatedLink(transactionId: number) {
-    return `/#/clients/${this.clientId}/loans-accounts/${this.loanId}/transactions/${transactionId}`;
+  /**
+   * Opens another transaction from a RELATED / repayment link without a full
+   * page reload. Hash `href` navigation reuses this OnPush component and used
+   * to leave the previous transaction on screen when `:id` changed.
+   */
+  goToRelatedTransaction(transactionId: number, event?: Event): void {
+    event?.preventDefault();
+    if (!transactionId) {
+      return;
+    }
+    const loanRoute = this.route.pathFromRoot.find((route) => route.routeConfig?.path?.startsWith(':loanId'));
+    const loanId = this.loanId || loanRoute?.snapshot.params['loanId'];
+    this.router.navigate(
+      [
+        loanId,
+        'transactions',
+        transactionId
+      ],
+      {
+        relativeTo: loanRoute?.parent,
+        queryParams: {
+          productType: this.loanProductService.productType.value
+        }
+      }
+    );
   }
 
   loanTransactionColor(): string {
