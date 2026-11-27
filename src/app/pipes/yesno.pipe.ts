@@ -13,11 +13,31 @@ import { TranslateService } from '@ngx-translate/core';
 export class YesnoPipe implements PipeTransform {
   private translateService = inject(TranslateService);
 
-  transform(value: boolean, ...args: unknown[]): string {
-    if (value == null) {
-      return null;
+  transform(value: any, ...args: unknown[]): string {
+    if (value == null || (typeof value === 'string' && value.trim() === '')) {
+      return '';
     }
-    const result = value ? 'Yes' : 'No';
+    const isTrue = this.coerceBoolean(value);
+    const result = isTrue ? 'Yes' : 'No';
     return this.translateService.instant('labels.buttons.' + result);
+  }
+
+  private coerceBoolean(value: any): boolean {
+    if (typeof value === 'boolean') {
+      return value;
+    }
+    if (typeof value === 'number') {
+      return value !== 0;
+    }
+    if (typeof value === 'string') {
+      const normalized = value.trim().toLowerCase();
+      if (normalized === 'true' || normalized === '1' || normalized === 'yes') {
+        return true;
+      }
+      if (normalized === 'false' || normalized === '0' || normalized === 'no') {
+        return false;
+      }
+    }
+    return Boolean(value);
   }
 }
