@@ -11,7 +11,8 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 /** Custom Services */
 import { HttpCacheService } from './http-cache.service';
@@ -46,24 +47,18 @@ export class CacheInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    return new Observable((subscriber: Subscriber<HttpEvent<any>>) => {
-      const cachedData = this.forceUpdate ? null : this.httpCacheService.getCacheData(request.urlWithParams);
-      if (cachedData !== null) {
-        // Create new response to avoid side-effects
-        subscriber.next(new HttpResponse(cachedData as Object));
-        subscriber.complete();
-      } else {
-        next.handle(request).subscribe(
-          (event) => {
-            if (environment.httpCacheEnabled && event instanceof HttpResponse) {
-              this.httpCacheService.setCacheData(request.urlWithParams, event);
-            }
-            subscriber.next(event);
-          },
-          (error) => subscriber.error(error),
-          () => subscriber.complete()
-        );
-      }
-    });
+    const cachedData = this.forceUpdate ? null : this.httpCacheService.getCacheData(request.urlWithParams);
+    if (cachedData !== null) {
+      // Create new response to avoid side-effects
+      return of(cachedData instanceof HttpResponse ? cachedData.clone() : new HttpResponse(cachedData as any));
+    }
+
+    return next.handle(request).pipe(
+      tap((event) => {
+        if (environment.httpCacheEnabled && event instanceof HttpResponse) {
+          this.httpCacheService.setCacheData(request.urlWithParams, event);
+        }
+      })
+    );
   }
 }
