@@ -36,8 +36,10 @@ test.beforeEach(async ({ page }) => {
   failRefresh = false;
   failPost = false;
   incompleteReceipt = false;
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   state = {
-    businessDate: '2026-11-26',
+    businessDate: today,
     officeId: 1,
     officeName: 'Synthetic Office',
     tellerId: 2,
@@ -54,7 +56,7 @@ test.beforeEach(async ({ page }) => {
     status: 'OPEN',
     registerStatus: 'OPEN'
   };
-  await page.context().addInitScript(() => {
+  await page.context().addInitScript((date) => {
     sessionStorage.setItem(
       'mifosXCredentials',
       JSON.stringify({
@@ -71,8 +73,8 @@ test.beforeEach(async ({ page }) => {
     );
     localStorage.setItem('mifosXServerURL', location.origin);
     localStorage.setItem('mifosXLanguage', JSON.stringify({ name: 'English', code: 'en' }));
-    localStorage.setItem('mifosXServerDate', '2026-11-26');
-  });
+    localStorage.setItem('mifosXServerDate', date);
+  }, today);
   await page
     .context()
     .route('**/assets/env.js', (route) =>
@@ -297,7 +299,10 @@ test('keyboard confirmation and rapid clicks dispatch one command', async ({ pag
   await load(page);
   await declare(page);
   const finalize = page.getByRole('button', { name: 'Finalize Closing', exact: true });
-  await finalize.click({ clickCount: 2 });
+  await finalize.evaluate((button: HTMLElement) => {
+    button.click();
+    button.click();
+  });
   await expect(page.getByRole('dialog')).toHaveCount(1);
   await page.getByRole('button', { name: 'Confirm', exact: true }).focus();
   await page.keyboard.press('Enter');

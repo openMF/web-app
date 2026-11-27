@@ -90,7 +90,6 @@ export class AddChargeSavingsAccountComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.chargeDetails = data;
-          const chargeTimeType = data.chargeTimeType.id;
           if (
             data.chargeTimeType.value === 'Withdrawal Fee' ||
             data.chargeTimeType.value === 'Saving No Activity Fee'
@@ -110,8 +109,8 @@ export class AddChargeSavingsAccountComponent implements OnInit {
           } else {
             this.savingsChargeForm.removeControl('feeOnMonthDay');
           }
-          if (chargeTimeType.value === 'Monthly Fee') {
-            this.savingsChargeForm.addControl('feeInterval', new FormControl(data.feeInterval, Validators.required));
+          if (data.chargeTimeType.value === 'Monthly Fee') {
+            this.savingsChargeForm.setControl('feeInterval', new FormControl(data.feeInterval, Validators.required));
           } else {
             this.savingsChargeForm.removeControl('feeInterval');
           }
