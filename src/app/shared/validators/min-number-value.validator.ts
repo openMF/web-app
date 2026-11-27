@@ -8,24 +8,17 @@
 
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
+/** A cleared input holds '' and an untouched one null; neither sets a limit. */
+const isEmpty = (value: unknown): boolean => value === null || value === undefined || value === '';
+
 export function minNumberValueValidator(minControlName: string): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const minControl = control.parent?.get(minControlName);
-    if (!minControl || !control.value) {
+    if (!minControl || isEmpty(control.value) || isEmpty(minControl.value)) {
       return null;
     }
-
-    let minValue = minControl.value;
-    if (typeof minValue === 'undefined') {
-      return null;
-    }
-    if (typeof minValue !== 'number') {
-      minValue = minValue * 1;
-    }
-    let controlValue = control.value;
-    if (typeof controlValue !== 'number') {
-      controlValue = controlValue * 1;
-    }
+    const minValue = Number(minControl.value);
+    const controlValue = Number(control.value);
     if (controlValue < minValue) {
       return { minValue: { requiredMin: minValue, actual: controlValue } };
     }

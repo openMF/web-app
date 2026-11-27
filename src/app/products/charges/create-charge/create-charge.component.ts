@@ -23,6 +23,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
 import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
+import { revalidateEachOther } from 'app/shared/validators/revalidate-each-other';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { ValidateOnFocusDirective } from '../../../directives/validate-on-focus.directive';
@@ -155,6 +156,7 @@ export class CreateChargeComponent implements OnInit {
         [minNumberValueValidator('minCap')]
       ]
     });
+    revalidateEachOther(this.chargeForm, 'minCap', 'maxCap');
   }
 
   /**

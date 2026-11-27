@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
+import { revalidateEachOther } from 'app/shared/validators/revalidate-each-other';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
 import { ValidateOnFocusDirective } from '../../../directives/validate-on-focus.directive';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
@@ -138,6 +139,7 @@ export class EditChargeComponent implements OnInit {
         Validators.required
       ]
     });
+    revalidateEachOther(this.chargeForm, 'minCap', 'maxCap');
     switch (this.chargeData.chargeAppliesTo.value) {
       case 'Loan': {
         this.chargeTimeTypeOptions = this.chargeData.loanChargeTimeTypeOptions;

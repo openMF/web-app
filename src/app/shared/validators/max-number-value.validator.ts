@@ -8,27 +8,17 @@
 
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
+/** A cleared input holds '' and an untouched one null; neither sets a limit. */
+const isEmpty = (value: unknown): boolean => value === null || value === undefined || value === '';
+
 export function maxNumberValueValidator(maxControlName: string): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const maxControl = control.parent?.get(maxControlName);
-    if (!maxControl || !control.value) {
+    if (!maxControl || isEmpty(control.value) || isEmpty(maxControl.value)) {
       return null;
     }
-
-    let maxValue = maxControl.value;
-    if (maxValue == null) {
-      return null;
-    }
-    if (typeof maxValue === 'undefined') {
-      return null;
-    }
-    if (typeof maxValue !== 'number') {
-      maxValue = maxValue * 1;
-    }
-    let controlValue = control.value;
-    if (typeof controlValue !== 'number') {
-      controlValue = controlValue * 1;
-    }
+    const maxValue = Number(maxControl.value);
+    const controlValue = Number(control.value);
     if (controlValue > maxValue) {
       return { maxValue: { requiredMax: maxValue, actual: controlValue } };
     }
