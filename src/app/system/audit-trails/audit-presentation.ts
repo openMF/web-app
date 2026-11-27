@@ -33,32 +33,54 @@ export interface AuditEvent {
   maker: string;
   checker: string;
   officeName: string;
+  clientName?: string;
+  savingsAccountNo?: string;
+  groupLevelName?: string;
   processingResult: string;
   timestamp: number | null;
   checkedTimestamp: number | null;
   ip: string;
 }
 const text = (value: unknown): string => (typeof value === 'string' ? value : '');
-export function auditEvent(row: any): AuditEvent {
-  if (!row || !auditId(row.id)) throw new Error('Invalid audit identity');
+function validIp(value: unknown): string {
+  if (typeof value !== 'string') return '';
+  const ip = value.trim();
+  if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ip) && ip.split('.').every((part) => Number(part) <= 255)) return ip;
+  if (/^[0-9a-f:.]+$/i.test(ip) && ip.includes(':')) {
+    try {
+      new URL('http://[' + ip + ']/');
+      return ip;
+    } catch {
+      return '';
+    }
+  }
+  return '';
+}
+export function auditEvent(row: unknown): AuditEvent {
+  if (!isRecord(row) || !auditId(row.id)) throw new Error('Invalid audit identity');
   return {
     id: auditId(row.id),
     resourceId: auditId(row.resourceId) ?? '',
     actionName: text(row.actionName),
     entityName: text(row.entityName),
     maker: text(row.maker),
-    checker: text(row.checker),
+    checker: text(row.checker).trim(),
     officeName: text(row.officeName),
+    clientName: text(row.clientName),
+    savingsAccountNo: text(row.savingsAccountNo),
+    groupLevelName: text(row.groupLevelName),
     processingResult: text(row.processingResult),
     timestamp: auditTimestamp(row.madeOnDate),
     checkedTimestamp: auditTimestamp(row.checkedOnDate),
-    ip: text(row.ip)
+    ip: validIp(row.ip)
   };
 }
-export function auditPage(response: any, limit: number): { events: AuditEvent[]; total: number } {
+export function auditPage(response: unknown, limit: number): { events: AuditEvent[]; total: number } {
   if (
-    !Array.isArray(response?.pageItems) ||
+    !isRecord(response) ||
+    !Array.isArray(response.pageItems) ||
     response.pageItems.length > limit ||
+    typeof response.totalFilteredRecords !== 'number' ||
     !Number.isSafeInteger(response.totalFilteredRecords) ||
     response.totalFilteredRecords < 0 ||
     response.pageItems.length > response.totalFilteredRecords
@@ -121,33 +143,49 @@ export interface SafeCommand {
   json: string;
   valid: boolean;
 }
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+class NumberLexeme {
+  constructor(readonly value: string) {}
+}
+type SafeValue = string | boolean | null | NumberLexeme | SafeValue[] | { [key: string]: SafeValue };
+
 export function safeCommand(command: unknown): SafeCommand {
   const invalid: SafeCommand = { fields: [], json: '', valid: false };
   if (typeof command !== 'string' || command.length > 65536) return invalid;
   try {
-    JSON.parse(command); // Validate the original grammar before protecting numeric lexemes.
-    // Capture number tokens before JSON.parse so monetary precision is never rounded.
+    const original: unknown = JSON.parse(command);
+    if (!isRecord(original)) return invalid;
+    // Check decoded strings too, so Unicode escapes cannot impersonate numeric tokens.
     let prefix = '__audit_number_';
-    while (command.includes(prefix)) prefix += '_';
-    const numbers = new Map<string, string>();
+    const decoded = JSON.stringify(original);
+    while (decoded.includes(prefix)) prefix += '_';
+    const numbers = new Map<string, NumberLexeme>();
     const protectedJson = command.replace(/"(?:[^"\\]|\\.)*"|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g, (token) => {
       if (token.startsWith('"')) return token;
       const key = prefix + numbers.size;
-      numbers.set(key, token);
+      numbers.set(key, new NumberLexeme(token));
       return JSON.stringify(key);
     });
-    const parsed = JSON.parse(protectedJson);
-    if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') return invalid;
-    const clean = (value: any, depth: number): any => {
+    const parsed: unknown = JSON.parse(protectedJson, (_key, value: unknown) =>
+      typeof value === 'string' && numbers.has(value) ? numbers.get(value) : value
+    );
+    if (!isRecord(parsed)) return invalid;
+    const clean = (value: unknown, depth: number): SafeValue => {
       if (depth > 8) return '[Redacted]';
+      // Encoded objects can conceal credentials inside otherwise permitted string fields.
+      if (typeof value === 'string' && /^\s*[\[{]/.test(value)) return '[Redacted]';
+      if (value instanceof NumberLexeme) return value;
       if (Array.isArray(value)) {
-        const items = value.slice(0, 100).map((item) => clean(item, depth + 1));
+        const items = value.slice(0, 100).map((item: unknown) => clean(item, depth + 1));
         return value.length > 100 ? [
               ...items,
               '[Truncated]'
             ] : items;
       }
-      if (value && typeof value === 'object')
+      if (isRecord(value))
         return Object.fromEntries(
           Object.entries(value).map(
             ([
@@ -159,14 +197,32 @@ export function safeCommand(command: unknown): SafeCommand {
             ]
           )
         );
-      return value;
+      return typeof value === 'string' || typeof value === 'boolean' ? value : value === null ? null : '[Redacted]';
     };
-    const serialize = (value: any): string => {
-      return JSON.stringify(value, null, 2).replace(new RegExp('"' + prefix + '\\d+"', 'g'), (token) =>
-        numbers.get(token.slice(1, -1))
-      );
+    // Only NumberLexeme instances may emit numeric text; strings are always JSON encoded.
+    const serialize = (value: SafeValue, depth = 0): string => {
+      if (value instanceof NumberLexeme) return value.value;
+      if (Array.isArray(value)) return '[' + value.map((item) => serialize(item, depth + 1)).join(', ') + ']';
+      if (value !== null && typeof value === 'object') {
+        const indent = '  '.repeat(depth + 1);
+        return (
+          '{\n' +
+          Object.entries(value)
+            .map(
+              ([
+                key,
+                item
+              ]) => indent + JSON.stringify(key) + ': ' + serialize(item, depth + 1)
+            )
+            .join(',\n') +
+          '\n' +
+          '  '.repeat(depth) +
+          '}'
+        );
+      }
+      return JSON.stringify(value);
     };
-    const redacted = clean(parsed, 0);
+    const redacted = clean(parsed, 0) as { [key: string]: SafeValue };
     return {
       fields: Object.keys(parsed)
         .filter((key) => SAFE_KEYS.has(key))

@@ -172,4 +172,25 @@ describe('audit presentation integrity', () => {
     expect(csv).toContain('"one,two\nthree"');
     expect(csv).not.toContain('commandAsJson');
   });
+  it.each([
+    '192.0.2.1',
+    '2001:db8::1',
+    '::ffff:192.0.2.1'
+  ])('retains valid backend IP %s', (ip) => {
+    expect(auditEvent(row({ ip })).ip).toBe(ip);
+  });
+  it('rejects malformed IPs and whitespace-only checker metadata', () => {
+    expect(auditEvent(row({ ip: '999.1.2.3', checker: '   ' })).ip).toBe('');
+    expect(auditEvent(row({ checker: '   ' })).checker).toBe('');
+  });
+  it('preserves the merged list CSV schema while keeping extra detail metadata', () => {
+    const event = auditEvent(row({ clientName: 'Synthetic Client' }));
+    const headers = Array.from({ length: 10 }, (_, index) => 'Column ' + index);
+    const csv = auditCsv([event], headers);
+    expect(event.clientName).toBe('Synthetic Client');
+    expect(csv.split('\r\n').map((line) => line.split(',').length)).toEqual([
+      10,
+      10
+    ]);
+  });
 });
