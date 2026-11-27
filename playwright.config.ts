@@ -8,6 +8,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
+import { MOCKED_SPECS } from './playwright/config/mocked-specs';
 import { ROLES } from './playwright/config/roles';
 
 /**
@@ -37,6 +38,19 @@ const includeRestrictedProjects =
   hasSpecFiles(RESTRICTED_DIR) || process.env.PLAYWRIGHT_ENABLE_RESTRICTED_PROJECTS === '1';
 
 /**
+ * `E2E_SUITE` lets CI run the suite as two parallel jobs:
+ *   mocked  → the `unit` and `mocked` projects. No backend, no global
+ *             readiness probe, no login; served from the production build.
+ *   backend → every other project, against the Docker Fineract stack.
+ * Left unset (the local default) every project is registered.
+ */
+const suite = process.env.E2E_SUITE;
+const MOCKED_SUITE_PROJECTS = [
+  'unit',
+  'mocked'
+];
+
+/**
  * Playwright configuration for Mifos X Web App E2E tests.
  *
  * Optimized for:
@@ -47,7 +61,7 @@ const includeRestrictedProjects =
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  globalSetup: process.env.CI ? './playwright/global-setup.ts' : undefined,
+  globalSetup: process.env.CI && suite !== 'mocked' ? './playwright/global-setup.ts' : undefined,
   // Test directory
   testDir: './playwright/tests',
 
@@ -144,6 +158,21 @@ export default defineConfig({
       use: { storageState: { cookies: [], origins: [] } }
     },
     {
+      // Browser specs that stub every Fineract call (see
+      // playwright/config/mocked-specs.ts). No `setup` dependency: they
+      // seed their own session from an empty storageState.
+      name: 'mocked',
+      testMatch: MOCKED_SPECS,
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: { cookies: [], origins: [] },
+        launchOptions: {
+          args: ['--ignore-certificate-errors'],
+          slowMo: process.env.CI ? 0 : Number(process.env.E2E_SLOW_MO ?? 500)
+        }
+      }
+    },
+    {
       // Live-backend factory specs — real Fineract HTTP, no browser.
       // Runs against `E2E_FINERACT_URL` (default https://localhost:8443)
       // and exits in seconds because no Chromium process is started.
@@ -186,7 +215,9 @@ export default defineConfig({
         /tests\/(admin|restricted)\//,
         /credits-workspace\.spec\.ts$/,
         /savings-products-list\.spec\.ts$/,
-        /savings-product-editor\.spec\.ts$/
+        /savings-product-editor\.spec\.ts$/,
+        // Run by the `mocked` project instead.
+        ...MOCKED_SPECS
       ],
       use: {
         ...devices['Desktop Chrome'],
@@ -231,14 +262,27 @@ export default defineConfig({
           }
         ]
       : [])
-  ],
+  ].filter((project) => {
+    if (suite === 'mocked') return MOCKED_SUITE_PROJECTS.includes(project.name);
+    if (suite === 'backend') return !MOCKED_SUITE_PROJECTS.includes(project.name);
+    return true;
+  }),
 
-  webServer: process.env.CI
-    ? undefined
-    : {
-        command: 'npm run start:local',
-        url: 'http://localhost:4200',
-        reuseExistingServer: true,
-        timeout: 180000
-      }
+  // The mocked suite serves the production build (`npm run build` first).
+  webServer:
+    suite === 'mocked'
+      ? {
+          command: 'node scripts/serve-e2e-static.js',
+          url: process.env.E2E_BASE_URL || 'http://localhost:4200',
+          reuseExistingServer: !process.env.CI,
+          timeout: 60000
+        }
+      : process.env.CI
+        ? undefined
+        : {
+            command: 'npm run start:local',
+            url: 'http://localhost:4200',
+            reuseExistingServer: true,
+            timeout: 180000
+          }
 });
