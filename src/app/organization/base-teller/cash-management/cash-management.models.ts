@@ -164,6 +164,11 @@ export interface CashierOption {
   id: FineractId;
   staffName?: string;
   cashierName?: string;
+  /** Fineract `CashierData#staffId`: the staff member the cashier window is assigned to. */
+  staffId?: FineractId | null;
+  tellerId?: FineractId;
+  tellerName?: string;
+  officeName?: string;
 }
 
 export interface CurrencyOption {

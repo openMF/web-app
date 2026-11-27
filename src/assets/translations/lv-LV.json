@@ -9801,5 +9801,275 @@
     "madeOn": "Izveidots",
     "checkedOn": "Pārbaudīts",
     "openOffice": "Atvērt filiāli"
+  },
+  "baseTellerWorkspace": {
+    "movement": {
+      "operationCountOne": "{{count}} operation",
+      "title": "Today's movement",
+      "inflows": "Inflows",
+      "outflows": "Outflows",
+      "operationCount": "{{count}} operations",
+      "barLabel": "Inflows are {{percent}}% of today's cash movement",
+      "openingFunds": "Opening funds",
+      "settlements": "Settlements and deposits",
+      "expected": "Expected cash",
+      "difference": "Difference of {{amount}}",
+      "balanced": "Cash on hand matches the expected cash",
+      "incomplete": "Reconciliation data is incomplete.",
+      "empty": "No cash movements recorded today.",
+      "reviewInClosing": "Review in register closing",
+      "closingDifference": "Closing difference: {{amount}} ({{type}})",
+      "closingBalanced": "The register closing had no difference",
+      "closingUnknown": "Closing difference unavailable"
+    },
+    "session": {
+      "region": "Cash register session",
+      "defaultTitle": "Cash drawer",
+      "tellerWindow": "Teller window",
+      "cashier": "Cashier",
+      "badge": {
+        "open": "Open",
+        "openSince": "Open since {{time}}",
+        "notOpened": "Register closed",
+        "completed": "Closing completed",
+        "unknown": "Status unavailable"
+      },
+      "hint": {
+        "notOpened": "The register has not been opened for today's business date.",
+        "completed": "Today's cash register closing is already completed."
+      },
+      "cashOnHand": "Cash on hand",
+      "noCash": "No cash recorded",
+      "operationsToday": "Operations today",
+      "lastCount": "Last cash count",
+      "limitUsage": "{{percent}}% of the {{limit}} limit",
+      "limitMissing": "Cash limit not configured",
+      "limitInvalid": "Cash limit configuration is invalid",
+      "currency": "Currency",
+      "quickCount": "Quick cash count",
+      "openRegister": "Open register",
+      "closeRegister": "Close register"
+    },
+    "states": {
+      "loading": "Loading your cash register…",
+      "noStaff": {
+        "title": "Your user is not linked to a staff member",
+        "text": "A cash register session needs a staff member assigned as cashier. Ask an administrator to link your user."
+      },
+      "noAssignment": {
+        "title": "No teller window assigned",
+        "text": "You are not assigned as a cashier of any teller window for today's business date."
+      },
+      "forbidden": {
+        "title": "Session information is not available to you",
+        "text": "Your role cannot read teller windows. The operations you may use are still listed below."
+      },
+      "unavailable": {
+        "title": "Session information is unavailable",
+        "text": "The teller windows could not be loaded. Try again in a moment."
+      },
+      "retry": "Try again",
+      "select": {
+        "title": "Select your teller window",
+        "text": "You are assigned to more than one teller window today. Choose the one you are working at."
+      }
+    },
+    "common": {
+      "unavailable": "Not available",
+      "loading": "Loading…",
+      "failed": "This information could not be loaded.",
+      "forbidden": "This information is not available for your role.",
+      "noSession": "Available once you have an assigned teller window."
+    },
+    "search": {
+      "label": "Search operations",
+      "placeholder": "Search an operation, for example “deposit” or “currency”",
+      "clear": "Clear search",
+      "results": "Search results",
+      "resultCount": "{{count}} operations found",
+      "empty": "No operations match “{{query}}”."
+    },
+    "frequent": {
+      "title": "Most used",
+      "hint": "Keyboard shortcuts F2 to F5",
+      "shortcut": "Shortcut {{key}}"
+    },
+    "categories": {
+      "customer": {
+        "title": "Customer operations",
+        "description": "Client-facing financial services"
+      },
+      "cashDrawer": {
+        "title": "Cash drawer",
+        "description": "Cash movements and inventory"
+      },
+      "vaultBanks": {
+        "title": "Vault and banks",
+        "description": "Transfers involving vault and bank balances"
+      },
+      "consultations": {
+        "title": "Consultations and corrections",
+        "description": "History and corrections"
+      },
+      "closings": {
+        "title": "Closings",
+        "description": "End-of-shift and end-of-day workflows"
+      }
+    },
+    "availability": {
+      "openRegister": "Open the register to continue",
+      "registerClosed": "The register is already closed for today"
+    },
+    "closings": {
+      "start": "Start"
+    },
+    "alert": {
+      "near": {
+        "title": "Close to the cash limit",
+        "text": "Send the excess to the vault to stay below {{limit}}."
+      },
+      "exceeded": {
+        "title": "Cash limit exceeded",
+        "text": "Cash on hand is above the {{limit}} limit. Send the excess to the vault."
+      },
+      "depositVault": "Deposit to vault"
+    },
+    "recent": {
+      "title": "Recent operations",
+      "viewHistory": "View history",
+      "empty": "No operations recorded today."
+    },
+    "closingDialog": {
+      "title": "Start {{workflow}}?",
+      "consequence": "This opens a reconciliation workflow. It is a consequential process: balances are counted and the register is settled.",
+      "supervisor": "End-of-day closing keeps its supervisor authorization requirement.",
+      "noAutoClose": "Nothing is closed from this page. The closing itself is confirmed on the next screens.",
+      "continue": "Continue"
+    },
+    "operationTypes": {
+      "SAVINGS_DEPOSIT": "Savings deposit",
+      "CASH_WITHDRAWAL": "Withdrawal",
+      "PAY_SERVICE": "Service payment",
+      "PAY_CREDIT": "Loan payment",
+      "OPEN_SAVINGS_ACCOUNT": "Savings account opening",
+      "RETURNED_CHECK_PAYMENT": "Returned check payment",
+      "ALLOCATE_CASH": "Cash allocation",
+      "CASH_ALLOCATION": "Cash allocation",
+      "CASH_SETTLEMENT": "Cash settlement",
+      "CASH_IN": "Cash in",
+      "CASH_OUT": "Cash out",
+      "CASH_TRANSFER_BETWEEN_TELLERS": "Teller cash transfer",
+      "CASH_DRAWER_PICKUP": "Cash drawer pickup",
+      "ACCOUNT_TRANSFER": "Account transfer",
+      "CASH_EXCHANGE": "Cash exchange",
+      "CLOSE_CASHIER": "Register closing",
+      "DEPOSIT_IN_TRANSIT": "Deposit in transit",
+      "BANK_DEPOSIT": "Bank deposit",
+      "REVERSE_TRANSACTION": "Transaction reversal",
+      "CASHIER_TRANSACTION": "Cashier transaction"
+    },
+    "operations": {
+      "cashOperationHistory": {
+        "title": "Cash Operation History",
+        "description": "Recorded bank deposits and deposits in transit",
+        "terms": "history, bank deposits, in transit, cash operations"
+      },
+      "foreignCurrency": {
+        "description": "Buy and sell foreign currency",
+        "terms": "currency, foreign currency, exchange rate, dollar, euro, forex"
+      },
+      "cashTransfers": {
+        "description": "Send or receive cash from another teller",
+        "terms": "teller transfer, send cash, receive cash, drawer, cashier"
+      },
+      "accountTransfers": {
+        "description": "Move balance between a client's accounts",
+        "terms": "transfer, move balance, between accounts, wire"
+      },
+      "cashPickup": {
+        "description": "Take surplus cash out of the drawer",
+        "terms": "withdrawal, pickup, surplus, excess, take cash, drawer pickup"
+      },
+      "endOfDayClosing": {
+        "description": "Branch closing, requires a supervisor",
+        "terms": "end of day, close day, branch closing, supervisor"
+      },
+      "cashExchange": {
+        "description": "Exchange notes and coins",
+        "terms": "change, denominations, notes, coins, break bills"
+      },
+      "catalogUpdates": {
+        "description": "Services, currencies and denominations",
+        "terms": "catalog, update, synchronize, sync, services"
+      },
+      "cashAllocation": {
+        "description": "Receive the day's opening funds",
+        "terms": "open drawer, opening, funding, provisioning, opening funds, allocation"
+      },
+      "cashInventory": {
+        "description": "Notes and coins available",
+        "terms": "inventory, stock, notes, coins, monitoring"
+      },
+      "savingsOpening": {
+        "description": "Open an account with an initial deposit",
+        "terms": "open account, new account, savings, opening"
+      },
+      "savingsDeposit": {
+        "description": "Deposit cash or checks into a savings account",
+        "terms": "deposit, cash in, credit, top up, savings"
+      },
+      "returnedCheck": {
+        "description": "Cover a rejected check",
+        "terms": "bounced check, returned check, rejected, cheque"
+      },
+      "loanPayment": {
+        "description": "Collect a loan installment",
+        "terms": "loan, credit, payment, installment, repayment"
+      },
+      "cashRegisterClosing": {
+        "description": "Balance your drawer at the end of the shift",
+        "terms": "close register, close drawer, balance, end of shift, cash count"
+      },
+      "globalCashCount": {
+        "description": "Count of all drawers in the branch",
+        "terms": "global count, cash count, all drawers, branch count"
+      },
+      "depositInTransit": {
+        "description": "Cash on its way to the bank",
+        "terms": "in transit, shipment, courier, armored, transport"
+      },
+      "bankDeposit": {
+        "description": "Record a deposit made at the bank",
+        "terms": "bank, bank deposit, deposit slip"
+      },
+      "cashOnHand": {
+        "description": "Current cash balance by currency",
+        "terms": "cash, balance, on hand, holdings, drawer balance"
+      },
+      "transactionHistory": {
+        "description": "All operations of your drawer",
+        "terms": "history, movements, transactions, operations, lookup"
+      },
+      "transactionReversal": {
+        "description": "Reverse an operation with authorization",
+        "terms": "reverse, void, cancel, undo, correction, reversal"
+      },
+      "servicePayment": {
+        "description": "Pay customer bills and services",
+        "terms": "bill, utility, service, payment, invoice"
+      },
+      "vaultDeposit": {
+        "description": "Send cash to the vault",
+        "terms": "vault, deposit to vault, surplus, safe"
+      },
+      "vaultHistory": {
+        "description": "Deposits sent to the vault",
+        "terms": "vault history, vault deposits, history"
+      },
+      "withdrawal": {
+        "description": "Hand cash or checks to the customer",
+        "terms": "withdraw, withdrawal, cash out, check, cheque"
+      }
+    }
   }
 }

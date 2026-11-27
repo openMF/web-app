@@ -26,7 +26,7 @@ import {
   FxTradeRequest,
   FxTradePreview
 } from './foreign-currency.models';
-import { BaseTellerComponent } from '../base-teller/base-teller.component';
+import { authorizedWorkflows } from '../base-teller/workspace/base-teller-workflows';
 import { OrganizationRoutingModule } from '../organization-routing.module';
 import { WithdrawalMoneyPipe } from '../base-teller/withdrawals/withdrawal-money.pipe';
 
@@ -239,12 +239,14 @@ describe('FX authorization and safe errors', () => {
     expect(TestBed.runInInjectionContext(() => fxTellerGuard(null, null))).not.toBe(true);
     expect(hasFxPermission(['ALL_FUNCTIONS_READ'], 'READ_BASE_TELLER_FX_RATE')).toBe(false);
   });
-  it('adds FX only to authorized Other Operations navigation', () => {
-    const component = TestBed.runInInjectionContext(() => new BaseTellerComponent());
-    expect(component.otherOperations.some((w) => w.label === 'fx.title')).toBe(false);
+  it('shows the FX operation on the Base Teller workspace only to authorized users', () => {
+    const visible = () => authorizedWorkflows(permissions).some((workflow) => workflow.label === 'fx.title');
+    expect(visible()).toBe(false);
     permissions = ['READ_BASE_TELLER_FX'];
-    expect(component.otherOperations.some((w) => w.label === 'fx.title')).toBe(true);
-    expect(component.workflows.some((w) => w.label === 'fx.title')).toBe(false);
+    expect(visible()).toBe(true);
+    // The FX read permission is exact: a generic read-all grant must not reveal it, like its route guard.
+    permissions = ['ALL_FUNCTIONS_READ'];
+    expect(visible()).toBe(false);
   });
   it.each([
     [

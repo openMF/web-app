@@ -6,70 +6,622 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container base-teller">
-  <mat-card class="workflow-card">
-    <mat-card-content>
-      <h2>{{ 'labels.text.Base Teller' | translate }}</h2>
+<div class="teller-workspace" [attr.aria-busy]="resolution().kind === 'loading'">
+  <h1 class="sr-only">{{ 'labels.text.Base Teller' | translate }}</h1>
 
-      <div class="workflow-grid">
-        @for (workflow of workflows; track workflow.route) {
-          <a class="workflow-link" *mifosxHasPermission="workflow.permission" [routerLink]="workflow.route">
-            <div class="workflow-block">
-              @if (workflow.fontAwesomeIcon) {
-                <span class="workflow-icon" aria-hidden="true">
-                  <fa-icon [icon]="workflow.fontAwesomeIcon" size="lg"></fa-icon>
-                </span>
-              } @else {
-                <mat-icon class="workflow-icon" aria-hidden="true">{{ workflow.materialIcon }}</mat-icon>
+  <!-- Session header -->
+  <section class="session-header" [attr.aria-label]="'baseTellerWorkspace.session.region' | translate">
+    @let state = resolution();
+    @let current = assignment();
+    @if (state.kind === 'loading') {
+      <div class="session-message" role="status">
+        <h2 class="session-title">{{ 'baseTellerWorkspace.states.loading' | translate }}</h2>
+      </div>
+    } @else if (state.kind === 'none') {
+      <div class="session-message" role="status">
+        <mat-icon aria-hidden="true">info</mat-icon>
+        <div>
+          <h2 class="session-title">
+            {{
+              (state.reason === 'no-staff'
+                ? 'baseTellerWorkspace.states.noStaff.title'
+                : 'baseTellerWorkspace.states.noAssignment.title'
+              ) | translate
+            }}
+          </h2>
+          <p>
+            {{
+              (state.reason === 'no-staff'
+                ? 'baseTellerWorkspace.states.noStaff.text'
+                : 'baseTellerWorkspace.states.noAssignment.text'
+              ) | translate
+            }}
+          </p>
+        </div>
+      </div>
+    } @else if (state.kind === 'error') {
+      <div class="session-message" role="alert">
+        <mat-icon aria-hidden="true">error</mat-icon>
+        <div>
+          <h2 class="session-title">
+            {{
+              (state.reason === 'forbidden'
+                ? 'baseTellerWorkspace.states.forbidden.title'
+                : 'baseTellerWorkspace.states.unavailable.title'
+              ) | translate
+            }}
+          </h2>
+          <p>
+            {{
+              (state.reason === 'forbidden'
+                ? 'baseTellerWorkspace.states.forbidden.text'
+                : 'baseTellerWorkspace.states.unavailable.text'
+              ) | translate
+            }}
+          </p>
+        </div>
+        <button mat-stroked-button type="button" class="session-retry" (click)="refresh({ force: true })">
+          {{ 'baseTellerWorkspace.states.retry' | translate }}
+        </button>
+      </div>
+    } @else if (state.kind === 'selection-required') {
+      <div class="session-message">
+        <mat-icon aria-hidden="true">swap_horiz</mat-icon>
+        <div>
+          <h2 class="session-title">{{ 'baseTellerWorkspace.states.select.title' | translate }}</h2>
+          <p>{{ 'baseTellerWorkspace.states.select.text' | translate }}</p>
+          <ul class="session-choices">
+            @for (candidate of state.assignments; track candidate.cashierId) {
+              <li>
+                <button
+                  mat-flat-button
+                  type="button"
+                  class="session-choice"
+                  (click)="chooseAssignment(candidate.cashierId)"
+                >
+                  {{ candidate.tellerName }} · {{ candidate.cashierName }}
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    } @else if (current) {
+      <div class="session-identity">
+        <span class="session-icon" aria-hidden="true"><mat-icon>point_of_sale</mat-icon></span>
+        <div class="session-identity-text">
+          <h2 class="session-title">
+            {{ current.tellerName || ('baseTellerWorkspace.session.defaultTitle' | translate) }}
+            <span [class]="'session-badge state-' + registerState()">
+              @switch (registerState()) {
+                @case ('open') {
+                  @if (clock(facts()?.openedAt); as openedTime) {
+                    {{ 'baseTellerWorkspace.session.badge.openSince' | translate: { time: openedTime } }}
+                  } @else {
+                    {{ 'baseTellerWorkspace.session.badge.open' | translate }}
+                  }
+                }
+                @case ('not-opened') {
+                  {{ 'baseTellerWorkspace.session.badge.notOpened' | translate }}
+                }
+                @case ('completed') {
+                  {{ 'baseTellerWorkspace.session.badge.completed' | translate }}
+                }
+                @default {
+                  {{ 'baseTellerWorkspace.session.badge.unknown' | translate }}
+                }
               }
-              <span class="workflow-title">{{ workflow.label | translate }}</span>
-              <mat-icon class="workflow-arrow" aria-hidden="true">chevron_right</mat-icon>
-            </div>
+            </span>
+          </h2>
+          <p class="session-meta">
+            {{ current.cashierName }}
+            @if (current.officeName) {
+              · {{ current.officeName }}
+            }
+            @if (businessDateLabel(); as dateLabel) {
+              · {{ dateLabel }}
+            }
+          </p>
+          @if (registerState() === 'not-opened') {
+            <p class="session-hint">{{ 'baseTellerWorkspace.session.hint.notOpened' | translate }}</p>
+          } @else if (registerState() === 'completed') {
+            <p class="session-hint">{{ 'baseTellerWorkspace.session.hint.completed' | translate }}</p>
+          }
+        </div>
+      </div>
+
+      <div class="session-metrics">
+        <div class="metric metric-cash">
+          <span class="metric-label">{{ 'baseTellerWorkspace.session.cashOnHand' | translate }}</span>
+          @let currentMovement = movement();
+          @if (holdings().status === 'loading') {
+            <strong class="metric-value" aria-hidden="true">…</strong>
+          } @else if (currentMovement) {
+            <strong class="metric-value">
+              {{ money(currentMovement.cashOnHand, currentMovement.currencyCode) }}
+              <span class="metric-currency">{{ currentMovement.currencyCode }}</span>
+            </strong>
+          } @else if (holdingRowsEmpty()) {
+            <strong class="metric-value metric-muted">{{ 'baseTellerWorkspace.session.noCash' | translate }}</strong>
+          } @else {
+            <strong class="metric-value metric-muted">{{
+              'baseTellerWorkspace.common.unavailable' | translate
+            }}</strong>
+          }
+          @let limit = activeLimit();
+          @if (limit && limit.state === 'available' && currentMovement) {
+            <mat-progress-bar
+              [class]="'limit-bar limit-' + limit.barLevel"
+              mode="determinate"
+              [value]="limit.percent > 100 ? 100 : limit.percent"
+              [attr.aria-label]="
+                'baseTellerWorkspace.session.limitUsage'
+                  | translate: { percent: limit.percent, limit: money(limit.limit, currentMovement.currencyCode) }
+              "
+            ></mat-progress-bar>
+            <span [class]="'limit-text limit-' + limit.barLevel">
+              {{
+                'baseTellerWorkspace.session.limitUsage'
+                  | translate: { percent: limit.percent, limit: money(limit.limit, currentMovement.currencyCode) }
+              }}
+            </span>
+          } @else if (limit && limit.state === 'unavailable' && limit.reason !== 'no-balance') {
+            <span class="limit-text limit-unknown">
+              {{
+                (limit.reason === 'invalid-limit'
+                  ? 'baseTellerWorkspace.session.limitInvalid'
+                  : 'baseTellerWorkspace.session.limitMissing'
+                ) | translate
+              }}
+            </span>
+          }
+        </div>
+        <div class="metric">
+          <span class="metric-label">{{ 'baseTellerWorkspace.session.operationsToday' | translate }}</span>
+          @if (history().status === 'loading') {
+            <strong class="metric-value" aria-hidden="true">…</strong>
+          } @else if (facts(); as summary) {
+            <strong class="metric-value">{{ summary.operationsToday }}</strong>
+          } @else {
+            <strong class="metric-value metric-muted">{{
+              'baseTellerWorkspace.common.unavailable' | translate
+            }}</strong>
+          }
+        </div>
+        <div class="metric">
+          <span class="metric-label">{{ 'baseTellerWorkspace.session.lastCount' | translate }}</span>
+          @if (history().status === 'loading') {
+            <strong class="metric-value" aria-hidden="true">…</strong>
+          } @else if (clock(facts()?.lastCountAt); as countTime) {
+            <strong class="metric-value">{{ countTime }}</strong>
+          } @else {
+            <strong class="metric-value metric-muted">{{
+              'baseTellerWorkspace.common.unavailable' | translate
+            }}</strong>
+          }
+        </div>
+      </div>
+
+      <div class="session-actions">
+        @if (currencies().length > 1) {
+          <mat-button-toggle-group
+            class="currency-toggle"
+            [value]="activeCurrency()"
+            (change)="selectCurrency($event.value)"
+            [attr.aria-label]="'baseTellerWorkspace.session.currency' | translate"
+          >
+            @for (code of currencies(); track code) {
+              <mat-button-toggle [value]="code">{{ code }}</mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        }
+        @if (canViewCashOnHand()) {
+          <a mat-flat-button class="session-action-primary" [routerLink]="cashOnHandRoute">
+            <mat-icon aria-hidden="true">fact_check</mat-icon>
+            {{ 'baseTellerWorkspace.session.quickCount' | translate }}
           </a>
         }
+        @if (registerState() === 'not-opened' && canOpenRegister()) {
+          <a mat-stroked-button class="session-action-secondary" [routerLink]="openRegisterRoute">
+            <mat-icon aria-hidden="true">lock_open</mat-icon>
+            {{ 'baseTellerWorkspace.session.openRegister' | translate }}
+          </a>
+        } @else if (closeRegister(); as closing) {
+          @let closingAvailability = availabilityOf(closing);
+          <button
+            mat-stroked-button
+            type="button"
+            class="session-action-secondary"
+            [disabled]="!closingAvailability.enabled"
+            (click)="confirmClosing(closing)"
+          >
+            <mat-icon aria-hidden="true">lock</mat-icon>
+            {{ 'baseTellerWorkspace.session.closeRegister' | translate }}
+          </button>
+        }
       </div>
-      @if (specialOperations.length) {
-        <h3>{{ 'vaultDeposit.specialOperations' | translate }}</h3>
-        <div class="workflow-grid">
-          @for (workflow of specialOperations; track workflow.route) {
-            <a class="workflow-link" [routerLink]="workflow.route">
-              <div class="workflow-block">
-                <mat-icon class="workflow-icon" aria-hidden="true">{{ workflow.materialIcon }}</mat-icon>
-                <span class="workflow-title">{{ workflow.label | translate }}</span>
-                <mat-icon class="workflow-arrow" aria-hidden="true">chevron_right</mat-icon>
-              </div>
+    }
+  </section>
+
+  <div class="workspace-layout">
+    <div class="workspace-main">
+      <!-- Operation search -->
+      <section class="search-card" [attr.aria-label]="'baseTellerWorkspace.search.label' | translate">
+        <div class="search-box">
+          <mat-icon class="search-prefix" aria-hidden="true">search</mat-icon>
+          <input
+            #searchInput
+            matInput
+            type="text"
+            role="searchbox"
+            enterkeyhint="search"
+            autocomplete="off"
+            class="search-input"
+            aria-keyshortcuts="Control+K Meta+K"
+            [formControl]="searchControl"
+            [placeholder]="'baseTellerWorkspace.search.placeholder' | translate"
+            [attr.aria-label]="'baseTellerWorkspace.search.label' | translate"
+            (keydown)="onSearchKeydown($event)"
+          />
+          @if (searching()) {
+            <button
+              mat-icon-button
+              type="button"
+              [attr.aria-label]="'baseTellerWorkspace.search.clear' | translate"
+              (click)="clearSearch()"
+            >
+              <mat-icon aria-hidden="true">close</mat-icon>
+            </button>
+          } @else {
+            <kbd class="shortcut-chip" aria-hidden="true">{{ searchShortcutLabel }}</kbd>
+          }
+        </div>
+      </section>
+
+      @if (searching()) {
+        <section class="results" aria-labelledby="results-title">
+          <h2 id="results-title" class="section-title">{{ 'baseTellerWorkspace.search.results' | translate }}</h2>
+          <p class="sr-only" role="status" aria-live="polite">
+            {{ 'baseTellerWorkspace.search.resultCount' | translate: { count: results().length } }}
+          </p>
+          @if (results().length === 0) {
+            <div class="empty-state">
+              <mat-icon aria-hidden="true">search_off</mat-icon>
+              <p>{{ 'baseTellerWorkspace.search.empty' | translate: { query: searchControl.value.trim() } }}</p>
+            </div>
+          } @else {
+            <ul class="card-grid">
+              @for (result of results(); track result.workflow.id; let index = $index) {
+                @let availability = availabilityOf(result.workflow);
+                <li>
+                  @if (result.workflow.requiresConfirmation || !availability.enabled) {
+                    <button
+                      type="button"
+                      class="op-card"
+                      data-result-card
+                      [attr.data-operation]="result.workflow.id"
+                      [disabled]="!availability.enabled"
+                      [attr.aria-describedby]="'result-hint-' + result.workflow.id"
+                      (click)="open(result.workflow)"
+                      (keydown)="onResultKeydown($event, index)"
+                    >
+                      <span class="op-icon" aria-hidden="true"
+                        ><mat-icon>{{ result.workflow.materialIcon }}</mat-icon></span
+                      >
+                      <span class="op-text">
+                        <span class="op-name">{{ result.label }}</span>
+                        <span class="op-description" [id]="'result-hint-' + result.workflow.id">
+                          @if (availability.enabled) {
+                            {{ result.description }}
+                          } @else {
+                            {{ availability.reasonKey | translate }}
+                          }
+                        </span>
+                      </span>
+                    </button>
+                  } @else {
+                    <a
+                      class="op-card"
+                      data-result-card
+                      [attr.data-operation]="result.workflow.id"
+                      [routerLink]="result.workflow.route"
+                      (keydown)="onResultKeydown($event, index)"
+                    >
+                      <span
+                        class="op-icon"
+                        [class.op-icon-danger]="result.workflow.emphasis === 'danger'"
+                        aria-hidden="true"
+                      >
+                        <mat-icon>{{ result.workflow.materialIcon }}</mat-icon>
+                      </span>
+                      <span class="op-text">
+                        <span class="op-name">{{ result.label }}</span>
+                        <span class="op-description">{{ result.description }}</span>
+                      </span>
+                      <mat-icon class="op-chevron" aria-hidden="true">chevron_right</mat-icon>
+                    </a>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        </section>
+      } @else {
+        <!-- Most used -->
+        @if (frequent().length) {
+          <section aria-labelledby="frequent-title">
+            <h2 id="frequent-title" class="section-title">
+              {{ 'baseTellerWorkspace.frequent.title' | translate }}
+              <span class="section-hint">{{ 'baseTellerWorkspace.frequent.hint' | translate }}</span>
+            </h2>
+            <ul class="tile-grid">
+              @for (entry of frequent(); track entry.workflow.id) {
+                <li>
+                  <a
+                    class="tile"
+                    [routerLink]="entry.workflow.route"
+                    [attr.data-operation]="entry.workflow.id"
+                    [attr.aria-keyshortcuts]="entry.slot.shortcut"
+                    [attr.aria-describedby]="'tile-hint-' + entry.workflow.id"
+                  >
+                    <span class="tile-top">
+                      <span
+                        class="op-icon op-icon-large"
+                        [class.op-icon-danger]="entry.workflow.emphasis === 'danger'"
+                        aria-hidden="true"
+                      >
+                        <mat-icon>{{ entry.workflow.materialIcon }}</mat-icon>
+                      </span>
+                      <kbd class="shortcut-chip" aria-hidden="true">{{ entry.slot.shortcut }}</kbd>
+                    </span>
+                    <span class="tile-name">{{ entry.workflow.label | translate }}</span>
+                    <span class="sr-only" [id]="'tile-hint-' + entry.workflow.id">
+                      {{ entry.workflow.descriptionKey | translate }}.
+                      {{ 'baseTellerWorkspace.frequent.shortcut' | translate: { key: entry.slot.shortcut } }}
+                    </span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </section>
+        }
+
+        <!-- Grouped operations -->
+        @for (category of categories(); track category.id) {
+          <section [attr.aria-labelledby]="'category-' + category.id">
+            <h2 [id]="'category-' + category.id" class="section-title">
+              {{ category.titleKey | translate }}
+              <span class="section-hint">{{ category.descriptionKey | translate }}</span>
+            </h2>
+            <ul class="card-grid">
+              @for (workflow of category.items; track workflow.id) {
+                <li>
+                  <a class="op-card" [routerLink]="workflow.route" [attr.data-operation]="workflow.id">
+                    <span class="op-icon" aria-hidden="true"
+                      ><mat-icon>{{ workflow.materialIcon }}</mat-icon></span
+                    >
+                    <span class="op-text">
+                      <span class="op-name">{{ workflow.label | translate }}</span>
+                      <span class="op-description">{{ workflow.descriptionKey | translate }}</span>
+                    </span>
+                    <mat-icon class="op-chevron" aria-hidden="true">chevron_right</mat-icon>
+                  </a>
+                </li>
+              }
+            </ul>
+          </section>
+        }
+
+        <!-- Closings -->
+        @if (closings().length) {
+          <section aria-labelledby="category-closings">
+            <h2 id="category-closings" class="section-title">
+              {{ 'baseTellerWorkspace.categories.closings.title' | translate }}
+              <span class="section-hint">{{ 'baseTellerWorkspace.categories.closings.description' | translate }}</span>
+            </h2>
+            <ul class="closing-grid">
+              @for (workflow of closings(); track workflow.id) {
+                @let availability = availabilityOf(workflow);
+                <li class="closing-card" [attr.data-operation]="workflow.id">
+                  <span class="op-icon" aria-hidden="true"
+                    ><mat-icon>{{ workflow.materialIcon }}</mat-icon></span
+                  >
+                  <span class="op-text">
+                    <span class="op-name">{{ workflow.label | translate }}</span>
+                    <span class="op-description" [id]="'closing-hint-' + workflow.id">
+                      @if (availability.enabled) {
+                        {{ workflow.descriptionKey | translate }}
+                      } @else {
+                        {{ availability.reasonKey | translate }}
+                      }
+                    </span>
+                  </span>
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    class="closing-start"
+                    [disabled]="!availability.enabled"
+                    [attr.aria-describedby]="'closing-hint-' + workflow.id"
+                    (click)="confirmClosing(workflow)"
+                  >
+                    {{ 'baseTellerWorkspace.closings.start' | translate }}
+                  </button>
+                </li>
+              }
+            </ul>
+          </section>
+        }
+      }
+    </div>
+
+    <aside class="workspace-side">
+      <!-- Today's movement -->
+      <section class="side-card" aria-labelledby="movement-title">
+        <h2 id="movement-title">{{ 'baseTellerWorkspace.movement.title' | translate }}</h2>
+        @if (!assignment()) {
+          <p class="side-muted">{{ 'baseTellerWorkspace.common.noSession' | translate }}</p>
+        } @else if (holdings().status === 'loading') {
+          <p class="side-muted" role="status">{{ 'baseTellerWorkspace.common.loading' | translate }}</p>
+        } @else if (holdings().status !== 'ready') {
+          <p class="side-muted" role="status">
+            {{
+              (holdings().status === 'forbidden'
+                ? 'baseTellerWorkspace.common.forbidden'
+                : 'baseTellerWorkspace.common.failed'
+              ) | translate
+            }}
+          </p>
+          <button mat-button type="button" (click)="refresh({ force: true })">
+            {{ 'baseTellerWorkspace.states.retry' | translate }}
+          </button>
+        } @else if (holdingRowsEmpty()) {
+          <p class="side-muted">{{ 'baseTellerWorkspace.movement.empty' | translate }}</p>
+        } @else if (movement(); as summary) {
+          <div class="movement-totals">
+            <div>
+              <span class="movement-label">{{ 'baseTellerWorkspace.movement.inflows' | translate }}</span>
+              <strong class="amount-in">{{ money(summary.inflows, summary.currencyCode) }}</strong>
+              @if (facts()?.inflowCount; as inflowCount) {
+                <small>{{ operationCountText(inflowCount) }}</small>
+              }
+            </div>
+            <div>
+              <span class="movement-label">{{ 'baseTellerWorkspace.movement.outflows' | translate }}</span>
+              <strong class="amount-out">{{ money(summary.outflows, summary.currencyCode) }}</strong>
+              @if (facts()?.outflowCount; as outflowCount) {
+                <small>{{ operationCountText(outflowCount) }}</small>
+              }
+            </div>
+          </div>
+          @if (summary.inflowShare !== null) {
+            <div
+              class="movement-bar"
+              role="img"
+              [attr.aria-label]="'baseTellerWorkspace.movement.barLabel' | translate: { percent: summary.inflowShare }"
+            >
+              <span class="movement-bar-in" [style.width.%]="summary.inflowShare"></span>
+              <span class="movement-bar-out"></span>
+            </div>
+          }
+          <dl class="movement-lines">
+            <div>
+              <dt>{{ 'baseTellerWorkspace.movement.openingFunds' | translate }}</dt>
+              <dd>{{ money(summary.openingFunds, summary.currencyCode) }}</dd>
+            </div>
+            <div>
+              <dt>+ {{ 'baseTellerWorkspace.movement.inflows' | translate }}</dt>
+              <dd>{{ money(summary.inflows, summary.currencyCode) }}</dd>
+            </div>
+            <div>
+              <dt>&minus; {{ 'baseTellerWorkspace.movement.outflows' | translate }}</dt>
+              <dd>{{ money(summary.outflows, summary.currencyCode) }}</dd>
+            </div>
+            <div>
+              <dt>&minus; {{ 'baseTellerWorkspace.movement.settlements' | translate }}</dt>
+              <dd>{{ money(summary.settlements, summary.currencyCode) }}</dd>
+            </div>
+            <div class="movement-total">
+              <dt>{{ 'baseTellerWorkspace.movement.expected' | translate }}</dt>
+              <dd>{{ money(summary.expectedCash, summary.currencyCode) }}</dd>
+            </div>
+          </dl>
+          @if (hasDifference(summary)) {
+            <p class="movement-difference" role="status">
+              <mat-icon aria-hidden="true">error</mat-icon>
+              {{ 'baseTellerWorkspace.movement.difference' | translate: { amount: differenceText(summary) } }}
+            </p>
+            @if (closeRegister(); as closing) {
+              @if (availabilityOf(closing).enabled) {
+                <button mat-button type="button" (click)="confirmClosing(closing)">
+                  {{ 'baseTellerWorkspace.movement.reviewInClosing' | translate }}
+                </button>
+              }
+            }
+          } @else {
+            <p class="movement-balanced">
+              <mat-icon aria-hidden="true">check_circle</mat-icon>
+              {{ 'baseTellerWorkspace.movement.balanced' | translate }}
+            </p>
+          }
+          @if (closingOutcome(); as outcome) {
+            <p class="movement-closing">
+              {{ closingOutcomeText(outcome) }}
+            </p>
+          }
+        } @else {
+          <p class="side-muted" role="status">{{ 'baseTellerWorkspace.movement.incomplete' | translate }}</p>
+        }
+      </section>
+
+      <!-- Cash-limit warnings -->
+      @for (alert of alerts(); track alert.currencyCode) {
+        <section [class]="'alert-card alert-' + alert.level" role="alert">
+          <mat-icon aria-hidden="true">{{ alert.level === 'exceeded' ? 'error' : 'warning' }}</mat-icon>
+          <div>
+            <h2>
+              {{ 'baseTellerWorkspace.alert.' + alert.level + '.title' | translate }}
+              @if (currencies().length > 1) {
+                <span class="alert-currency">{{ alert.currencyCode }}</span>
+              }
+            </h2>
+            <p>{{ 'baseTellerWorkspace.alert.' + alert.level + '.text' | translate: { limit: alert.limitText } }}</p>
+            @if (canDepositToVault()) {
+              <a class="alert-action" [routerLink]="vaultRoute">{{
+                'baseTellerWorkspace.alert.depositVault' | translate
+              }}</a>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- Recent operations -->
+      <section class="side-card" aria-labelledby="recent-title">
+        <div class="side-card-heading">
+          <h2 id="recent-title">{{ 'baseTellerWorkspace.recent.title' | translate }}</h2>
+          @if (canViewHistory() && historyQueryParams(); as queryParams) {
+            <a class="side-link" [routerLink]="historyRoute" [queryParams]="queryParams">
+              {{ 'baseTellerWorkspace.recent.viewHistory' | translate }}
             </a>
           }
         </div>
-      }
-      @if (outflows.length) {
-        <h3>{{ 'accountTransfer.outflows' | translate }}</h3>
-        <div class="workflow-grid">
-          @for (workflow of outflows; track workflow.route) {
-            <a class="workflow-link" [routerLink]="workflow.route">
-              <div class="workflow-block">
-                <mat-icon class="workflow-icon" aria-hidden="true">{{ workflow.materialIcon }}</mat-icon>
-                <span class="workflow-title">{{ workflow.label | translate }}</span>
-                <mat-icon class="workflow-arrow" aria-hidden="true">chevron_right</mat-icon>
-              </div>
-            </a>
-          }
-        </div>
-      }
-      @if (otherOperations.length) {
-        <h3>{{ 'accountTransfer.otherOperations' | translate }}</h3>
-        <div class="workflow-grid">
-          @for (workflow of otherOperations; track workflow.route) {
-            <a class="workflow-link" [routerLink]="workflow.route">
-              <div class="workflow-block">
-                <mat-icon class="workflow-icon" aria-hidden="true">{{ workflow.materialIcon }}</mat-icon
-                ><span class="workflow-title">{{ workflow.label | translate }}</span
-                ><mat-icon class="workflow-arrow" aria-hidden="true">chevron_right</mat-icon>
-              </div>
-            </a>
-          }
-        </div>
-      }
-    </mat-card-content>
-  </mat-card>
+        @if (!assignment()) {
+          <p class="side-muted">{{ 'baseTellerWorkspace.common.noSession' | translate }}</p>
+        } @else if (history().status === 'loading') {
+          <p class="side-muted" role="status">{{ 'baseTellerWorkspace.common.loading' | translate }}</p>
+        } @else if (history().status !== 'ready') {
+          <p class="side-muted" role="status">
+            {{
+              (history().status === 'forbidden'
+                ? 'baseTellerWorkspace.common.forbidden'
+                : 'baseTellerWorkspace.common.failed'
+              ) | translate
+            }}
+          </p>
+        } @else if (recent().length === 0) {
+          <p class="side-muted">{{ 'baseTellerWorkspace.recent.empty' | translate }}</p>
+        } @else {
+          <ul class="recent-list">
+            @for (operation of recent(); track operation.historyId) {
+              <li class="recent-item">
+                <time class="recent-time" [attr.datetime]="operation.transactionDate">
+                  {{ clock(operation.transactionDate) ?? '—' }}
+                </time>
+                <span class="recent-main">
+                  <span class="recent-operation">{{ operationLabel(operation.operation) }}</span>
+                  <span class="recent-reference">{{ operation.reference }}</span>
+                </span>
+                <span
+                  class="recent-amount"
+                  [class.amount-in]="operation.direction === 'in'"
+                  [class.amount-out]="operation.direction === 'out'"
+                >
+                  {{ recentAmount(operation) ?? '—' }}
+                </span>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+    </aside>
+  </div>
 </div>

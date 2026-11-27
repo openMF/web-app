@@ -7518,7 +7518,7 @@
       "global": "Recuento de caja global",
       "deposit-in-transit": "Depósito en Tránsito",
       "bank-deposit": "Depósito Bancario",
-      "history": "Historial de transacciones",
+      "history": "Historial de operaciones de efectivo",
       "holdings": "Efectivo en mano"
     },
     "actions": {
@@ -9936,5 +9936,275 @@
     "madeOn": "Creado el",
     "checkedOn": "Revisado el",
     "openOffice": "Abrir oficina"
+  },
+  "baseTellerWorkspace": {
+    "movement": {
+      "operationCountOne": "{{count}} operación",
+      "title": "Movimiento de hoy",
+      "inflows": "Entradas",
+      "outflows": "Salidas",
+      "operationCount": "{{count}} operaciones",
+      "barLabel": "Las entradas son el {{percent}}% del movimiento de efectivo de hoy",
+      "openingFunds": "Fondo inicial",
+      "settlements": "Liquidaciones y depósitos",
+      "expected": "Efectivo esperado",
+      "difference": "Diferencia de {{amount}}",
+      "balanced": "El efectivo en caja coincide con el esperado",
+      "incomplete": "Los datos de conciliación están incompletos.",
+      "empty": "Sin movimientos de efectivo hoy.",
+      "reviewInClosing": "Revisar en el cierre de caja",
+      "closingDifference": "Diferencia del cierre: {{amount}} ({{type}})",
+      "closingBalanced": "El cierre de caja no tuvo diferencia",
+      "closingUnknown": "Diferencia del cierre no disponible"
+    },
+    "session": {
+      "region": "Sesión de caja",
+      "defaultTitle": "Caja",
+      "tellerWindow": "Ventanilla",
+      "cashier": "Cajero",
+      "badge": {
+        "open": "Abierta",
+        "openSince": "Abierta desde {{time}}",
+        "notOpened": "Caja cerrada",
+        "completed": "Cierre completado",
+        "unknown": "Estado no disponible"
+      },
+      "hint": {
+        "notOpened": "La caja no se ha abierto en la fecha contable de hoy.",
+        "completed": "El cierre de caja de hoy ya se completó."
+      },
+      "cashOnHand": "Efectivo en caja",
+      "noCash": "Sin efectivo registrado",
+      "operationsToday": "Operaciones hoy",
+      "lastCount": "Último arqueo",
+      "limitUsage": "{{percent}}% del límite de {{limit}}",
+      "limitMissing": "Límite de efectivo no configurado",
+      "limitInvalid": "La configuración del límite de efectivo no es válida",
+      "currency": "Moneda",
+      "quickCount": "Arqueo rápido",
+      "openRegister": "Abrir caja",
+      "closeRegister": "Cerrar caja"
+    },
+    "states": {
+      "loading": "Cargando tu caja…",
+      "noStaff": {
+        "title": "Tu usuario no está vinculado a un empleado",
+        "text": "Una sesión de caja necesita un empleado asignado como cajero. Pide a un administrador que vincule tu usuario."
+      },
+      "noAssignment": {
+        "title": "No tienes una ventanilla asignada",
+        "text": "No estás asignado como cajero de ninguna ventanilla en la fecha contable de hoy."
+      },
+      "forbidden": {
+        "title": "La información de la sesión no está disponible para ti",
+        "text": "Tu rol no puede consultar las ventanillas. Las operaciones que puedes usar siguen listadas abajo."
+      },
+      "unavailable": {
+        "title": "La información de la sesión no está disponible",
+        "text": "No se pudieron cargar las ventanillas. Inténtalo de nuevo en un momento."
+      },
+      "retry": "Reintentar",
+      "select": {
+        "title": "Selecciona tu ventanilla",
+        "text": "Hoy tienes asignada más de una ventanilla. Elige en la que estás trabajando."
+      }
+    },
+    "common": {
+      "unavailable": "No disponible",
+      "loading": "Cargando…",
+      "failed": "No se pudo cargar esta información.",
+      "forbidden": "Esta información no está disponible para tu rol.",
+      "noSession": "Disponible cuando tengas una ventanilla asignada."
+    },
+    "search": {
+      "label": "Buscar operaciones",
+      "placeholder": "Buscar una operación, por ejemplo “depósito” o “divisas”",
+      "clear": "Borrar búsqueda",
+      "results": "Resultados de la búsqueda",
+      "resultCount": "{{count}} operaciones encontradas",
+      "empty": "Ninguna operación coincide con “{{query}}”."
+    },
+    "frequent": {
+      "title": "Más usadas",
+      "hint": "Atajos de teclado F2 a F5",
+      "shortcut": "Atajo {{key}}"
+    },
+    "categories": {
+      "customer": {
+        "title": "Operaciones con clientes",
+        "description": "Lo que haces en ventanilla con cada cliente"
+      },
+      "cashDrawer": {
+        "title": "Efectivo de la caja",
+        "description": "Lo que entra y sale de tu caja"
+      },
+      "vaultBanks": {
+        "title": "Bóveda y bancos",
+        "description": "Movimientos con la bóveda y el banco"
+      },
+      "consultations": {
+        "title": "Consultas y correcciones",
+        "description": "Revisar y corregir operaciones"
+      },
+      "closings": {
+        "title": "Cierres",
+        "description": "Al terminar el turno o el día"
+      }
+    },
+    "availability": {
+      "openRegister": "Abre la caja para continuar",
+      "registerClosed": "La caja ya se cerró hoy"
+    },
+    "closings": {
+      "start": "Iniciar"
+    },
+    "alert": {
+      "near": {
+        "title": "Cerca del límite de efectivo",
+        "text": "Envía el excedente a la bóveda para quedarte por debajo de {{limit}}."
+      },
+      "exceeded": {
+        "title": "Límite de efectivo superado",
+        "text": "El efectivo en caja supera el límite de {{limit}}. Envía el excedente a la bóveda."
+      },
+      "depositVault": "Depositar en bóveda"
+    },
+    "recent": {
+      "title": "Últimas operaciones",
+      "viewHistory": "Ver historial",
+      "empty": "Sin operaciones registradas hoy."
+    },
+    "closingDialog": {
+      "title": "¿Iniciar {{workflow}}?",
+      "consequence": "Esto abre un proceso de conciliación. Es un proceso importante: se cuentan los saldos y se liquida la caja.",
+      "supervisor": "El cierre de fin de día mantiene su requisito de autorización de un supervisor.",
+      "noAutoClose": "Desde esta página no se cierra nada. El cierre se confirma en las pantallas siguientes.",
+      "continue": "Continuar"
+    },
+    "operationTypes": {
+      "SAVINGS_DEPOSIT": "Depósito de ahorro",
+      "CASH_WITHDRAWAL": "Retiro",
+      "PAY_SERVICE": "Pago de servicio",
+      "PAY_CREDIT": "Pago de préstamo",
+      "OPEN_SAVINGS_ACCOUNT": "Apertura de cuenta de ahorro",
+      "RETURNED_CHECK_PAYMENT": "Pago de cheque devuelto",
+      "ALLOCATE_CASH": "Asignación de efectivo",
+      "CASH_ALLOCATION": "Asignación de efectivo",
+      "CASH_SETTLEMENT": "Liquidación de efectivo",
+      "CASH_IN": "Entrada de efectivo",
+      "CASH_OUT": "Salida de efectivo",
+      "CASH_TRANSFER_BETWEEN_TELLERS": "Transferencia entre cajeros",
+      "CASH_DRAWER_PICKUP": "Retiro de caja",
+      "ACCOUNT_TRANSFER": "Transferencia entre cuentas",
+      "CASH_EXCHANGE": "Cambio de efectivo",
+      "CLOSE_CASHIER": "Cierre de caja",
+      "DEPOSIT_IN_TRANSIT": "Depósito en tránsito",
+      "BANK_DEPOSIT": "Depósito bancario",
+      "REVERSE_TRANSACTION": "Anulación de transacción",
+      "CASHIER_TRANSACTION": "Transacción de caja"
+    },
+    "operations": {
+      "cashOperationHistory": {
+        "title": "Historial de operaciones de efectivo",
+        "description": "Depósitos bancarios y en tránsito registrados",
+        "terms": "historial, depósitos bancarios, tránsito, operaciones de efectivo"
+      },
+      "foreignCurrency": {
+        "description": "Compra y venta de moneda extranjera",
+        "terms": "divisas, moneda extranjera, dólar, euro, tipo de cambio, cambio de moneda"
+      },
+      "cashTransfers": {
+        "description": "Enviar o recibir efectivo de otra caja",
+        "terms": "traspaso entre cajeros, cajero, enviar efectivo, recibir efectivo"
+      },
+      "accountTransfers": {
+        "description": "Mover saldo entre cuentas del mismo cliente",
+        "terms": "transferencia, traspaso, mover saldo, entre cuentas"
+      },
+      "cashPickup": {
+        "description": "Sacar excedente de efectivo",
+        "terms": "retiro de caja, retiro, excedente, recoger efectivo, sacar efectivo"
+      },
+      "endOfDayClosing": {
+        "description": "Cierre de la sucursal, requiere supervisor",
+        "terms": "cierre del día, fin de día, cierre de sucursal, supervisor"
+      },
+      "cashExchange": {
+        "description": "Cambiar billetes y monedas",
+        "terms": "cambio, denominaciones, billetes, monedas, cambiar"
+      },
+      "catalogUpdates": {
+        "description": "Servicios, divisas y denominaciones",
+        "terms": "catálogo, actualizar, sincronizar, servicios"
+      },
+      "cashAllocation": {
+        "description": "Recibir el fondo inicial del día",
+        "terms": "apertura, abastecimiento, fondo inicial, abrir caja, fondeo"
+      },
+      "cashInventory": {
+        "description": "Billetes y monedas disponibles",
+        "terms": "inventario, billetes, monedas, existencias, monitoreo"
+      },
+      "savingsOpening": {
+        "description": "Alta de cuenta y depósito inicial",
+        "terms": "apertura, nueva cuenta, alta, ahorro, abrir cuenta"
+      },
+      "savingsDeposit": {
+        "description": "Abonar efectivo o cheque a una cuenta de ahorro",
+        "terms": "depósito, abono, ingreso, ahorro, aportación"
+      },
+      "returnedCheck": {
+        "description": "Cubrir un cheque rechazado",
+        "terms": "cheque rebotado, cheque devuelto, rechazado"
+      },
+      "loanPayment": {
+        "description": "Cobrar la cuota de un préstamo",
+        "terms": "préstamo, crédito, pago, abono, cuota"
+      },
+      "cashRegisterClosing": {
+        "description": "Cuadra tu caja al terminar el turno",
+        "terms": "cierre, cerrar caja, cuadre, fin de turno, arqueo"
+      },
+      "globalCashCount": {
+        "description": "Arqueo de todas las cajas de la sucursal",
+        "terms": "arqueo, recuento, conteo, sucursal, todas las cajas"
+      },
+      "depositInTransit": {
+        "description": "Efectivo en camino al banco",
+        "terms": "tránsito, remesa, traslado, valores, transporte"
+      },
+      "bankDeposit": {
+        "description": "Registrar depósito en el banco",
+        "terms": "banco, depósito bancario, ficha de depósito"
+      },
+      "cashOnHand": {
+        "description": "Saldo actual de efectivo por moneda",
+        "terms": "efectivo, saldo, en mano, existencia, saldo de caja"
+      },
+      "transactionHistory": {
+        "description": "Todas las operaciones de tu caja",
+        "terms": "historial, movimientos, consultas, operaciones, transacciones"
+      },
+      "transactionReversal": {
+        "description": "Revertir una operación con autorización",
+        "terms": "anular, anulación, cancelar, revertir, reverso, corrección"
+      },
+      "servicePayment": {
+        "description": "Pagar recibos y servicios de clientes",
+        "terms": "recibo, servicio, luz, agua, teléfono, factura, pago de servicios"
+      },
+      "vaultDeposit": {
+        "description": "Enviar efectivo a la bóveda",
+        "terms": "bóveda, depósito en bóveda, excedente, resguardo"
+      },
+      "vaultHistory": {
+        "description": "Depósitos enviados a la bóveda",
+        "terms": "historial de bóveda, depósitos de bóveda, historial"
+      },
+      "withdrawal": {
+        "description": "Entregar efectivo o cheque al cliente",
+        "terms": "retiro, retirar, cheque, efectivo, egreso"
+      }
+    }
   }
 }

@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
+import { HANDLE_HTTP_ERROR_LOCALLY } from 'app/core/http/error-handler.interceptor';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -29,8 +30,14 @@ export class TransactionHistoryService {
     return this.http.get<TransactionHistoryContext>(`${this.path}/context`);
   }
 
-  search(filters: TransactionHistoryFilters = {}): Observable<TransactionHistorySearch> {
-    return this.http.get<TransactionHistorySearch>(this.path, { params: this.params(filters, true) });
+  search(
+    filters: TransactionHistoryFilters = {},
+    options?: { localErrors?: boolean }
+  ): Observable<TransactionHistorySearch> {
+    return this.http.get<TransactionHistorySearch>(this.path, {
+      params: this.params(filters, true),
+      ...(options?.localErrors ? { context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true) } : {})
+    });
   }
 
   getDetail(historyId: string): Observable<TransactionHistoryDetail> {

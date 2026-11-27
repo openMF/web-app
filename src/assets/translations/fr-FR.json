@@ -7523,7 +7523,7 @@
       "global": "Compte de trésorerie mondial",
       "deposit-in-transit": "Dépôt en transit",
       "bank-deposit": "Dépôt bancaire",
-      "history": "Historique des transactions",
+      "history": "Historique des opérations d'espèces",
       "holdings": "Encaisse"
     },
     "actions": {
@@ -9801,5 +9801,275 @@
     "madeOn": "Créé le",
     "checkedOn": "Vérifié le",
     "openOffice": "Ouvrir l’agence"
+  },
+  "baseTellerWorkspace": {
+    "movement": {
+      "operationCountOne": "{{count}} opération",
+      "title": "Mouvement d'aujourd'hui",
+      "inflows": "Entrées",
+      "outflows": "Sorties",
+      "operationCount": "{{count}} opérations",
+      "barLabel": "Les entrées représentent {{percent}} % du mouvement d'espèces du jour",
+      "openingFunds": "Fonds initial",
+      "settlements": "Règlements et dépôts",
+      "expected": "Espèces attendues",
+      "difference": "Écart de {{amount}}",
+      "balanced": "Les espèces en caisse correspondent au montant attendu",
+      "incomplete": "Les données de rapprochement sont incomplètes.",
+      "empty": "Aucun mouvement d'espèces enregistré aujourd'hui.",
+      "reviewInClosing": "Vérifier dans la clôture de caisse",
+      "closingDifference": "Écart de clôture : {{amount}} ({{type}})",
+      "closingBalanced": "La clôture de caisse n'a présenté aucun écart",
+      "closingUnknown": "Écart de clôture indisponible"
+    },
+    "session": {
+      "region": "Session de caisse",
+      "defaultTitle": "Caisse",
+      "tellerWindow": "Guichet",
+      "cashier": "Caissier",
+      "badge": {
+        "open": "Ouverte",
+        "openSince": "Ouverte depuis {{time}}",
+        "notOpened": "Caisse fermée",
+        "completed": "Clôture terminée",
+        "unknown": "Statut indisponible"
+      },
+      "hint": {
+        "notOpened": "La caisse n'a pas été ouverte à la date comptable du jour.",
+        "completed": "La clôture de caisse d'aujourd'hui est déjà terminée."
+      },
+      "cashOnHand": "Espèces en caisse",
+      "noCash": "Aucune espèce enregistrée",
+      "operationsToday": "Opérations aujourd'hui",
+      "lastCount": "Dernier comptage",
+      "limitUsage": "{{percent}} % de la limite de {{limit}}",
+      "limitMissing": "Limite d'espèces non configurée",
+      "limitInvalid": "La configuration de la limite d'espèces est invalide",
+      "currency": "Devise",
+      "quickCount": "Comptage rapide",
+      "openRegister": "Ouvrir la caisse",
+      "closeRegister": "Fermer la caisse"
+    },
+    "states": {
+      "loading": "Chargement de votre caisse…",
+      "noStaff": {
+        "title": "Votre utilisateur n'est pas lié à un employé",
+        "text": "Une session de caisse nécessite un employé affecté comme caissier. Demandez à un administrateur de lier votre utilisateur."
+      },
+      "noAssignment": {
+        "title": "Aucun guichet affecté",
+        "text": "Vous n'êtes affecté comme caissier d'aucun guichet à la date comptable du jour."
+      },
+      "forbidden": {
+        "title": "Les informations de session ne sont pas disponibles pour vous",
+        "text": "Votre rôle ne peut pas consulter les guichets. Les opérations autorisées restent listées ci-dessous."
+      },
+      "unavailable": {
+        "title": "Les informations de session sont indisponibles",
+        "text": "Les guichets n'ont pas pu être chargés. Réessayez dans un instant."
+      },
+      "retry": "Réessayer",
+      "select": {
+        "title": "Sélectionnez votre guichet",
+        "text": "Vous êtes affecté à plusieurs guichets aujourd'hui. Choisissez celui où vous travaillez."
+      }
+    },
+    "common": {
+      "unavailable": "Non disponible",
+      "loading": "Chargement…",
+      "failed": "Ces informations n'ont pas pu être chargées.",
+      "forbidden": "Ces informations ne sont pas disponibles pour votre rôle.",
+      "noSession": "Disponible une fois un guichet affecté."
+    },
+    "search": {
+      "label": "Rechercher des opérations",
+      "placeholder": "Rechercher une opération, par exemple « dépôt » ou « devises »",
+      "clear": "Effacer la recherche",
+      "results": "Résultats de la recherche",
+      "resultCount": "{{count}} opérations trouvées",
+      "empty": "Aucune opération ne correspond à « {{query}} »."
+    },
+    "frequent": {
+      "title": "Les plus utilisées",
+      "hint": "Raccourcis clavier F2 à F5",
+      "shortcut": "Raccourci {{key}}"
+    },
+    "categories": {
+      "customer": {
+        "title": "Opérations clients",
+        "description": "Services financiers au guichet"
+      },
+      "cashDrawer": {
+        "title": "Caisse",
+        "description": "Mouvements et stock d’espèces"
+      },
+      "vaultBanks": {
+        "title": "Coffre et banques",
+        "description": "Mouvements avec le coffre et la banque"
+      },
+      "consultations": {
+        "title": "Consultations et corrections",
+        "description": "Historique et corrections"
+      },
+      "closings": {
+        "title": "Clôtures",
+        "description": "Fin de service et fin de journée"
+      }
+    },
+    "availability": {
+      "openRegister": "Ouvrez la caisse pour continuer",
+      "registerClosed": "La caisse est déjà fermée pour aujourd'hui"
+    },
+    "closings": {
+      "start": "Démarrer"
+    },
+    "alert": {
+      "near": {
+        "title": "Proche de la limite d'espèces",
+        "text": "Envoyez l’excédent au coffre pour rester sous {{limit}}."
+      },
+      "exceeded": {
+        "title": "Limite d'espèces dépassée",
+        "text": "Les espèces en caisse dépassent la limite de {{limit}}. Envoyez l’excédent au coffre."
+      },
+      "depositVault": "Déposer au coffre"
+    },
+    "recent": {
+      "title": "Opérations récentes",
+      "viewHistory": "Voir l'historique",
+      "empty": "Aucune opération enregistrée aujourd'hui."
+    },
+    "closingDialog": {
+      "title": "Démarrer {{workflow}} ?",
+      "consequence": "Cela ouvre un processus de rapprochement important : les soldes sont comptés et la caisse est réglée.",
+      "supervisor": "La clôture de fin de journée conserve l'autorisation d'un superviseur.",
+      "noAutoClose": "Rien n'est clôturé depuis cette page. La clôture est confirmée sur les écrans suivants.",
+      "continue": "Continuer"
+    },
+    "operationTypes": {
+      "SAVINGS_DEPOSIT": "Dépôt d'épargne",
+      "CASH_WITHDRAWAL": "Retrait",
+      "PAY_SERVICE": "Paiement de service",
+      "PAY_CREDIT": "Remboursement de prêt",
+      "OPEN_SAVINGS_ACCOUNT": "Ouverture de compte d'épargne",
+      "RETURNED_CHECK_PAYMENT": "Paiement de chèque retourné",
+      "ALLOCATE_CASH": "Allocation d'espèces",
+      "CASH_ALLOCATION": "Allocation d'espèces",
+      "CASH_SETTLEMENT": "Règlement d'espèces",
+      "CASH_IN": "Entrée d'espèces",
+      "CASH_OUT": "Sortie d'espèces",
+      "CASH_TRANSFER_BETWEEN_TELLERS": "Transfert entre caissiers",
+      "CASH_DRAWER_PICKUP": "Retrait de caisse",
+      "ACCOUNT_TRANSFER": "Virement entre comptes",
+      "CASH_EXCHANGE": "Change d'espèces",
+      "CLOSE_CASHIER": "Clôture de caisse",
+      "DEPOSIT_IN_TRANSIT": "Dépôt en transit",
+      "BANK_DEPOSIT": "Dépôt bancaire",
+      "REVERSE_TRANSACTION": "Annulation d'opération",
+      "CASHIER_TRANSACTION": "Transaction de caisse"
+    },
+    "operations": {
+      "cashOperationHistory": {
+        "title": "Historique des opérations d'espèces",
+        "description": "Dépôts bancaires et dépôts en transit enregistrés",
+        "terms": "historique, dépôts bancaires, transit, opérations d’espèces"
+      },
+      "foreignCurrency": {
+        "description": "Achat et vente de devises",
+        "terms": "devises, monnaie étrangère, dollar, euro, taux de change"
+      },
+      "cashTransfers": {
+        "description": "Envoyer ou recevoir des espèces d'un autre caissier",
+        "terms": "transfert entre caissiers, caissier, envoyer des espèces"
+      },
+      "accountTransfers": {
+        "description": "Déplacer un solde entre comptes d'un même client",
+        "terms": "virement, transfert, entre comptes, déplacer solde"
+      },
+      "cashPickup": {
+        "description": "Retirer l'excédent d'espèces",
+        "terms": "retrait de caisse, retrait, excédent, prélever"
+      },
+      "endOfDayClosing": {
+        "description": "Clôture de l'agence, nécessite un superviseur",
+        "terms": "fin de journée, clôture agence, superviseur"
+      },
+      "cashExchange": {
+        "description": "Changer des billets et des pièces",
+        "terms": "change, coupures, billets, pièces, monnaie"
+      },
+      "catalogUpdates": {
+        "description": "Services, devises et coupures",
+        "terms": "catalogue, mise à jour, synchroniser, services"
+      },
+      "cashAllocation": {
+        "description": "Recevoir le fonds initial du jour",
+        "terms": "ouverture, approvisionnement, fonds initial, ouvrir la caisse"
+      },
+      "cashInventory": {
+        "description": "Billets et pièces disponibles",
+        "terms": "inventaire, stock, billets, pièces, suivi"
+      },
+      "savingsOpening": {
+        "description": "Ouvrir un compte avec un dépôt initial",
+        "terms": "ouverture, nouveau compte, épargne, ouvrir un compte"
+      },
+      "savingsDeposit": {
+        "description": "Déposer des espèces ou un chèque sur un compte d'épargne",
+        "terms": "dépôt, versement, épargne, verser"
+      },
+      "returnedCheck": {
+        "description": "Couvrir un chèque rejeté",
+        "terms": "chèque rejeté, chèque retourné, impayé"
+      },
+      "loanPayment": {
+        "description": "Encaisser l'échéance d'un prêt",
+        "terms": "prêt, crédit, paiement, échéance, remboursement"
+      },
+      "cashRegisterClosing": {
+        "description": "Équilibrer votre caisse en fin de service",
+        "terms": "clôture, fermer la caisse, équilibrage, fin de service, comptage"
+      },
+      "globalCashCount": {
+        "description": "Comptage de toutes les caisses de l’agence",
+        "terms": "comptage global, comptage, toutes les caisses, agence"
+      },
+      "depositInTransit": {
+        "description": "Espèces en route vers la banque",
+        "terms": "transit, convoyage, transport de fonds, remise"
+      },
+      "bankDeposit": {
+        "description": "Enregistrer un dépôt effectué à la banque",
+        "terms": "banque, dépôt bancaire, bordereau"
+      },
+      "cashOnHand": {
+        "description": "Solde actuel des espèces par devise",
+        "terms": "espèces, solde, en caisse, encaisse"
+      },
+      "transactionHistory": {
+        "description": "Toutes les opérations de votre caisse",
+        "terms": "historique, mouvements, consultation, opérations, transactions"
+      },
+      "transactionReversal": {
+        "description": "Annuler une opération avec autorisation",
+        "terms": "annuler, annulation, extourne, correction, contre-passation"
+      },
+      "servicePayment": {
+        "description": "Payer les factures et services des clients",
+        "terms": "facture, service, électricité, eau, téléphone, paiement"
+      },
+      "vaultDeposit": {
+        "description": "Envoyer des espèces au coffre",
+        "terms": "coffre, dépôt au coffre, excédent"
+      },
+      "vaultHistory": {
+        "description": "Dépôts envoyés au coffre",
+        "terms": "historique du coffre, dépôts au coffre, historique"
+      },
+      "withdrawal": {
+        "description": "Remettre des espèces ou un chèque au client",
+        "terms": "retrait, retirer, chèque, espèces"
+      }
+    }
   }
 }

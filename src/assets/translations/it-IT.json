@@ -7523,7 +7523,7 @@
       "global": "Conteggio contante globale",
       "deposit-in-transit": "Deposito in transito",
       "bank-deposit": "Deposito bancario",
-      "history": "Cronologia delle transazioni",
+      "history": "Storico operazioni di contanti",
       "holdings": "Contanti a portata di mano"
     },
     "actions": {
@@ -9801,5 +9801,275 @@
     "madeOn": "Creato il",
     "checkedOn": "Verificato il",
     "openOffice": "Apri filiale"
+  },
+  "baseTellerWorkspace": {
+    "movement": {
+      "operationCountOne": "{{count}} operazione",
+      "title": "Movimento di oggi",
+      "inflows": "Entrate",
+      "outflows": "Uscite",
+      "operationCount": "{{count}} operazioni",
+      "barLabel": "Le entrate sono il {{percent}}% del movimento di contanti di oggi",
+      "openingFunds": "Fondo iniziale",
+      "settlements": "Regolamenti e depositi",
+      "expected": "Contanti attesi",
+      "difference": "Differenza di {{amount}}",
+      "balanced": "I contanti in cassa corrispondono a quelli attesi",
+      "incomplete": "I dati di riconciliazione sono incompleti.",
+      "empty": "Nessun movimento di contanti registrato oggi.",
+      "reviewInClosing": "Verifica nella chiusura di cassa",
+      "closingDifference": "Differenza di chiusura: {{amount}} ({{type}})",
+      "closingBalanced": "La chiusura di cassa non ha avuto differenze",
+      "closingUnknown": "Differenza di chiusura non disponibile"
+    },
+    "session": {
+      "region": "Sessione di cassa",
+      "defaultTitle": "Cassa",
+      "tellerWindow": "Sportello",
+      "cashier": "Cassiere",
+      "badge": {
+        "open": "Aperta",
+        "openSince": "Aperta dalle {{time}}",
+        "notOpened": "Cassa chiusa",
+        "completed": "Chiusura completata",
+        "unknown": "Stato non disponibile"
+      },
+      "hint": {
+        "notOpened": "La cassa non è stata aperta per la data contabile di oggi.",
+        "completed": "La chiusura di cassa di oggi è già stata completata."
+      },
+      "cashOnHand": "Contanti in cassa",
+      "noCash": "Nessun contante registrato",
+      "operationsToday": "Operazioni oggi",
+      "lastCount": "Ultimo conteggio",
+      "limitUsage": "{{percent}}% del limite di {{limit}}",
+      "limitMissing": "Limite di contanti non configurato",
+      "limitInvalid": "La configurazione del limite di contanti non è valida",
+      "currency": "Valuta",
+      "quickCount": "Conteggio rapido",
+      "openRegister": "Apri cassa",
+      "closeRegister": "Chiudi cassa"
+    },
+    "states": {
+      "loading": "Caricamento della tua cassa…",
+      "noStaff": {
+        "title": "Il tuo utente non è collegato a un dipendente",
+        "text": "Una sessione di cassa richiede un dipendente assegnato come cassiere. Chiedi a un amministratore di collegare il tuo utente."
+      },
+      "noAssignment": {
+        "title": "Nessuno sportello assegnato",
+        "text": "Non sei assegnato come cassiere di alcuno sportello per la data contabile di oggi."
+      },
+      "forbidden": {
+        "title": "Le informazioni di sessione non sono disponibili per te",
+        "text": "Il tuo ruolo non può consultare gli sportelli. Le operazioni consentite restano elencate sotto."
+      },
+      "unavailable": {
+        "title": "Le informazioni di sessione non sono disponibili",
+        "text": "Impossibile caricare gli sportelli. Riprova tra un momento."
+      },
+      "retry": "Riprova",
+      "select": {
+        "title": "Seleziona il tuo sportello",
+        "text": "Oggi sei assegnato a più sportelli. Scegli quello in cui stai lavorando."
+      }
+    },
+    "common": {
+      "unavailable": "Non disponibile",
+      "loading": "Caricamento…",
+      "failed": "Impossibile caricare queste informazioni.",
+      "forbidden": "Queste informazioni non sono disponibili per il tuo ruolo.",
+      "noSession": "Disponibile quando avrai uno sportello assegnato."
+    },
+    "search": {
+      "label": "Cerca operazioni",
+      "placeholder": "Cerca un’operazione, ad esempio “deposito” o “valute”",
+      "clear": "Cancella ricerca",
+      "results": "Risultati della ricerca",
+      "resultCount": "{{count}} operazioni trovate",
+      "empty": "Nessuna operazione corrisponde a “{{query}}”."
+    },
+    "frequent": {
+      "title": "Più usate",
+      "hint": "Scorciatoie da tastiera da F2 a F5",
+      "shortcut": "Scorciatoia {{key}}"
+    },
+    "categories": {
+      "customer": {
+        "title": "Operazioni con i clienti",
+        "description": "Servizi finanziari allo sportello"
+      },
+      "cashDrawer": {
+        "title": "Contanti della cassa",
+        "description": "Movimenti e giacenza di contanti"
+      },
+      "vaultBanks": {
+        "title": "Caveau e banche",
+        "description": "Movimenti con il caveau e la banca"
+      },
+      "consultations": {
+        "title": "Consultazioni e correzioni",
+        "description": "Storico e correzioni"
+      },
+      "closings": {
+        "title": "Chiusure",
+        "description": "Fine turno e fine giornata"
+      }
+    },
+    "availability": {
+      "openRegister": "Apri la cassa per continuare",
+      "registerClosed": "La cassa è già chiusa per oggi"
+    },
+    "closings": {
+      "start": "Avvia"
+    },
+    "alert": {
+      "near": {
+        "title": "Vicino al limite di contanti",
+        "text": "Invia l’eccedenza al caveau per restare sotto {{limit}}."
+      },
+      "exceeded": {
+        "title": "Limite di contanti superato",
+        "text": "I contanti in cassa superano il limite di {{limit}}. Invia l’eccedenza al caveau."
+      },
+      "depositVault": "Deposita nel caveau"
+    },
+    "recent": {
+      "title": "Ultime operazioni",
+      "viewHistory": "Vedi storico",
+      "empty": "Nessuna operazione registrata oggi."
+    },
+    "closingDialog": {
+      "title": "Avviare {{workflow}}?",
+      "consequence": "Si apre un processo di riconciliazione importante: i saldi vengono contati e la cassa viene regolata.",
+      "supervisor": "La chiusura di fine giornata mantiene l’autorizzazione di un supervisore.",
+      "noAutoClose": "Da questa pagina non si chiude nulla. La chiusura si conferma nelle schermate successive.",
+      "continue": "Continua"
+    },
+    "operationTypes": {
+      "SAVINGS_DEPOSIT": "Deposito di risparmio",
+      "CASH_WITHDRAWAL": "Prelievo",
+      "PAY_SERVICE": "Pagamento di servizio",
+      "PAY_CREDIT": "Pagamento di prestito",
+      "OPEN_SAVINGS_ACCOUNT": "Apertura conto di risparmio",
+      "RETURNED_CHECK_PAYMENT": "Pagamento assegno restituito",
+      "ALLOCATE_CASH": "Assegnazione di contanti",
+      "CASH_ALLOCATION": "Assegnazione di contanti",
+      "CASH_SETTLEMENT": "Regolamento di contanti",
+      "CASH_IN": "Entrata di contanti",
+      "CASH_OUT": "Uscita di contanti",
+      "CASH_TRANSFER_BETWEEN_TELLERS": "Trasferimento tra cassieri",
+      "CASH_DRAWER_PICKUP": "Prelievo di cassa",
+      "ACCOUNT_TRANSFER": "Trasferimento tra conti",
+      "CASH_EXCHANGE": "Cambio di contanti",
+      "CLOSE_CASHIER": "Chiusura di cassa",
+      "DEPOSIT_IN_TRANSIT": "Deposito in transito",
+      "BANK_DEPOSIT": "Deposito bancario",
+      "REVERSE_TRANSACTION": "Storno di transazione",
+      "CASHIER_TRANSACTION": "Transazione di cassa"
+    },
+    "operations": {
+      "cashOperationHistory": {
+        "title": "Storico operazioni di contanti",
+        "description": "Depositi bancari e in transito registrati",
+        "terms": "storico, depositi bancari, transito, operazioni di contanti"
+      },
+      "foreignCurrency": {
+        "description": "Acquisto e vendita di valuta estera",
+        "terms": "valute, valuta estera, cambio, dollaro, euro"
+      },
+      "cashTransfers": {
+        "description": "Inviare o ricevere contanti da un altro cassiere",
+        "terms": "trasferimento tra cassieri, cassiere, inviare contanti"
+      },
+      "accountTransfers": {
+        "description": "Spostare saldo tra conti dello stesso cliente",
+        "terms": "bonifico, trasferimento, tra conti, giroconto"
+      },
+      "cashPickup": {
+        "description": "Prelevare l’eccedenza di contanti",
+        "terms": "prelievo di cassa, prelievo, eccedenza, ritirare"
+      },
+      "endOfDayClosing": {
+        "description": "Chiusura della filiale, richiede un supervisore",
+        "terms": "fine giornata, chiusura filiale, supervisore"
+      },
+      "cashExchange": {
+        "description": "Cambiare banconote e monete",
+        "terms": "cambio, tagli, banconote, monete, spiccioli"
+      },
+      "catalogUpdates": {
+        "description": "Servizi, valute e tagli",
+        "terms": "catalogo, aggiornare, sincronizzare, servizi"
+      },
+      "cashAllocation": {
+        "description": "Ricevere il fondo iniziale del giorno",
+        "terms": "apertura, approvvigionamento, fondo iniziale, aprire cassa"
+      },
+      "cashInventory": {
+        "description": "Banconote e monete disponibili",
+        "terms": "inventario, giacenza, banconote, monete, monitoraggio"
+      },
+      "savingsOpening": {
+        "description": "Aprire un conto con un deposito iniziale",
+        "terms": "apertura, nuovo conto, risparmio, aprire conto"
+      },
+      "savingsDeposit": {
+        "description": "Versare contanti o assegno su un conto di risparmio",
+        "terms": "deposito, versamento, risparmio, accredito"
+      },
+      "returnedCheck": {
+        "description": "Coprire un assegno respinto",
+        "terms": "assegno protestato, assegno restituito, respinto"
+      },
+      "loanPayment": {
+        "description": "Incassare la rata di un prestito",
+        "terms": "prestito, credito, pagamento, rata, rimborso"
+      },
+      "cashRegisterClosing": {
+        "description": "Quadra la tua cassa a fine turno",
+        "terms": "chiusura, chiudere cassa, quadratura, fine turno, conteggio"
+      },
+      "globalCashCount": {
+        "description": "Conteggio di tutte le casse della filiale",
+        "terms": "conteggio globale, conteggio, tutte le casse, filiale"
+      },
+      "depositInTransit": {
+        "description": "Contanti in viaggio verso la banca",
+        "terms": "transito, trasporto valori, spedizione, rimessa"
+      },
+      "bankDeposit": {
+        "description": "Registrare un deposito fatto in banca",
+        "terms": "banca, deposito bancario, distinta"
+      },
+      "cashOnHand": {
+        "description": "Saldo attuale dei contanti per valuta",
+        "terms": "contanti, saldo, in cassa, giacenza"
+      },
+      "transactionHistory": {
+        "description": "Tutte le operazioni della tua cassa",
+        "terms": "storico, movimenti, consultazioni, operazioni, transazioni"
+      },
+      "transactionReversal": {
+        "description": "Stornare un’operazione con autorizzazione",
+        "terms": "annullare, annullamento, storno, correzione"
+      },
+      "servicePayment": {
+        "description": "Pagare bollette e servizi dei clienti",
+        "terms": "bolletta, servizio, luce, acqua, telefono, pagamento"
+      },
+      "vaultDeposit": {
+        "description": "Inviare contanti al caveau",
+        "terms": "caveau, deposito nel caveau, eccedenza"
+      },
+      "vaultHistory": {
+        "description": "Depositi inviati al caveau",
+        "terms": "storico caveau, depositi caveau, storico"
+      },
+      "withdrawal": {
+        "description": "Consegnare contanti o assegno al cliente",
+        "terms": "prelievo, prelevare, assegno, contanti"
+      }
+    }
   }
 }

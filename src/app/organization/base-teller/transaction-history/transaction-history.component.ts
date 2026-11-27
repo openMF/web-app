@@ -15,6 +15,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { finalize, Subscription } from 'rxjs';
 
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -55,6 +56,7 @@ const dateRangeValidator: ValidatorFn = (control: AbstractControl): ValidationEr
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionHistoryComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
   private readonly formBuilder = inject(FormBuilder);
   private readonly service = inject(TransactionHistoryService);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -142,8 +144,41 @@ export class TransactionHistoryComponent implements OnInit {
   hasSearched = false;
 
   ngOnInit(): void {
+    this.applyRouteScope();
     this.loadContext();
     this.search();
+  }
+
+  /**
+   * Seeds the cashier and day from `?cashierId=&date=` so a link from the Base Teller workspace opens this cashier's
+   * history for that business date instead of institution-wide history. Malformed values are ignored; the backend still
+   * validates the cashier against the caller's scope.
+   */
+  private applyRouteScope(): void {
+    const params = this.route.snapshot.queryParamMap;
+    const cashierId = params.get('cashierId');
+    const date = this.parseIsoDate(params.get('date'));
+    if (cashierId !== null && /^[1-9]\d{0,17}$/.test(cashierId)) {
+      this.filtersForm.controls.tellerId.setValue(Number(cashierId));
+    }
+    if (date) {
+      this.filtersForm.controls.fromDate.setValue(date);
+      this.filtersForm.controls.toDate.setValue(date);
+    }
+  }
+
+  private parseIsoDate(value: string | null): Date | null {
+    const match = value === null ? null : /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!match) {
+      return null;
+    }
+    const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    // Reject overflowed dates such as 2026-02-31.
+    return date.getFullYear() === Number(match[1]) &&
+      date.getMonth() === Number(match[2]) - 1 &&
+      date.getDate() === Number(match[3])
+      ? date
+      : null;
   }
 
   loadContext(): void {

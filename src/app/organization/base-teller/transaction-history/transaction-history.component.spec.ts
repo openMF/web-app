@@ -9,6 +9,7 @@
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { ActivatedRoute, Params, convertToParamMap } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject, throwError } from 'rxjs';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
@@ -28,6 +29,7 @@ describe('TransactionHistoryComponent', () => {
   let fixture: ComponentFixture<TransactionHistoryComponent>;
   let component: TransactionHistoryComponent;
   let service: jest.Mocked<TransactionHistoryService>;
+  let queryParams: Params;
 
   const context: TransactionHistoryContext = {
     tellers: [{ id: 9, tellerId: 4, code: 'T-9', name: 'Main Teller', officeId: 1, officeName: 'Head Office' }],
@@ -114,6 +116,7 @@ describe('TransactionHistoryComponent', () => {
   };
 
   beforeEach(async () => {
+    queryParams = {};
     service = {
       getContext: jest.fn(() => of(context)),
       search: jest.fn(() => of(searchResult)),
@@ -144,6 +147,16 @@ describe('TransactionHistoryComponent', () => {
       ],
       providers: [
         { provide: TransactionHistoryService, useValue: service },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              get queryParamMap() {
+                return convertToParamMap(queryParams);
+              }
+            }
+          }
+        },
         provideNativeDateAdapter(),
         provideNoopAnimations()
       ]
@@ -173,6 +186,46 @@ describe('TransactionHistoryComponent', () => {
       order: 'DESC'
     });
     expect(fixture.nativeElement.querySelectorAll('.filter-grid mat-form-field')).toHaveLength(9);
+  });
+
+  describe('scope from the Base Teller workspace link', () => {
+    function openWith(params: Params): void {
+      queryParams = params;
+      service.search.mockClear();
+      fixture = TestBed.createComponent(TransactionHistoryComponent);
+      fixture.detectChanges();
+    }
+
+    it('starts on the linked cashier and business day instead of institution-wide history', () => {
+      openWith({ cashierId: '9', date: '2026-11-27' });
+
+      expect(service.search).toHaveBeenCalledWith(
+        expect.objectContaining({ tellerId: 9, fromDate: '2026-11-27', toDate: '2026-11-27' })
+      );
+    });
+
+    it.each([
+      { cashierId: 'abc', date: 'nope' },
+      { cashierId: '-4', date: '2026-02-31' },
+      { cashierId: '0', date: '27/11/2026' },
+      { cashierId: '9; DROP', date: '' }
+    ])('ignores malformed parameters %j', (params) => {
+      openWith(params);
+
+      expect(service.search).toHaveBeenCalledWith(
+        expect.objectContaining({ tellerId: undefined, fromDate: undefined, toDate: undefined })
+      );
+    });
+
+    it('applies each parameter independently', () => {
+      openWith({ cashierId: '12' });
+      expect(service.search).toHaveBeenLastCalledWith(expect.objectContaining({ tellerId: 12, fromDate: undefined }));
+
+      openWith({ date: '2026-11-27' });
+      expect(service.search).toHaveBeenLastCalledWith(
+        expect.objectContaining({ tellerId: undefined, fromDate: '2026-11-27' })
+      );
+    });
   });
 
   it('applies every filter with ISO dates and resets to the first page', () => {

@@ -7523,7 +7523,7 @@
       "global": "Contagem de caixa global",
       "deposit-in-transit": "Depósito em Trânsito",
       "bank-deposit": "Depósito Bancário",
-      "history": "Histórico de transações",
+      "history": "Histórico de operações de numerário",
       "holdings": "Dinheiro em mãos"
     },
     "actions": {
@@ -9801,5 +9801,275 @@
     "madeOn": "Criado em",
     "checkedOn": "Verificado em",
     "openOffice": "Abrir agência"
+  },
+  "baseTellerWorkspace": {
+    "movement": {
+      "operationCountOne": "{{count}} operação",
+      "title": "Movimento de hoje",
+      "inflows": "Entradas",
+      "outflows": "Saídas",
+      "operationCount": "{{count}} operações",
+      "barLabel": "As entradas são {{percent}}% do movimento de numerário de hoje",
+      "openingFunds": "Fundo inicial",
+      "settlements": "Liquidações e depósitos",
+      "expected": "Numerário esperado",
+      "difference": "Diferença de {{amount}}",
+      "balanced": "O numerário em caixa coincide com o esperado",
+      "incomplete": "Os dados de reconciliação estão incompletos.",
+      "empty": "Sem movimentos de numerário hoje.",
+      "reviewInClosing": "Rever no fecho de caixa",
+      "closingDifference": "Diferença do fecho: {{amount}} ({{type}})",
+      "closingBalanced": "O fecho de caixa não teve diferença",
+      "closingUnknown": "Diferença do fecho indisponível"
+    },
+    "session": {
+      "region": "Sessão de caixa",
+      "defaultTitle": "Caixa",
+      "tellerWindow": "Balcão",
+      "cashier": "Caixa (operador)",
+      "badge": {
+        "open": "Aberto",
+        "openSince": "Aberto desde as {{time}}",
+        "notOpened": "Caixa fechado",
+        "completed": "Fecho concluído",
+        "unknown": "Estado indisponível"
+      },
+      "hint": {
+        "notOpened": "O caixa não foi aberto na data contabilística de hoje.",
+        "completed": "O fecho de caixa de hoje já foi concluído."
+      },
+      "cashOnHand": "Numerário em caixa",
+      "noCash": "Sem numerário registado",
+      "operationsToday": "Operações hoje",
+      "lastCount": "Última contagem",
+      "limitUsage": "{{percent}}% do limite de {{limit}}",
+      "limitMissing": "Limite de numerário não configurado",
+      "limitInvalid": "A configuração do limite de numerário é inválida",
+      "currency": "Moeda",
+      "quickCount": "Contagem rápida",
+      "openRegister": "Abrir caixa",
+      "closeRegister": "Fechar caixa"
+    },
+    "states": {
+      "loading": "A carregar o seu caixa…",
+      "noStaff": {
+        "title": "O seu utilizador não está associado a um colaborador",
+        "text": "Uma sessão de caixa requer um colaborador atribuído como operador de caixa. Peça a um administrador que associe o seu utilizador."
+      },
+      "noAssignment": {
+        "title": "Nenhum balcão atribuído",
+        "text": "Não está atribuído como operador de nenhum balcão na data contabilística de hoje."
+      },
+      "forbidden": {
+        "title": "As informações da sessão não estão disponíveis para si",
+        "text": "O seu perfil não pode consultar os balcões. As operações permitidas continuam listadas abaixo."
+      },
+      "unavailable": {
+        "title": "As informações da sessão não estão disponíveis",
+        "text": "Não foi possível carregar os balcões. Tente novamente dentro de instantes."
+      },
+      "retry": "Tentar novamente",
+      "select": {
+        "title": "Selecione o seu balcão",
+        "text": "Está atribuído a mais de um balcão hoje. Escolha aquele em que está a trabalhar."
+      }
+    },
+    "common": {
+      "unavailable": "Indisponível",
+      "loading": "A carregar…",
+      "failed": "Não foi possível carregar esta informação.",
+      "forbidden": "Esta informação não está disponível para o seu perfil.",
+      "noSession": "Disponível quando tiver um balcão atribuído."
+    },
+    "search": {
+      "label": "Pesquisar operações",
+      "placeholder": "Pesquisar uma operação, por exemplo “depósito” ou “divisas”",
+      "clear": "Limpar pesquisa",
+      "results": "Resultados da pesquisa",
+      "resultCount": "{{count}} operações encontradas",
+      "empty": "Nenhuma operação corresponde a “{{query}}”."
+    },
+    "frequent": {
+      "title": "Mais usadas",
+      "hint": "Atalhos de teclado F2 a F5",
+      "shortcut": "Atalho {{key}}"
+    },
+    "categories": {
+      "customer": {
+        "title": "Operações com clientes",
+        "description": "Serviços financeiros ao balcão"
+      },
+      "cashDrawer": {
+        "title": "Numerário da caixa",
+        "description": "Movimentos e inventário de numerário"
+      },
+      "vaultBanks": {
+        "title": "Cofre e bancos",
+        "description": "Movimentos com o cofre e o banco"
+      },
+      "consultations": {
+        "title": "Consultas e correções",
+        "description": "Histórico e correções"
+      },
+      "closings": {
+        "title": "Fechos",
+        "description": "Fim de turno e fim de dia"
+      }
+    },
+    "availability": {
+      "openRegister": "Abra o caixa para continuar",
+      "registerClosed": "O caixa já foi fechado hoje"
+    },
+    "closings": {
+      "start": "Iniciar"
+    },
+    "alert": {
+      "near": {
+        "title": "Perto do limite de numerário",
+        "text": "Envie o excedente para o cofre para ficar abaixo de {{limit}}."
+      },
+      "exceeded": {
+        "title": "Limite de numerário excedido",
+        "text": "O numerário em caixa excede o limite de {{limit}}. Envie o excedente para o cofre."
+      },
+      "depositVault": "Depositar no cofre"
+    },
+    "recent": {
+      "title": "Últimas operações",
+      "viewHistory": "Ver histórico",
+      "empty": "Sem operações registadas hoje."
+    },
+    "closingDialog": {
+      "title": "Iniciar {{workflow}}?",
+      "consequence": "Isto abre um processo de reconciliação importante: os saldos são contados e o caixa é liquidado.",
+      "supervisor": "O fecho de fim de dia mantém a autorização de um supervisor.",
+      "noAutoClose": "Nada é fechado a partir desta página. O fecho é confirmado nos ecrãs seguintes.",
+      "continue": "Continuar"
+    },
+    "operationTypes": {
+      "SAVINGS_DEPOSIT": "Depósito de poupança",
+      "CASH_WITHDRAWAL": "Levantamento",
+      "PAY_SERVICE": "Pagamento de serviço",
+      "PAY_CREDIT": "Pagamento de empréstimo",
+      "OPEN_SAVINGS_ACCOUNT": "Abertura de conta poupança",
+      "RETURNED_CHECK_PAYMENT": "Pagamento de cheque devolvido",
+      "ALLOCATE_CASH": "Atribuição de numerário",
+      "CASH_ALLOCATION": "Atribuição de numerário",
+      "CASH_SETTLEMENT": "Liquidação de numerário",
+      "CASH_IN": "Entrada de numerário",
+      "CASH_OUT": "Saída de numerário",
+      "CASH_TRANSFER_BETWEEN_TELLERS": "Transferência entre operadores",
+      "CASH_DRAWER_PICKUP": "Levantamento de caixa",
+      "ACCOUNT_TRANSFER": "Transferência entre contas",
+      "CASH_EXCHANGE": "Troca de numerário",
+      "CLOSE_CASHIER": "Fecho de caixa",
+      "DEPOSIT_IN_TRANSIT": "Depósito em trânsito",
+      "BANK_DEPOSIT": "Depósito bancário",
+      "REVERSE_TRANSACTION": "Anulação de transação",
+      "CASHIER_TRANSACTION": "Transação de caixa"
+    },
+    "operations": {
+      "cashOperationHistory": {
+        "title": "Histórico de operações de numerário",
+        "description": "Depósitos bancários e em trânsito registados",
+        "terms": "histórico, depósitos bancários, trânsito, operações de numerário"
+      },
+      "foreignCurrency": {
+        "description": "Compra e venda de moeda estrangeira",
+        "terms": "divisas, moeda estrangeira, câmbio, dólar, euro"
+      },
+      "cashTransfers": {
+        "description": "Enviar ou receber numerário de outro operador",
+        "terms": "transferência entre operadores, operador, enviar numerário"
+      },
+      "accountTransfers": {
+        "description": "Mover saldo entre contas do mesmo cliente",
+        "terms": "transferência, entre contas, mover saldo"
+      },
+      "cashPickup": {
+        "description": "Retirar o excedente de numerário",
+        "terms": "levantamento de caixa, levantamento, excedente, recolher"
+      },
+      "endOfDayClosing": {
+        "description": "Fecho da agência, requer supervisor",
+        "terms": "fim de dia, fecho da agência, supervisor"
+      },
+      "cashExchange": {
+        "description": "Trocar notas e moedas",
+        "terms": "troca, denominações, notas, moedas, trocos"
+      },
+      "catalogUpdates": {
+        "description": "Serviços, divisas e denominações",
+        "terms": "catálogo, atualizar, sincronizar, serviços"
+      },
+      "cashAllocation": {
+        "description": "Receber o fundo inicial do dia",
+        "terms": "abertura, abastecimento, fundo inicial, abrir caixa"
+      },
+      "cashInventory": {
+        "description": "Notas e moedas disponíveis",
+        "terms": "inventário, existências, notas, moedas, monitorização"
+      },
+      "savingsOpening": {
+        "description": "Abrir uma conta com depósito inicial",
+        "terms": "abertura, nova conta, poupança, abrir conta"
+      },
+      "savingsDeposit": {
+        "description": "Depositar numerário ou cheque numa conta poupança",
+        "terms": "depósito, entrada, poupança, depositar"
+      },
+      "returnedCheck": {
+        "description": "Cobrir um cheque rejeitado",
+        "terms": "cheque devolvido, cheque sem provisão, rejeitado"
+      },
+      "loanPayment": {
+        "description": "Cobrar a prestação de um empréstimo",
+        "terms": "empréstimo, crédito, pagamento, prestação, reembolso"
+      },
+      "cashRegisterClosing": {
+        "description": "Acertar o seu caixa no fim do turno",
+        "terms": "fecho, fechar caixa, acerto, fim de turno, contagem"
+      },
+      "globalCashCount": {
+        "description": "Contagem de todos os caixas da agência",
+        "terms": "contagem global, contagem, todos os caixas, agência"
+      },
+      "depositInTransit": {
+        "description": "Numerário a caminho do banco",
+        "terms": "trânsito, transporte de valores, remessa"
+      },
+      "bankDeposit": {
+        "description": "Registar um depósito feito no banco",
+        "terms": "banco, depósito bancário, talão"
+      },
+      "cashOnHand": {
+        "description": "Saldo atual de numerário por moeda",
+        "terms": "numerário, saldo, em caixa, existência"
+      },
+      "transactionHistory": {
+        "description": "Todas as operações do seu caixa",
+        "terms": "histórico, movimentos, consultas, operações, transações"
+      },
+      "transactionReversal": {
+        "description": "Anular uma operação com autorização",
+        "terms": "anular, anulação, estorno, correção"
+      },
+      "servicePayment": {
+        "description": "Pagar faturas e serviços de clientes",
+        "terms": "fatura, serviço, luz, água, telefone, pagamento"
+      },
+      "vaultDeposit": {
+        "description": "Enviar numerário para o cofre",
+        "terms": "cofre, depósito no cofre, excedente"
+      },
+      "vaultHistory": {
+        "description": "Depósitos enviados para o cofre",
+        "terms": "histórico do cofre, depósitos no cofre, histórico"
+      },
+      "withdrawal": {
+        "description": "Entregar numerário ou cheque ao cliente",
+        "terms": "levantamento, levantar, cheque, numerário"
+      }
+    }
   }
 }

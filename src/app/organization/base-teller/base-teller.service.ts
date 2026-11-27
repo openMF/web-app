@@ -701,6 +701,12 @@ export interface CashAllocationReceipt {
   denominations: CashAllocationDenomination[];
 }
 
+/** Optional behaviour of read-only calls made by panels that render their own error state. */
+export interface BaseTellerReadOptions {
+  /** Suppress the global error notification; the caller shows a localized unavailable state instead. */
+  localErrors?: boolean;
+}
+
 /**
  * Base Teller service.
  */
@@ -709,6 +715,10 @@ export interface CashAllocationReceipt {
 })
 export class BaseTellerService {
   private http = inject(HttpClient);
+
+  private readContext(options?: BaseTellerReadOptions): { context?: HttpContext } {
+    return options?.localErrors ? { context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true) } : {};
+  }
 
   private readonly savingsAccountOpeningsPath = '/v2/base-teller/savings-account-openings';
   private readonly returnedChecksPath = '/v2/base-teller/returned-checks';
@@ -780,21 +790,25 @@ export class BaseTellerService {
   getCashierClosingContext(
     cashierId: FineractId,
     currencyCode: string,
-    businessDate?: string
+    businessDate?: string,
+    options?: BaseTellerReadOptions
   ): Observable<CashierClosingContext> {
     let params = new HttpParams().set('cashierId', String(cashierId)).set('currencyCode', currencyCode);
     if (businessDate) {
       params = params.set('businessDate', businessDate);
     }
-    return this.http.get<CashierClosingContext>(`${this.cashierClosingsPath}/context`, { params });
+    return this.http.get<CashierClosingContext>(`${this.cashierClosingsPath}/context`, {
+      params,
+      ...this.readContext(options)
+    });
   }
 
   closeCashier(payload: CashierClosingRequest): Observable<CashierClosingReceipt> {
     return this.http.post<CashierClosingReceipt>(this.cashierClosingsPath, payload);
   }
 
-  getCashierClosing(id: FineractId): Observable<CashierClosingReceipt> {
-    return this.http.get<CashierClosingReceipt>(`${this.cashierClosingsPath}/${id}`);
+  getCashierClosing(id: FineractId, options?: BaseTellerReadOptions): Observable<CashierClosingReceipt> {
+    return this.http.get<CashierClosingReceipt>(`${this.cashierClosingsPath}/${id}`, this.readContext(options));
   }
 
   getGlobalCashCount(businessDate?: string, currencyCode?: string): Observable<GlobalCashCount> {
@@ -827,7 +841,7 @@ export class BaseTellerService {
     return this.http.get<CashOperationPage>(this.cashOperationsPath, { params });
   }
 
-  getCashHoldings(filters: CashHoldingFilters): Observable<CashHolding[]> {
+  getCashHoldings(filters: CashHoldingFilters, options?: BaseTellerReadOptions): Observable<CashHolding[]> {
     let params = new HttpParams();
     Object.entries(filters).forEach(
       ([
@@ -839,15 +853,26 @@ export class BaseTellerService {
         }
       }
     );
-    return this.http.get<CashHolding[]>(`${this.cashOperationsPath}/holdings`, { params });
+    return this.http.get<CashHolding[]>(`${this.cashOperationsPath}/holdings`, {
+      params,
+      ...this.readContext(options)
+    });
   }
 
-  getCashManagementTellers(): Observable<TellerOption[] | { pageItems?: TellerOption[] }> {
-    return this.http.get<TellerOption[] | { pageItems?: TellerOption[] }>('/tellers');
+  getCashManagementTellers(
+    options?: BaseTellerReadOptions
+  ): Observable<TellerOption[] | { pageItems?: TellerOption[] }> {
+    return this.http.get<TellerOption[] | { pageItems?: TellerOption[] }>('/tellers', this.readContext(options));
   }
 
-  getCashManagementCashiers(tellerId: FineractId): Observable<{ cashiers?: CashierOption[] } | CashierOption[]> {
-    return this.http.get<{ cashiers?: CashierOption[] } | CashierOption[]>(`/tellers/${tellerId}/cashiers`);
+  getCashManagementCashiers(
+    tellerId: FineractId,
+    options?: BaseTellerReadOptions
+  ): Observable<{ cashiers?: CashierOption[] } | CashierOption[]> {
+    return this.http.get<{ cashiers?: CashierOption[] } | CashierOption[]>(
+      `/tellers/${tellerId}/cashiers`,
+      this.readContext(options)
+    );
   }
 
   getCashManagementCurrencies(): Observable<{ selectedCurrencyOptions?: CurrencyOption[] }> {

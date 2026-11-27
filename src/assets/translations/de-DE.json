@@ -7525,7 +7525,7 @@
       "global": "Globale Bargeldzählung",
       "deposit-in-transit": "Bankeinzahlung im Transit",
       "bank-deposit": "Bankeinzahlung",
-      "history": "Transaktionsverlauf",
+      "history": "Verlauf der Bargeldvorgänge",
       "holdings": "Kassenbestand"
     },
     "actions": {
@@ -9803,5 +9803,275 @@
     "madeOn": "Erstellt am",
     "checkedOn": "Geprüft am",
     "openOffice": "Geschäftsstelle öffnen"
+  },
+  "baseTellerWorkspace": {
+    "movement": {
+      "operationCountOne": "{{count}} Vorgang",
+      "title": "Bewegung heute",
+      "inflows": "Eingänge",
+      "outflows": "Ausgänge",
+      "operationCount": "{{count}} Vorgänge",
+      "barLabel": "Eingänge sind {{percent}} % der heutigen Bargeldbewegung",
+      "openingFunds": "Anfangsbestand",
+      "settlements": "Abrechnungen und Einzahlungen",
+      "expected": "Erwartetes Bargeld",
+      "difference": "Differenz von {{amount}}",
+      "balanced": "Der Kassenbestand entspricht dem erwarteten Bargeld",
+      "incomplete": "Die Abstimmungsdaten sind unvollständig.",
+      "empty": "Heute wurden keine Bargeldbewegungen erfasst.",
+      "reviewInClosing": "Im Kassenabschluss prüfen",
+      "closingDifference": "Abschlussdifferenz: {{amount}} ({{type}})",
+      "closingBalanced": "Der Kassenabschluss hatte keine Differenz",
+      "closingUnknown": "Abschlussdifferenz nicht verfügbar"
+    },
+    "session": {
+      "region": "Kassensitzung",
+      "defaultTitle": "Kasse",
+      "tellerWindow": "Schalter",
+      "cashier": "Kassierer",
+      "badge": {
+        "open": "Geöffnet",
+        "openSince": "Geöffnet seit {{time}}",
+        "notOpened": "Kasse geschlossen",
+        "completed": "Abschluss erfolgt",
+        "unknown": "Status nicht verfügbar"
+      },
+      "hint": {
+        "notOpened": "Die Kasse wurde für das heutige Geschäftsdatum nicht geöffnet.",
+        "completed": "Der heutige Kassenabschluss ist bereits erfolgt."
+      },
+      "cashOnHand": "Kassenbestand",
+      "noCash": "Kein Bargeld erfasst",
+      "operationsToday": "Vorgänge heute",
+      "lastCount": "Letzte Kassenzählung",
+      "limitUsage": "{{percent}} % des Limits von {{limit}}",
+      "limitMissing": "Bargeldlimit nicht konfiguriert",
+      "limitInvalid": "Die Konfiguration des Bargeldlimits ist ungültig",
+      "currency": "Währung",
+      "quickCount": "Schnellzählung",
+      "openRegister": "Kasse öffnen",
+      "closeRegister": "Kasse schließen"
+    },
+    "states": {
+      "loading": "Ihre Kasse wird geladen…",
+      "noStaff": {
+        "title": "Ihr Benutzer ist keinem Mitarbeiter zugeordnet",
+        "text": "Eine Kassensitzung erfordert einen als Kassierer zugewiesenen Mitarbeiter. Bitten Sie einen Administrator, Ihren Benutzer zuzuordnen."
+      },
+      "noAssignment": {
+        "title": "Kein Schalter zugewiesen",
+        "text": "Sie sind für das heutige Geschäftsdatum keinem Schalter als Kassierer zugewiesen."
+      },
+      "forbidden": {
+        "title": "Sitzungsinformationen sind für Sie nicht verfügbar",
+        "text": "Ihre Rolle darf Schalter nicht einsehen. Die erlaubten Vorgänge sind weiterhin unten aufgeführt."
+      },
+      "unavailable": {
+        "title": "Sitzungsinformationen sind nicht verfügbar",
+        "text": "Die Schalter konnten nicht geladen werden. Versuchen Sie es gleich noch einmal."
+      },
+      "retry": "Erneut versuchen",
+      "select": {
+        "title": "Schalter auswählen",
+        "text": "Sie sind heute mehreren Schaltern zugewiesen. Wählen Sie den, an dem Sie arbeiten."
+      }
+    },
+    "common": {
+      "unavailable": "Nicht verfügbar",
+      "loading": "Wird geladen…",
+      "failed": "Diese Informationen konnten nicht geladen werden.",
+      "forbidden": "Diese Informationen sind für Ihre Rolle nicht verfügbar.",
+      "noSession": "Verfügbar, sobald Ihnen ein Schalter zugewiesen ist."
+    },
+    "search": {
+      "label": "Vorgänge suchen",
+      "placeholder": "Vorgang suchen, zum Beispiel „Einzahlung“ oder „Devisen“",
+      "clear": "Suche löschen",
+      "results": "Suchergebnisse",
+      "resultCount": "{{count}} Vorgänge gefunden",
+      "empty": "Kein Vorgang passt zu „{{query}}“."
+    },
+    "frequent": {
+      "title": "Am häufigsten verwendet",
+      "hint": "Tastenkürzel F2 bis F5",
+      "shortcut": "Tastenkürzel {{key}}"
+    },
+    "categories": {
+      "customer": {
+        "title": "Kundenvorgänge",
+        "description": "Finanzdienstleistungen am Schalter"
+      },
+      "cashDrawer": {
+        "title": "Kassenlade",
+        "description": "Bargeldbewegungen und Bestand"
+      },
+      "vaultBanks": {
+        "title": "Tresor und Banken",
+        "description": "Bewegungen mit Tresor und Bank"
+      },
+      "consultations": {
+        "title": "Abfragen und Korrekturen",
+        "description": "Verlauf und Korrekturen"
+      },
+      "closings": {
+        "title": "Abschlüsse",
+        "description": "Schicht- und Tagesabschluss"
+      }
+    },
+    "availability": {
+      "openRegister": "Öffnen Sie die Kasse, um fortzufahren",
+      "registerClosed": "Die Kasse ist für heute bereits geschlossen"
+    },
+    "closings": {
+      "start": "Starten"
+    },
+    "alert": {
+      "near": {
+        "title": "Nahe am Bargeldlimit",
+        "text": "Senden Sie den Überschuss in den Tresor, um unter {{limit}} zu bleiben."
+      },
+      "exceeded": {
+        "title": "Bargeldlimit überschritten",
+        "text": "Der Kassenbestand liegt über dem Limit von {{limit}}. Senden Sie den Überschuss in den Tresor."
+      },
+      "depositVault": "In den Tresor einzahlen"
+    },
+    "recent": {
+      "title": "Letzte Vorgänge",
+      "viewHistory": "Verlauf anzeigen",
+      "empty": "Heute wurden keine Vorgänge erfasst."
+    },
+    "closingDialog": {
+      "title": "{{workflow}} starten?",
+      "consequence": "Dies öffnet einen folgenreichen Abstimmungsprozess: Bestände werden gezählt und die Kasse wird abgerechnet.",
+      "supervisor": "Der Tagesabschluss behält die Freigabe durch einen Vorgesetzten bei.",
+      "noAutoClose": "Auf dieser Seite wird nichts abgeschlossen. Der Abschluss wird in den folgenden Schritten bestätigt.",
+      "continue": "Weiter"
+    },
+    "operationTypes": {
+      "SAVINGS_DEPOSIT": "Spareinzahlung",
+      "CASH_WITHDRAWAL": "Auszahlung",
+      "PAY_SERVICE": "Servicezahlung",
+      "PAY_CREDIT": "Kreditzahlung",
+      "OPEN_SAVINGS_ACCOUNT": "Sparkontoeröffnung",
+      "RETURNED_CHECK_PAYMENT": "Zahlung für zurückgegebenen Scheck",
+      "ALLOCATE_CASH": "Bargeldzuweisung",
+      "CASH_ALLOCATION": "Bargeldzuweisung",
+      "CASH_SETTLEMENT": "Bargeldabrechnung",
+      "CASH_IN": "Bargeldeingang",
+      "CASH_OUT": "Bargeldausgang",
+      "CASH_TRANSFER_BETWEEN_TELLERS": "Bargeldtransfer zwischen Kassierern",
+      "CASH_DRAWER_PICKUP": "Kassenentnahme",
+      "ACCOUNT_TRANSFER": "Kontoübertragung",
+      "CASH_EXCHANGE": "Bargeldwechsel",
+      "CLOSE_CASHIER": "Kassenabschluss",
+      "DEPOSIT_IN_TRANSIT": "Einzahlung unterwegs",
+      "BANK_DEPOSIT": "Bankeinzahlung",
+      "REVERSE_TRANSACTION": "Stornierung",
+      "CASHIER_TRANSACTION": "Kassenbuchung"
+    },
+    "operations": {
+      "cashOperationHistory": {
+        "title": "Verlauf der Bargeldvorgänge",
+        "description": "Erfasste Bankeinzahlungen und Einzahlungen unterwegs",
+        "terms": "verlauf, bankeinzahlungen, unterwegs, bargeldvorgänge"
+      },
+      "foreignCurrency": {
+        "description": "Fremdwährung kaufen und verkaufen",
+        "terms": "devisen, fremdwährung, wechselkurs, dollar, euro"
+      },
+      "cashTransfers": {
+        "description": "Bargeld an einen anderen Kassierer senden oder von ihm erhalten",
+        "terms": "kassierertransfer, bargeld senden, bargeld erhalten"
+      },
+      "accountTransfers": {
+        "description": "Guthaben zwischen Konten desselben Kunden verschieben",
+        "terms": "überweisung, übertragung, zwischen konten, umbuchung"
+      },
+      "cashPickup": {
+        "description": "Überschüssiges Bargeld entnehmen",
+        "terms": "kassenentnahme, entnahme, überschuss, abholen"
+      },
+      "endOfDayClosing": {
+        "description": "Filialabschluss, erfordert einen Vorgesetzten",
+        "terms": "tagesabschluss, filialabschluss, vorgesetzter"
+      },
+      "cashExchange": {
+        "description": "Scheine und Münzen wechseln",
+        "terms": "wechseln, stückelung, scheine, münzen, kleingeld"
+      },
+      "catalogUpdates": {
+        "description": "Dienste, Währungen und Stückelungen",
+        "terms": "katalog, aktualisieren, synchronisieren, dienste"
+      },
+      "cashAllocation": {
+        "description": "Den Anfangsbestand des Tages erhalten",
+        "terms": "eröffnung, ausstattung, anfangsbestand, kasse öffnen"
+      },
+      "cashInventory": {
+        "description": "Verfügbare Scheine und Münzen",
+        "terms": "inventar, bestand, scheine, münzen, überwachung"
+      },
+      "savingsOpening": {
+        "description": "Konto mit Ersteinzahlung eröffnen",
+        "terms": "eröffnung, neues konto, sparkonto, konto eröffnen"
+      },
+      "savingsDeposit": {
+        "description": "Bargeld oder Scheck auf ein Sparkonto einzahlen",
+        "terms": "einzahlung, gutschrift, sparen, einzahlen"
+      },
+      "returnedCheck": {
+        "description": "Einen abgelehnten Scheck ausgleichen",
+        "terms": "geplatzter scheck, zurückgegebener scheck, abgelehnt"
+      },
+      "loanPayment": {
+        "description": "Eine Kreditrate einziehen",
+        "terms": "kredit, darlehen, zahlung, rate, rückzahlung"
+      },
+      "cashRegisterClosing": {
+        "description": "Kasse am Schichtende abgleichen",
+        "terms": "kassenabschluss, kasse schließen, abgleich, schichtende, zählung"
+      },
+      "globalCashCount": {
+        "description": "Zählung aller Kassen der Filiale",
+        "terms": "globale zählung, kassenzählung, alle kassen, filiale"
+      },
+      "depositInTransit": {
+        "description": "Bargeld auf dem Weg zur Bank",
+        "terms": "unterwegs, transport, geldtransport, sendung"
+      },
+      "bankDeposit": {
+        "description": "Eine bei der Bank getätigte Einzahlung erfassen",
+        "terms": "bank, bankeinzahlung, einzahlungsbeleg"
+      },
+      "cashOnHand": {
+        "description": "Aktueller Kassenbestand je Währung",
+        "terms": "bargeld, bestand, kassenbestand, saldo"
+      },
+      "transactionHistory": {
+        "description": "Alle Vorgänge Ihrer Kasse",
+        "terms": "verlauf, bewegungen, abfragen, vorgänge, transaktionen"
+      },
+      "transactionReversal": {
+        "description": "Einen Vorgang mit Freigabe stornieren",
+        "terms": "stornieren, storno, rückgängig, korrektur"
+      },
+      "servicePayment": {
+        "description": "Rechnungen und Dienste von Kunden bezahlen",
+        "terms": "rechnung, dienst, strom, wasser, telefon, zahlung"
+      },
+      "vaultDeposit": {
+        "description": "Bargeld in den Tresor senden",
+        "terms": "tresor, tresoreinzahlung, überschuss"
+      },
+      "vaultHistory": {
+        "description": "In den Tresor gesendete Einzahlungen",
+        "terms": "tresorverlauf, tresoreinzahlungen, verlauf"
+      },
+      "withdrawal": {
+        "description": "Bargeld oder Scheck an den Kunden aushändigen",
+        "terms": "auszahlung, abheben, scheck, bargeld"
+      }
+    }
   }
 }
