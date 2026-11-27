@@ -108,12 +108,12 @@
             <span class="flex-25"> {{ 'labels.inputs.Show Payment Details' | translate }}</span>
             <span class="expandcollapsebutton flex-75" (click)="toggleDisplay()">
               @if (showPaymentDetails) {
-                <button mat-raised-button color="primary">
+                <button type="button" mat-raised-button color="primary">
                   <i class="fa fa-minus"></i>
                 </button>
               }
               @if (!showPaymentDetails) {
-                <button mat-raised-button color="primary">
+                <button type="button" mat-raised-button color="primary">
                   <i class="fa fa-plus"></i>
                 </button>
               }
