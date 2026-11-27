@@ -1,0 +1,22 @@
+# Overlay for docker-compose.e2e.yml used by CI: serves an app already built on
+# the runner (`npm run build` → dist/web-app/browser) from a stock nginx image,
+# instead of building the root Dockerfile (a second `npm ci` + `ng build`).
+#
+#   docker compose -f docker-compose.e2e.yml -f docker-compose.e2e.prebuilt.yml up -d web-app
+#
+# Local runs keep using docker-compose.e2e.yml alone.
+services:
+  web-app:
+    build: !reset null
+    image: nginx:1.31.7-alpine3.24
+    volumes:
+      - ./dist/web-app/browser:/usr/share/nginx/html
+    # Same as the base command, plus the .mjs MIME fix the Dockerfile applies
+    # (PDF.js loads its worker as an ES module).
+    command: >-
+      /bin/sh -c "
+      sed -i 's#application/javascript[[:space:]]*js;#application/javascript js mjs;#' /etc/nginx/mime.types &&
+      envsubst '$$E2E_PROXY_TARGET' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf &&
+      envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js &&
+      nginx -g 'daemon off;'
+      "

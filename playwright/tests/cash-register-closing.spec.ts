@@ -304,7 +304,13 @@ test('keyboard confirmation and rapid clicks dispatch one command', async ({ pag
   await load(page);
   await declare(page);
   const finalize = page.getByRole('button', { name: 'Finalize Closing', exact: true });
-  await finalize.click({ clickCount: 2 });
+  await expect(finalize).toBeEnabled();
+  // Both clicks run in one task, so the second always reaches the button's guard. A mouse
+  // double-click can land its second click on the dialog backdrop when rendering is slow.
+  await finalize.evaluate((button: HTMLElement) => {
+    button.click();
+    button.click();
+  });
   await expect(page.getByRole('dialog')).toHaveCount(1);
   await page.getByRole('button', { name: 'Confirm', exact: true }).focus();
   await page.keyboard.press('Enter');
