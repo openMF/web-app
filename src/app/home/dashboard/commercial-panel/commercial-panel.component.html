@@ -249,6 +249,15 @@
               </div>
             </dl>
             <div class="follow-up-actions">
+              @if (['PENDING', 'IN_PROGRESS', 'SUBMITTED'].includes(selected.prospect.registrationStatus)) {
+                <a
+                  mat-button
+                  color="primary"
+                  routerLink="/dashboard"
+                  [queryParams]="{ operationsTask: 'prospect:' + selected.prospect.prospectId }"
+                  >{{ 'operations.openTask' | translate }}</a
+                >
+              }
               @if (clientRoute(selected, true); as route) {
                 <a mat-stroked-button color="primary" [routerLink]="route">{{
                   'commercialPipeline.notes' | translate

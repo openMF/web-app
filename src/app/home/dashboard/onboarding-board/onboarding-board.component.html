@@ -100,6 +100,15 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
             <td mat-cell *matCellDef="let task">
+              @if (task.operationsKey) {
+                <a
+                  mat-button
+                  color="primary"
+                  routerLink="/dashboard"
+                  [queryParams]="{ operationsTask: task.operationsKey }"
+                  >{{ 'operations.openTask' | translate }}</a
+                >
+              }
               <a mat-button color="primary" [routerLink]="task.route">
                 {{ 'labels.buttons.View' | translate }}
               </a>

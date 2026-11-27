@@ -30,9 +30,11 @@ interface OnboardingTask {
   status: string;
   aging: TaskAging;
   route: (string | number)[];
+  operationsKey?: string;
 }
 
 interface TaskStatus {
+  id?: number;
   value?: string;
   code?: string;
 }
@@ -191,6 +193,7 @@ export class OnboardingBoardComponent implements OnInit {
 
   private mapClients(clients: PendingClient[]): OnboardingTask[] {
     return clients.map((client) => ({
+      operationsKey: client.status?.id === 100 ? `enrollment:${client.id}:ACTIVATION` : undefined,
       typeLabel: 'labels.inputs.Client Approval',
       customer: client.displayName,
       reference: client.accountNo,
@@ -207,6 +210,12 @@ export class OnboardingBoardComponent implements OnInit {
 
   private mapLoans(loans: PendingLoan[]): OnboardingTask[] {
     return loans.map((loan) => ({
+      operationsKey:
+        loan.status?.id === 100
+          ? `loan:${loan.id}:approval`
+          : loan.status?.id === 200
+            ? `loan:${loan.id}:disbursement`
+            : undefined,
       typeLabel: 'labels.inputs.Loan Approval',
       customer: loan.clientName,
       reference: loan.accountNo,

@@ -1,0 +1,378 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="operations" [attr.aria-label]="'operations.title' | translate" [attr.aria-busy]="loading">
+  <header class="operations-header">
+    <div>
+      <h1>{{ 'operations.title' | translate }}</h1>
+      <p class="muted">{{ 'operations.subtitle' | translate }}</p>
+    </div>
+    <button mat-stroked-button type="button" color="primary" (click)="refresh()" [disabled]="loading">
+      <mat-icon aria-hidden="true">refresh</mat-icon>{{ 'operations.refresh' | translate }}
+    </button>
+  </header>
+  <div class="rule-banner" role="status">
+    <mat-icon aria-hidden="true">info_outline</mat-icon>
+    <div>
+      <strong>{{ 'operations.rule' | translate }}</strong>
+      <p>{{ 'operations.ruleUnavailable' | translate }}</p>
+    </div>
+  </div>
+  @if (loading) {
+    <div class="loading" role="status">
+      <mat-spinner diameter="24"></mat-spinner>{{ 'operations.loading' | translate }}
+    </div>
+  }
+  @if (partialError) {
+    <p role="alert" class="error">{{ 'operations.partialError' | translate }}</p>
+  }
+  @if (denied) {
+    <p role="status">{{ 'operations.denied' | translate }}</p>
+  }
+  <div class="summary-grid">
+    @for (card of cards; track card.area) {
+      <mat-card
+        class="summary-card"
+        [class.active]="area === card.area"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="card.title | translate"
+        [attr.aria-pressed]="area === card.area"
+        (click)="setArea(card.area)"
+        (keydown.enter)="setArea(card.area)"
+        (keydown.space)="$event.preventDefault(); setArea(card.area)"
+      >
+        <mat-card-content>
+          <div class="card-heading">
+            <span class="area-icon" [class]="'area-icon ' + card.area"
+              ><mat-icon aria-hidden="true">{{ card.icon }}</mat-icon></span
+            >
+            <h2>{{ card.title | translate }}</h2>
+            <small>{{
+              areaCount(card.area) === null
+                ? ('operations.unavailable' | translate)
+                : ('operations.loadedCount' | translate: { count: areaCount(card.area) })
+            }}</small>
+          </div>
+          <div class="metrics">
+            @if (card.area === 'prospect') {
+              <div>
+                <span>{{ 'operations.onboarding' | translate }}</span
+                ><strong>{{ countQueue('enrollment') ?? '—' }}</strong>
+              </div>
+              <div>
+                <span>{{ 'operations.registrations' | translate }}</span
+                ><strong>{{ countQueue('registrations') ?? '—' }}</strong>
+              </div>
+              <div>
+                <span>{{ 'operations.overdue' | translate }}</span
+                ><strong>—</strong>
+              </div>
+            } @else if (card.area === 'loan') {
+              <div>
+                <span>{{ 'operations.portfolio' | translate }}</span
+                ><strong>—</strong>
+              </div>
+              <div>
+                <span>{{ 'operations.toApprove' | translate }}</span
+                ><strong>{{ approvals ?? '—' }}</strong>
+              </div>
+              <div>
+                <span>{{ 'operations.par30' | translate }}</span
+                ><strong>—</strong>
+              </div>
+            } @else {
+              <div>
+                <span>{{ 'operations.collected' | translate }}</span
+                ><strong>—</strong>
+              </div>
+              <div>
+                <span>{{ 'operations.due' | translate }}</span
+                ><strong>—</strong>
+              </div>
+              <div>
+                <span>{{ 'operations.overdueLoans' | translate }}</span
+                ><strong>—</strong>
+              </div>
+            }
+          </div>
+          <div class="distribution" aria-hidden="true">
+            @for (category of ['neutral', 'on-time', 'at-risk', 'overdue', 'unknown']; track category) {
+              <span [class]="category" [style.width.%]="distribution(card.area, category)"></span>
+            }
+          </div>
+          <div class="legend">
+            <span class="on-time">{{ 'operations.onTime' | translate }}</span
+            ><span class="at-risk">{{ 'operations.atRisk' | translate }}</span
+            ><span class="overdue">{{ 'operations.overdue' | translate }}</span>
+          </div>
+          <small class="metric-scope">{{
+            (card.area === 'prospect'
+              ? 'operations.prospectScope'
+              : card.area === 'loan'
+                ? 'operations.loanScope'
+                : 'operations.collectionScope'
+            ) | translate
+          }}</small>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+  <div class="workspace">
+    <mat-card class="task-card">
+      <div class="task-toolbar">
+        <h2>{{ 'operations.pendingTasks' | translate }}</h2>
+        <div class="age-filters" [attr.aria-label]="'operations.ageFilter' | translate">
+          @for (option of filters; track option.id) {
+            <button
+              mat-button
+              type="button"
+              [class.active]="age === option.id"
+              [attr.aria-pressed]="age === option.id"
+              (click)="setAge(option.id)"
+            >
+              {{ option.label | translate }} <span>{{ countAge(option.id) }}</span>
+            </button>
+          }
+        </div>
+      </div>
+      <div class="search-row">
+        <mat-form-field appearance="outline"
+          ><mat-label>{{ 'operations.search' | translate }}</mat-label
+          ><input matInput [formControl]="search" maxlength="100" /><mat-icon matSuffix aria-hidden="true"
+            >search</mat-icon
+          ></mat-form-field
+        ><mat-slide-toggle [formControl]="mine" aria-describedby="ownership-gap">{{
+          'operations.onlyMine' | translate
+        }}</mat-slide-toggle>
+      </div>
+      <p id="ownership-gap" class="scope-note">{{ 'operations.ownershipGap' | translate }}</p>
+      <div class="scope-note filter-summary" role="status">
+        <span>{{ 'operations.loadedScope' | translate: { count: visible.length, total: tasks.length } }}</span>
+        @if (area) {
+          <button mat-button type="button" (click)="setArea('')">{{ 'operations.clearArea' | translate }}</button>
+        }
+      </div>
+      <div class="table-scroll">
+        <table mat-table [dataSource]="visible" [attr.aria-label]="'operations.pendingTasks' | translate">
+          <ng-container matColumnDef="select"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'operations.select' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              <mat-radio-button
+                name="operations-task"
+                color="primary"
+                [checked]="selected?.key === task.key"
+                (change)="select(task)"
+                [aria-label]="
+                  ('operations.selectTask' | translate) + ' ' + (task.customerName || task.reference || task.sourceId)
+                "
+              ></mat-radio-button></td
+          ></ng-container>
+          <ng-container matColumnDef="age"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'operations.age' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              <span [class]="'age-chip ' + task.agingCategory">{{
+                task.daysWaiting === null
+                  ? ('operations.unknown' | translate)
+                  : ((task.daysWaiting === 1 ? 'operations.day' : 'operations.days')
+                    | translate: { count: task.daysWaiting })
+              }}</span>
+            </td></ng-container
+          >
+          <ng-container matColumnDef="task"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'operations.task' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              <button mat-button class="task-name" type="button" (click)="select(task)">
+                {{ task.title | translate }}</button
+              ><small
+                >{{ task.customerName || ('operations.missing' | translate) }}
+                <span class="reference">{{ task.reference || task.sourceId }}</span></small
+              >
+            </td></ng-container
+          >
+          <ng-container matColumnDef="owner"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'operations.owner' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              {{
+                task.ownerName ||
+                  ((task.ownerState === 'unassigned' ? 'operations.unassigned' : 'operations.unavailable') | translate)
+              }}
+            </td></ng-container
+          >
+          <ng-container matColumnDef="area"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'operations.area' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              <span [class]="'area-badge ' + task.source">{{ 'operations.' + task.source | translate }}</span>
+            </td></ng-container
+          >
+          <ng-container matColumnDef="flags"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'operations.flags' | translate }}</th>
+            <td mat-cell *matCellDef="let task">{{ 'operations.unavailable' | translate }}</td></ng-container
+          >
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: columns" [class.selected]="selected?.key === row.key"></tr>
+        </table>
+      </div>
+      @if (!loading && !visible.length) {
+        <p class="empty" role="status">{{ 'operations.empty' | translate }}</p>
+      }
+      <div class="queue-pages">
+        @for (pageState of pages; track pageState.queue) {
+          <div class="queue-page">
+            <span
+              >{{ 'operations.' + pageState.queue | translate }}
+              <small>{{
+                (pageState.state === 'ready'
+                  ? 'operations.sourcePage'
+                  : pageState.state === 'error'
+                    ? 'operations.sourceError'
+                    : 'operations.sourceDenied'
+                ) | translate: { page: pageIndex[pageState.queue] + 1, count: pageState.count, total: pageState.total }
+              }}</small></span
+            >
+            <div>
+              <button
+                mat-button
+                type="button"
+                [disabled]="loading || pageIndex[pageState.queue] === 0"
+                (click)="page(pageState.queue, -1)"
+                [attr.aria-label]="
+                  ('operations.previous' | translate) + ' ' + ('operations.' + pageState.queue | translate)
+                "
+              >
+                {{ 'operations.previous' | translate }}</button
+              ><button
+                mat-button
+                type="button"
+                [disabled]="
+                  loading ||
+                  pageState.state !== 'ready' ||
+                  (pageIndex[pageState.queue] + 1) * data.pageSize >= pageState.total
+                "
+                (click)="page(pageState.queue, 1)"
+                [attr.aria-label]="
+                  ('operations.next' | translate) + ' ' + ('operations.' + pageState.queue | translate)
+                "
+              >
+                {{ 'operations.next' | translate }}
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-card>
+    <mat-card class="detail-card"
+      ><mat-card-content>
+        @if (lookupLoading) {
+          <p role="status">{{ 'operations.loading' | translate }}</p>
+        }
+        @if (requestedMissing) {
+          <p role="status">{{ 'operations.requestedMissing' | translate }}</p>
+        }
+        @if (selected; as task) {
+          <div class="detail-badges">
+            <span [class]="'area-badge ' + task.source">{{ 'operations.' + task.source | translate }}</span
+            ><span [class]="'age-chip ' + task.agingCategory">{{
+              task.daysWaiting === null
+                ? ('operations.unknownAge' | translate)
+                : ((task.daysWaiting === 1 ? 'operations.day' : 'operations.days')
+                  | translate: { count: task.daysWaiting })
+            }}</span>
+          </div>
+          <h2>{{ task.customerName || ('operations.missing' | translate) }}</h2>
+          <p class="muted">{{ task.title | translate }}</p>
+          <dl>
+            <div>
+              <dt>{{ 'operations.reference' | translate }}</dt>
+              <dd>{{ task.reference || task.sourceId }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'operations.owner' | translate }}</dt>
+              <dd>{{ 'operations.unavailable' | translate }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'operations.status' | translate }}</dt>
+              <dd>{{ 'operations.statuses.' + task.status | translate }}</dd>
+            </div>
+          </dl>
+          <h3>{{ 'operations.statusSummary' | translate }}</h3>
+          <p>{{ task.title | translate }}</p>
+          <h3>{{ 'operations.history' | translate }}</h3>
+          @if (task.source === 'loan') {
+            <small>{{ 'operations.historyScope' | translate }}</small>
+          }
+          @if (historyLoading) {
+            <p role="status">{{ 'operations.loading' | translate }}</p>
+          } @else if (history === null) {
+            <p class="muted">{{ 'operations.historyGap' | translate }}</p>
+          } @else {
+            <ol class="history">
+              @for (event of history; track event.id) {
+                <li>
+                  <strong>{{ event.actionName | translateKey: 'auditTrail.actions' }}</strong
+                  ><span>{{ event.madeOnDate | date: 'medium' }}</span
+                  ><span>{{ event.maker || ('operations.missing' | translate) }} · {{ event.processingResult }}</span>
+                </li>
+              } @empty {
+                <li>{{ 'operations.noEvents' | translate }}</li>
+              }
+            </ol>
+          }
+          @if (fileRoute(task); as route) {
+            <a mat-flat-button color="primary" [routerLink]="route">{{ 'operations.openFile' | translate }}</a>
+          }
+          <p class="muted">{{ 'operations.actionGap' | translate }}</p>
+          <div class="unavailable-actions">
+            <button mat-stroked-button disabled>{{ 'operations.review' | translate }}</button
+            ><button mat-stroked-button disabled>{{ 'operations.assign' | translate }}</button
+            ><button mat-stroked-button disabled>{{ 'operations.escalate' | translate }}</button>
+          </div>
+        } @else {
+          <h2>{{ 'operations.details' | translate }}</h2>
+          <p class="muted">{{ 'operations.selectPrompt' | translate }}</p>
+        }
+      </mat-card-content></mat-card
+    >
+  </div>
+  <mat-card class="activity-card"
+    ><mat-card-content
+      ><header>
+        <h2>{{ 'operations.activity' | translate }}</h2>
+        <small>{{ 'operations.activityScope' | translate }}</small>
+      </header>
+      @if (activity === null) {
+        <p class="muted">{{ 'operations.activityGap' | translate }}</p>
+      } @else {
+        <ol class="activity-list">
+          @for (event of activity; track event.id) {
+            <li>
+              <time>{{ event.madeOnDate | date: 'medium' }}</time
+              ><mat-icon aria-hidden="true">history</mat-icon
+              ><span
+                ><strong>{{ event.maker || ('operations.missing' | translate) }}</strong>
+                {{ event.actionName | translateKey: 'auditTrail.actions' }} ·
+                {{ event.entityName | translateKey: 'auditTrail.entities' }} {{ event.resourceId }}</span
+              ><small>{{ event.processingResult }}</small>
+            </li>
+          } @empty {
+            <li>{{ 'operations.noEvents' | translate }}</li>
+          }
+        </ol>
+        <a mat-button color="primary" routerLink="/system/audit-trails">{{ 'operations.allActivity' | translate }}</a>
+      }
+    </mat-card-content></mat-card
+  >
+</section>

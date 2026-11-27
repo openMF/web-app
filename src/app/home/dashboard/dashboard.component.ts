@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -19,6 +19,7 @@ import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboa
 import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
 import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
 import { OnboardingBoardComponent } from './onboarding-board/onboarding-board.component';
+import { OperationsDashboardComponent } from './operations-dashboard/operations-dashboard.component';
 import { CommercialPanelComponent } from './commercial-panel/commercial-panel.component';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -37,7 +38,8 @@ import { TranslateService } from '@ngx-translate/core';
     MatTabContent,
     MatTabGroup,
     OnboardingBoardComponent,
-    CommercialPanelComponent
+    CommercialPanelComponent,
+    OperationsDashboardComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -61,12 +63,19 @@ export class DashboardComponent implements OnInit {
   /** Client group options */
   clientGroups: any[] = [];
 
+  @ViewChild(MatTabGroup) tabs?: MatTabGroup;
+
   constructor() {
-    this.route.data.subscribe((data: { offices: any[]; products?: any[]; clientGroups?: any[] }) => {
-      this.offices = data.offices || [];
-      this.products = data.products || [];
-      this.clientGroups = data.clientGroups || [];
+    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      if (params.has('operationsTask') && this.tabs) this.tabs.selectedIndex = 0;
     });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { offices: any[]; products?: any[]; clientGroups?: any[] }) => {
+        this.offices = data.offices || [];
+        this.products = data.products || [];
+        this.clientGroups = data.clientGroups || [];
+      });
   }
 
   ngOnInit() {
