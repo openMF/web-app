@@ -7,6 +7,10 @@
  */
 import { expect, test, Page } from '@playwright/test';
 
+// Synthetic sessions must not inherit the default CI project's live login preferences.
+test.use({ storageState: { cookies: [], origins: [] }, timezoneId: 'UTC' });
+const fixtureBusinessDate = '2026-11-26';
+
 // Synthetic HTTP responses: no browser test sends financial commands to a live backend.
 let state: Record<string, unknown>;
 let posts: unknown[];
@@ -37,7 +41,7 @@ test.beforeEach(async ({ page }) => {
   failPost = false;
   incompleteReceipt = false;
   state = {
-    businessDate: '2026-11-26',
+    businessDate: fixtureBusinessDate,
     officeId: 1,
     officeName: 'Synthetic Office',
     tellerId: 2,
@@ -111,6 +115,9 @@ test.beforeEach(async ({ page }) => {
   });
 });
 async function load(page: Page) {
+  // Startup resets the business date to today. Keep it aligned with the fixed API context
+  // on every tab without pausing timers used by dialogs, HTTP requests or animations.
+  await page.clock.setFixedTime(new Date(`${fixtureBusinessDate}T12:00:00Z`));
   await page.goto(closingPath);
   await page.locator('mat-select[formcontrolname="tellerId"]').click();
   await page.getByRole('option', { name: 'Main Teller' }).click();

@@ -6,600 +6,614 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, MatSortHeader } from '@angular/material/sort';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
-
-/** Custom Data Source */
-import { AuditTrailsDataSource } from './audit-trail.datasource';
-
-/** Custom Utils */
-import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
-
-/** Custom Services */
-import { SystemService } from '../system.service';
-import { SettingsService } from 'app/settings/settings.service';
-
-/** rxjs Imports */
-import { merge } from 'rxjs';
-import { tap, debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators';
-import { Dates } from 'app/core/utils/dates';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { AsyncPipe } from '@angular/common';
-import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { MatProgressBar } from '@angular/material/progress-bar';
-import {
-  MatTable,
-  MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
-  MatCellDef,
-  MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
-  MatRowDef,
-  MatRow
-} from '@angular/material/table';
-import { DatetimeFormatPipe } from '../../pipes/datetime-format.pipe';
-import { TranslatePipe } from '../../pipes/translate.pipe';
-import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-
 /**
- * Audit Trails Component.
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription, firstValueFrom, interval, merge, takeUntil, Subject } from 'rxjs';
+import moment from 'moment';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { SystemService } from '../system.service';
+import { AuditTrailsDataSource } from './audit-trail.datasource';
+import {
+  AuditEvent,
+  SafeCommand,
+  auditEvent,
+  auditPage,
+  auditDay,
+  auditTone,
+  checkerState,
+  safeCommand,
+  auditId,
+  canReadAudit,
+  validAuditRange,
+  auditCsv
+} from './audit-presentation';
+
+interface FilterState {
+  mode: string;
+  search: string;
+  entityName: string;
+  actionName: string;
+  processingResult: string;
+  makerId: string;
+  checkerId: string;
+  from: string;
+  to: string;
+  checkedFrom: string;
+  checkedTo: string;
+}
+const EMPTY: FilterState = {
+  mode: 'trail',
+  search: '',
+  entityName: '',
+  actionName: '',
+  processingResult: '',
+  makerId: '',
+  checkerId: '',
+  from: '',
+  to: '',
+  checkedFrom: '',
+  checkedTo: ''
+};
+interface Preset {
+  name: string;
+  filters: FilterState;
+}
+
 @Component({
   selector: 'mifosx-audit-trails',
   templateUrl: './audit-trails.component.html',
   styleUrls: ['./audit-trails.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent,
-    MatAutocompleteTrigger,
-    MatAutocomplete,
-    MatProgressBar,
-    MatTable,
-    MatSort,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatSortHeader,
-    MatCellDef,
-    MatCell,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
-    MatPaginator,
-    AsyncPipe,
-    DatetimeFormatPipe
+    MatButtonModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatMenuModule,
+    MatExpansionModule,
+    MatProgressBarModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuditTrailsComponent implements OnInit, AfterViewInit {
+export class AuditTrailsComponent implements OnInit {
+  private system = inject(SystemService);
   private route = inject(ActivatedRoute);
-  private systemService = inject(SystemService);
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
+  private auth = inject(AuthenticationService);
+  private settings = inject(SettingsService);
+  private translate = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
+  private detailRequest?: Subscription;
+  private exactRequest?: Subscription;
+  private exportCancel = new Subject<void>();
+  private exportRun = 0;
+  private scope = '';
+  private applied: FilterState = { ...EMPTY };
+  private returnState?: { filters: FilterState; event: AuditEvent; pageIndex: number };
+  private formBuilder = inject(FormBuilder);
+  readonly filters = this.formBuilder.nonNullable.group({ ...EMPTY });
+  readonly presetName = this.formBuilder.nonNullable.control('');
+  readonly dataSource = new AuditTrailsDataSource(this.system, () => this.scopeValid());
+  readonly tone = auditTone;
+  readonly checkerState = checkerState;
+  rows: AuditEvent[] = [];
+  total = 0;
+  loading = false;
+  error = false;
+  invalid = false;
+  forbidden = false;
+  template: any = { appUsers: [], actionNames: [], entityNames: [], processingResults: [] };
+  selected?: AuditEvent;
+  detail?: AuditEvent;
+  command?: SafeCommand;
+  detailLoading = false;
+  detailError = false;
+  showDates = false;
+  showPresets = false;
+  jsonOpen = false;
+  pageIndex = 0;
+  pageSize = 25;
+  orderBy = 'id';
+  direction = 'desc';
+  exact = false;
+  history?: { entityName: string; resourceId: string };
+  presets: Preset[] = [];
+  activePreset = '';
+  exporting = false;
+  exported = 0;
+  feedback = '';
 
-  /** Minimum date allowed. */
-  minDate = new Date(2000, 0, 1);
-  /** Maximum date allowed. */
-  maxDate = new Date();
-  /** Audit Trails Data */
-  auditTrailsData: any;
-  /** Filtered user data for autocomplete. */
-  filteredUserData: any;
-  /** Filtered action data for autocomplete. */
-  filteredActionData: any;
-  /** Filtered entity data for autocomplete. */
-  filteredEntityData: any;
-  /** Filtered checker data for autocomplete. */
-  filteredCheckerData: any;
-  /** Audit Trail Search Template Data. */
-  auditTrailSearchTemplateData: any;
-  /** Columns to be displayed in audit trails table. */
-  displayedColumns: string[] = [
-    'id',
-    'resourceId',
-    'processingResult',
-    'maker',
-    'actionName',
-    'entityName',
-    'officeName',
-    'madeOnDate',
-    'checker',
-    'checkedOnDate',
-    'clientIp'
-  ];
-  /** Data source for audit trails table. */
-  dataSource: AuditTrailsDataSource;
-  /** Audit Trails filter. */
-  filterAuditTrailsBy = [
-    {
-      type: 'actionName',
-      value: ''
-    },
-    {
-      type: 'entityName',
-      value: ''
-    },
-    {
-      type: 'resourceId',
-      value: ''
-    },
-    {
-      type: 'makerId',
-      value: ''
-    },
-    {
-      type: 'makerDateTimeFrom',
-      value: ''
-    },
-    {
-      type: 'makerDateTimeTo',
-      value: ''
-    },
-    {
-      type: 'checkerDateTimeFrom',
-      value: ''
-    },
-    {
-      type: 'checkerDateTimeTo',
-      value: ''
-    },
-    {
-      type: 'checkerId',
-      value: ''
-    },
-    {
-      type: 'processingResult',
-      value: ''
-    },
-    {
-      type: 'dateFormat',
-      value: this.settingsService.dateFormat
-    },
-    {
-      type: 'locale',
-      value: this.settingsService.language.code
-    }
-  ];
-  /** User form control. */
-  user = new UntypedFormControl('');
-  /** From date form control. */
-  fromDate = new UntypedFormControl();
-  /** From time form control. */
-  fromTime = new UntypedFormControl();
-  /** Checked from date form control. */
-  checkedFromDate = new UntypedFormControl();
-  /** Checked from time form control. */
-  checkedFromTime = new UntypedFormControl();
-  /** Processing result form control. */
-  processingResult = new UntypedFormControl();
-  /** Action name form control. */
-  actionName = new UntypedFormControl();
-  /** Resource ID form control. */
-  resourceId = new UntypedFormControl('');
-  /** To date form control. */
-  toDate = new UntypedFormControl();
-  /** To time form control. */
-  toTime = new UntypedFormControl();
-  /** Checked to date form control. */
-  checkedToDate = new UntypedFormControl();
-  /** Checked to time form control. */
-  checkedToTime = new UntypedFormControl();
-  /** Entity name form control. */
-  entityName = new UntypedFormControl();
-  /** Checker form control. */
-  checker = new UntypedFormControl();
-
-  isLoading = false;
-
-  /** Paginator for audit trails table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  /** Sorter for audit trails table. */
-  @ViewChild(MatSort) sort: MatSort;
-
-  /**
-   * Retrieves the audit trail search template data from `resolve`.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
-   * @param {Dates} dateUtils Dates utils
-   * @param {SettingsService} settingsService Settings Service
-   */
-  constructor() {
-    this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
-      this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
+  get canRead(): boolean {
+    return canReadAudit(this.auth.getCredentials()) && !this.forbidden;
+  }
+  private currentScope(): string {
+    const credentials = this.auth.getCredentials();
+    return JSON.stringify([
+      this.settings.serverUrl,
+      this.settings.tenantIdentifier,
+      credentials?.userId,
+      credentials?.username,
+      credentials?.authenticated,
+      credentials?.permissions
+    ]);
+  }
+  private scopeValid(): boolean {
+    return this.canRead && this.scope === this.currentScope();
+  }
+  ngOnInit(): void {
+    this.scope = this.currentScope();
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      const source = data['auditTrailSearchTemplate'] ?? {};
+      this.template = {
+        appUsers: (source.appUsers ?? []).filter((user: any) => auditId(user.id) && typeof user.username === 'string'),
+        actionNames: (source.actionNames ?? []).filter((value: any) => typeof value === 'string'),
+        entityNames: (source.entityNames ?? []).filter((value: any) => typeof value === 'string'),
+        processingResults: (source.processingResults ?? source.statuses ?? []).filter(
+          (value: any) => auditId(value.id) && typeof value.processingResult === 'string'
+        )
+      };
     });
+    this.dataSource.rows$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((rows) => {
+      this.rows = rows;
+      this.cdr.markForCheck();
+    });
+    this.dataSource.records$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((total) => {
+      this.total = total;
+      this.cdr.markForCheck();
+    });
+    this.dataSource.loading$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      this.loading = value;
+      this.cdr.markForCheck();
+    });
+    this.dataSource.error$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      this.error = value;
+      this.cdr.markForCheck();
+    });
+    // In-memory named presets deliberately retain neither audit payloads nor browser-persistent preferences.
+    merge(this.auth.isAuthenticated$, interval(500))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        if (!this.scopeValid()) this.invalidateScope();
+      });
+    this.destroyRef.onDestroy(() => {
+      this.dataSource.disconnect();
+      this.detailRequest?.unsubscribe();
+      this.exactRequest?.unsubscribe();
+      this.exportCancel.next();
+      this.exportCancel.complete();
+      this.presets = [];
+    });
+    this.apply();
   }
-
-  /**
-   * Sets filtered users, actions and entities for autocomplete and audit trails table.
-   */
-  ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
-    this.setFilteredUsers();
-    this.setFilteredActions();
-    this.setFilteredEntities();
-    this.setFilteredCheckers();
-    this.dataSource = new AuditTrailsDataSource(this.systemService);
-    this.getAuditTrails();
+  private invalidateScope(): void {
+    this.forbidden = true;
+    this.dataSource.clear();
+    this.closeDetail();
+    this.exactRequest?.unsubscribe();
+    this.exportRun++;
+    this.exportCancel.next();
+    this.exporting = false;
+    this.presets = [];
+    this.template = {};
+    this.filters.reset({ ...EMPTY });
+    this.applied = { ...EMPTY };
+    this.history = undefined;
+    this.returnState = undefined;
+    this.feedback = '';
+    this.cdr.markForCheck();
   }
-
-  /**
-   * Subscribes to all search filters:
-   * User Name, From Date, To Date, Checked From Date, Checked To Date, Resource ID, Action Name, Entity Name, Checker
-   * sort change and page change.
-   */
-  ngAfterViewInit() {
-    this.clearFilterWhenEmptied(this.user, 'makerId');
-
-    this.fromDate.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(this.getDateTime(filterValue, this.fromTime.value), 'makerDateTimeFrom');
-        })
-      )
-      .subscribe();
-
-    this.fromTime.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((timeValue) => {
-          this.applyFilter(this.getDateTime(this.fromDate.value, timeValue), 'makerDateTimeFrom');
-        })
-      )
-      .subscribe();
-
-    this.toDate.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(this.getDateTime(filterValue, this.toTime.value), 'makerDateTimeTo');
-        })
-      )
-      .subscribe();
-
-    this.toTime.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((timeValue) => {
-          this.applyFilter(this.getDateTime(this.toDate.value, timeValue), 'makerDateTimeTo');
-        })
-      )
-      .subscribe();
-
-    this.checkedFromDate.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(this.getDateTime(filterValue, this.checkedFromTime.value), 'checkerDateTimeFrom');
-        })
-      )
-      .subscribe();
-
-    this.checkedFromTime.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((timeValue) => {
-          this.applyFilter(this.getDateTime(this.checkedFromDate.value, timeValue), 'checkerDateTimeFrom');
-        })
-      )
-      .subscribe();
-
-    this.checkedToDate.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(this.getDateTime(filterValue, this.checkedToTime.value), 'checkerDateTimeTo');
-        })
-      )
-      .subscribe();
-
-    this.checkedToTime.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((timeValue) => {
-          this.applyFilter(this.getDateTime(this.checkedToDate.value, timeValue), 'checkerDateTimeTo');
-        })
-      )
-      .subscribe();
-
-    this.resourceId.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'resourceId');
-        })
-      )
-      .subscribe();
-
-    this.clearFilterWhenEmptied(this.actionName, 'actionName');
-    this.clearFilterWhenEmptied(this.entityName, 'entityName');
-    this.clearFilterWhenEmptied(this.checker, 'checkerId');
-
-    //this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
-    if (this.sort && this.paginator) {
-      merge(this.sort.sortChange, this.paginator.page)
-        .pipe(tap(() => this.loadAuditTrailsPage()))
-        .subscribe();
+  private valid(state: FilterState): boolean {
+    const member = (value: string, values: any[], key?: string) =>
+      !value || values.some((item) => String(key ? item[key] : item) === value);
+    return [
+        'trail',
+        'resource',
+        'user'
+      ].includes(
+        state.mode
+      ) && state.search.length <= 128 && (!state.search || (state.mode === 'user' ? this.template.appUsers.some((user: any) => user.username === state.search) : !!auditId(state.search))) && member(state.entityName, this.template.entityNames) && member(state.actionName, this.template.actionNames) && member(state.processingResult, this.template.processingResults, 'id') && member(state.makerId, this.template.appUsers, 'id') && member(state.checkerId, this.template.appUsers, 'id') && validAuditRange(state.from, state.to) && validAuditRange(state.checkedFrom, state.checkedTo);
+  }
+  query(state = this.applied): { type: string; value: string }[] {
+    const result = [
+      'entityName',
+      'actionName',
+      'makerId',
+      'checkerId',
+      'processingResult'
+    ].map((key) => ({ type: key, value: state[key as keyof FilterState] }));
+    // Current Fineract consumes status; older deployments consume processingResult. Both are verified DTO fields.
+    result.push({ type: 'status', value: state.processingResult });
+    if (state.search && state.mode === 'resource') result.push({ type: 'resourceId', value: state.search });
+    if (state.search && state.mode === 'user') {
+      result.find((filter) => filter.type === 'makerId').value = String(
+        this.template.appUsers.find((user: any) => user.username === state.search).id
+      );
     }
-  }
-
-  /**
-   * Initializes the data source for audit trails table and loads the first page.
-   */
-  getAuditTrails() {
-    this.isLoading = true;
-    const isActive: string = this.sort ? this.sort.active : '';
-    const direction: string = this.sort ? this.sort.direction : '';
-    const pageIndex: number = this.paginator ? this.paginator.pageIndex : 0;
-    const pageSize: any = this.paginator ? this.paginator.pageSize : 20;
-
-    this.dataSource.getAuditTrails(this.filterAuditTrailsBy, isActive, direction, pageIndex, pageSize);
-    this.isLoading = false;
-  }
-
-  /**
-   * Loads a page of audit trails.
-   */
-  loadAuditTrailsPage() {
-    if (this.sort && !this.sort.direction) {
-      delete this.sort.active;
+    for (const [
+      key,
+      type
+    ] of [
+      [
+        'from',
+        'makerDateTimeFrom'
+      ],
+      [
+        'to',
+        'makerDateTimeTo'
+      ],
+      [
+        'checkedFrom',
+        'checkerDateTimeFrom'
+      ],
+      [
+        'checkedTo',
+        'checkerDateTimeTo'
+      ]
+    ]) {
+      result.push({
+        type,
+        value: state[key as keyof FilterState]
+          ? moment(state[key as keyof FilterState]).format('YYYY-MM-DD HH:mm:ss')
+          : ''
+      });
     }
-    this.getAuditTrails();
+    result.push({ type: 'dateFormat', value: 'yyyy-MM-dd HH:mm:ss' }, { type: 'locale', value: 'en' });
+    return result.filter((filter) => filter.value !== '');
   }
-
-  /**
-   * Filters data in audit trails table based on passed value and poperty.
-   * @param {string} filterValue Value to filter data.
-   * @param {string} property Property to filter data by.
-   */
-  applyFilter(filterValue: string, property: string) {
-    const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
-    if (this.filterAuditTrailsBy[findIndex].value === filterValue) {
+  apply(changed?: string): void {
+    if (!this.scopeValid()) return;
+    const state = this.filters.getRawValue();
+    state.search = state.search.trim();
+    if (changed === 'makerId' && state.mode === 'user') state.search = '';
+    if (state.mode === 'user' && state.search) {
+      const user = this.template.appUsers.find((item: any) => item.username === state.search);
+      if (user) state.makerId = String(user.id);
+    }
+    this.invalid = !this.valid(state);
+    if (this.invalid) return;
+    this.cancelExport();
+    this.exactRequest?.unsubscribe();
+    this.closeDetail();
+    this.filters.reset(state);
+    this.applied = { ...state };
+    this.pageIndex = 0;
+    this.history = undefined;
+    this.returnState = undefined;
+    this.activePreset = '';
+    this.exact = !!state.search && state.mode === 'trail';
+    if (this.exact) {
+      // Exact lookup has its own unambiguous scope. Clear unrelated controls before requesting it.
+      this.applied = { ...EMPTY, mode: 'trail', search: state.search };
+      this.filters.reset(this.applied);
+      this.dataSource.clear();
+      this.loading = true;
+      this.exactRequest = this.system.getAuditTrail(state.search).subscribe({
+        next: (response) => {
+          if (!this.scopeValid()) {
+            this.invalidateScope();
+            return;
+          }
+          try {
+            const event = auditEvent(response);
+            if (event.id !== state.search) throw new Error('Mismatched audit');
+            this.rows = [event];
+            this.total = 1;
+            this.loading = false;
+            this.selected = event;
+            this.setDetail(response, event);
+            this.cdr.markForCheck();
+          } catch {
+            this.exactFailed();
+          }
+        },
+        error: () => this.exactFailed()
+      });
+    } else this.load();
+  }
+  private exactFailed(): void {
+    this.rows = [];
+    this.total = 0;
+    this.loading = false;
+    this.error = true;
+    this.cdr.markForCheck();
+  }
+  clear(): void {
+    this.filters.reset({ ...EMPTY });
+    this.apply();
+  }
+  load(): void {
+    if (!this.scopeValid()) {
+      this.invalidateScope();
       return;
     }
-    if (this.paginator) {
-      this.paginator.pageIndex = 0;
-    }
-    this.filterAuditTrailsBy[findIndex].value = filterValue;
-    this.loadAuditTrailsPage();
+    this.dataSource.getAuditTrails(
+      this.query(),
+      this.orderBy,
+      this.direction,
+      this.pageIndex,
+      this.pageSize,
+      this.history
+    );
   }
-
-  /**
-   * Clears an autocomplete filter once its input is emptied.
-   * A selection is applied by the autocomplete's `optionSelected` output, so half-typed text never
-   * reaches the server: it is not a valid option and the request would come back with no records.
-   * @param {UntypedFormControl} control Autocomplete form control.
-   * @param {string} property Filter property the control feeds.
-   */
-  private clearFilterWhenEmptied(control: UntypedFormControl, property: string): void {
-    control.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe((value) => {
-      if (!value) {
-        this.applyFilter('', property);
+  page(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.load();
+  }
+  sort(event: Sort): void {
+    this.orderBy = event.direction ? event.active : 'id';
+    this.direction = event.direction || 'desc';
+    this.pageIndex = 0;
+    this.load();
+  }
+  label(value: string, group: string): string {
+    if (!value) return this.translate.instant('auditRedesign.notRecorded');
+    const key = 'labels.auditTrail.' + group + '.' + value;
+    const translated = this.translate.instant(key);
+    return translated === key ? value : translated;
+  }
+  dayStart(index: number): boolean {
+    return index === 0 || auditDay(this.rows[index]) !== auditDay(this.rows[index - 1]);
+  }
+  date(timestamp: number | null, timeOnly = false): string {
+    if (timestamp === null) return this.translate.instant('auditRedesign.notRecorded');
+    return new Intl.DateTimeFormat(
+      this.settings.language.code,
+      timeOnly ? { timeStyle: 'medium' } : { dateStyle: 'full' }
+    ).format(timestamp);
+  }
+  timestamp(timestamp: number | null): string {
+    return timestamp === null
+      ? this.translate.instant('auditRedesign.notRecorded')
+      : new Intl.DateTimeFormat(this.settings.language.code, { dateStyle: 'medium', timeStyle: 'medium' }).format(
+          timestamp
+        );
+  }
+  select(event: AuditEvent): void {
+    if (!this.scopeValid()) return;
+    this.closeDetail(false);
+    this.selected = event;
+    this.detailLoading = true;
+    this.detailRequest = this.system.getAuditTrail(event.id).subscribe({
+      next: (response) => {
+        if (!this.scopeValid()) {
+          this.invalidateScope();
+          return;
+        }
+        try {
+          this.setDetail(response, event);
+        } catch {
+          this.detailError = true;
+        }
+        this.detailLoading = false;
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        this.detailError = true;
+        this.detailLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }
-
-  /**
-   * Displays user name in form control input.
-   * @param {any} user User data.
-   * @returns {string} User name if valid otherwise undefined.
-   */
-  displayUserName(user?: any): string | undefined {
-    return user ? user.name : undefined;
+  private setDetail(response: any, expected: AuditEvent): void {
+    const event = auditEvent(response);
+    if (
+      event.id !== expected.id ||
+      event.entityName !== expected.entityName ||
+      event.resourceId !== expected.resourceId
+    )
+      throw new Error('Mismatched audit detail');
+    this.detail = event;
+    this.command = safeCommand(response.commandAsJson);
   }
-
-  /**
-   * Displays action name in form control input.
-   * @param {any} action Action data.
-   * @returns {string} Action name if valid otherwise undefined.
-   */
-  displayActionName(action?: any): string | undefined {
-    return action ? action : undefined;
+  resourceLink(): string[] | null {
+    const permissions = this.auth.getCredentials()?.permissions ?? [];
+    return this.detail?.entityName === 'OFFICE' && this.detail.resourceId && [
+        'READ_OFFICE',
+        'ALL_FUNCTIONS_READ',
+        'ALL_FUNCTIONS'
+      ].some((permission) => permissions.includes(permission)) ? [
+          '/organization/offices',
+          this.detail.resourceId
+        ] : null;
   }
-
-  /**
-   * Displays entity name in form control input.
-   * @param {any} entity Entity data.
-   * @returns {string} Entity name if valid otherwise undefined.
-   */
-  displayEntityName(entity?: any): string | undefined {
-    return entity ? entity : undefined;
+  closeDetail(restoreFocus = true): void {
+    if (restoreFocus && this.selected) document.getElementById('audit-trail-' + this.selected.id)?.focus();
+    this.detailRequest?.unsubscribe();
+    this.selected = undefined;
+    this.detail = undefined;
+    this.command = undefined;
+    this.jsonOpen = false;
+    this.detailLoading = false;
+    this.detailError = false;
   }
-
-  /**
-   * Sets filtered users for autocomplete.
-   */
-  setFilteredUsers() {
-    this.filteredUserData = this.user.valueChanges.pipe(
-      startWith(''),
-      map((user: any) => (typeof user === 'string' ? user : user.name)),
-      map((userName: string) =>
-        userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers
-      )
-    );
+  resourceHistory(): void {
+    if (this.history || !this.detail?.entityName || !this.detail.resourceId || !this.scopeValid()) return;
+    const event = this.detail;
+    this.returnState = { filters: { ...this.applied }, event, pageIndex: this.pageIndex };
+    this.applied = { ...EMPTY, mode: 'resource', search: event.resourceId, entityName: event.entityName };
+    this.filters.reset(this.applied);
+    this.history = { entityName: event.entityName, resourceId: event.resourceId };
+    this.exact = false;
+    this.pageIndex = 0;
+    this.cancelExport();
+    this.load();
   }
-
-  /**
-   * Sets filtered checkers for autocomplete.
-   */
-  setFilteredCheckers() {
-    this.filteredCheckerData = this.checker.valueChanges.pipe(
-      startWith(''),
-      map((user: any) => (typeof user === 'string' ? user : user.name)),
-      map((userName: string) =>
-        userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers
-      )
-    );
+  backToEvent(): void {
+    if (!this.returnState) return;
+    const previous = this.returnState;
+    this.returnState = undefined;
+    this.history = undefined;
+    this.filters.reset(previous.filters);
+    this.applied = previous.filters;
+    this.pageIndex = previous.pageIndex;
+    this.exact = !!this.applied.search && this.applied.mode === 'trail';
+    if (this.exact) this.apply();
+    else this.load();
+    this.select(previous.event);
   }
-
-  /**
-   * Sets filtered actions for autocomplete.
-   */
-  setFilteredActions() {
-    this.filteredActionData = this.actionName.valueChanges.pipe(
-      startWith(''),
-      map((action: any) => (typeof action === 'string' ? action : '')),
-      map((actionName: string) =>
-        actionName ? this.filterActionAutocompleteData(actionName) : this.auditTrailSearchTemplateData.actionNames
-      )
-    );
-  }
-
-  /**
-   * Sets filtered entities for autocomplete.
-   */
-  setFilteredEntities() {
-    this.filteredEntityData = this.entityName.valueChanges.pipe(
-      startWith(''),
-      map((entity: any) => (typeof entity === 'string' ? entity : '')),
-      map((entityName: string) =>
-        entityName ? this.filterEntityAutocompleteData(entityName) : this.auditTrailSearchTemplateData.entityNames
-      )
-    );
-  }
-
-  /**
-   * Filters users.
-   * @param {string} userName User name to filter user by.
-   * @returns {any} Filtered users.
-   */
-  private filterUserAutocompleteData(userName: string): any {
-    return this.auditTrailSearchTemplateData.appUsers.filter((user: any) =>
-      user.username.toLowerCase().includes(userName.toLowerCase())
-    );
-  }
-
-  /**
-   * Filters actions.
-   * @param {string} actionName Action name to filter action by.
-   * @returns {any} Filtered actions.
-   */
-  private filterActionAutocompleteData(actionName: string): any {
-    return this.auditTrailSearchTemplateData.actionNames.filter((action: any) =>
-      action.toLowerCase().includes(actionName.toLowerCase())
-    );
-  }
-
-  /**
-   * Filters entities.
-   * @param {string} entityName Entity name to filter action by.
-   * @returns {any} Filtered entities.
-   */
-  private filterEntityAutocompleteData(entityName: string): any {
-    return this.auditTrailSearchTemplateData.entityNames.filter((entity: any) =>
-      entity.toLowerCase().includes(entityName.toLowerCase())
-    );
-  }
-
-  /**
-   * Generates the CSV file of Audit Trails Data.
-   */
-  downloadCSV() {
-    const dateFormat = this.settingsService.dateFormat;
-    const header = [
-      'ID',
-      'Resource ID',
-      'Status',
-      'Office',
-      'Made On',
-      'Maker',
-      'Checked On',
-      'Checker',
-      'Entity',
-      'Action',
-      'Client'
+  savePreset(): void {
+    const name = this.presetName.value.trim();
+    if (!name || name.length > 64 || !this.valid(this.filters.getRawValue()) || this.presets.length >= 20) return;
+    this.presets = [
+      ...this.presets.filter((preset) => preset.name !== name),
+      { name, filters: { ...this.filters.getRawValue() } }
     ];
-    const headerCode = [
-      'id',
-      'resourceId',
-      'processingResult',
-      'officeName',
-      'madeOnDate',
-      'maker',
-      'checkedOnDate',
-      'checker',
-      'entityName',
-      'actionName',
-      'clientName'
-    ];
-    this.systemService
-      .getAuditTrails(this.filterAuditTrailsBy, this.sort?.active ?? '', this.sort?.direction ?? '', 0, -1)
-      .subscribe((response: any) => {
-        if (response !== undefined) {
-          let csv = response.pageItems.map((row: any) =>
-            headerCode.map((fieldName) => {
-              // Resolve the raw string value first, THEN sanitize before JSON.stringify wraps
-              // it in double-quotes for CSV quoting. Sanitizing the JSON.stringify output would
-              // be ineffective because the leading " masks formula-trigger characters from the
-              // sanitizer, and Excel strips those outer quotes when parsing the CSV cell.
-              let rawValue: string;
-              if (
-                (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
-                row[fieldName] != null &&
-                row[fieldName] !== ''
-              ) {
-                rawValue = this.dateUtils.formatDate(row[fieldName], 'yyyy-MM-ddTHH:mm:ssZ');
-              } else {
-                rawValue = row[fieldName] == null ? '' : String(row[fieldName]);
-              }
-              return JSON.stringify(sanitizeCsvValue(rawValue));
-            })
+    this.presetName.reset();
+  }
+  restore(preset: Preset): void {
+    if (!this.scopeValid() || !this.valid(preset.filters)) return;
+    this.filters.reset({ ...preset.filters });
+    this.apply();
+    this.activePreset = preset.name;
+  }
+  deletePreset(preset: Preset): void {
+    this.presets = this.presets.filter((item) => item !== preset);
+    if (this.activePreset === preset.name) this.activePreset = '';
+  }
+  failedOperations(): void {
+    const status = this.template.processingResults.find((item: any) => /^failed$/i.test(item.processingResult));
+    if (!status) return;
+    this.filters.reset({ ...EMPTY, processingResult: String(status.id) });
+    this.apply();
+  }
+  get hasFailedStatus(): boolean {
+    return !!this.template.processingResults?.some((item: any) => /^failed$/i.test(item.processingResult));
+  }
+  today(): void {
+    const entityName = this.template.entityNames.find((name: string) => name === 'OFFICE');
+    if (!entityName) return;
+    const day = moment().format('YYYY-MM-DD');
+    this.filters.reset({ ...EMPTY, entityName, from: day + 'T00:00', to: day + 'T23:59:59' });
+    this.apply();
+  }
+  mine(): void {
+    const id = String(this.auth.getCredentials()?.userId);
+    if (!this.template.appUsers.some((user: any) => String(user.id) === id)) return;
+    this.filters.reset({ ...EMPTY, makerId: id });
+    this.apply();
+  }
+  async copy(): Promise<void> {
+    if (!this.detail || !this.scopeValid()) return;
+    const event = this.detail;
+    const scope = this.scope;
+    const values = {
+      id: event.id,
+      action: event.actionName,
+      entity: event.entityName,
+      resourceId: event.resourceId,
+      maker: event.maker,
+      madeOn: this.timestamp(event.timestamp),
+      checker: event.checker,
+      status: event.processingResult
+    };
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(values, null, 2));
+      if (scope === this.scope && this.scopeValid()) this.feedback = 'copied';
+    } catch {
+      if (this.scopeValid()) this.feedback = 'copyFailed';
+    }
+    this.cdr.markForCheck();
+  }
+  cancelExport(): void {
+    this.exportRun++;
+    this.exportCancel.next();
+    this.exporting = false;
+  }
+  async downloadCSV(): Promise<void> {
+    if (this.exporting || !this.scopeValid()) return;
+    // Applying pending edits first makes the exported population match the displayed filter controls.
+    if (JSON.stringify(this.filters.getRawValue()) !== JSON.stringify(this.applied)) this.apply();
+    if (this.invalid || !this.scopeValid()) return;
+    const run = ++this.exportRun;
+    this.exporting = true;
+    this.exported = 0;
+    this.feedback = '';
+    const snapshot = JSON.stringify(this.applied);
+    const history = this.history;
+    const query = this.query();
+    const events: AuditEvent[] = [];
+    const seen = new Set<string>();
+    try {
+      if (this.exact) {
+        if (this.loading || this.error || this.rows.length !== 1) throw new Error('Exact lookup incomplete');
+        events.push(this.rows[0]);
+      } else {
+        let offset = 0;
+        let total: number | undefined;
+        // Bounded complete export: never download a partial result or silently truncate at the cap.
+        do {
+          const response = await firstValueFrom(
+            this.system.getAuditTrails(query, 'id', 'desc', offset, 200).pipe(takeUntil(this.exportCancel))
           );
-          csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
-          csv = csv.join('\r\n');
-          const link = document.createElement('a');
-          link.setAttribute('href', encodeURI(csv));
-          link.setAttribute('download', 'Audit Trails.csv');
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
-      });
-  }
-
-  /**
-   * Gets the date from the passed timestamp.
-   *
-   * TODO: Update once language and date settings are setup.
-   *
-   * @param {any} timestamp Timestamp from which date is to be extracted.
-   */
-  private getDate(timestamp: any) {
-    const dateFormat = this.settingsService.dateFormat;
-    return this.dateUtils.formatDate(timestamp, dateFormat);
-  }
-  private getDateTime(date: Date, timeStr: string): string {
-    if (!date) {
-      return '';
+          if (
+            !this.scopeValid() ||
+            snapshot !== JSON.stringify(this.applied) ||
+            !this.exporting ||
+            run !== this.exportRun
+          )
+            throw new Error('Scope changed');
+          const page = auditPage(response, 200);
+          if (total !== undefined && page.total !== total) throw new Error('Audit population changed');
+          total = page.total;
+          if (total > 10000 || (!page.events.length && offset < total) || offset + page.events.length > total)
+            throw new Error('Incomplete export');
+          for (const event of page.events) {
+            if (seen.has(event.id)) throw new Error('Unstable pagination');
+            seen.add(event.id);
+            if (!history || (history.entityName === event.entityName && history.resourceId === event.resourceId))
+              events.push(event);
+          }
+          offset += page.events.length;
+          this.exported = offset;
+          this.cdr.markForCheck();
+        } while (offset < total);
+      }
+      if (!this.scopeValid() || !this.exporting || run !== this.exportRun) return;
+      const headers = [
+        'trailId',
+        'action',
+        'entity',
+        'resourceId',
+        'office',
+        'madeBy',
+        'madeOn',
+        'checker',
+        'checkedOn',
+        'status'
+      ].map((key) => this.translate.instant('auditRedesign.' + key));
+      const url = URL.createObjectURL(new Blob([auditCsv(events, headers)], { type: 'text/csv;charset=utf-8' }));
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'audit-trails.csv';
+      anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      this.feedback = 'exportDone';
+    } catch {
+      if (this.scopeValid() && this.exporting && run === this.exportRun) this.feedback = 'exportFailed';
+    } finally {
+      if (run === this.exportRun) this.exporting = false;
+      this.cdr.markForCheck();
     }
-    const result = new Date(date);
-    if (timeStr) {
-      const [
-        hours,
-        minutes,
-        seconds
-      ] = timeStr.split(':').map(Number);
-      result.setHours(hours || 0);
-      result.setMinutes(minutes || 0);
-      result.setSeconds(seconds || 0);
-    }
-    return this.dateUtils.formatDate(result, 'yyyy-MM-ddTHH:mm:ssZ');
   }
 }

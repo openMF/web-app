@@ -6,68 +6,92 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/** Angular Imports */
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-
-/** rxjs Imports */
-import { Observable, BehaviorSubject } from 'rxjs';
-
-/** Custom Services */
-import { SystemService } from '../system.service';
-
 /**
- * Audit Trails custom data source to implement server side filtering, pagination and sorting.
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-export class AuditTrailsDataSource implements DataSource<any> {
-  /** Audit Trails behavior subject to represent loaded audit trails page. */
-  private auditTrailsSubject = new BehaviorSubject<any[]>([]);
-  /** Records subject to represent total number of filtered audit trail records. */
-  private recordsSubject = new BehaviorSubject<number>(0);
 
-  /** Records observable which can be subscribed to get the value of total number of filtered audit trail records. */
-  public records$ = this.recordsSubject.asObservable();
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { SystemService } from '../system.service';
+import { AuditEvent, auditPage } from './audit-presentation';
 
-  /**
-   * @param {SystemService} systemService System Service.
-   */
-  constructor(private systemService: SystemService) {}
+/** One cancellable page request; totals always describe the server population, never a local subset. */
+export class AuditTrailsDataSource implements DataSource<AuditEvent> {
+  private rows = new BehaviorSubject<AuditEvent[]>([]);
+  private records = new BehaviorSubject(0);
+  private loading = new BehaviorSubject(false);
+  private error = new BehaviorSubject(false);
+  private request?: Subscription;
+  readonly rows$ = this.rows.asObservable();
+  readonly records$ = this.records.asObservable();
+  readonly loading$ = this.loading.asObservable();
+  readonly error$ = this.error.asObservable();
 
-  /**
-   * Gets audit trails on the basis of provided parameters and emits the value.
-   * @param {any} filterBy Properties by which entries should be filtered.
-   * @param {string} orderBy Property by which entries should be sorted.
-   * @param {string} sortOrder Sort order: ascending or descending.
-   * @param {number} pageIndex Page number.
-   * @param {number} limit Number of entries within the page.
-   */
+  constructor(
+    private systemService: SystemService,
+    private authorized: () => boolean = () => true
+  ) {}
+
   getAuditTrails(
-    filterBy: any,
-    orderBy: string = '',
-    sortOrder: string = '',
-    pageIndex: number = 0,
-    limit: number = 10
-  ) {
-    this.auditTrailsSubject.next([]);
-    this.systemService
-      .getAuditTrails(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
-      .subscribe((auditTrails: any) => {
-        this.recordsSubject.next(auditTrails.totalFilteredRecords);
-        this.auditTrailsSubject.next(auditTrails.pageItems);
-      });
+    filters: any,
+    orderBy = 'id',
+    sortOrder = 'desc',
+    pageIndex = 0,
+    limit = 25,
+    identity?: { entityName: string; resourceId: string }
+  ): void {
+    this.clear();
+    if (!this.authorized()) return;
+    this.loading.next(true);
+    this.request = this.systemService.getAuditTrails(filters, orderBy, sortOrder, pageIndex * limit, limit).subscribe({
+      next: (response) => {
+        if (!this.authorized()) {
+          this.clear();
+          return;
+        }
+        try {
+          const page = auditPage(response, limit);
+          this.records.next(page.total);
+          this.rows.next(
+            identity
+              ? page.events.filter(
+                  (event) => event.entityName === identity.entityName && event.resourceId === identity.resourceId
+                )
+              : page.events
+          );
+          this.loading.next(false);
+        } catch {
+          this.fail();
+        }
+      },
+      error: () => this.fail()
+    });
   }
-
-  /**
-   * @param {CollectionViewer} collectionViewer
-   */
-  connect(collectionViewer: CollectionViewer): Observable<any[]> {
-    return this.auditTrailsSubject.asObservable();
+  private fail(): void {
+    this.rows.next([]);
+    this.records.next(0);
+    this.loading.next(false);
+    this.error.next(true);
   }
-
-  /**
-   * @param {CollectionViewer} collectionViewer
-   */
-  disconnect(collectionViewer: CollectionViewer): void {
-    this.auditTrailsSubject.complete();
-    this.recordsSubject.complete();
+  clear(): void {
+    this.request?.unsubscribe();
+    this.rows.next([]);
+    this.records.next(0);
+    this.loading.next(false);
+    this.error.next(false);
+  }
+  connect(_viewer?: CollectionViewer) {
+    return this.rows$;
+  }
+  disconnect(_viewer?: CollectionViewer): void {
+    this.clear();
+    this.rows.complete();
+    this.records.complete();
+    this.loading.complete();
+    this.error.complete();
   }
 }
