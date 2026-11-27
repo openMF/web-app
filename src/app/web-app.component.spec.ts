@@ -275,6 +275,34 @@ describe('WebAppComponent', () => {
       }
     });
 
+    it('clicks the translated Submit and Cancel buttons when the language is not English', () => {
+      const labels: Record<string, string> = {
+        'labels.buttons.Submit': 'Aceptar',
+        'labels.buttons.Cancel': 'Cancelar'
+      };
+      mockTranslateService.instant.mockImplementation((key: string) => labels[key] ?? key);
+      const submitButton = document.createElement('button');
+      submitButton.textContent = ' Aceptar ';
+      const cancelButton = document.createElement('button');
+      cancelButton.textContent = 'Cancelar';
+      document.body.append(submitButton, cancelButton);
+      const submitClick = jest.spyOn(submitButton, 'click').mockImplementation(() => {});
+      const cancelClick = jest.spyOn(cancelButton, 'click').mockImplementation(() => {});
+
+      try {
+        const input = document.createElement('input');
+        component.onKeydownHandler(keydown(input, { ctrlKey: true, altKey: true, key: 's', code: 'KeyS' }));
+        component.onKeydownHandler(keydown(input, { ctrlKey: true, altKey: true, key: 'x', code: 'KeyX' }));
+
+        expect(submitClick).toHaveBeenCalledTimes(1);
+        expect(cancelClick).toHaveBeenCalledTimes(1);
+      } finally {
+        mockTranslateService.instant.mockImplementation((key: string) => key);
+        submitButton.remove();
+        cancelButton.remove();
+      }
+    });
+
     it('does not trigger Submit from editable targets on AltGr non-Latin characters', () => {
       jest.spyOn(component, 'isMacOS').mockReturnValue(false);
       const submitButton = document.createElement('button');
