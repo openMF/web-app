@@ -765,8 +765,12 @@ export class LoansService {
    * @param {string} loanId Loan Id.
    * @returns {Observable<any>}
    */
-  getLoanApprovalTemplate(loanId: string): Observable<any> {
+  getLoanApprovalTemplate(loanId: string, exactAmounts = false): Observable<any> {
     const httpParams = new HttpParams().set('templateType', 'approval').set('associations', 'delinquency');
+    if (exactAmounts)
+      return this.http
+        .get(`/loans/${loanId}/template`, { params: httpParams, responseType: 'text' })
+        .pipe(map((text) => parseExactJson(text, ['approvalAmount'])));
     return this.http.get(`/loans/${loanId}/template`, { params: httpParams });
   }
 

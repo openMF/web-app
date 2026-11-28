@@ -104,7 +104,16 @@ export function creditFilterError(value: any): string {
 }
 
 export function creditCalendarDate(value: any): moment.Moment {
-  return Array.isArray(value) ? moment({ year: value[0], month: value[1] - 1, date: value[2] }) : moment(value);
+  if (value == null || value === '') return moment.invalid();
+  if (Array.isArray(value)) {
+    if (value.length !== 3 || !value.every(Number.isInteger)) return moment.invalid();
+    return moment([
+      value[0],
+      value[1] - 1,
+      value[2]
+    ]);
+  }
+  return typeof value === 'string' ? moment(value, moment.ISO_8601, true) : moment(value);
 }
 
 /** Quotes every cell and neutralizes formulas, including whitespace-prefixed formulas. */
@@ -113,4 +122,22 @@ export function creditCsvCell(value: unknown, account = false): string {
   if (/^\s+[=+\-@|%]/.test(text) || /^\n/.test(text) || (account && /^0\d/.test(text))) text = "'" + text;
   else text = sanitizeCsvValue(text);
   return '"' + text.replace(/"/g, '""') + '"';
+}
+
+/** Calendar-day ages use the same configured business date as the overdue summary. */
+export function creditAge(value: unknown, reference: unknown): number | null {
+  const date = creditCalendarDate(value);
+  const today = creditCalendarDate(reference);
+  return date.isValid() && today.isValid() ? today.startOf('day').diff(date.startOf('day'), 'days') : null;
+}
+
+/** submittedTo is inclusive: more than ten days means on or before business date minus eleven. */
+export function creditOverdueParams(scope: any, reference: unknown): any | null {
+  const today = creditCalendarDate(reference);
+  if (!today.isValid()) return null;
+  let cutoff = today.startOf('day').subtract(11, 'days');
+  if (scope.submittedTo && creditCalendarDate(scope.submittedTo).isBefore(cutoff, 'day'))
+    cutoff = creditCalendarDate(scope.submittedTo);
+  if (scope.submittedFrom && creditCalendarDate(scope.submittedFrom).isAfter(cutoff, 'day')) return null;
+  return { status: 100, submittedTo: cutoff.format('YYYY-MM-DD') };
 }

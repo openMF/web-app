@@ -151,7 +151,7 @@ describe('TasksService maker-checker search', () => {
 
   it('preserves exact mass-rejection decimal tokens at the HTTP boundary', () => {
     let response: any;
-    service.getCreditApplications({ limit: 10, offset: 0 }, true).subscribe((data) => (response = data));
+    service.getCreditApplications({ limit: 10, offset: 0 }).subscribe((data) => (response = data));
     const request = httpMock.expectOne((req) => req.url === '/v2/credit-applications');
     expect(request.request.responseType).toBe('text');
     request.flush(
@@ -186,7 +186,17 @@ describe('TasksService maker-checker search', () => {
     expect(request.request.params.get('limit')).toBe('10');
     expect(request.request.params.get('orderBy')).toBe('submittedOnDate');
     expect(request.request.params.get('sortOrder')).toBe('DESC');
-    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+    request.flush('{"totalFilteredRecords":0,"pageItems":[]}');
+  });
+
+  it('preserves numeric credit amount tokens before JSON parsing loses precision', () => {
+    let result: any;
+    service.getCreditApplications().subscribe((value) => (result = value));
+    const request = httpMock.expectOne('/v2/credit-applications');
+    expect(request.request.responseType).toBe('text');
+    request.flush('{"totalFilteredRecords":1,"pageItems":[{"loanId":42,"amount":9999999999999.99}]}');
+    expect(result.pageItems[0].amount).toBe('9999999999999.99');
+    expect(result.pageItems[0].loanId).toBe(42);
   });
 
   it('converts the epoch-seconds madeOnDate served by /makercheckers to milliseconds', () => {

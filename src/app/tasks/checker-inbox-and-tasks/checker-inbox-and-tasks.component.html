@@ -68,7 +68,7 @@
                 ariaCurrentWhenActive="page"
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="navigationOpen = false"
-                [class.empty-queue]="queue.path === 'credit' && creditCount === 0"
+                [class.empty-queue]="queue.path === creditQueuePath && creditCount === 0"
               >
                 <span>{{ queue.label | translate }}</span>
                 @if (queue.path === 'checker-inbox' && checkerCount.count() !== null) {
@@ -84,11 +84,11 @@
                 @if (queue.path === 'client-approval' && clientApprovalCount !== null) {
                   <span class="queue-count">{{ clientApprovalCount }}</span>
                 }
+                @if (queue.path === creditQueuePath && creditCount !== null) {
+                  <span class="queue-count">{{ creditCount }}</span>
+                }
                 @if (queue.path === 'mass-rejection' && massRejectionCount !== null) {
                   <span class="queue-count">{{ massRejectionCount }}</span>
-                }
-                @if (queue.path === 'credit' && creditCount !== null) {
-                  <span class="queue-count">{{ creditCount }}</span>
                 }
               </a>
             }

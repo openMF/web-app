@@ -347,7 +347,7 @@ test('keeps the confirmed queue alive during internal navigation', async ({ page
   await page.getByRole('button', { name: 'Reject 1 application', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
   await expect(page.locator('mifosx-credit-applications')).toContainText('Processing');
-  await page.getByRole('link', { name: 'Credit', exact: true }).click();
+  await page.getByRole('link', { name: 'Credit Applications', exact: true }).click();
   await expect(page).toHaveURL(/mass-rejection/);
   expect(writes).toHaveLength(1);
   finish();

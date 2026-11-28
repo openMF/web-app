@@ -93,10 +93,8 @@ export const routes: Routes = [
         },
         {
           path: 'credit',
-          component: CreditApplicationsComponent,
-          canActivate: [creditApplicationsGuard],
-          canDeactivate: [creditApplicationBatchGuard],
-          data: { title: 'Credit', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
+          redirectTo: 'requests',
+          pathMatch: 'full'
         },
         {
           path: 'mass-rejection',

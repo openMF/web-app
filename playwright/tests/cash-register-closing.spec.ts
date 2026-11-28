@@ -12,6 +12,8 @@ test.use({ storageState: { cookies: [], origins: [] }, timezoneId: 'UTC' });
 const fixtureBusinessDate = '2026-11-26';
 
 // Synthetic HTTP responses: no browser test sends financial commands to a live backend.
+test.use({ storageState: { cookies: [], origins: [] }, timezoneId: 'UTC' });
+
 let state: Record<string, unknown>;
 let posts: unknown[];
 let failRefresh: boolean;
@@ -36,6 +38,8 @@ const receipt = () => ({
 });
 
 test.beforeEach(async ({ page }) => {
+  // The app initializes its business date from the clock; keep it aligned with the synthetic responses.
+  await page.clock.setFixedTime(new Date('2026-11-26T12:00:00Z'));
   posts = [];
   failRefresh = false;
   failPost = false;

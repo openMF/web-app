@@ -41,23 +41,27 @@
 
 .status-summaries {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, calc((100% - 48px) / 4)));
-  gap: 16px;
+  grid-template-columns: repeat(5, minmax(0, 20%));
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
 }
 
 .summary-card {
   height: auto;
   min-height: 104px;
-  border: 1px solid var(--ds-border);
-  border-radius: var(--ds-radius-lg);
+  border: 0;
+  border-inline-end: 1px solid var(--ds-border);
+  border-radius: 0;
   padding: 16px;
   background: var(--ds-surface);
   color: var(--ds-text-1);
   text-align: start;
 
   &.selected-summary {
-    outline: 2px solid var(--md-sys-color-primary);
-    outline-offset: -2px;
+    box-shadow: inset 0 -2px var(--md-sys-color-primary);
+    background: color-mix(in srgb, var(--md-sys-color-primary) 6%, var(--ds-surface));
   }
 
   strong {
@@ -97,6 +101,10 @@
 
   &.pending {
     color: var(--ds-partial);
+  }
+
+  &.approved {
+    color: var(--md-sys-color-primary);
   }
 
   &.active {
@@ -364,8 +372,8 @@ td {
   }
 
   &.approved {
-    background: var(--ds-blue-50);
-    color: var(--ds-blue-700);
+    background: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--ds-surface));
+    color: var(--md-sys-color-primary);
   }
 }
 
@@ -487,7 +495,7 @@ button:focus-visible,
 @media (width <= 1279px) {
   .status-summaries {
     gap: 8px;
-    grid-template-columns: repeat(4, minmax(0, calc((100% - 24px) / 4)));
+    grid-template-columns: repeat(3, minmax(0, calc((100% - 16px) / 3)));
   }
 
   .page-numbers {
@@ -673,6 +681,22 @@ button:focus-visible,
 .approval-hint {
   color: var(--ds-text-2);
   font-size: 0.75rem;
+}
+
+.summary-detail {
+  display: block;
+  color: var(--ds-text-2);
+  font-size: 0.75rem;
+  white-space: normal;
+}
+
+.relative-date.overdue {
+  color: var(--ds-alert);
+  font-weight: 600;
+}
+
+.selection-total {
+  font-variant-numeric: tabular-nums;
 }
 
 .mass-rejection-workspace {
