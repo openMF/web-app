@@ -130,6 +130,9 @@
   // tools as the logged-in officer. Leave unset to use the built-in mock responses.
   window['env']['copilotMcpBaseUrl'] = '$MIFOS_COPILOT_MCP_BASE_URL';
 
+  // Optional enrollment evidence consultation; requires the savings plugin (off by default).
+  window['env']['enableEnrollmentPipeline'] = '$MIFOS_ENABLE_ENROLLMENT_PIPELINE';
+
   // Tenant Management administration UI
   // Set MIFOS_ENABLE_TENANT_MANAGEMENT=true where the Fineract tenant management plugin is
   // installed (off by default; a server without it has no tenant administration API)

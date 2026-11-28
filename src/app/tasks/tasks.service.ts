@@ -8,12 +8,13 @@
 
 /** Angular Imports */
 import { Injectable, Injector, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { map, Observable, tap } from 'rxjs';
 import type { MakerCheckerRecord } from './checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox-audit';
 import { parseExactJson } from 'app/products/saving-products/product-editor/interest-rate.model';
+import { HANDLE_HTTP_ERROR_LOCALLY } from 'app/core/http/error-handler.interceptor';
 import { CheckerInboxCountService } from './checker-inbox-count.service';
 
 /**
@@ -58,14 +59,14 @@ export interface EnrollmentCase {
   officeId?: number | string;
   clientLifecycleStatus?: string | { code?: string; value?: string; id?: number | string };
   enrollmentStages?: EnrollmentStage[];
-  kycEvidence?: KycEvidence;
+  kycEvidence?: KycEvidence | null;
 }
 
 export interface EnrollmentStage {
   name?: string;
   status?: string | { code?: string; value?: string; id?: number | string };
-  startedAt?: string | number[];
-  completedAt?: string | number[];
+  startedAt?: string | number[] | null;
+  completedAt?: string | number[] | null;
   source?: string;
   aging?: Aging | null;
 }
@@ -77,6 +78,17 @@ export interface Aging {
 }
 
 export interface KycEvidence {
+  /** Source-qualified fields returned by savings-plugin KycEvidenceData. */
+  verificationId?: number;
+  verificationCreatedAt?: string;
+  verificationLastModifiedAt?: string;
+  providerDecisionCreatedAt?: string;
+  faceMatchEvidencePresent?: boolean;
+  faceMatchEvidenceSucceeded?: boolean;
+  idVerificationEvidencePresent?: boolean;
+  idVerificationEvidenceSucceeded?: boolean;
+  amlScreeningEvidencePresent?: boolean;
+  amlScreeningEvidenceSucceeded?: boolean;
   verificationSessionId?: string | number;
   sessionId?: string | number;
   providerDecisionStatus?: string;
@@ -211,7 +223,10 @@ export class TasksService {
    * @param {EnrollmentCasesSearchParams} searchData Enrollment case search and paging parameters.
    */
   getEnrollmentCases(searchData: EnrollmentCasesSearchParams): Observable<EnrollmentCasesResponse> {
-    return this.http.get<EnrollmentCasesResponse>('/v2/onboarding/cases', { params: this.buildHttpParams(searchData) });
+    return this.http.get<EnrollmentCasesResponse>('/v2/onboarding/cases', {
+      params: this.buildHttpParams(searchData),
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
   }
 
   /**

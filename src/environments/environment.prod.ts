@@ -109,6 +109,10 @@ export const environment = {
   mifosInterbankTransfersEnabled:
     loadedEnv['mifosInterbankTransfersEnabled'] !== 'false' && loadedEnv['mifosInterbankTransfersEnabled'] !== false,
 
+  /** Optional savings-plugin enrollment consultation; ordinary Fineract deployments leave this off. */
+  enableEnrollmentPipeline:
+    loadedEnv['enableEnrollmentPipeline'] === 'true' || loadedEnv['enableEnrollmentPipeline'] === true,
+
   /**
    * Tenant Management administration UI: deployment master switch.
    * Off by default; set MIFOS_ENABLE_TENANT_MANAGEMENT=true where the Fineract tenant management

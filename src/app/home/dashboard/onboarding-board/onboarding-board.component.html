@@ -6,109 +6,294 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-card class="onboarding-board">
-  <mat-card-content>
-    <div class="board-header">
-      <h2>{{ 'labels.heading.Onboarding Board' | translate }}</h2>
-      @if (!loading && !loadError && tasks.length > 0) {
-        <mat-form-field class="search-field">
-          <mat-label>{{ 'labels.text.Filter by name' | translate }}</mat-label>
-          <input matInput [formControl]="searchControl" />
-        </mat-form-field>
-      }
-    </div>
-
-    @if (loading) {
-      <div class="state" role="status">
-        <mat-spinner diameter="40"></mat-spinner>
-        <p>{{ 'labels.text.Loading data' | translate }}</p>
-      </div>
-    } @else if (loadError) {
-      <div class="state" role="alert">
-        <mat-icon>error_outline</mat-icon>
-        <p>{{ 'labels.text.Failed to load' | translate }}</p>
-        <button mat-stroked-button color="primary" (click)="loadTasks()">
-          {{ 'labels.buttons.Retry' | translate }}
-        </button>
-      </div>
-    } @else if (tasks.length === 0) {
-      <div class="state">
-        <mat-icon>task_alt</mat-icon>
-        <p>{{ 'labels.text.No data found' | translate }}</p>
-      </div>
-    } @else if (filteredTasks.length === 0) {
-      <div class="state">
-        <mat-icon>search_off</mat-icon>
-        <p>{{ 'labels.inputs.No records match the selected filter' | translate }}</p>
-      </div>
-    } @else {
-      <div class="table-container">
-        <table mat-table [dataSource]="filteredTasks">
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Task' | translate }}</th>
-            <td mat-cell *matCellDef="let task">
-              {{ task.typeLabel | translate }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="customer">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
-            <td mat-cell *matCellDef="let task">{{ task.customer }}</td>
-          </ng-container>
-          <ng-container matColumnDef="reference">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account Number' | translate }}</th>
-            <td mat-cell *matCellDef="let task">{{ task.reference }}</td>
-          </ng-container>
-          <ng-container matColumnDef="office">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Office' | translate }}</th>
-            <td mat-cell *matCellDef="let task">{{ task.office }}</td>
-          </ng-container>
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-            <td mat-cell *matCellDef="let task">{{ task.status }}</td>
-          </ng-container>
-          <ng-container matColumnDef="aging">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Aging' | translate }}</th>
-            <td mat-cell *matCellDef="let task">
-              @let agingLabel = task.aging.labelKey | translate;
-              @let agingDescription =
-                task.aging.daysElapsed === null
-                  ? (task.aging.descriptionKey | translate)
-                  : ((task.aging.daysElapsed === 1 ? 'labels.text.Aging day' : 'labels.text.Aging days')
-                    | translate
-                      : {
-                          label: agingLabel,
-                          count: task.aging.daysElapsed
-                        });
-              <span
-                class="aging-indicator"
-                [ngClass]="task.aging.cssClass"
-                [matTooltip]="agingDescription"
-                [attr.aria-label]="agingDescription"
-              >
-                <span class="aging-dot" aria-hidden="true"></span>
-                <span>
-                  @if (task.aging.daysElapsed === null || task.aging.daysElapsed === 0) {
-                    {{ agingLabel }}
-                  } @else {
-                    {{ task.aging.daysElapsed }}
-                    {{ (task.aging.daysElapsed === 1 ? 'labels.inputs.day' : 'labels.inputs.days') | translate }}
-                  }
-                </span>
-              </span>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
-            <td mat-cell *matCellDef="let task">
-              <a mat-button color="primary" [routerLink]="task.route">
-                {{ 'labels.buttons.View' | translate }}
-              </a>
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
+<div class="onboarding-panel">
+  @if (hasPermission('READ_CLIENT') || hasPermission('READ_LOAN') || hasPermission('READ_SAVINGSACCOUNT')) {
+    @for (scope of [taskScope]; track scope) {
+      <mifosx-onboarding-tasks></mifosx-onboarding-tasks>
     }
-  </mat-card-content>
-</mat-card>
+  }
+  @if (pipelineEnabled) {
+    <mat-expansion-panel class="consultation-panel" (opened)="openPipeline()" [expanded]="pipelineOpened">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ 'onboardingPipeline.viewStatus' | translate }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ng-container *ngTemplateOutlet="consultation"></ng-container>
+      </ng-template>
+    </mat-expansion-panel>
+  }
+</div>
+
+<ng-template #consultation>
+  <section
+    class="enrollment-panel"
+    [attr.aria-label]="'onboardingPipeline.title' | translate"
+    [attr.aria-busy]="loading"
+  >
+    <header class="panel-header">
+      <div>
+        <h2>{{ 'onboardingPipeline.title' | translate }}</h2>
+        <p>{{ 'onboardingPipeline.description' | translate }}</p>
+      </div>
+      @if (canRead) {
+        <button mat-stroked-button color="primary" type="button" (click)="refresh()" [disabled]="loading">
+          <mat-icon>refresh</mat-icon>{{ 'labels.buttons.Refresh' | translate }}
+        </button>
+      }
+    </header>
+
+    @if (!canRead) {
+      <mat-card
+        ><mat-card-content role="status">{{ 'onboardingPipeline.forbidden' | translate }}</mat-card-content></mat-card
+      >
+    } @else {
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <span class="metric-label">{{ 'onboardingPipeline.cases' | translate }}</span>
+          <strong>{{ loaded && !loading && !error ? filteredRows.length : '—' }}</strong>
+          <small>{{ 'onboardingPipeline.pageCount' | translate }}</small>
+        </mat-card-content>
+      </mat-card>
+      <p class="scope-note">
+        <mat-icon aria-hidden="true">info_outline</mat-icon>{{ 'onboardingPipeline.scopeExplanation' | translate }}
+      </p>
+
+      <mat-card class="matrix-card">
+        <mat-card-content>
+          <div class="toolbar">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-field">
+              <mat-label>{{ 'onboardingPipeline.search' | translate }}</mat-label>
+              <input matInput [formControl]="search" maxlength="100" aria-describedby="onboarding-filter-scope" />
+              <mat-icon matSuffix aria-hidden="true">search</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>{{ 'onboardingPipeline.branch' | translate }}</mat-label>
+              <mat-select [formControl]="office" aria-describedby="onboarding-filter-scope">
+                <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
+                @for (branch of offices; track branch.id) {
+                  <mat-option [value]="branch.id">{{ branch.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <p id="onboarding-filter-scope" class="toolbar-note">{{ 'onboardingPipeline.pageFilters' | translate }}</p>
+          <p id="onboarding-capability-gap" class="toolbar-note">{{ 'onboardingPipeline.filterGap' | translate }}</p>
+          <div class="scope-bar" role="status">
+            <span>{{
+              'onboardingPipeline.scope'
+                | translate: { shown: filteredRows.length, loaded: rows.length, total: total === null ? '—' : total }
+            }}</span>
+            <span>{{ 'onboardingPipeline.sort' | translate }}</span>
+          </div>
+          @if (loading) {
+            <div class="state" role="status">
+              <mat-spinner diameter="32"></mat-spinner>{{ 'onboardingPipeline.loading' | translate }}
+            </div>
+          } @else if (error) {
+            <div class="state" role="alert">
+              <mat-icon>error_outline</mat-icon>
+              <p>{{ error | translate }}</p>
+              <button mat-stroked-button color="primary" type="button" (click)="refresh()">
+                {{ 'labels.buttons.Retry' | translate }}
+              </button>
+            </div>
+          } @else if (!filteredRows.length) {
+            <div class="state" role="status">
+              <mat-icon>search_off</mat-icon
+              >{{ (rows.length ? 'onboardingPipeline.noMatches' : 'onboardingPipeline.empty') | translate }}
+            </div>
+          } @else {
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              [attr.aria-label]="'onboardingPipeline.matrix' | translate"
+            >
+              <table mat-table [dataSource]="filteredRows" class="pipeline-table">
+                <ng-container matColumnDef="client">
+                  <th mat-header-cell *matHeaderCellDef scope="col">{{ 'onboardingPipeline.client' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">
+                    <button
+                      mat-button
+                      type="button"
+                      class="client-button"
+                      (click)="select(row)"
+                      [attr.aria-pressed]="selected === row"
+                    >
+                      {{ row.clientName || ('onboardingPipeline.unavailable' | translate) }}
+                    </button>
+                    <small>{{ 'onboardingPipeline.clientId' | translate: { id: row.clientId } }}</small>
+                  </td>
+                </ng-container>
+                @for (id of stages; track id; let i = $index) {
+                  <ng-container [matColumnDef]="id">
+                    <th mat-header-cell *matHeaderCellDef scope="col">
+                      <span class="stage-number">{{ i + 1 }}</span
+                      >{{ stageLabels[id] | translate }}<small>{{ stageDescriptions[id] | translate }}</small>
+                    </th>
+                    <td mat-cell *matCellDef="let row" class="stage-cell">
+                      <ng-container *ngTemplateOutlet="marker; context: { $implicit: row.stages[i] }"></ng-container>
+                    </td>
+                  </ng-container>
+                }
+                <ng-container matColumnDef="current">
+                  <th mat-header-cell *matHeaderCellDef scope="col">
+                    {{ 'onboardingPipeline.currentStage' | translate }}
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <span class="current-state">{{ 'onboardingPipeline.unavailable' | translate }}</span
+                    ><small>{{ 'onboardingPipeline.durationUnknown' | translate }}</small>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns" [class.selected-row]="selected === row"></tr>
+              </table>
+            </div>
+            <div class="mobile-clients">
+              @for (row of filteredRows; track row.clientId) {
+                <article class="mobile-client" [class.selected-row]="selected === row">
+                  <button mat-button type="button" (click)="select(row)" [attr.aria-pressed]="selected === row">
+                    {{ row.clientName || ('onboardingPipeline.unavailable' | translate) }}
+                  </button>
+                  <small>{{ 'onboardingPipeline.clientId' | translate: { id: row.clientId } }}</small>
+                  <ol>
+                    @for (stage of row.stages; track stage.id) {
+                      <li>
+                        <span>{{ stageLabels[stage.id] | translate }}</span
+                        ><ng-container *ngTemplateOutlet="marker; context: { $implicit: stage }"></ng-container>
+                      </li>
+                    }
+                  </ol>
+                  <small>{{ 'onboardingPipeline.durationUnknown' | translate }}</small>
+                </article>
+              }
+            </div>
+          }
+          @if (total !== null && !error && !loading) {
+            <mat-paginator
+              [length]="total"
+              [pageIndex]="pageIndex"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[10, 25, 50]"
+              (page)="changePage($event)"
+              [attr.aria-label]="'onboardingPipeline.pages' | translate"
+            ></mat-paginator>
+          }
+          <div class="legend" [attr.aria-label]="'labels.inputs.Status' | translate">
+            <span
+              ><mat-icon class="success-icon" aria-hidden="true">check_circle</mat-icon
+              >{{ stateLabels.completed | translate }}</span
+            >
+            <span><mat-icon aria-hidden="true">help_outline</mat-icon>{{ stateLabels.unknown | translate }}</span>
+          </div>
+          <p class="business-rule">
+            <mat-icon aria-hidden="true">schedule</mat-icon>{{ 'onboardingPipeline.rule' | translate }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      @if (loaded && !loading && !error) {
+        <div class="detail-grid">
+          <mat-card class="traceability"
+            ><mat-card-content>
+              <header class="detail-header">
+                <h3>
+                  {{ 'onboardingPipeline.traceability' | translate }}
+                  @if (selected) {
+                    · {{ selected.clientName || ('onboardingPipeline.unavailable' | translate) }}
+                  }
+                </h3>
+              </header>
+              <p class="muted">{{ 'onboardingPipeline.historyGap' | translate }}</p>
+              @if (detailLoading) {
+                <div class="state" role="status">
+                  <mat-spinner diameter="32"></mat-spinner>{{ 'onboardingPipeline.loading' | translate }}
+                </div>
+              } @else if (detailError) {
+                <div role="alert">
+                  <p>{{ detailError | translate }}</p>
+                  <button mat-stroked-button type="button" (click)="retryDetail()">
+                    {{ 'labels.buttons.Retry' | translate }}
+                  </button>
+                </div>
+              } @else if (detail) {
+                <ol class="status-summary">
+                  @for (stage of detail.stages; track stage.id) {
+                    <li>
+                      <ng-container
+                        *ngTemplateOutlet="marker; context: { $implicit: stage, showText: false }"
+                      ></ng-container>
+                      <div>
+                        <h4>{{ stageLabels[stage.id] | translate }} · {{ stateLabels[stage.state] | translate }}</h4>
+                        <p>{{ detailLabels[stage.detail] | translate }}</p>
+                        @if (stage.recordedAt) {
+                          <small
+                            >{{ 'onboardingPipeline.recordedUpdate' | translate }}
+                            <time [attr.datetime]="stage.recordedAt">{{
+                              stage.recordedAt | date: 'medium' : '+0000'
+                            }}</time>
+                            {{ 'onboardingPipeline.utc' | translate }}</small
+                          >
+                        }
+                      </div>
+                    </li>
+                  }
+                </ol>
+                <div class="actions">
+                  @if (clientRoute(detail); as route) {
+                    <a class="status-action" mat-flat-button color="primary" [routerLink]="route"
+                      ><mat-icon>visibility</mat-icon>{{ 'onboardingPipeline.viewStatus' | translate }}</a
+                    >
+                  }
+                  @if (clientRoute(detail, true); as route) {
+                    <a mat-stroked-button [routerLink]="route">{{ 'onboardingPipeline.addNote' | translate }}</a>
+                  }
+                </div>
+                <p id="onboarding-action-gap" class="toolbar-note">{{ 'onboardingPipeline.actionGap' | translate }}</p>
+              } @else {
+                <p>{{ 'onboardingPipeline.selectClient' | translate }}</p>
+              }
+            </mat-card-content></mat-card
+          >
+          <mat-card class="attention"
+            ><mat-card-content>
+              <header class="detail-header">
+                <h3>{{ 'onboardingPipeline.attention' | translate }}</h3>
+                <small>{{ 'onboardingPipeline.pageCount' | translate }}</small>
+              </header>
+              <p class="muted">{{ 'onboardingPipeline.attentionGap' | translate }}</p>
+              @for (row of attention; track row.clientId) {
+                <div class="attention-row">
+                  <mat-icon aria-hidden="true">priority_high</mat-icon>
+                  <div>
+                    <strong>{{ row.clientName || ('onboardingPipeline.unavailable' | translate) }}</strong
+                    ><small>{{ stateLabels[row.stages[0].state] | translate }}</small>
+                  </div>
+                  <button mat-button color="primary" type="button" (click)="select(row)">
+                    {{ 'labels.buttons.View' | translate }}
+                  </button>
+                </div>
+              } @empty {
+                <p class="muted">{{ 'onboardingPipeline.noKnownAttention' | translate }}</p>
+              }
+            </mat-card-content></mat-card
+          >
+        </div>
+      }
+    }
+  </section>
+</ng-template>
+
+<ng-template #marker let-stage let-showText="showText">
+  <span
+    class="stage-marker"
+    [ngClass]="stageClass(stage)"
+    role="img"
+    [attr.aria-label]="(stageLabels[stage.id] | translate) + ': ' + (stateLabels[stage.state] | translate)"
+  >
+    <mat-icon aria-hidden="true">{{ stageIcon(stage) }}</mat-icon>
+  </span>
+  @if (showText !== false) {
+    <span class="stage-text">{{ stateLabels[stage.state] | translate }}</span>
+  }
+</ng-template>
