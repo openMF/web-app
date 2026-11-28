@@ -8,13 +8,16 @@ on:
 
 concurrency:
   group: unit-tests-${{ github.ref }}
-  cancel-in-progress: true
+  # Let a coverage run on main/dev finish instead of cancelling it on the next merge.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   jest:
     name: Unit Tests (Jest)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Coverage makes a run about five times slower, so it is only collected on
+    # pushes to main/dev, which get a longer timeout. Pull requests skip it.
+    timeout-minutes: ${{ github.event_name == 'push' && 40 || 20 }}
 
     steps:
       - name: Checkout code
@@ -37,11 +40,11 @@ jobs:
         # ngOnDestroy() directly, which never triggers it. Tracked
         # separately; drop continue-on-error once green so this gate blocks.
         continue-on-error: true
-        run: npm run test:ci
+        run: npm run test:ci -- ${{ github.event_name == 'push' && '--coverage' || '' }}
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v7
-        if: always()
+        if: always() && github.event_name == 'push'
         with:
           name: jest-coverage
           path: coverage/
