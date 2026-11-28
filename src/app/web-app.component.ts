@@ -429,26 +429,27 @@ export class WebAppComponent implements OnInit, OnDestroy {
         document.getElementById('runreport')?.click();
         break;
       case 'cancel':
-        const cancelButtons = document.querySelectorAll('button');
-        const filteredcancelButtons = Array.prototype.filter.call(cancelButtons, function (el: any) {
-          return el.textContent.trim() === 'Cancel';
-        });
-        if (filteredcancelButtons.length > 0) {
-          filteredcancelButtons[0].click();
-        }
+        this.clickButtonByLabel('Cancel');
         break;
       case 'submit':
-        const submitButton = document.querySelectorAll('button');
-        const filteredSubmitButton = Array.prototype.filter.call(submitButton, function (el: any) {
-          return el.textContent.trim() === 'Submit';
-        });
-        if (filteredSubmitButton.length > 0) {
-          filteredSubmitButton[0].click();
-        }
+        this.clickButtonByLabel('Submit');
         break;
       default:
         this.router.navigate([routeD.route], { relativeTo: this.activatedRoute });
     }
+  }
+
+  /**
+   * Clicks the first button whose text is the given label, in the current language
+   * (`labels.buttons.<label>`) or in English, since a few templates still hardcode it.
+   */
+  private clickButtonByLabel(label: string): void {
+    const labels = [
+      this.translateService.instant(`labels.buttons.${label}`),
+      label
+    ];
+    const button = Array.from(document.querySelectorAll('button')).find((el) => labels.includes(el.textContent.trim()));
+    button?.click();
   }
 
   /**
