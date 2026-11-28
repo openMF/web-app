@@ -309,8 +309,8 @@ test('rapid selection cancels stale details and standalone route redacts', async
   );
   await expect(page.locator('.detail-card')).not.toContainText('STALE');
   await page.getByRole('link', { name: 'Open audit details' }).click();
-  await expect(page.locator('.command-table')).toContainText('Submitted office');
-  await expect(page.locator('.command-table')).not.toContainText('HIDDEN_SECRET');
+  await expect(page.locator('.submitted-card')).toContainText('Submitted office');
+  await expect(page.locator('.audit-details')).not.toContainText('HIDDEN_SECRET');
 });
 
 for (const width of [

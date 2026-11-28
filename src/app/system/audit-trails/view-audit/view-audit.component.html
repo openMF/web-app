@@ -6,143 +6,361 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container layout-row align-between responsive-column">
-  <mat-card class="flex-100">
-    <mat-card-content class="flex-100">
-      <div class="layout-row flex-100">
-        <div class="flex-46">
-          <div class="layout-row-wrap">
-            <div class="flex-50 mat-body-strong">
-              {{ 'labels.inputs.ID' | translate }}
-            </div>
+<!--
+  Copyright since 2025 Mifos Initiative
 
-            <div class="flex-50">
-              {{ auditTrailData.id }}
-            </div>
-
-            <div class="flex-50 mat-body-strong">
-              {{ 'labels.inputs.Status' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ auditTrailData.processingResult }}
-            </div>
-
-            <div class="flex-50 mat-body-strong">
-              {{ 'labels.inputs.User' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ auditTrailData.maker }}
-            </div>
-
-            <div class="flex-50 mat-body-strong">
-              {{ 'labels.inputs.Action' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ auditTrailData.actionName | translateKey: 'auditTrail.actions' }}
-            </div>
-
-            <div class="flex-50 mat-body-strong">
-              {{ 'labels.inputs.Entity' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ auditTrailData.entityName | translateKey: 'auditTrail.entities' }}
-            </div>
-
-            <div class="flex-50 mat-body-strong">
-              {{ 'labels.inputs.Resource ID' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ auditTrailData.resourceId }}
-            </div>
-
-            <div class="flex-50 mat-body-strong">
-              {{ 'labels.inputs.Date' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ auditTrailData.madeOnDate | datetimeFormat }}
-            </div>
-
-            @if (auditTrailData.officeName) {
-              <div class="flex-50 mat-body-strong">
-                {{ 'labels.inputs.Office' | translate }}
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<section class="audit-details" [attr.aria-label]="'auditDetails.title' | translate">
+  @if (state === 'loading') {
+    <mat-progress-bar mode="indeterminate" [attr.aria-label]="'auditDetails.loading' | translate" />
+  }
+  @if (state !== 'ready' && state !== 'loading') {
+    <mat-card class="state-card" role="status">
+      <h1>{{ 'auditDetails.' + state | translate }}</h1>
+      <a mat-flat-button color="primary" routerLink="../">{{ 'auditDetails.back' | translate }}</a>
+    </mat-card>
+  }
+  @if (state === 'ready' && event) {
+    <header class="audit-heading">
+      <div>
+        <div class="badges">
+          <span class="badge" [attr.data-tone]="tone(event.actionName)">{{ action(event) }}</span>
+          <span>{{ entity(event) }}</span>
+          <span class="badge" [attr.data-tone]="tone(event.processingResult)">{{
+            event.processingResult || ('auditDetails.notRecorded' | translate)
+          }}</span>
+          <span class="trail-id">{{ 'auditDetails.trail' | translate }} {{ event.id }}</span>
+        </div>
+        <h1 #auditHeading tabindex="-1">{{ heading || ('auditDetails.unknownResource' | translate) }}</h1>
+        <p>
+          {{
+            'auditDetails.activity'
+              | translate
+                : {
+                    maker: event.maker || ('auditDetails.notRecorded' | translate),
+                    action: action(event),
+                    entity: entity(event),
+                    date: date(event.timestamp)
+                  }
+          }}
+        </p>
+      </div>
+      <nav class="heading-actions" [attr.aria-label]="'auditDetails.navigation' | translate">
+        <div class="trail-navigation">
+          <button
+            mat-icon-button
+            [disabled]="!previous"
+            (click)="navigate(previous)"
+            [attr.aria-label]="'auditDetails.previousTrail' | translate"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            [disabled]="!next"
+            (click)="navigate(next)"
+            [attr.aria-label]="'auditDetails.nextTrail' | translate"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+        <button mat-stroked-button (click)="copy()">
+          <mat-icon>content_copy</mat-icon>{{ 'auditDetails.copy' | translate }}
+        </button>
+        <button mat-stroked-button (click)="exportJson()">
+          <mat-icon>download</mat-icon>{{ 'auditDetails.export' | translate }}
+        </button>
+        <a mat-flat-button color="primary" routerLink="../" queryParamsHandling="preserve"
+          ><mat-icon>arrow_back</mat-icon>{{ 'auditDetails.back' | translate }}</a
+        >
+      </nav>
+    </header>
+    <p class="feedback" role="status" aria-live="polite">
+      @if (feedback) {
+        {{ 'auditDetails.' + feedback | translate }}
+      }
+    </p>
+    <div class="investigation-grid">
+      <main class="audit-main">
+        <mat-card class="metadata" [attr.aria-label]="'auditDetails.metadata' | translate">
+          <div>
+            <span class="meta-label">{{ 'auditDetails.madeBy' | translate }}</span>
+            <div class="maker">
+              <span class="avatar" aria-hidden="true">{{ event.maker.slice(0, 2).toLocaleUpperCase() || '?' }}</span>
+              <div>
+                <strong>{{ event.maker || ('auditDetails.notRecorded' | translate) }}</strong
+                ><small>{{ 'auditDetails.maker' | translate }}</small>
               </div>
-            }
-
-            @if (auditTrailData.officeName) {
-              <div class="flex-50">
-                {{ auditTrailData.officeName }}
-              </div>
-            }
-
-            @if (auditTrailData.savingsAccountNo) {
-              <div class="flex-50 mat-body-strong">
-                {{ 'labels.inputs.Savings Account No' | translate }}
-              </div>
-            }
-
-            @if (auditTrailData.savingsAccountNo) {
-              <div class="flex-50">
-                {{ auditTrailData.savingsAccountNo }}
-              </div>
-            }
-
-            @if (auditTrailData.groupLevelName) {
-              <div class="flex-50 mat-body-strong">
-                {{ 'labels.inputs.Group Level' | translate }}
-              </div>
-            }
-
-            @if (auditTrailData.groupLevelName) {
-              <div class="flex-50">
-                {{ auditTrailData.groupLevelName }}
-              </div>
+            </div>
+          </div>
+          <div>
+            <span class="meta-label">{{ 'auditDetails.dateTime' | translate }}</span
+            ><strong>{{ date(event.timestamp) }}</strong>
+            @if (event.timestamp !== null) {
+              <small>{{ date(event.timestamp, true) }}</small>
             }
           </div>
+          <div>
+            <span class="meta-label">{{ 'auditDetails.resource' | translate }}</span
+            ><strong>{{ resourceLabel }}</strong>
+            @if (resourceLink) {
+              <a [routerLink]="resourceLink">{{ 'auditDetails.openOffice' | translate }}</a>
+            }
+          </div>
+          <div>
+            <span class="meta-label">{{ 'auditDetails.checker' | translate }}</span
+            ><strong>{{ event.checker || ('auditDetails.noneRecorded' | translate) }}</strong>
+            @if (event.checker && event.checkedTimestamp !== null) {
+              <small>{{ date(event.checkedTimestamp) }}</small>
+            }
+            @if (checkerStatus === 'pending') {
+              <small>{{ 'auditDetails.pending' | translate }}</small>
+            }
+          </div>
+          <div>
+            <span class="meta-label">{{ 'auditDetails.clientIp' | translate }}</span
+            ><strong [class.warning]="!event.ip">
+              @if (!event.ip) {
+                <mat-icon aria-hidden="true">warning_amber</mat-icon>
+              }
+              {{ event.ip || ('auditDetails.notRecorded' | translate) }}</strong
+            >
+            @if (!event.ip) {
+              <small>{{ 'auditDetails.metadataGap' | translate }}</small>
+            }
+          </div>
+        </mat-card>
 
-          @if (auditTrailData.ip) {
-            <div fxFlex="50%" class="mat-body-strong">
-              {{ 'labels.inputs.Client Ip' | translate }}
-            </div>
+        <mat-card class="submitted-card">
+          <div class="card-heading">
+            <h2>{{ 'auditDetails.submitted' | translate }}</h2>
+            <span>{{ 'auditDetails.fieldCount' | translate: { count: fields.length } }}</span>
+          </div>
+          <p class="card-description">{{ 'auditDetails.submittedDescription' | translate }}</p>
+          @if (!detail.command.valid) {
+            <p class="notice" role="status">{{ 'auditDetails.invalidJson' | translate }}</p>
           }
-
-          @if (auditTrailData.ip) {
-            <div fxFlex="50%">
-              {{ auditTrailData.ip }}
-            </div>
+          @if (detail.command.valid && !fields.length) {
+            <p class="notice">{{ 'auditDetails.noFields' | translate }}</p>
           }
-        </div>
+          <div class="table-scroll">
+            <table mat-table [dataSource]="fields" [attr.aria-label]="'auditDetails.submitted' | translate">
+              <ng-container matColumnDef="field"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'auditDetails.field' | translate }}</th>
+                <td mat-cell *matCellDef="let field">{{ label(field.key) }}</td></ng-container
+              >
+              <ng-container matColumnDef="value"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'auditDetails.value' | translate }}</th>
+                <td mat-cell *matCellDef="let field">
+                  <strong>{{ displayField(field.key, field.value) }}</strong>
+                  @if (field.key === 'parentId' && parentName) {
+                    <small>{{ 'auditDetails.currentParentName' | translate: { name: parentName } }}</small>
+                  }
+                </td></ng-container
+              >
+              <ng-container matColumnDef="parameter"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'auditDetails.parameter' | translate }}</th>
+                <td mat-cell *matCellDef="let field">
+                  <code>{{ field.key }}</code>
+                </td></ng-container
+              >
+              <tr mat-header-row *matHeaderRowDef="columns"></tr>
+              <tr mat-row *matRowDef="let row; columns: columns"></tr>
+            </table>
+          </div>
+          <p class="privacy-note">{{ 'auditDetails.redaction' | translate }}</p>
+        </mat-card>
 
-        <div class="flex-46 command">
-          <table mat-table [dataSource]="dataSource" class="command-table" matSort>
-            <ng-container matColumnDef="command">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Command' | translate }}</th>
-              <td mat-cell *matCellDef="let auditTrailCommand">{{ auditTrailCommand.command }}</td>
-            </ng-container>
+        <mat-expansion-panel class="request-format">
+          <mat-expansion-panel-header
+            ><mat-panel-title>{{
+              'auditDetails.requestFormat' | translate
+            }}</mat-panel-title></mat-expansion-panel-header
+          >
+          <dl class="record-context">
+            @if (event.officeName) {
+              <dt>{{ 'labels.inputs.Office' | translate }}</dt>
+              <dd>{{ event.officeName }}</dd>
+            }
+            @if (event.clientName) {
+              <dt>{{ 'labels.inputs.Client' | translate }}</dt>
+              <dd>{{ event.clientName }}</dd>
+            }
+            @if (event.savingsAccountNo) {
+              <dt>{{ 'labels.inputs.Savings Account No' | translate }}</dt>
+              <dd>{{ event.savingsAccountNo }}</dd>
+            }
+            @if (event.groupLevelName) {
+              <dt>{{ 'labels.inputs.Group Level' | translate }}</dt>
+              <dd>{{ event.groupLevelName }}</dd>
+            }
+          </dl>
+          <dl>
+            @for (field of formatFields; track field.key) {
+              <dt>{{ label(field.key) }}</dt>
+              <dd>
+                {{ displayField(field.key, field.value) }} <code>{{ field.key }}</code>
+              </dd>
+            }
+          </dl>
+          <p>{{ 'auditDetails.jsonDescription' | translate }}</p>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header
+              ><mat-panel-title>{{ 'auditDetails.viewJson' | translate }}</mat-panel-title></mat-expansion-panel-header
+            >
+            @if (detail.command.valid) {
+              <button mat-stroked-button (click)="copy(true)">
+                <mat-icon>content_copy</mat-icon>{{ 'auditDetails.copyJson' | translate }}
+              </button>
+              <pre
+                class="request-json"
+                tabindex="0"
+                [attr.aria-label]="'auditDetails.safeJson' | translate"
+              ><code>@for (token of tokens; track $index) {<span [class]="'json-' + token.kind">{{ token.text }}</span>}</code></pre>
+            } @else {
+              <p>{{ 'auditDetails.invalidJson' | translate }}</p>
+            }
+          </mat-expansion-panel>
+        </mat-expansion-panel>
 
-            <ng-container matColumnDef="commandValue">
-              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Command Value' | translate }}</th>
-              <td mat-cell *matCellDef="let auditTrailCommand" class="column-value-wrapper">
-                {{ auditTrailCommand.commandValue }}
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="layout-row layout-align-center m-t-20 column-on-mobile">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
-          {{ 'labels.buttons.Back' | translate }}
-        </button>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+        @if (comparisonState !== 'idle') {
+          <mat-card class="comparison-card" aria-live="polite">
+            <h2>{{ 'auditDetails.comparison' | translate }}</h2>
+            <p class="trail-id">{{ 'auditDetails.trail' | translate }} {{ comparedId }} → {{ event.id }}</p>
+            <p>{{ 'auditDetails.comparisonDescription' | translate }}</p>
+            @if (comparisonState === 'loading') {
+              <mat-progress-bar mode="indeterminate" [attr.aria-label]="'auditDetails.loading' | translate" />
+            }
+            @if (comparisonState === 'error') {
+              <p role="status">{{ 'auditDetails.comparisonUnavailable' | translate }}</p>
+            }
+            @if (comparisonState === 'ready') {
+              <div class="table-scroll">
+                <table mat-table [dataSource]="comparison">
+                  <ng-container matColumnDef="field"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'auditDetails.field' | translate }}</th>
+                    <td mat-cell *matCellDef="let row">{{ label(row.key) }}</td></ng-container
+                  >
+                  <ng-container matColumnDef="previous"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'auditDetails.previousValue' | translate }}</th>
+                    <td mat-cell *matCellDef="let row">{{ display(row.previous) }}</td></ng-container
+                  >
+                  <ng-container matColumnDef="current"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'auditDetails.currentValue' | translate }}</th>
+                    <td mat-cell *matCellDef="let row">{{ display(row.current) }}</td></ng-container
+                  >
+                  <ng-container matColumnDef="kind"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'auditDetails.difference' | translate }}</th>
+                    <td mat-cell *matCellDef="let row">
+                      <span class="badge">{{ 'auditDetails.' + row.kind | translate }}</span>
+                    </td></ng-container
+                  >
+                  <tr mat-header-row *matHeaderRowDef="comparisonColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: comparisonColumns"></tr>
+                </table>
+              </div>
+            }
+          </mat-card>
+        }
+      </main>
+      <aside>
+        <mat-card class="history-card">
+          <div class="card-heading">
+            <h2>{{ 'auditDetails.historyOf' | translate: { resource: resourceLabel } }}</h2>
+            <span>{{ 'auditDetails.loaded' | translate: { count: history.length } }}</span>
+          </div>
+          <p class="card-description">{{ 'auditDetails.historyScope' | translate }}</p>
+          @if (loadingHistory) {
+            <mat-progress-bar mode="indeterminate" [attr.aria-label]="'auditDetails.loadingHistory' | translate" />
+          }
+          <ol class="history-timeline">
+            @for (trail of history; track trail.id) {
+              <li [class.selected]="trail.id === event.id">
+                <button
+                  mat-button
+                  (click)="navigate(trail)"
+                  [attr.aria-current]="trail.id === event.id ? 'page' : null"
+                >
+                  <span class="history-event"
+                    ><span class="history-badges"
+                      ><span class="badge" [attr.data-tone]="tone(trail.actionName)">{{ action(trail) }}</span
+                      ><span class="trail-id">{{ trail.id }}</span>
+                      @if (trail.id === event.id) {
+                        <span class="badge">{{ 'auditDetails.thisTrail' | translate }}</span>
+                      }</span
+                    ><strong>{{ date(trail.timestamp) }}</strong
+                    ><small>{{ trail.maker || ('auditDetails.notRecorded' | translate) }}</small></span
+                  >
+                </button>
+              </li>
+            }
+          </ol>
+          @if (!loadingHistory && !history.length && !historyError) {
+            <p>{{ 'auditDetails.noHistory' | translate }}</p>
+          }
+          @if (historyError) {
+            <p role="status">{{ 'auditDetails.historyError' | translate }}</p>
+            <button mat-stroked-button (click)="loadHistory()">{{ 'auditDetails.retry' | translate }}</button>
+          }
+          @if (hasMore) {
+            <button mat-button [disabled]="loadingHistory" (click)="loadHistory()">
+              {{ 'auditDetails.loadMore' | translate }}
+            </button>
+          }
+          @if (atLimit) {
+            <p>{{ 'auditDetails.historyLimit' | translate }}</p>
+          }
+          @if (previous) {
+            <button
+              class="compare-button"
+              mat-stroked-button
+              [disabled]="comparisonState === 'loading'"
+              (click)="compare()"
+            >
+              <mat-icon>compare_arrows</mat-icon>{{ 'auditDetails.compareWith' | translate: { id: previous.id } }}
+            </button>
+          }
+        </mat-card>
+        <mat-card class="observations-card">
+          <h2>{{ 'auditDetails.observations' | translate }}</h2>
+          <p class="card-description">{{ 'auditDetails.observationsDescription' | translate }}</p>
+          <ul class="observations">
+            @if (!event.checker) {
+              <li>
+                <mat-icon aria-hidden="true">info_outline</mat-icon>
+                <div>
+                  <strong>{{ 'auditDetails.noChecker' | translate }}</strong>
+                  <p>{{ 'auditDetails.checkerLimitation' | translate }}</p>
+                </div>
+              </li>
+            }
+            @if (!event.ip) {
+              <li>
+                <mat-icon class="warning" aria-hidden="true">warning_amber</mat-icon>
+                <div>
+                  <strong>{{ 'auditDetails.noIp' | translate }}</strong>
+                  <p>{{ 'auditDetails.ipLimitation' | translate }}</p>
+                </div>
+              </li>
+            }
+            @if (minutesAfterCreation !== null) {
+              <li>
+                <mat-icon aria-hidden="true">schedule</mat-icon>
+                <div>
+                  <strong>{{ 'auditDetails.creationInterval' | translate: { minutes: minutesAfterCreation } }}</strong>
+                  <p>{{ 'auditDetails.creationEvidence' | translate }}</p>
+                </div>
+              </li>
+            }
+            @if (event.checker && event.ip && minutesAfterCreation === null) {
+              <li>{{ 'auditDetails.noObservations' | translate }}</li>
+            }
+          </ul>
+        </mat-card>
+      </aside>
+    </div>
+  }
+</section>
