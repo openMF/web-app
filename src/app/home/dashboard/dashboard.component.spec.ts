@@ -9,7 +9,7 @@
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -18,6 +18,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
 import { TasksService } from 'app/tasks/tasks.service';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboard-engine.component';
+import { OperationsDashboardComponent } from './operations-dashboard/operations-dashboard.component';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -32,6 +33,9 @@ class DashboardEngineStubComponent {
   @Input() clientGroups: any[];
 }
 
+@Component({ selector: 'mifosx-operations-dashboard', standalone: true, template: '' })
+class OperationsStubComponent {}
+
 describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   const rbacEnabled = environment.productionModeEnableRBAC;
@@ -45,7 +49,13 @@ describe('DashboardComponent', () => {
       ],
       providers: [
         provideNoopAnimations(),
-        { provide: ActivatedRoute, useValue: { data: of({ offices: [], products: [], clientGroups: [] }) } },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({ offices: [], products: [], clientGroups: [] }),
+            queryParamMap: of(convertToParamMap({}))
+          }
+        },
         {
           provide: AuthenticationService,
           useValue: { getCredentials: () => ({ permissions: [] as string[] }) }
@@ -61,8 +71,14 @@ describe('DashboardComponent', () => {
       ]
     })
       .overrideComponent(DashboardComponent, {
-        remove: { imports: [DashboardEngineComponent] },
-        add: { imports: [DashboardEngineStubComponent] }
+        remove: { imports: [
+            DashboardEngineComponent,
+            OperationsDashboardComponent
+          ] },
+        add: { imports: [
+            DashboardEngineStubComponent,
+            OperationsStubComponent
+          ] }
       })
       .compileComponents();
 
@@ -83,7 +99,8 @@ describe('DashboardComponent', () => {
     expect(tabLabels).toEqual([
       'labels.heading.Dashboard',
       'labels.heading.Onboarding Board',
-      'commercialPipeline.tab'
+      'commercialPipeline.tab',
+      'operations.analytics'
     ]);
   });
 
@@ -91,7 +108,7 @@ describe('DashboardComponent', () => {
     const tabs = fixture.nativeElement.querySelectorAll('[role="tab"]');
 
     expect(tabs[0].getAttribute('aria-selected')).toBe('true');
-    expect(fixture.nativeElement.querySelector('mifosx-analytics-dashboard')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('mifosx-operations-dashboard')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('mifosx-onboarding-board')).toBeNull();
 
     tabs[1].click();
@@ -101,14 +118,22 @@ describe('DashboardComponent', () => {
     expect(fixture.nativeElement.querySelector('mifosx-onboarding-board')).toBeTruthy();
   });
 
-  it('restores the existing dashboard content when switching back', () => {
+  it('retains analytics lazily without loading it in Operations', () => {
+    expect(fixture.nativeElement.querySelector('mifosx-analytics-dashboard')).toBeNull();
+    fixture.nativeElement.querySelectorAll('[role="tab"]')[3].click();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('mifosx-analytics-dashboard')).toBeTruthy();
+  });
+
+  it('restores the existing dashboard content when switching back', async () => {
     const tabs = fixture.nativeElement.querySelectorAll('[role="tab"]');
     tabs[1].click();
     fixture.detectChanges();
+    await fixture.whenStable();
     tabs[0].click();
     fixture.detectChanges();
 
     expect(tabs[0].getAttribute('aria-selected')).toBe('true');
-    expect(fixture.nativeElement.querySelector('mifosx-analytics-dashboard')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('mifosx-operations-dashboard')).toBeTruthy();
   });
 });

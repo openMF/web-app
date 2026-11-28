@@ -7,16 +7,9 @@
 -->
 
 <div class="container">
-  <mat-tab-group animationDuration="0ms">
+  <mat-tab-group animationDuration="0ms" [preserveContent]="true">
     <mat-tab label="{{ 'labels.heading.Dashboard' | translate }}">
-      <div class="dashboard-layout">
-        <mifosx-analytics-dashboard
-          [dashboard]="dashboardDefinition"
-          [offices]="offices"
-          [products]="products"
-          [clientGroups]="clientGroups"
-        ></mifosx-analytics-dashboard>
-      </div>
+      <mifosx-operations-dashboard></mifosx-operations-dashboard>
     </mat-tab>
     <mat-tab label="{{ 'labels.heading.Onboarding Board' | translate }}">
       <ng-template matTabContent>
@@ -26,6 +19,16 @@
     <mat-tab label="{{ 'commercialPipeline.tab' | translate }}">
       <ng-template matTabContent>
         <mifosx-commercial-panel [offices]="offices"></mifosx-commercial-panel>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="{{ 'operations.analytics' | translate }}">
+      <ng-template matTabContent>
+        <mifosx-analytics-dashboard
+          [dashboard]="dashboardDefinition"
+          [offices]="offices"
+          [products]="products"
+          [clientGroups]="clientGroups"
+        ></mifosx-analytics-dashboard>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

@@ -129,6 +129,8 @@ test.beforeEach(async ({ page, prospectPermissions }) => {
 
 async function open(page: Page) {
   await page.goto('/#/dashboard');
+  await expect(page.locator('mifosx-operations-dashboard section')).toHaveAttribute('aria-busy', 'false');
+  queries = [];
   await page.getByRole('tab', { name: 'Commercial panel', exact: true }).click();
   await expect(page.locator('mifosx-commercial-panel')).toBeVisible();
 }
@@ -137,7 +139,9 @@ const panel = (page: Page) => page.locator('mifosx-commercial-panel');
 test('keeps both existing dashboard views and lazily loads the commercial view', async ({ page }) => {
   await page.goto('/#/dashboard');
   await expect(page.getByRole('tab', { name: 'Dashboard', exact: true })).toHaveAttribute('aria-selected', 'true');
-  expect(queries).toHaveLength(0);
+  await expect(page.locator('mifosx-operations-dashboard section')).toHaveAttribute('aria-busy', 'false');
+  expect(queries.every((query) => query.searchParams.get('limit') === '25')).toBe(true);
+  queries = [];
   await page.getByRole('tab', { name: 'Onboarding Board', exact: true }).click();
   await expect(page.locator('mifosx-onboarding-board')).toBeVisible();
   await page.getByRole('tab', { name: 'Commercial panel', exact: true }).click();
