@@ -147,6 +147,9 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    * Submits the close recurring deposit form
    */
   submit() {
+    if (this.closeRecurringDepositForm.invalid) {
+      return;
+    }
     const closeRecurringDepositFormData = this.closeRecurringDepositForm.value;
     const closedOnDate = this.closeRecurringDepositForm.value.closedOnDate;
     const dateFormat = this.settingsService.dateFormat;
